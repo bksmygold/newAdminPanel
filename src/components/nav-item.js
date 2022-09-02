@@ -1,0 +1,145 @@
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import PropTypes from "prop-types";
+import { Box, Button, ListItem } from "@mui/material";
+import * as React from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+export const NavItem = (props) => {
+  const { href, items, isCollapsible, icon, title, ...others } = props;
+  const router = useRouter();
+  const active = href ? router.pathname === href : false;
+
+  return (
+    <ListItem
+      disableGutters
+      sx={{
+        display: "flex",
+        mb: 0.5,
+        py: 0,
+        px: 2,
+      }}
+      {...others}
+    >
+      {/* <NextLink href={href} passHref> */}
+      {/* <Button
+          component="a"
+          startIcon={icon}
+          disableRipple
+          sx={{
+            backgroundColor: active && "rgba(255,255,255, 0.08)",
+            borderRadius: 1,
+            color: active ? "secondary.main" : "neutral.300",
+            fontWeight: active && "fontWeightBold",
+            justifyContent: "flex-start",
+            px: 3,
+            textAlign: "left",
+            textTransform: "none",
+            width: "100%",
+            "& .MuiButton-startIcon": {
+              color: active ? "secondary.main" : "neutral.400",
+            },
+            "&:hover": {
+              backgroundColor: "rgba(255,255,255, 0.08)",
+            },
+          }}
+        > */}
+      {isCollapsible ? (
+        <Accordion sx={{ backgroundColor: "transparent" ,width:"100%"}}>
+          <Button
+            component="div"
+            startIcon={icon}
+            disableRipple
+            sx={{
+              backgroundColor: active && "rgba(255,255,255, 0.08)",
+              borderRadius: 1,
+              color: active ? "white" : "white",
+              fontWeight: active && "fontWeightBold",
+              justifyContent: "flex-start",
+              px: 3,
+              textAlign: "left",
+              textTransform: "none",
+              width: "100%",
+              "& .MuiButton-startIcon": {
+                color: active ? "secondary.main" : "neutral.400",
+              },
+              "&:hover": {
+                backgroundColor: "rgba(255,255,255, 0.08)",
+              },
+            }}
+          >
+            <NextLink href={href} passHref>
+                <Box sx={{ flexGrow: 1 }}>{title}</Box>
+            </NextLink>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+          </AccordionSummary>
+              </Button>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems:"center"
+            }}
+          >
+
+          {items?.map((x) => (
+            
+            <Button 
+            sx={{
+              color: "white"
+              
+            }}
+            key={x.title}>
+              <Typography>{x.title}</Typography>
+            </Button>
+          ))}
+          </div>
+        </Accordion>
+      ) : (
+        <>
+          <NextLink href={href} passHref>
+            <Button
+              component="div"
+              startIcon={icon}
+              disableRipple
+              sx={{
+                backgroundColor: active ? "rgba(255,255,255, 0.08)" : 'transparent',
+                borderRadius: 1,
+                color: active ? "secondary.main" : "neutral.300",
+                fontWeight: active && "fontWeightBold",
+                justifyContent: "flex-start",
+                px: 3,
+                textAlign: "left",
+                textTransform: "none",
+                width: "100%",
+                "& .MuiButton-startIcon": {
+                  color: active ? "secondary.main" : "neutral.400",
+                },
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255, 0.08)",
+                },
+              }}
+            >
+              <Box sx={{ flexGrow: 1 }}>{title}</Box>
+            </Button>
+          </NextLink>
+        </>
+      )}
+    </ListItem>
+  );
+};
+
+NavItem.propTypes = {
+  href: PropTypes.string,
+  icon: PropTypes.node,
+  title: PropTypes.string,
+};
