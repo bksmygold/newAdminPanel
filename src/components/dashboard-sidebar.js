@@ -96,17 +96,9 @@ export const DashboardSidebar = (props) => {
       >
         <div>
           <Box sx={{ p: 3 }}>
-            <NextLink href="/" passHref>
-              <a>
-                {/* <Logo
-                  sx={{
-                    height: 30,
-                    width: 30,
-                  }}
-                /> */}
-                <img style={{ height: 30, width: 30 }} src={logo} />
-              </a>
-            </NextLink>
+            {/* <NextLink href="/" passHref>
+              
+            </NextLink> */}
           </Box>
           <Box sx={{ px: 2 }}>
             <Box
@@ -122,6 +114,7 @@ export const DashboardSidebar = (props) => {
               }}
             >
               <div>
+                <img src={ logo}/>
                 <Typography color="inherit" variant="subtitle1">
                   Bks MyGold
                 </Typography>
