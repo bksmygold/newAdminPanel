@@ -16,9 +16,8 @@ import { User as UserIcon } from "../icons/user";
 import { UserAdd as UserAddIcon } from "../icons/user-add";
 import { Users as UsersIcon } from "../icons/users";
 import { XCircle as XCircleIcon } from "../icons/x-circle";
-import { Logo } from "./logo";
 import { NavItem } from "./nav-item";
-import logo from '../assets/logo.png'
+import logo from '../../public/static/images/logo.png'
 //=======================================================
 const items = [
   {
@@ -44,7 +43,7 @@ const items = [
     ],
   },
   {
-    href: "/",
+    href: "/metal-master",
     icon: <CogIcon fontSize="small" />,
     title: "Metal Master",
     childrens: [
@@ -59,6 +58,12 @@ const items = [
         title: "Metal Group",
       },
     ],
+  },
+  {
+    href: "/peoduct",
+    icon: <CogIcon fontSize="small" />,
+    title: "Product",
+    
   },
 ];
 //========================================================================
@@ -104,17 +109,18 @@ export const DashboardSidebar = (props) => {
             <Box
               sx={{
                 alignItems: "center",
-                backgroundColor: "rgba(255, 255, 255, 0.04)",
+                backgroundColor: "white",
                 cursor: "pointer",
                 display: "flex",
                 justifyContent: "space-between",
                 px: 3,
                 py: "11px",
                 borderRadius: 1,
+                color:'black'
               }}
             >
               <div>
-                <img src={ logo}/>
+                <img src={logo} />
                 <Typography color="inherit" variant="subtitle1">
                   Bks MyGold
                 </Typography>
@@ -134,7 +140,7 @@ export const DashboardSidebar = (props) => {
         </div>
         <Divider
           sx={{
-            borderColor: "#2D3748",
+            borderColor: "green",
             my: 3,
           }}
         />
@@ -153,7 +159,7 @@ export const DashboardSidebar = (props) => {
             </>
           ))}
         </Box>
-        <Divider sx={{ borderColor: "#2D3748" }} />
+        <Divider sx={{ borderColor: "green" }} />
         {/* <Box
           sx={{
             px: 2,
@@ -203,7 +209,7 @@ export const DashboardSidebar = (props) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: "neutral.900",
+            backgroundColor: "#FFFFFF",
             color: "#FFFFFF",
             width: 280,
           },
@@ -222,7 +228,7 @@ export const DashboardSidebar = (props) => {
       open={open}
       PaperProps={{
         sx: {
-          backgroundColor: "neutral.900",
+          backgroundColor: "#ffffff",
           color: "#FFFFFF",
           width: 280,
         },

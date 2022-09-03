@@ -1,32 +1,118 @@
-.loginContainer {
-  background-color: #fffdfa;
-  height: 100vh;
+/* =========== Login ================== */
+
+.container {
   width: 100vw;
+  height: 100vh;
+  background-color: white;
+
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.mb {
-  margin-bottom: 20px;
+form {
+  display: contents;
 }
-.login-box {
+.login {
+  /* border: 1px dashed; */
+  border-radius: 10px;
+  width: 80vw;
+  height: 80vh;
   background-color: #fdfaf2;
-  width: 48%;
-  height: 80%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: -1px 2px 11px 0px;
 }
 
-   .box {
-    /* height: 50%; */
-    width: 49%;
-    background-color: #FDFAF2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 3%;
-    border-radius: 10px;
-    margin: auto;
+.box {
+  width: 50vw;
+  height: 50vh;
+  padding: 4%;
+  background-color: #fdfaf2;
+  /* border: 1px dashed; */
+  display: flex;
+  flex-direction: column;
+}
+.box1 {
+  width: 50vw;
+  height: 50vh;
+  padding: 7%;
+  background-color: #a27f4b;
+  /* border: 1px dashed; */
+  display: flex;
+  flex-direction: column;
+  margin-right: 14px;
+}
+.box > h4 {
+  margin-bottom: 10px;
+  color: #8b5704;
+}
+.box > input {
+  background-color: red;
+}
+.box1 > h2,
+p {
+  /* margin-bottom: 4px; */
+  font-weight: lighter;
+  color: #fdfaf2;
+}
+@media screen and (max-width: 866px) {
+  .box1 {
+    display: none;
+  }
+  .login {
+  }
+}
+/* =========== Nav Bar ================== */
+#welcomeText {
+  font-weight: bolder;
+  color: #8b5704;
+}
+/* =========== Dashobaord ================== */
+
+.row {
+  /* background-color: rebeccapurple; */
+  /* background-color: rebeccapurple; */
+  width: 100%;
+  /* height: 25%; */
+  display: flex;
+  grid-gap: 10px;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.card {
+  /* width: 25%; */
+  background-color: #fdfaf2;
+  /* border: 2px solid black; */
+  padding: 4%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 1px 4px 0px 0px #eaeaea, inset -1px -4px 0px 0px #eaeaea;
+}
+#title {
+  color: #905e0f;
+  font-weight: 800;
+}
+#stats {
+  color: black;
+  font-weight: inherit;
+  font-size: 3vw;
+}
+#statsNo {
+  color: gray;
+  font-weight: 400;
+  font-size: 1.6vw;
+}
+@media screen and (max-width: 650px) {
+  .flee {
+    flex-direction: column;
+  }
+  /* .card {
+    width: 80%;
+    padding: 16px;
+  } */
 }

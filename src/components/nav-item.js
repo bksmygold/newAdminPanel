@@ -12,6 +12,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 export const NavItem = (props) => {
   const { href, items, isCollapsible, icon, title, ...others } = props;
   const router = useRouter();
+  console.log("router --", router);
   const active = href ? router.pathname === href : false;
 
   return (
@@ -49,59 +50,58 @@ export const NavItem = (props) => {
           }}
         > */}
       {isCollapsible ? (
-        <Accordion sx={{ backgroundColor: "transparent" ,width:"100%"}}>
+        <Accordion sx={{ backgroundColor: "transparent", width: "100%" }}>
           <Button
             component="div"
             startIcon={icon}
             disableRipple
             sx={{
-              backgroundColor: active && "rgba(255,255,255, 0.08)",
+              backgroundColor: active && "#E5D5BC",
               borderRadius: 1,
-              color: active ? "white" : "white",
+              color: active ? "#935F0E" : "gray",
               fontWeight: active && "fontWeightBold",
               justifyContent: "flex-start",
-              px: 3,
+              // px: 3,
               textAlign: "left",
               textTransform: "none",
               width: "100%",
               "& .MuiButton-startIcon": {
-                color: active ? "secondary.main" : "neutral.400",
+                color: active ? "#925F0F" : "grey",
               },
-              "&:hover": {
-                backgroundColor: "rgba(255,255,255, 0.08)",
-              },
+              // "&:hover": {
+              //   backgroundColor: "rgba(255,255,255, 0.08)",
+              // },
             }}
           >
             <NextLink href={href} passHref>
-                <Box sx={{ flexGrow: 1 }}>{title}</Box>
+              <Box sx={{ flexGrow: 1 }}>{title}</Box>
             </NextLink>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-          </AccordionSummary>
-              </Button>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            ></AccordionSummary>
+          </Button>
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
-              alignItems:"center"
+              justifyContent: "flex-end",
+              alignItems: "flex-end",
             }}
           >
-
-          {items?.map((x) => (
-            
-            <Button 
-            sx={{
-              color: "white"
-              
-            }}
-            key={x.title}>
-              <Typography>{x.title}</Typography>
-            </Button>
-          ))}
+            {items?.map((x) => (
+              <Button key={x.title}>
+                <Typography
+                  sx={{
+                    color: "gray",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {x.title}
+                </Typography>
+              </Button>
+            ))}
           </div>
         </Accordion>
       ) : (
@@ -112,21 +112,21 @@ export const NavItem = (props) => {
               startIcon={icon}
               disableRipple
               sx={{
-                backgroundColor: active ? "rgba(255,255,255, 0.08)" : 'transparent',
+                backgroundColor: active && "#E5D5BC",
                 borderRadius: 1,
-                color: active ? "secondary.main" : "neutral.300",
+                color: active ? "#935F0E" : "gray",
                 fontWeight: active && "fontWeightBold",
                 justifyContent: "flex-start",
-                px: 3,
+                // px: 3,
                 textAlign: "left",
                 textTransform: "none",
                 width: "100%",
                 "& .MuiButton-startIcon": {
-                  color: active ? "secondary.main" : "neutral.400",
+                  color: active ? "#925F0F" : "grey",
                 },
-                "&:hover": {
-                  backgroundColor: "rgba(255,255,255, 0.08)",
-                },
+                // "&:hover": {
+                //   backgroundColor: "rgba(255,255,255, 0.08)",
+                // },
               }}
             >
               <Box sx={{ flexGrow: 1 }}>{title}</Box>

@@ -20,28 +20,30 @@ export const DashboardNavbar = (props) => {
       <DashboardNavbarRoot
         sx={{
           left: {
-            lg: 280
+            lg: 280,
           },
           width: {
-            lg: 'calc(100% - 280px)'
-          }
+            lg: "calc(100% - 280px)",
+          },
         }}
-        {...other}>
+        {...other}
+      >
         <Toolbar
           disableGutters
           sx={{
             minHeight: 64,
             left: 0,
-            px: 2
+            px: 2,
           }}
         >
+          <p id='welcomeText'>👋 Welcome Nischal </p>
           <IconButton
             onClick={onSidebarOpen}
             sx={{
               display: {
-                xs: 'inline-flex',
-                lg: 'none'
-              }
+                xs: "inline-flex",
+                lg: "none",
+              },
             }}
           >
             <MenuIcon fontSize="small" />
@@ -59,11 +61,7 @@ export const DashboardNavbar = (props) => {
           </Tooltip>
           <Tooltip title="Notifications">
             <IconButton sx={{ ml: 1 }}>
-              <Badge
-                badgeContent={4}
-                color="primary"
-                variant="dot"
-              >
+              <Badge badgeContent={4} color="primary" variant="dot">
                 <BellIcon fontSize="small" />
               </Badge>
             </IconButton>
@@ -72,7 +70,7 @@ export const DashboardNavbar = (props) => {
             sx={{
               height: 40,
               width: 40,
-              ml: 1
+              ml: 1,
             }}
             src="/static/images/avatars/avatar_1.png"
           >
