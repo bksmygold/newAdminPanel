@@ -1,63 +1,60 @@
-import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import PeopleIcon from '@mui/icons-material/PeopleOutlined';
+import { Avatar, Box, Card, CardContent, Grid, Typography } from "@mui/material";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import PeopleIcon from "@mui/icons-material/PeopleOutlined";
 
 export const TotalCustomers = (props) => (
-  <Card {...props}>
-    <CardContent>
-      <Grid
-        container
-        spacing={3}
-        sx={{ justifyContent: 'space-between' }}
-      >
+  <Card sx={{ boxShadow: "0px 4px 9px 0px #bab9b6" }} {...props}>
+    <CardContent
+      sx={{
+        backgroundColor: "#FDFAF2",
+        boxShadow: "0px 0px 10px  ",
+      }}
+    >
+      <Grid container spacing={3} sx={{ justifyContent: "center" }}>
         <Grid item>
-          <Typography
-            color="textSecondary"
-            gutterBottom
-            variant="overline"
-          >
-            TOTAL CUSTOMERS
+          <Typography color="#905E0F" gutterBottom variant="overline">
+            {props.title}
           </Typography>
-          <Typography
-            color="textPrimary"
-            variant="h4"
-          >
-            1,6k
+          <Typography color="textPrimary" variant="h5">
+            ₹ {props.rate} /gm
           </Typography>
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <Avatar
             sx={{
-              backgroundColor: 'success.main',
+              backgroundColor: "success.main",
               height: 56,
-              width: 56
+              width: 56,
             }}
           >
-            <PeopleIcon />
           </Avatar>
-        </Grid>
+        </Grid> */}
       </Grid>
       <Box
         sx={{
-          alignItems: 'center',
-          display: 'flex',
-          pt: 2
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          pt: 2,
         }}
       >
-        <ArrowUpwardIcon color="success" />
+        {props.percentage >= 10 ? (
+          <ArrowUpwardIcon color="success" />
+        ) : (
+          <ArrowDownwardIcon color="error" />
+        )}
         <Typography
           variant="body2"
           sx={{
-            mr: 1
+            mr: 1,
+            color: "black",
           }}
         >
-          16%
+          {props.percentage}%
         </Typography>
-        <Typography
-          color="textSecondary"
-          variant="caption"
-        >
-          Since last month
+        <Typography color="textSecondary" variant="caption">
+          Updated at {props.updatedAt}
         </Typography>
       </Box>
     </CardContent>

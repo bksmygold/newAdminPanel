@@ -17,12 +17,19 @@ import { UserAdd as UserAddIcon } from "../icons/user-add";
 import { Users as UsersIcon } from "../icons/users";
 import { XCircle as XCircleIcon } from "../icons/x-circle";
 import { NavItem } from "./nav-item";
-import logo from '../../public/static/images/logo.png'
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import StoreIcon from "@mui/icons-material/Store";
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
+import SummarizeIcon from "@mui/icons-material/Summarize";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import Image from "next/image";
+
 //=======================================================
 const items = [
   {
     href: "/",
-    icon: <ChartBarIcon fontSize="small" />,
+    icon: <DashboardIcon />,
     title: "Dashboard",
     childrens: [
       {
@@ -43,27 +50,29 @@ const items = [
     ],
   },
   {
-    href: "/metal-master",
-    icon: <CogIcon fontSize="small" />,
-    title: "Metal Master",
-    childrens: [
-      {
-        href: "/metal-master/metal",
-        icon: <ChartBarIcon fontSize="small" />,
-        title: "Metal",
-      },
-      {
-        href: "/metal-master/metal-group",
-        icon: <ChartBarIcon fontSize="small" />,
-        title: "Metal Group",
-      },
-    ],
+    href: "/userManagement",
+    icon: <ManageAccountsIcon />,
+    title: "User Management",
   },
   {
-    href: "/peoduct",
-    icon: <CogIcon fontSize="small" />,
-    title: "Product",
-    
+    href: "/taxSettings",
+    icon: <AccountBalanceWalletIcon />,
+    title: "Tax Setting",
+  },
+  {
+    href: "/eCommerce",
+    icon: <StoreIcon />,
+    title: "E-Commerce",
+  },
+  {
+    href: "/promotional",
+    icon: <ConnectWithoutContactIcon />,
+    title: "Promotional Setting",
+  },
+  {
+    href: "/reports",
+    icon: <SummarizeIcon />,
+    title: "Reports",
   },
 ];
 //========================================================================
@@ -116,11 +125,12 @@ export const DashboardSidebar = (props) => {
                 px: 3,
                 py: "11px",
                 borderRadius: 1,
-                color:'black'
+                color: "black",
               }}
             >
               <div>
-                <img src={logo} />
+                
+                <Image src="/logo.png" alt="me" width="64" height="64" />
                 <Typography color="inherit" variant="subtitle1">
                   Bks MyGold
                 </Typography>

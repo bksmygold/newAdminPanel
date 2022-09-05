@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Box, Container, Grid } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { Budget } from "../components/dashboard/budget";
 import { LatestOrders } from "../components/dashboard/latest-orders";
 import { LatestProducts } from "../components/dashboard/latest-products";
@@ -13,15 +13,9 @@ import { Line } from "react-chartjs-2";
 import { styled } from "@mui/material/styles";
 import "chart.js/auto";
 import Paper from "@mui/material/Paper";
-
-// import {
-//   Chart as ChartJS,
-//   LineController,
-//   LineElement,
-//   PointElement,
-//   LinearScale,
-//   Title,
-// } from "chart.js";
+import { RetailCard } from "../components/dashboard/myGoldRetail";
+import { PeopleCard } from "../components/dashboard/myGoldPeople";
+import { FinancialsCard } from "src/components/dashboard/myGoldFinancials";
 //====================================================================
 const Dashboard = () => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -31,13 +25,7 @@ const Dashboard = () => {
     textAlign: "center",
     color: theme.palette.text.secondary,
   }));
-  // ChartJS.register(
-  //   LineController,
-  //   LineElement,
-  //   PointElement,
-  //   LinearScale,
-  //   Title
-  // )
+
   //====================================================================
   return (
     <>
@@ -62,460 +50,183 @@ const Dashboard = () => {
           }}
           // maxWidth={true}
         >
-          {/* <Grid
-          container
-          spacing={3}
-        >
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
+          {/* -----------   General Information------------------- */}
+
+          <Typography
+            sx={{
+              marginTop: 5,
+              marginBottom: 1,
+            }}
+            variant="h6"
           >
-            <Budget />
+            General Information
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <Budget title="Visits" stats={32451} statsPer={14} />
+            </Grid>
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <Budget title="Apps Downloads" stats={15451} statsPer={14} />
+            </Grid>
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <Budget title="Conversions" stats={42451} statsPer={21} />
+            </Grid>
+            <Grid item lg={3} sm={6} xl={3} xs={12}>
+              <Budget title="Orders" stats={30451} statsPer={21} />
+            </Grid>
+
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <TotalCustomers
+                title="Current Buy Rate"
+                rate={5840}
+                percentage={10}
+                updatedAt={"2:04"}
+              />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <TotalCustomers
+                title="Current Sell Rate"
+                rate={5440}
+                percentage={8}
+                updatedAt={"2:04"}
+              />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <TotalCustomers
+                title="Average Buy Rate"
+                rate={5650}
+                percentage={10}
+                updatedAt={"2:04"}
+              />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <TotalCustomers
+                title="Average Sell Rate"
+                rate={5320}
+                percentage={4}
+                updatedAt={"2:04"}
+              />
+            </Grid>
+
+            {/* <Grid item xl={3} lg={3} sm={6} xs={12}>
+                <TotalProfit sx={{ height: "100%" }} />
+              </Grid> */}
           </Grid>
-          <Grid
-            item
-            xl={3}
-            lg={3}
-            sm={6}
-            xs={12}
+
+          {/* -----------   My Gold Financials------------------- */}
+          <Typography
+            xl={1}
+            variant="h6"
+            sx={{
+              marginTop: 5,
+              marginBottom: 1,
+            }}
           >
-            <TotalCustomers />
+            MyGold Financials
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <FinancialsCard isInvoice />
+            </Grid>
+
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <FinancialsCard title="Receiveables" />
+            </Grid>
+
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <FinancialsCard title="Settlements" />
+            </Grid>
+
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <FinancialsCard title="Commissions" />
+            </Grid>
           </Grid>
-          <Grid
-            item
-            xl={3}
-            lg={3}
-            sm={6}
-            xs={12}
+          {/* -----------   My Gold Retails------------------- */}
+
+          <Typography
+            xl={1}
+            variant="h6"
+            sx={{
+              marginTop: 5,
+              marginBottom: 1,
+            }}
           >
-            <TasksProgress />
+            MyGold Retials
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <RetailCard totalOrder title="Total Order" stats={369} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <RetailCard toBePacked title="To be Packed" stats={12} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <RetailCard toBeShipped title="To be Shipped" stats={100} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <RetailCard inTransit title="In-Transit" stats={2} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <RetailCard orderDelivered title="Order Delivered" stats={369} />
+            </Grid>
+
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <RetailCard totalReturn title="Total Returns" stats={369} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <RetailCard toBePicked title="To be Picked" stats={12} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <RetailCard toBeRecieved title="To be Recieved" stats={100} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <RetailCard returnAccepted title="Return Accepted" stats={2} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <RetailCard returnRejected title="Return Rejected" stats={369} />
+            </Grid>
           </Grid>
-          <Grid
-            item
-            xl={3}
-            lg={3}
-            sm={6}
-            xs={12}
+          {/* -----------   My Gold Peopple------------------- */}
+          <Typography
+            xl={1}
+            variant="h6"
+            sx={{
+              marginTop: 5,
+              marginBottom: 1,
+            }}
           >
-            <TotalProfit sx={{ height: '100%' }} />
+            MyGold People
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <PeopleCard totalOrder title="Total Customers" stats={369} percentage={10} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <PeopleCard totalOrder title="Total Merchants" stats={36} percentage={12} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <PeopleCard totalOrder title="Total Retails" stats={12} percentage={14} />
+            </Grid>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
+              <PeopleCard totalOrder title="Total VIP Referrals" stats={786} percentage={54} />
+            </Grid>
           </Grid>
-          <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
-            <Sales />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xl={3}
-            xs={12}
-          >
-            <TrafficByDevice sx={{ height: '100%' }} />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xl={3}
-            xs={12}
-          >
-            <LatestProducts sx={{ height: '100%' }} />
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
+
+          {/* <Grid item lg={4} md={6} xl={3} xs={12}>
+            <TrafficByDevice sx={{ height: "100%" }} />
+          </Grid> */}
+          {/* <Grid item lg={4} md={6} xl={3} xs={12}>
+            <LatestProducts sx={{ height: "100%" }} />
+          </Grid> */}
+          {/* <Grid item lg={8} md={12} xl={9} xs={12}>
             <LatestOrders />
-          </Grid>
-        </Grid>
-      </Container> */}
+          </Grid> */}
+          {/* -----------   My Gold Inventory------------------- */}
 
-          <Grid class="flee" container spacing={2}>
-            <Grid item xs={3}>
-              <Item>
-                <div className="card">
-                  <div>
-                    <p id="title">Visits</p>
-                    <p id="stats">32,457</p>
-                    <p id="statsNo">+14.00(+.50%)</p>
-                  </div>
-                  <div>
-                    <Line
-                      style={{
-                        width: "100%",
-                      }}
-                      data={{
-                        labels: [
-                          "jan",
-                          "feb",
-                          "mar",
-                          "apr",
-                          "may",
-                          "jun",
-                          "jul",
-                          "aug",
-                          "sept",
-                          "oct",
-                          "nov",
-                        ],
-
-                        datasets: [
-                          {
-                            borderColor: "#905e0f",
-                            backgroundColor: "white",
-                            id: 1,
-                            label: "data",
-                            data: [1, 2, 4, 2, 3, 4, 6, 3, 7, 9, 3],
-                          },
-                        ],
-                      }}
-                    />
-                    {/* <p id="title">Chart</p> */}
-                  </div>
-                </div>
-              </Item>
-            </Grid>
-            <Grid item xs={3}>
-              <Item>
-                <div className="card">
-                  <div>
-                    <p id="title">Visits</p>
-                    <p id="stats">32,457</p>
-                    <p id="statsNo">+14.00(+.50%)</p>
-                  </div>
-                  <div>
-                    <Line
-                      style={{
-                        width: "100%",
-                      }}
-                      data={{
-                        labels: [
-                          "jan",
-                          "feb",
-                          "mar",
-                          "apr",
-                          "may",
-                          "jun",
-                          "jul",
-                          "aug",
-                          "sept",
-                          "oct",
-                          "nov",
-                        ],
-
-                        datasets: [
-                          {
-                            borderColor: "#905e0f",
-                            backgroundColor: "white",
-                            id: 1,
-                            label: "data",
-                            data: [1, 2, 4, 2, 3, 4, 6, 3, 7, 9, 3],
-                          },
-                        ],
-                      }}
-                    />
-                    {/* <p id="title">Chart</p> */}
-                  </div>
-                </div>
-              </Item>
-            </Grid>
-            <Grid item xs={3}>
-              <Item>
-                <div className="card">
-                  <div>
-                    <p id="title">Visits</p>
-                    <p id="stats">32,457</p>
-                    <p id="statsNo">+14.00(+.50%)</p>
-                  </div>
-                  <div>
-                    <Line
-                      style={{
-                        width: "100%",
-                      }}
-                      data={{
-                        labels: [
-                          "jan",
-                          "feb",
-                          "mar",
-                          "apr",
-                          "may",
-                          "jun",
-                          "jul",
-                          "aug",
-                          "sept",
-                          "oct",
-                          "nov",
-                        ],
-
-                        datasets: [
-                          {
-                            borderColor: "#905e0f",
-                            backgroundColor: "white",
-                            id: 1,
-                            label: "data",
-                            data: [1, 2, 4, 2, 3, 4, 6, 3, 7, 9, 3],
-                          },
-                        ],
-                      }}
-                    />
-                    {/* <p id="title">Chart</p> */}
-                  </div>
-                </div>
-              </Item>
-            </Grid>
-            <Grid item xs={3}>
-              <Item>
-                <div className="card">
-                  <div>
-                    <p id="title">Visits</p>
-                    <p id="stats">32,457</p>
-                    <p id="statsNo">+14.00(+.50%)</p>
-                  </div>
-                  <div>
-                    <Line
-                      style={{
-                        width: "100%",
-                      }}
-                      data={{
-                        labels: [
-                          "jan",
-                          "feb",
-                          "mar",
-                          "apr",
-                          "may",
-                          "jun",
-                          "jul",
-                          "aug",
-                          "sept",
-                          "oct",
-                          "nov",
-                        ],
-
-                        datasets: [
-                          {
-                            borderColor: "#905e0f",
-                            backgroundColor: "white",
-                            id: 1,
-                            label: "data",
-                            data: [1, 2, 4, 2, 3, 4, 6, 3, 7, 9, 3],
-                          },
-                        ],
-                      }}
-                    />
-                    {/* <p id="title">Chart</p> */}
-                  </div>
-                </div>
-              </Item>
-            </Grid>
-          </Grid>
-          <Grid class="flee" container spacing={2}>
-            <Grid item xs={3}>
-              <Item>
-                <div className="card">
-                  <div>
-                    <p id="title">Visits</p>
-                    <p id="stats">32,457</p>
-                    <p id="statsNo">+14.00(+.50%)</p>
-                  </div>
-                  <div>
-                    <Line
-                      style={{
-                        width: "100%",
-                      }}
-                      data={{
-                        labels: [
-                          "jan",
-                          "feb",
-                          "mar",
-                          "apr",
-                          "may",
-                          "jun",
-                          "jul",
-                          "aug",
-                          "sept",
-                          "oct",
-                          "nov",
-                        ],
-
-                        datasets: [
-                          {
-                            borderColor: "#905e0f",
-                            backgroundColor: "white",
-                            id: 1,
-                            label: "data",
-                            data: [1, 2, 4, 2, 3, 4, 6, 3, 7, 9, 3],
-                          },
-                        ],
-                      }}
-                    />
-                    {/* <p id="title">Chart</p> */}
-                  </div>
-                </div>
-              </Item>
-            </Grid>
-            <Grid item xs={3}>
-              <Item>
-                <div className="card">
-                  <div>
-                    <p id="title">Visits</p>
-                    <p id="stats">32,457</p>
-                    <p id="statsNo">+14.00(+.50%)</p>
-                  </div>
-                  <div>
-                    <Line
-                      style={{
-                        width: "100%",
-                      }}
-                      data={{
-                        labels: [
-                          "jan",
-                          "feb",
-                          "mar",
-                          "apr",
-                          "may",
-                          "jun",
-                          "jul",
-                          "aug",
-                          "sept",
-                          "oct",
-                          "nov",
-                        ],
-
-                        datasets: [
-                          {
-                            borderColor: "#905e0f",
-                            backgroundColor: "white",
-                            id: 1,
-                            label: "data",
-                            data: [1, 2, 4, 2, 3, 4, 6, 3, 7, 9, 3],
-                          },
-                        ],
-                      }}
-                    />
-                    {/* <p id="title">Chart</p> */}
-                  </div>
-                </div>
-              </Item>
-            </Grid>
-            <Grid item xs={3}>
-              <Item>
-                <div className="card">
-                  <div>
-                    <p id="title">Visits</p>
-                    <p id="stats">32,457</p>
-                    <p id="statsNo">+14.00(+.50%)</p>
-                  </div>
-                  <div>
-                    <Line
-                      style={{
-                        width: "100%",
-                      }}
-                      data={{
-                        labels: [
-                          "jan",
-                          "feb",
-                          "mar",
-                          "apr",
-                          "may",
-                          "jun",
-                          "jul",
-                          "aug",
-                          "sept",
-                          "oct",
-                          "nov",
-                        ],
-
-                        datasets: [
-                          {
-                            borderColor: "#905e0f",
-                            backgroundColor: "white",
-                            id: 1,
-                            label: "data",
-                            data: [1, 2, 4, 2, 3, 4, 6, 3, 7, 9, 3],
-                          },
-                        ],
-                      }}
-                    />
-                    {/* <p id="title">Chart</p> */}
-                  </div>
-                </div>
-              </Item>
-            </Grid>
-            <Grid item xs={3}>
-              <Item>
-                <div className="card">
-                  <div>
-                    <p id="title">Visits</p>
-                    <p id="stats">32,457</p>
-                    <p id="statsNo">+14.00(+.50%)</p>
-                  </div>
-                  <div>
-                    <Line
-                      style={{
-                        width: "100%",
-                      }}
-                      data={{
-                        labels: [
-                          "jan",
-                          "feb",
-                          "mar",
-                          "apr",
-                          "may",
-                          "jun",
-                          "jul",
-                          "aug",
-                          "sept",
-                          "oct",
-                          "nov",
-                        ],
-
-                        datasets: [
-                          {
-                            borderColor: "#905e0f",
-                            backgroundColor: "white",
-                            id: 1,
-                            label: "data",
-                            data: [1, 2, 4, 2, 3, 4, 6, 3, 7, 9, 3],
-                          },
-                        ],
-                      }}
-                    />
-                    {/* <p id="title">Chart</p> */}
-                  </div>
-                </div>
-              </Item>
-            </Grid>
-          </Grid>
+          {/* <Grid item lg={8} md={12} xl={9} xs={12}> */}
+            <Sales />
+          {/* </Grid> */}
         </Container>
-        <Line
-          style={{
-            width: "100%",
-          }}
-          data={{
-            labels: ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sept", "oct", "nov"],
-
-            datasets: [
-              {
-                borderColor: "white",
-                backgroundColor: "white",
-                id: 1,
-                label: "data",
-                data: [1, 2, 4, 2, 3, 4, 6, 3, 7, 9, 3],
-              },
-            ],
-          }}
-        />
       </Box>
     </>
   );

@@ -9,27 +9,27 @@ export const Sales = (props) => {
   const data = {
     datasets: [
       {
-        backgroundColor: '#3F51B5',
+        backgroundColor: "#905E0F",
         barPercentage: 0.5,
         barThickness: 12,
         borderRadius: 4,
         categoryPercentage: 0.5,
         data: [18, 5, 19, 27, 29, 19, 20],
-        label: 'This year',
-        maxBarThickness: 10
+        label: "Custody",
+        maxBarThickness: 80,
       },
       {
-        backgroundColor: '#EEEEEE',
+        backgroundColor: "#EABE78",
         barPercentage: 0.5,
         barThickness: 12,
         borderRadius: 4,
         categoryPercentage: 0.5,
         data: [11, 20, 12, 29, 30, 25, 13],
-        label: 'Last year',
-        maxBarThickness: 10
-      }
+        label: "Release",
+        maxBarThickness: 80,
+      },
     ],
-    labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug', '7 aug']
+    labels: ["1 Aug", "2 Aug", "3 Aug", "4 Aug", "5 Aug", "6 Aug", "7 aug"],
   };
 
   const options = {
@@ -82,48 +82,48 @@ export const Sales = (props) => {
   };
 
   return (
-    <Card {...props}>
-      <CardHeader
-        action={(
-          <Button
-            endIcon={<ArrowDropDownIcon fontSize="small" />}
-            size="small"
+    <Box sx={{ width:"100%",display: "flex", justifyContent: "center",alignItems:"center" }}>
+      <Card
+        sx={{
+          boxShadow: "0px 4px 9px 0px #bab9b6",
+          marginTop: 2,
+          width: "100%",
+        }}
+        {...props}
+      >
+        <CardHeader
+          action={
+            <Button endIcon={<ArrowDropDownIcon fontSize="small" />} size="small">
+              Last 7 days
+            </Button>
+          }
+          sx={{ color: "#905E0F" }}
+          title="Gold in Custody Vs Gold Released"
+        />
+        <Divider />
+        <CardContent>
+          <Box
+            sx={{
+              height: 400,
+              position: "relative",
+            }}
           >
-            Last 7 days
-          </Button>
-        )}
-        title="Latest Sales"
-      />
-      <Divider />
-      <CardContent>
+            <Bar data={data} options={options} />
+          </Box>
+        </CardContent>
+        <Divider />
         <Box
           sx={{
-            height: 400,
-            position: 'relative'
+            display: "flex",
+            justifyContent: "flex-end",
+            p: 2,
           }}
         >
-          <Bar
-            data={data}
-            options={options}
-          />
+          <Button color="primary" endIcon={<ArrowRightIcon fontSize="small" />} size="small">
+            Overview
+          </Button>
         </Box>
-      </CardContent>
-      <Divider />
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          p: 2
-        }}
-      >
-        <Button
-          color="primary"
-          endIcon={<ArrowRightIcon fontSize="small" />}
-          size="small"
-        >
-          Overview
-        </Button>
-      </Box>
-    </Card>
+      </Card>
+    </Box>
   );
 };
