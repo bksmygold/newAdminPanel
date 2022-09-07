@@ -9,7 +9,7 @@ export default function taxSettings() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>User Management </title>
+        <title>Tax Settings </title>
       </Head>
 
       <Container>

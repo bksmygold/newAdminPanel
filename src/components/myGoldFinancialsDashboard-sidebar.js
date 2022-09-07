@@ -20,63 +20,78 @@ import { NavItem } from "./nav-item";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import StoreIcon from "@mui/icons-material/Store";
-import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
+import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import Image from "next/image";
-
+import ReceiptIcon from "@mui/icons-material/Receipt";
 //=======================================================
 const items = [
   {
     href: "/",
-    icon: <DashboardIcon />,
-    title: "Dashboard",
+    icon: <ReceiptIcon />,
+    title: "Sale Invoices",
     childrens: [
       {
         href: "/dashboard/retail-dashboard",
         icon: <ChartBarIcon fontSize="small" />,
-        title: "Retail Dashboard",
+        title: "Customer",
       },
       {
         href: "/dashboard/analytics-dashboard",
         icon: <ChartBarIcon fontSize="small" />,
-        title: "Analytics Dashboard",
+        title: "Retailer",
       },
       {
         href: "/dashboard/goldbank-dashboard",
         icon: <ChartBarIcon fontSize="small" />,
-        title: "Gold Bank",
+        title: "Referral",
+      },
+      {
+        href: "/dashboard/goldbank-dashboard",
+        icon: <ChartBarIcon fontSize="small" />,
+        title: "Merchant",
       },
     ],
   },
   {
     href: "/userManagement",
     icon: <ManageAccountsIcon />,
-    title: "User Management",
+    title: "Purchase Invoices",
   },
   {
     href: "/taxSettings",
     icon: <AccountBalanceWalletIcon />,
-    title: "Tax Setting",
+    title: "Settlements",
   },
   {
     href: "/eCommerce",
     icon: <StoreIcon />,
-    title: "E-Commerce",
+    title: "Expense Management",
   },
   {
     href: "/promotionalSetting",
     icon: <ConnectWithoutContactIcon />,
-    title: "Promotional Setting",
+    title: "Credit Notes",
   },
   {
     href: "/reports",
     icon: <SummarizeIcon />,
-    title: "Reports",
+    title: "Debit Notes",
+  },
+  {
+    href: "/reports",
+    icon: <SummarizeIcon />,
+    title: "Bank Reciepts",
+  },
+  {
+    href: "/reports",
+    icon: <SummarizeIcon />,
+    title: "Bank Payments",
   },
 ];
 //========================================================================
-export const DashboardSidebar = (props) => {
+export const MyGoldFinancialsDashboardSidebar = (props) => {
   //========================================================================
   const { open, onClose } = props;
   const router = useRouter();
@@ -129,7 +144,6 @@ export const DashboardSidebar = (props) => {
               }}
             >
               <div>
-                
                 <Image src="/logo.png" alt="me" width="64" height="64" />
                 <Typography color="inherit" variant="subtitle1">
                   Bks MyGold
@@ -251,7 +265,7 @@ export const DashboardSidebar = (props) => {
   );
 };
 //========================================================================
-DashboardSidebar.propTypes = {
+MyGoldFinancialsDashboardSidebar.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool,
 };

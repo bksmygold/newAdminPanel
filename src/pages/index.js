@@ -16,6 +16,8 @@ import Paper from "@mui/material/Paper";
 import { RetailCard } from "../components/dashboard/myGoldRetail";
 import { PeopleCard } from "../components/dashboard/myGoldPeople";
 import { FinancialsCard } from "src/components/dashboard/myGoldFinancials";
+import { useRouter } from "next/router";
+
 //====================================================================
 const Dashboard = () => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -26,6 +28,7 @@ const Dashboard = () => {
     color: theme.palette.text.secondary,
   }));
 
+  const router = useRouter()
   //====================================================================
   return (
     <>
@@ -120,7 +123,9 @@ const Dashboard = () => {
             sx={{
               marginTop: 5,
               marginBottom: 1,
+              cursor:"pointer"
             }}
+            onClick={() => { router.push("/myGoldFinancials");}}
           >
             MyGold Financials
           </Typography>

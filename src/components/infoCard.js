@@ -3,13 +3,15 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import MoneyIcon from "@mui/icons-material/Money";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-
+import { useRouter } from "next/router";
 //=========================================================
-export const InfoCard = (props) => (
+export const InfoCard = (props) => { 
+  const router = useRouter()
   //-------------------------------------------
-  <Card
+  return(
+    < Card
     sx={{
-      boxShadow: "0px 4px 9px 0px #bab9b6",
+      boxShadow: "-2px 7px 5px 0px #d2c6c6, inset 2px -7px 15px 0px #d2c6c6",
       // width: '100%',
       // height:"fit-content"
     }}
@@ -68,6 +70,7 @@ export const InfoCard = (props) => (
             justifyContent: "flex-end",
             alignItems: "flex-end",
           }}
+          onClick={() => {router.push(props.url) }}
         >
           <Typography sx={{ fontWeight: "bold" }} color="textSecondary" variant="caption">
             View Details
@@ -77,4 +80,4 @@ export const InfoCard = (props) => (
       {/* -------------------------------------------------------------- */}
     </CardContent>
   </Card>
-);
+)}

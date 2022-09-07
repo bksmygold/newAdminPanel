@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import { Box } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { DashboardNavbar } from './dashboard-navbar';
-import { DashboardSidebar } from './dashboard-sidebar';
+import { useState } from "react";
+import { Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { DashboardNavbar } from "./dashboard-navbar";
+import { MyGoldFinancialsDashboardSidebar } from "./myGoldFinancialsDashboard-sidebar";
 //===============================================================
-const DashboardLayoutRoot = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flex: '1 1 auto',
-  maxWidth: '100%',
+const DashboardLayoutRoot = styled("div")(({ theme }) => ({
+  display: "flex",
+  flex: "1 1 auto",
+  maxWidth: "100%",
   paddingTop: 64,
-  [theme.breakpoints.up('lg')]: {
-    paddingLeft: 280
-  }
+  [theme.breakpoints.up("lg")]: {
+    paddingLeft: 280,
+  },
 }));
 //===============================================================
-export const DashboardLayout = (props) => {
+export const MyGoldFinancialsDashboardLayout = (props) => {
   //===============================================================
   const { children } = props;
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -34,7 +34,10 @@ export const DashboardLayout = (props) => {
         </Box>
       </DashboardLayoutRoot>
       <DashboardNavbar onSidebarOpen={() => setSidebarOpen(true)} />
-      <DashboardSidebar onClose={() => setSidebarOpen(false)} open={isSidebarOpen} />
+      <MyGoldFinancialsDashboardSidebar
+        onClose={() => setSidebarOpen(false)}
+        open={isSidebarOpen}
+      />
     </>
   );
 };
