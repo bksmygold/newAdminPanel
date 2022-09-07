@@ -4,7 +4,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import PeopleIcon from "@mui/icons-material/PeopleOutlined";
 
 export const TotalCustomers = (props) => (
-  <Card sx={{ boxShadow: "0px 4px 9px 0px #bab9b6" }} {...props}>
+  <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }} {...props}>
     <CardContent
       sx={{
         backgroundColor: "#FDFAF2",

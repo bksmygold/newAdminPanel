@@ -16,11 +16,10 @@ export const SettingsPassword = (props) => {
 
   return (
     <form {...props}>
-      <Card>
-        <CardHeader
-          subheader="Update password"
-          title="Password"
-        />
+      <Card
+        sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }}
+      >
+        <CardHeader subheader="Update password" title="Password" />
         <Divider />
         <CardContent>
           <TextField
@@ -47,15 +46,12 @@ export const SettingsPassword = (props) => {
         <Divider />
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            p: 2
+            display: "flex",
+            justifyContent: "flex-end",
+            p: 2,
           }}
         >
-          <Button
-            color="primary"
-            variant="contained"
-          >
+          <Button color="primary" variant="contained">
             Update
           </Button>
         </Box>

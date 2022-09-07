@@ -74,6 +74,12 @@ const items = [
     icon: <SummarizeIcon />,
     title: "Reports",
   },
+ 
+  {
+    href: "/settings",
+    icon: <CogIcon />,
+    title: "Settings",
+  },
 ];
 //========================================================================
 export const DashboardSidebar = (props) => {

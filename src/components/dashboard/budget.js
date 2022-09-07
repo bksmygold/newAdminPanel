@@ -4,7 +4,7 @@ import MoneyIcon from '@mui/icons-material/Money';
 import TimelineIcon from "@mui/icons-material/Timeline";
 
 export const Budget = (props) => (
-  <Card sx={{ boxShadow: "0px 4px 9px 0px #bab9b6" }} {...props}>
+  <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }} {...props}>
     <CardContent sx={{ backgroundColor: "#FDFAF2" }}>
       <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
         <Grid item>

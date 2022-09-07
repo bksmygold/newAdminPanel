@@ -57,6 +57,8 @@ export const NavItem = (props) => {
             disableRipple
             sx={{
               backgroundColor: active && "#E5D5BC",
+              boxShadow: "0px 4px 1px 0px #bbb5b5",
+              border: "1px solid #a39a9a6e",
               borderRadius: 1,
               color: active ? "#935F0E" : "gray",
               fontWeight: active && "fontWeightBold",
@@ -113,6 +115,8 @@ export const NavItem = (props) => {
               disableRipple
               sx={{
                 backgroundColor: active && "#E5D5BC",
+                boxShadow: active && "0px 4px 1px 0px #bbb5b5",
+                border: active && "1px solid #a39a9a6e",
                 borderRadius: 1,
                 color: active ? "#935F0E" : "gray",
                 fontWeight: active && "fontWeightBold",

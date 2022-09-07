@@ -12,7 +12,7 @@ export default function taxSettings() {
         <title>Tax Settings </title>
       </Head>
 
-      <Container>
+      <Container sx={{padding:1}}>
         {/* ------------------------------ */}
 
         <Typography
@@ -135,7 +135,7 @@ export default function taxSettings() {
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Subscriptions for Ads"
+              title="Subscriptions(Ads)"
               desc="Create , Update, delete subscription plans for Ads for Retailers"
             />
           </Grid>

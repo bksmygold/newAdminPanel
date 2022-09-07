@@ -85,7 +85,7 @@ export const Sales = (props) => {
     <Box sx={{ width:"100%",display: "flex", justifyContent: "center",alignItems:"center" }}>
       <Card
         sx={{
-          boxShadow: "0px 4px 9px 0px #bab9b6",
+           boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657",
           marginTop: 2,
           width: "100%",
         }}
