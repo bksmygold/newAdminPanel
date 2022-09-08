@@ -12,11 +12,11 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-
 //=============================================
 export default function Form(props) {
-  const { title, desc ,children,add,edit} = props;
-  //--------------
+  const { title, desc, children } = props;
+
+  //--------------------------------------------------
   return (
     <>
       <Container
@@ -26,7 +26,7 @@ export default function Form(props) {
           boxShadow: "0px 4px 1px 0px #d2c6c6",
           marginTop: 5,
           border: "1px solid #d2c6c657",
-          backgroundColor:"white"
+          backgroundColor: "white",
         }}
       >
         {/* ------------------------------ */}
@@ -64,7 +64,7 @@ export default function Form(props) {
           container
         >
           {children}
-
+{/* 
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <Button
               variant="outlined"
@@ -72,7 +72,7 @@ export default function Form(props) {
             >
               {add ? `Add ${add}` : `Edit ${edit}`}
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
         {/* ------------------------------ */}
       </Container>

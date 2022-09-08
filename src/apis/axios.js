@@ -11,7 +11,7 @@ axios.interceptors.request.use((request) => {
 });
 
 
-axios.interceptors.response.use(res => res.data.data, err => { 
+axios.interceptors.response.use(res => res.data, err => { 
     if (err.response) {
         return Promise.reject({
             message: err.response.message || err.response.statusText || "Nahi mila",

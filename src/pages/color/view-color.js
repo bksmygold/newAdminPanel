@@ -7,58 +7,55 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from '../../components/utility/table'
-import { useRouter } from 'next/router'
+import Table from "../../components/utility/table";
+import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
+import DeleteSpinner from "src/components/deleteSpinner";
+import { getColor, deleteColor } from "src/apis/color";
+import Loading from "src/components/loading";
+
 //=======================================================
 export default function Color() {
-  const router = useRouter()
+  const router = useRouter();
+
+  const query = useQuery({
+    queryKey: "Color",
+    queryFn: getColor,
+    onSuccess: (res) => console.log("Success ---", res.message),
+    onError: (err) => console.log("Error --->", err),
+  });
+  if (query.isLoading) return <Loading />
+  
+  console.log('====>',query)
   //=======================
-   const editButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {
-             router.push("/color/edit-color");
-           }}
-         >
-           <EditIcon />
-         </Button>
-       </strong>
-     );
-   };
-   //==========
-   const deleteButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {}}
-         >
-           <DeleteIcon />
-         </Button>
-       </strong>
-     );
-   };
+  const editButton = (params) => {
+    return (
+      <strong>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          size="small"
+          onClick={() => {
+            router.push(`/color/edit-color/?id=${params.id}`);
+          }}
+        >
+          <EditIcon />
+        </Button>
+      </strong>
+    );
+  };
+  //==========
+  const deleteButton = (params) => (
+
+    <DeleteSpinner id={params.id} deleting={deleteColor} url="/color/view-color" />
+
+  )
+    
+  
   //==========
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    {
-      field: "metal",
-      headerName: "Metal Name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "icon",
-      headerName: "Icon",
-      width: 150,
-      editable: true,
-    },
+    { field: "name", headerName: "Color Name", width: 150 },
+ 
 
     {
       field: "edit",
@@ -76,15 +73,7 @@ export default function Color() {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      metal: "Gold",
-      icon: "Icon hai",
-      edit: "Edit",
-    },
-  ];
-;
+
   //=======================================================
   return (
     <>
@@ -93,7 +82,13 @@ export default function Color() {
         <title>Dashboard | Color </title>
       </Head>
 
-      <Table rows={rows} columns={columns} create="color" url="/color/add-color" title='Color View'/>
+      <Table
+        rows={query.data.data.data}
+        columns={columns}
+        create="color"
+        url="/color/add-color"
+        title="Color View"
+      />
     </>
   );
 }

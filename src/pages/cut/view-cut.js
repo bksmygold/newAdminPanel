@@ -7,58 +7,53 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from '../../components/utility/table'
-import { useRouter } from 'next/router'
+import Table from "../../components/utility/table";
+import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
+import { getCut, deleteCut} from "src/apis/cut";
+import React from "react";
+import DeleteSpinner from "src/components/deleteSpinner";
+import Loading from "src/components/loading";
+
 //=======================================================
 export default function Cut() {
-  const router = useRouter()
+  const router = useRouter();
   //=======================
-   const editButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {
-             router.push("/cut/edit-cut");
-           }}
-         >
-           <EditIcon />
-         </Button>
-       </strong>
-     );
-   };
-   //==========
-   const deleteButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {}}
-         >
-           <DeleteIcon />
-         </Button>
-       </strong>
-     );
-   };
+
+  const query = useQuery({
+    queryKey: "Cut",
+    queryFn: getCut,
+    onSuccess: (res) => console.log("Success ---", res.message),
+    onError: (err) => console.log("Error --->", err),
+  });
+
+   if (query.isLoading) return <Loading />;
+
+  //=======================
+  const editButton = (params) => {
+    return (
+      <strong>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          size="small"
+          onClick={() => {
+            router.push(`/cut/edit-cut/?id=${params.id}`);
+          }}
+        >
+          <EditIcon />
+        </Button>
+      </strong>
+    );
+  };
+  //==========
+  const deleteButton = (params) => {
+    return <DeleteSpinner id={params.id} deleting={deleteCut} url="/cut/view-cut" />;
+  };
   //==========
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    {
-      field: "metal",
-      headerName: "Metal Name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "icon",
-      headerName: "Icon",
-      width: 150,
-      editable: true,
-    },
+    { field: "name", headerName: "Cut Name", width: 250 },
+   
 
     {
       field: "edit",
@@ -76,15 +71,7 @@ export default function Cut() {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      metal: "Gold",
-      icon: "Icon hai",
-      edit: "Edit",
-    },
-  ];
-;
+
   //=======================================================
   return (
     <>
@@ -93,7 +80,7 @@ export default function Cut() {
         <title>Dashboard | Cut </title>
       </Head>
 
-      <Table rows={rows} columns={columns} create="cut" url="/cut/add-cut" title='Cut View'/>
+      <Table rows={query.data.data.data} columns={columns} create="cut" url="/cut/add-cut" title="Cut View" />
     </>
   );
 }

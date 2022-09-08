@@ -7,84 +7,71 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from '../../components/utility/table'
-import { useRouter } from 'next/router'
+import Table from "../../components/utility/table";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { getOrnament } from "src/apis/ornament";
+import DeleteSpinner from "src/components/deleteSpinner";
+import { deletetOrnament } from "src/apis/ornament";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import Loading from "src/components/loading";
+
 //=======================================================
 export default function Ornament() {
-  const router = useRouter()
+  const router = useRouter();
   //=======================
-   const editButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {
-             router.push("/ornament/edit-ornament");
-           }}
-         >
-           <EditIcon />
-         </Button>
-       </strong>
-     );
-   };
-   //==========
-   const deleteButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {}}
-         >
-           <DeleteIcon />
-         </Button>
-       </strong>
-     );
-   };
+
+  const query = useQuery({
+    queryKey: "Ornament",
+    queryFn: () => getOrnament(),
+    onSuccess: (res) => console.log("Success ---", res.message),
+    onError: (err) => console.log("Error --->", err),
+  });
+
+  if (query.isLoading) return <Loading />;
+
+  //=======================
+  const editButton = (params) => {
+    return (
+      <strong>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          size="small"
+          onClick={() => {
+            router.push(`/ornament/edit-ornament/?id=${params.id}`);
+          }}
+        >
+          <EditIcon />
+        </Button>
+      </strong>
+    );
+  };
+  //==========
+  const deleteButton = (params) => {
+    return (
+
+      <DeleteSpinner id={params.id} deleting={deletetOrnament} url="/ornament/view-ornament" />
+    );
+  };
   //==========
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    {
-      field: "metal",
-      headerName: "Metal Name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "icon",
-      headerName: "Icon",
-      width: 150,
-      editable: true,
-    },
+    { field: "name", headerName: "Ornament Name", width: 250 },
 
     {
       field: "edit",
       headerName: "Edit",
       width: 150,
-      editable: true,
       renderCell: editButton,
     },
     {
       field: "delete",
       headerName: "Delete",
       width: 150,
-      editable: true,
       renderCell: deleteButton,
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      metal: "Gold",
-      icon: "Icon hai",
-      edit: "Edit",
-    },
-  ];
-;
   //=======================================================
   return (
     <>
@@ -93,7 +80,13 @@ export default function Ornament() {
         <title>Dashboard | Ornament </title>
       </Head>
 
-      <Table rows={rows} columns={columns} create="Ornament" url="/ornament/add-ornament" title='Ornament View'/>
+      <Table
+        rows={query.data.data.data}
+        columns={columns}
+        create="Ornament"
+        url="/ornament/add-ornament"
+        title="Ornament View"
+      />
     </>
   );
 }
