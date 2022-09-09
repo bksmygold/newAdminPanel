@@ -7,58 +7,48 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from '../../components/utility/table'
-import { useRouter } from 'next/router'
+import Table from "../../components/utility/table";
+import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
+import DeleteSpinner from "src/components/deleteSpinner";
+import { deleteShape ,getShape} from "src/apis/shape";
+import Loading from "src/components/loading";
 //=======================================================
 export default function Shape() {
-  const router = useRouter()
+  const router = useRouter();
   //=======================
-   const editButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {
-             router.push("/shape/edit-shape");
-           }}
-         >
-           <EditIcon />
-         </Button>
-       </strong>
-     );
-   };
-   //==========
-   const deleteButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {}}
-         >
-           <DeleteIcon />
-         </Button>
-       </strong>
-     );
-   };
+  const editButton = (params) => {
+    return (
+      <strong>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          size="small"
+          onClick={() => {
+            router.push(`/shape/edit-shape/?id=${params.id}`);
+          }}
+        >
+          <EditIcon />
+        </Button>
+      </strong>
+    );
+  };
   //==========
+  const deleteButton = (params) => {
+    return <DeleteSpinner id={params.id} deleting={deleteShape} url={"/shape/view-shape"} />;
+  };
+  //===============================
+  const query = useQuery({
+    queryKey: "Shape",
+    queryFn: getShape,
+    onSuccess: (res) => console.log("Success ---", res.message),
+    onError: (err) => console.log("Error --->", err),
+  });
+if(query.isLoading)return <Loading/>
+  //===============================
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    {
-      field: "metal",
-      headerName: "Metal Name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "icon",
-      headerName: "Icon",
-      width: 150,
-      editable: true,
-    },
+    { field: "name", headerName: "Shape Name", width: 150 },
+   
 
     {
       field: "edit",
@@ -76,15 +66,7 @@ export default function Shape() {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      metal: "Gold",
-      icon: "Icon hai",
-      edit: "Edit",
-    },
-  ];
-;
+
   //=======================================================
   return (
     <>
@@ -93,7 +75,13 @@ export default function Shape() {
         <title>Dashboard | Shape </title>
       </Head>
 
-      <Table rows={rows} columns={columns} create="shape" url="/shape/add-shape" title='Shape View'/>
+      <Table
+        rows={query.data.data.data}
+        columns={columns}
+        create="shape"
+        url="/shape/add-shape"
+        title="Shape View"
+      />
     </>
   );
 }

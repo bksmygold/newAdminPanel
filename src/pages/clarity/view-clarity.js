@@ -7,55 +7,50 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from '../../components/utility/table'
-import { useRouter } from 'next/router'
+import Table from "../../components/utility/table";
+import { useRouter } from "next/router";
+import { Query, useQuery } from "@tanstack/react-query";
+import DeleteSpinner from "src/components/deleteSpinner";
+import { deleteClarity, getClarity } from "src/apis/clarity";
+import Loading from "src/components/loading";
 //=======================================================
 export default function Clarity() {
-  const router = useRouter()
+  const router = useRouter();
   //=======================
-   const editButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {
-             router.push("/clarity/edit-clarity");
-           }}
-         >
-           <EditIcon />
-         </Button>
-       </strong>
-     );
-   };
-   //==========
-   const deleteButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {}}
-         >
-           <DeleteIcon />
-         </Button>
-       </strong>
-     );
-   };
+  const editButton = (params) => {
+    return (
+      <strong>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          size="small"
+          onClick={() => {
+            router.push(`/clarity/edit-clarity/?id=${params.id}`);
+          }}
+        >
+          <EditIcon />
+        </Button>
+      </strong>
+    );
+  };
   //==========
+  const deleteButton = (params) => {
+    return <DeleteSpinner id={params.id} deleting={deleteClarity} url={"/clarity/view-clarity"} />;
+  };
+  //============================
+  const query = useQuery({
+    queryKey: "Clarity",
+    queryFn: getClarity,
+    onSuccess: (res) => console.log("Success ---", res.message),
+    onError: (err) => console.log("Error --->", err),
+  });
+  if (query.isLoading) return <Loading />;
+
+  //============================
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
-      field: "metal",
-      headerName: "Metal Name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "icon",
-      headerName: "Icon",
+      field: "name",
+      headerName: "Clarity Name",
       width: 150,
       editable: true,
     },
@@ -76,15 +71,6 @@ export default function Clarity() {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      metal: "Gold",
-      icon: "Icon hai",
-      edit: "Edit",
-    },
-  ];
-;
   //=======================================================
   return (
     <>
@@ -93,7 +79,13 @@ export default function Clarity() {
         <title>Dashboard | Clarity </title>
       </Head>
 
-      <Table rows={rows} columns={columns} create="clarity" url="/clarity/add-clarity" title='Clarity View'/>
+      <Table
+        rows={query?.data?.data.data}
+        columns={columns}
+        create="clarity"
+        url="/clarity/add-clarity"
+        title="Clarity View"
+      />
     </>
   );
 }

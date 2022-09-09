@@ -9,6 +9,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Table from '../../components/utility/table'
 import { useRouter } from 'next/router'
+import { getCategory,deleteCategory} from "src/apis/category";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "src/components/loading";
+import DeleteSpinner from "src/components/deleteSpinner";
+
 //=======================================================
 export default function Category() {
   const router = useRouter()
@@ -21,7 +26,7 @@ export default function Category() {
            sx={{ backgroundColor: "white", color: "#8B5704" }}
            size="small"
            onClick={() => {
-             router.push("/category/edit-category");
+             router.push(`/category/edit-category/?id=${params.id}`);
            }}
          >
            <EditIcon />
@@ -31,34 +36,27 @@ export default function Category() {
    };
    //==========
    const deleteButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {}}
-         >
-           <DeleteIcon />
-         </Button>
-       </strong>
-     );
+    return <DeleteSpinner id={params.id} deleting={deleteCategory} url={"/category/view-category"} />;
+
    };
-  //==========
+  //=======================
+  const query = useQuery({
+    queryKey: "Category",
+    queryFn: getCategory,
+    onSuccess: (res) => console.log("Success ---", res.message),
+    onError: (err) => console.log("Error --->", err),
+  });
+  if (query.isLoading) return <Loading />;
+
+  //===============================
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
-      field: "metal",
-      headerName: "Metal Name",
-      width: 150,
+      field: "name",
+      headerName: "Category Name",
+      width: 250,
       editable: true,
     },
-    {
-      field: "icon",
-      headerName: "Icon",
-      width: 150,
-      editable: true,
-    },
+
 
     {
       field: "edit",
@@ -76,15 +74,7 @@ export default function Category() {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      metal: "Gold",
-      icon: "Icon hai",
-      edit: "Edit",
-    },
-  ];
-;
+
   //=======================================================
   return (
     <>
@@ -94,9 +84,9 @@ export default function Category() {
       </Head>
 
       <Table
-        rows={rows}
+        rows={query.data.data.data}
         columns={columns}
-        create="category"
+        create="Category"
         url="/category/add-category"
         title="Category View"
       />

@@ -9,8 +9,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Table from '../../components/utility/table'
 import { useRouter } from 'next/router'
+import { getMetalGroup ,deleteMetalGroup} from "src/apis/metalGroup";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "src/components/loading";
+import DeleteSpinner from "src/components/deleteSpinner";
+
 //=======================================================
-export default function Metal() {
+export default function MetalGroup() {
   const router = useRouter()
   //=======================
    const editButton = (params) => {
@@ -21,7 +26,7 @@ export default function Metal() {
            sx={{ backgroundColor: "white", color: "#8B5704" }}
            size="small"
            onClick={() => {
-             router.push("/metalGroup/edit-metalGroup");
+             router.push(`/metalGroup/edit-metalGroup/?id=${params.id}`);
            }}
          >
            <EditIcon />
@@ -31,32 +36,60 @@ export default function Metal() {
    };
    //==========
    const deleteButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {}}
-         >
-           <DeleteIcon />
-         </Button>
-       </strong>
-     );
+    return <DeleteSpinner id={params.id} deleting={deleteMetalGroup} url={"/metalGroup/view-metalGroup"} />;
+
    };
-  //==========
+  //=======================
+  const query = useQuery({
+    queryKey: "Metal Group",
+    queryFn: getMetalGroup,
+    onSuccess: (res) => console.log("Success ---", res.message),
+    onError: (err) => console.log("Error --->", err),
+  });
+  if (query.isLoading) return <Loading />;
+
+  //===============================
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
-      field: "metal",
-      headerName: "Metal Name",
-      width: 150,
+      field: "shortName",
+      headerName: "Metal Group Short Name",
+      width: 250,
       editable: true,
     },
     {
-      field: "icon",
-      headerName: "Icon",
-      width: 150,
+      field: "purity",
+      headerName: "Purity",
+      width: 250,
+      editable: true,
+    },
+    {
+      field: "roundingDigits",
+      headerName: "Rounding Digits",
+      width: 250,
+      editable: true,
+    },
+    {
+      field: "metal",
+      headerName: "Metal Name",
+      width: 250,
+      editable: true,
+    },
+    {
+      field: "unit",
+      headerName: "Unit Name",
+      width: 250,
+      editable: true,
+    },
+    {
+      field: "ornament",
+      headerName: "Ornament Name",
+      width: 250,
+      editable: true,
+    },
+    {
+      field: "gst",
+      headerName: "GST",
+      width: 250,
       editable: true,
     },
 
@@ -76,15 +109,7 @@ export default function Metal() {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      metal: "Gold",
-      icon: "Icon hai",
-      edit: "Edit",
-    },
-  ];
-;
+
   //=======================================================
   return (
     <>
@@ -93,8 +118,14 @@ export default function Metal() {
         <title>Dashboard | Metal Group </title>
       </Head>
 
-      <Table rows={rows} columns={columns} create="Metal Group" url="/metalGroup/add-metalGroup" title='Metal Group View'/>
+      <Table
+        rows={query.data.data.data}
+        columns={columns}
+        create="Metal Group"
+        url="/metalGroup/add-metalGroup"
+        title="Metal Group View"
+      />
     </>
   );
 }
-Metal.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+MetalGroup.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
