@@ -7,7 +7,6 @@ import {
   Container,
   Typography,
   Grid,
-  Button,
   styled,
   TextField,
 } from "@mui/material";
@@ -20,12 +19,9 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import swal from "sweetalert";
-import { updateMetalGroup, getMetalGroupById } from "src/apis/metalGroup";
+import { getVideoById,updateVideo } from "src/apis/howToVideo";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AddModeratorRounded } from "@mui/icons-material";
-import { getMetal } from "src/apis/metal";
-import { getUnit } from "src/apis/unit";
-import { getOrnament } from "src/apis/ornament";
 import Loading from "src/components/loading";
 
 //=======================================================
@@ -51,70 +47,63 @@ const CustomFormControl = styled(FormControl)`
   }
 `;
 //=======================================================
-export default function EditMetalGroup() {
+export default function EditVideo() {
   //=======================
   const router = useRouter();
   //=======================================================
   const formik = useFormik({
     initialValues: {
-      shortName: "",
-      metal: "",
-      purity: 0,
-      roundingDigits: 0,
-      unit: "",
-      ornament: "",
-      gst: 3,
+      title: "",
+      language: "",
+      category: "",
+      video: "",
     },
     validationSchema: yup.object({
-      shortName: yup.string("Enter Metal Group Name").required("Metal Group is required"),
-      metal: yup.string("Choose Metal ").required("Metal is required"),
-      purity: yup.number("Enter Purity").required("Purity is required"),
-      roundingDigits: yup.number("Enter Rounding digits").required("Rounding digits is required"),
-      unit: yup.string("Enter  Unit").required("Unit is required"),
-      ornament: yup.string("Enter Ornament").required("Ornament is required"),
+      title: yup.string("Enter how-to-video title").required("how-to-video title  is required"),
+      language: yup.string("Enter language").required("language is required"),
+      category: yup.string("Enter category Name").required("categoryis required"),
     }),
     onSubmit: (values) => {
-      metalGroupMutation.mutate({ data: values, id: router.query.id });
+      console.log("payload --->", values);
+
+      videoMutation.mutate(values);
+      // console.log('hua ')
     },
   });
-
-  const [metal, setMetal] = React.useState([]);
-  const [unit, setUnit] = React.useState([]);
-  const [ornament, setOrnament] = React.useState([]);
-
-  React.useEffect(() => {
-    getMetal().then((res) => setMetal(res.data.data));
-    getUnit().then((res) => setUnit(res.data.data));
-    getOrnament().then((res) => setOrnament(res.data.data));
-  }, []);
 
   //----------
 
   const query = useQuery({
-    querKey: ["metalGroup", router.query.id],
-    queryFn: () => getMetalGroupById(router.query.id),
-    onSuccess: (res) => formik.setValues(res.data),
+    querKey: ["Video", router.query.id],
+    queryFn: () => getVideoById(router.query.id),
+    onSuccess: (res) =>
+      formik.setValues({
+        title: res.data.title,
+        language: res.data.language,
+        category: res.data.category,
+      }),
     enabled: !!router.query.id,
   });
 
-  
-  
-  const metalGroupMutation = useMutation({
-    mutationFn: updateMetalGroup,
+
+  const videoMutation = useMutation({
+    mutationFn: updateVideo,
     onSuccess: (res) => {
-      swal("Metal Group Updated !", res.message, "success"),
-      router.push("/metalGroup/view-metalGroup");
+      swal("how-to-video Added !", res.message, "success"),
+        router.push("/howToVideo/view-howToVideo");
     },
     onError: (err) => swal("Error !", err.message, "error"),
   });
-  
-  if (query.isLoading) return <Loading />;
+
+
+    if (query.isLoading) return <Loading />;
+
   //=======================================================
   return (
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Add-Metal Group</title>
+        <title>Dashboard | Edit-how-to-video</title>
       </Head>
       <Container
         sx={{
@@ -133,7 +122,7 @@ export default function EditMetalGroup() {
             color: "#8B5704",
           }}
         >
-          Edit Metal Group
+          Edit How-To-Video
         </Typography>
         <Typography
           variant="caption"
@@ -143,7 +132,7 @@ export default function EditMetalGroup() {
             fontWeight: "bold",
           }}
         >
-          Edit Metal Group for products used in E-commerce
+          Edit how-to-video used in as a Banner in the App
         </Typography>
         {/* ------------------------------ */}
 
@@ -170,20 +159,20 @@ export default function EditMetalGroup() {
                 fontWeight: 600,
               }}
             >
-              Metal Group Name
+              Video Title
             </Typography>
 
             <form onSubmit={formik.handleSubmit}>
               <CustomTextField
-                error={formik.touched.shortName && Boolean(formik.errors.shortName)}
-                helperText={formik.touched.shortName && formik.errors.shortName}
-                id="shortName"
-                name="shortName"
-                value={formik.values.shortName}
+                error={formik.touched.title && Boolean(formik.errors.title)}
+                helperText={formik.touched.title && formik.errors.title}
+                id="title"
+                name="title"
+                value={formik.values.title}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Metal Group name"
+                label="Video Title"
               />
 
               <Typography
@@ -195,23 +184,24 @@ export default function EditMetalGroup() {
                   fontWeight: 600,
                 }}
               >
-                Metal
+                Video Language
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Metal </InputLabel>
+                <InputLabel id="demo-simple-select-label">Language</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={formik.values.metal}
+                  id="language"
+                  value={formik.values.language}
                   onChange={formik.handleChange}
-                  name="metal"
+                  name="language"
                 >
-                  {metal.map((x) => (
-                    <MenuItem key={x.id} value={x.id}>
-                      {x.name}
-                    </MenuItem>
-                  ))}
+                  <MenuItem key="Hi" value="hindi">
+                    Hindi
+                  </MenuItem>
+                  <MenuItem key="En" value="english">
+                    English
+                  </MenuItem>
                 </Select>
               </CustomFormControl>
 
@@ -224,23 +214,24 @@ export default function EditMetalGroup() {
                   fontWeight: 600,
                 }}
               >
-                Unit
+                Video Category
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Unit </InputLabel>
+                <InputLabel id="demo-simple-select-label">Category</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={formik.values.unit}
+                  id="category"
+                  value={formik.values.category}
                   onChange={formik.handleChange}
-                  name="unit"
+                  name="category"
                 >
-                  {unit.map((x) => (
-                    <MenuItem key={x.id} value={x.id}>
-                      {x.name}
-                    </MenuItem>
-                  ))}
+                  <MenuItem key="testimonial" value="testimonial">
+                    Testimonials
+                  </MenuItem>
+                  <MenuItem key="how_to" value="how_to">
+                    How-To
+                  </MenuItem>
                 </Select>
               </CustomFormControl>
 
@@ -253,80 +244,23 @@ export default function EditMetalGroup() {
                   fontWeight: 600,
                 }}
               >
-                Ornament
-              </Typography>
-              <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Ornament </InputLabel>
-                <Select
-                  defaultValue=""
-                  // value={age}
-                  value={formik.values.ornament}
-                  onChange={formik.handleChange}
-                  name="ornament"
-                >
-                  {ornament.map((x) => (
-                    <MenuItem key={x.id} value={x.name}>
-                      {x.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </CustomFormControl>
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "#8B5704",
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Purity
+                Upload Video
               </Typography>
               <CustomTextField
-                error={formik.touched.purity && Boolean(formik.errors.purity)}
-                helperText={formik.touched.purity && formik.errors.purity}
-                id="purity"
-                name="purity"
-                type="number"
-                value={formik.values.purity}
+                // error={formik.touched.icon && Boolean(formik.errors.icon)}
+                // helperText={formik.touched.icon && formik.errors.icon}
+                type="file"
+                id="video"
+                name="video"
+                value={formik.values.video}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Purity"
               />
 
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "#8B5704",
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Rounding Digits
-              </Typography>
-              <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Digits </InputLabel>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  // value={age}
-                  value={formik.values.roundingDigits}
-                  onChange={formik.handleChange}
-                  name="roundingDigits"
-                >
-                  <MenuItem value="1">One</MenuItem>
-                  <MenuItem value="2">Two</MenuItem>
-                  <MenuItem value="3">Three</MenuItem>
-                </Select>
-              </CustomFormControl>
-
               <LoadingButton
-                disabled={metalGroupMutation.isLoading}
-                loading={metalGroupMutation.isLoading}
+                disabled={videoMutation.isLoading}
+                loading={videoMutation.isLoading}
                 type="submit"
                 sx={{
                   marginTop: 2,
@@ -338,7 +272,7 @@ export default function EditMetalGroup() {
                   },
                 }}
               >
-                Edit Metal Group
+                Edit how-to-video
               </LoadingButton>
             </form>
           </Grid>
@@ -348,4 +282,4 @@ export default function EditMetalGroup() {
     </>
   );
 }
-EditMetalGroup.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+EditVideo.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

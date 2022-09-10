@@ -12,7 +12,7 @@ export default function taxSettings() {
         <title>Tax Settings </title>
       </Head>
 
-      <Container sx={{padding:1}}>
+      <Container sx={{ padding: 1 }}>
         {/* ------------------------------ */}
 
         <Typography
@@ -31,6 +31,7 @@ export default function taxSettings() {
             <InfoCard
               title="Government Taxes"
               desc="create, update, delete taxes imposed by government like Central Excise etc.,"
+              url='customDuty/view-customDuty'
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
@@ -69,6 +70,7 @@ export default function taxSettings() {
             <InfoCard
               title="Interest Rates"
               desc="Create , Update, delete interest rates for Reserving gold , gold loans."
+              url="/loanInterest/view-loanInterest"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
@@ -77,18 +79,7 @@ export default function taxSettings() {
               desc="Update Mandi Government Treasury Gold for the gold declared"
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title="Interest Rates"
-              desc="Create , Update, delete interest rates for Reserving gold , gold loans."
-            />
-          </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title="Treasury Gold Mandi "
-              desc="Update Mandi Government Treasury Gold for the gold declared"
-            />
-          </Grid>
+
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Refer and Earn"

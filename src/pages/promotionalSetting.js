@@ -28,10 +28,10 @@ export default function promotionalSetting() {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="Offer Sliders" desc="create, update, delete Offer Sliders" />
+            <InfoCard title="Offer Sliders" desc="create, update, delete Offer Sliders" url='slider/view-slider' />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="How-to Videos" desc="create, update, delete how To Videos" />
+            <InfoCard title="How-to Videos" desc="create, update, delete how To Videos" url='how-to-video/view-how-to-video'/>
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard title="Testimonials" desc="create, update, delete Testimonials Videos" />

@@ -15,19 +15,14 @@ import { DashboardLayout } from "../../components/dashboard-layout";
 import FormInput from "../../components/utility/formInput";
 import Form from "../../components/utility/form";
 import LoadingButton from "@mui/lab/LoadingButton";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import swal from "sweetalert";
-import { updateMetalGroup, getMetalGroupById } from "src/apis/metalGroup";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { AddModeratorRounded } from "@mui/icons-material";
-import { getMetal } from "src/apis/metal";
-import { getUnit } from "src/apis/unit";
-import { getOrnament } from "src/apis/ornament";
-import Loading from "src/components/loading";
-
+import { getPlanById, updatePlan } from "src/apis/plan";
+import { useMutation ,useQuery} from "@tanstack/react-query";
+import { getCyclePeriod } from "src/apis/cyclePeriod";
 //=======================================================
 const CustomTextField = styled(TextField)`
   & label.Mui-focused {
@@ -39,7 +34,6 @@ const CustomTextField = styled(TextField)`
     }
   }
 `;
-
 const CustomFormControl = styled(FormControl)`
   & label.Mui-focused {
     color: #a88143;
@@ -51,71 +45,61 @@ const CustomFormControl = styled(FormControl)`
   }
 `;
 //=======================================================
-export default function EditMetalGroup() {
+export default function EditPlan() {
+  const [cycle, setCycle] = useState([]);
+  useEffect(() => {
+    getCyclePeriod().then((res) => setCycle(res.data.data));
+  }, []);
   //=======================
   const router = useRouter();
   //=======================================================
   const formik = useFormik({
     initialValues: {
-      shortName: "",
-      metal: "",
-      purity: 0,
-      roundingDigits: 0,
-      unit: "",
-      ornament: "",
-      gst: 3,
+      name: "",
+      mode: "",
+      type: "",
+      duration: 0,
+      cyclePeriod: "",
+      min: 0,
     },
     validationSchema: yup.object({
-      shortName: yup.string("Enter Metal Group Name").required("Metal Group is required"),
-      metal: yup.string("Choose Metal ").required("Metal is required"),
-      purity: yup.number("Enter Purity").required("Purity is required"),
-      roundingDigits: yup.number("Enter Rounding digits").required("Rounding digits is required"),
-      unit: yup.string("Enter  Unit").required("Unit is required"),
-      ornament: yup.string("Enter Ornament").required("Ornament is required"),
+      name: yup.string("Enter Unit Name").required("Unit is required"),
+      mode: yup.string("Enter mode").required("modeis required"),
+      type: yup.string("Enter type").required("type is required"),
+      cyclePeriod: yup.string("Enter cycle period").required("Cycle Period is required"),
+      duration: yup.number("Enter duration").required("duration is required"),
+      min: yup.number("Enter minimum").required("minimum is required"),
     }),
     onSubmit: (values) => {
-      metalGroupMutation.mutate({ data: values, id: router.query.id });
+      planMutation.mutate({
+        data: values,
+        id:router.query.id
+      });
     },
   });
 
-  const [metal, setMetal] = React.useState([]);
-  const [unit, setUnit] = React.useState([]);
-  const [ornament, setOrnament] = React.useState([]);
-
-  React.useEffect(() => {
-    getMetal().then((res) => setMetal(res.data.data));
-    getUnit().then((res) => setUnit(res.data.data));
-    getOrnament().then((res) => setOrnament(res.data.data));
-  }, []);
-
-  //----------
-
   const query = useQuery({
-    querKey: ["metalGroup", router.query.id],
-    queryFn: () => getMetalGroupById(router.query.id),
+    queryKey: ["plan", router.query.id],
+    queryFn: () => getPlanById(router.query.id),
     onSuccess: (res) => formik.setValues(res.data),
     enabled: !!router.query.id,
   });
 
-  
-  
-  const metalGroupMutation = useMutation({
-    mutationFn: updateMetalGroup,
+  const planMutation = useMutation({
+    mutationFn: updatePlan,
     onSuccess: (res) => {
-      swal("Metal Group Updated !", res.message, "success"),
-      router.push("/metalGroup/view-metalGroup");
+      swal("Plan Updated !", res.message, "success"), router.push("/plan/view-plan");
     },
-    onError: (err) => swal("Error !", err.message, "error"),
+    onError: (err) => swal("Erro !", err.message, "error"),
   });
-  
-  if (query.isLoading) return <Loading />;
   //=======================================================
   return (
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Add-Metal Group</title>
+        <title>Dashboard | Edit-Unit </title>
       </Head>
+      {/* ------------------------------ */}
       <Container
         sx={{
           padding: 5,
@@ -126,14 +110,13 @@ export default function EditMetalGroup() {
           backgroundColor: "white",
         }}
       >
-        {/* ------------------------------ */}
         <Typography
           variant="h6"
           sx={{
             color: "#8B5704",
           }}
         >
-          Edit Metal Group
+          Edit plan
         </Typography>
         <Typography
           variant="caption"
@@ -143,7 +126,7 @@ export default function EditMetalGroup() {
             fontWeight: "bold",
           }}
         >
-          Edit Metal Group for products used in E-commerce
+          Edit plan for Buy and Save Modules
         </Typography>
         {/* ------------------------------ */}
 
@@ -161,29 +144,28 @@ export default function EditMetalGroup() {
           container
         >
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <Typography
-              variant="body1"
-              sx={{
-                color: "#8B5704",
-                marginBottom: 2,
-                marginTop: 2,
-                fontWeight: 600,
-              }}
-            >
-              Metal Group Name
-            </Typography>
-
             <form onSubmit={formik.handleSubmit}>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#8B5704",
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Plan Name
+              </Typography>
               <CustomTextField
-                error={formik.touched.shortName && Boolean(formik.errors.shortName)}
-                helperText={formik.touched.shortName && formik.errors.shortName}
-                id="shortName"
-                name="shortName"
-                value={formik.values.shortName}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+                id="name"
+                name="name"
+                value={formik.values.name}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Metal Group name"
+                label="Unit Type name"
               />
 
               <Typography
@@ -195,23 +177,24 @@ export default function EditMetalGroup() {
                   fontWeight: 600,
                 }}
               >
-                Metal
+                Plan Mode
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Metal </InputLabel>
+                <InputLabel id="demo-simple-select-label">mode</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={formik.values.metal}
+                  id="mode"
+                  value={formik.values.mode}
                   onChange={formik.handleChange}
-                  name="metal"
+                  name="mode"
                 >
-                  {metal.map((x) => (
-                    <MenuItem key={x.id} value={x.id}>
-                      {x.name}
-                    </MenuItem>
-                  ))}
+                  <MenuItem key="weight" value="weight">
+                    By Weight
+                  </MenuItem>
+                  <MenuItem key="value" value="value">
+                    By Value
+                  </MenuItem>
                 </Select>
               </CustomFormControl>
 
@@ -224,76 +207,42 @@ export default function EditMetalGroup() {
                   fontWeight: 600,
                 }}
               >
-                Unit
-              </Typography>
-              <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Unit </InputLabel>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={formik.values.unit}
-                  onChange={formik.handleChange}
-                  name="unit"
-                >
-                  {unit.map((x) => (
-                    <MenuItem key={x.id} value={x.id}>
-                      {x.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </CustomFormControl>
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "#8B5704",
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Ornament
-              </Typography>
-              <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Ornament </InputLabel>
-                <Select
-                  defaultValue=""
-                  // value={age}
-                  value={formik.values.ornament}
-                  onChange={formik.handleChange}
-                  name="ornament"
-                >
-                  {ornament.map((x) => (
-                    <MenuItem key={x.id} value={x.name}>
-                      {x.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </CustomFormControl>
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "#8B5704",
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Purity
+                Plan Type
               </Typography>
               <CustomTextField
-                error={formik.touched.purity && Boolean(formik.errors.purity)}
-                helperText={formik.touched.purity && formik.errors.purity}
-                id="purity"
-                name="purity"
+                error={formik.touched.type && Boolean(formik.errors.type)}
+                helperText={formik.touched.type && formik.errors.type}
+                id="type"
+                name="type"
+                value={formik.values.type}
+                onChange={formik.handleChange}
+                fullWidth
+                variant="outlined"
+                label="type"
+              />
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#8B5704",
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Plan Duration
+              </Typography>
+              <CustomTextField
+                error={formik.touched.duration && Boolean(formik.errors.duration)}
+                helperText={formik.touched.duration && formik.errors.duration}
+                id="duration"
+                name="duration"
                 type="number"
-                value={formik.values.purity}
+                value={formik.values.duration}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Purity"
+                label="duration"
               />
 
               <Typography
@@ -305,28 +254,53 @@ export default function EditMetalGroup() {
                   fontWeight: 600,
                 }}
               >
-                Rounding Digits
+                Plan Min
+              </Typography>
+              <CustomTextField
+                error={formik.touched.min && Boolean(formik.errors.min)}
+                helperText={formik.touched.min && formik.errors.min}
+                id="min"
+                type="number"
+                name="min"
+                value={formik.values.min}
+                onChange={formik.handleChange}
+                fullWidth
+                variant="outlined"
+                label="min"
+              />
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#8B5704",
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Cycle Period
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Digits </InputLabel>
+                <InputLabel id="demo-simple-select-label">cycle period</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  // value={age}
-                  value={formik.values.roundingDigits}
+                  id="cyclePeriod"
+                  value={formik.values.cyclePeriod}
                   onChange={formik.handleChange}
-                  name="roundingDigits"
+                  name="cyclePeriod"
                 >
-                  <MenuItem value="1">One</MenuItem>
-                  <MenuItem value="2">Two</MenuItem>
-                  <MenuItem value="3">Three</MenuItem>
+                  {cycle.map((x) => (
+                    <MenuItem key={x.id} value={x.id}>
+                      {x.name}
+                    </MenuItem>
+                  ))}
                 </Select>
               </CustomFormControl>
 
               <LoadingButton
-                disabled={metalGroupMutation.isLoading}
-                loading={metalGroupMutation.isLoading}
+                disabled={planMutation.isLoading}
+                loading={planMutation.isLoading}
                 type="submit"
                 sx={{
                   marginTop: 2,
@@ -338,7 +312,7 @@ export default function EditMetalGroup() {
                   },
                 }}
               >
-                Edit Metal Group
+                Edit Plan
               </LoadingButton>
             </form>
           </Grid>
@@ -348,4 +322,4 @@ export default function EditMetalGroup() {
     </>
   );
 }
-EditMetalGroup.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+EditPlan.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

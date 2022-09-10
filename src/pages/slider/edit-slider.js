@@ -20,12 +20,14 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import swal from "sweetalert";
-import { updateMetalGroup, getMetalGroupById } from "src/apis/metalGroup";
+import { updateSlider, getSliderById } from "src/apis/slider";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AddModeratorRounded } from "@mui/icons-material";
-import { getMetal } from "src/apis/metal";
-import { getUnit } from "src/apis/unit";
-import { getOrnament } from "src/apis/ornament";
+
+import { getCollection } from "src/apis/collection";
+import { getCategory } from "src/apis/category";
+import { getVariety } from "src/apis/variety";
+import { getItem } from "src/apis/item";
 import Loading from "src/components/loading";
 
 //=======================================================
@@ -51,59 +53,60 @@ const CustomFormControl = styled(FormControl)`
   }
 `;
 //=======================================================
-export default function EditMetalGroup() {
+export default function AddSlider() {
   //=======================
   const router = useRouter();
   //=======================================================
   const formik = useFormik({
     initialValues: {
-      shortName: "",
-      metal: "",
-      purity: 0,
-      roundingDigits: 0,
-      unit: "",
-      ornament: "",
-      gst: 3,
+      name: "",
+      type: "",
+      typeId: "",
+      image: "",
     },
     validationSchema: yup.object({
-      shortName: yup.string("Enter Metal Group Name").required("Metal Group is required"),
-      metal: yup.string("Choose Metal ").required("Metal is required"),
-      purity: yup.number("Enter Purity").required("Purity is required"),
-      roundingDigits: yup.number("Enter Rounding digits").required("Rounding digits is required"),
-      unit: yup.string("Enter  Unit").required("Unit is required"),
-      ornament: yup.string("Enter Ornament").required("Ornament is required"),
+      name: yup.string("Enter Slider Name").required("Slider name is required"),
+      type: yup.string("Enter Slider Type Name").required("Slider Type is required"),
+      typeId: yup.string("Enter Slider Sub Type Name").required("Slider Sub Type is required"),
     }),
     onSubmit: (values) => {
-      metalGroupMutation.mutate({ data: values, id: router.query.id });
+      sliderMutation.mutate({ data: values, id: router.query.id });
+      // console.log('hua ')
     },
   });
+  console.log(formik.values);
 
-  const [metal, setMetal] = React.useState([]);
-  const [unit, setUnit] = React.useState([]);
-  const [ornament, setOrnament] = React.useState([]);
+  const [collection, setCollection] = React.useState([]);
+  const [category, setCategory] = React.useState([]);
+  const [variety, setVariety] = React.useState([]);
+  const [item, setItem] = React.useState([]);
 
   React.useEffect(() => {
-    getMetal().then((res) => setMetal(res.data.data));
-    getUnit().then((res) => setUnit(res.data.data));
-    getOrnament().then((res) => setOrnament(res.data.data));
+    getCollection().then((res) => setCollection(res.data.data));
+    getCategory().then((res) => setCategory(res.data.data));
+    getVariety().then((res) => setVariety(res.data.data));
+    getItem().then((res) => setItem(res.data.data));
   }, []);
 
   //----------
 
   const query = useQuery({
-    querKey: ["metalGroup", router.query.id],
-    queryFn: () => getMetalGroupById(router.query.id),
-    onSuccess: (res) => formik.setValues(res.data),
+    querKey: ["Slider", router.query.id],
+    queryFn: () => getSliderById(router.query.id),
+    onSuccess: (res) =>
+      formik.setValues({
+        name: res.data.name,
+        type: res.data.type,
+        typeId: res.data.typeId,
+      }),
     enabled: !!router.query.id,
   });
 
   
-  
-  const metalGroupMutation = useMutation({
-    mutationFn: updateMetalGroup,
+  const sliderMutation = useMutation({
+    mutationFn: updateSlider,
     onSuccess: (res) => {
-      swal("Metal Group Updated !", res.message, "success"),
-      router.push("/metalGroup/view-metalGroup");
+      swal("Slider Updated !", res.message, "success"), router.push("/slider/view-slider");
     },
     onError: (err) => swal("Error !", err.message, "error"),
   });
@@ -114,7 +117,7 @@ export default function EditMetalGroup() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Add-Metal Group</title>
+        <title>Dashboard | Edit-Slider</title>
       </Head>
       <Container
         sx={{
@@ -143,7 +146,7 @@ export default function EditMetalGroup() {
             fontWeight: "bold",
           }}
         >
-          Edit Metal Group for products used in E-commerce
+          Edit Slider used in as a Banner in the App
         </Typography>
         {/* ------------------------------ */}
 
@@ -170,20 +173,20 @@ export default function EditMetalGroup() {
                 fontWeight: 600,
               }}
             >
-              Metal Group Name
+              Slider Name
             </Typography>
 
             <form onSubmit={formik.handleSubmit}>
               <CustomTextField
-                error={formik.touched.shortName && Boolean(formik.errors.shortName)}
-                helperText={formik.touched.shortName && formik.errors.shortName}
-                id="shortName"
-                name="shortName"
-                value={formik.values.shortName}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+                id="name"
+                name="name"
+                value={formik.values.name}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Metal Group name"
+                label="Slider name"
               />
 
               <Typography
@@ -195,26 +198,32 @@ export default function EditMetalGroup() {
                   fontWeight: 600,
                 }}
               >
-                Metal
+                Slider Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Metal </InputLabel>
+                <InputLabel id="demo-simple-select-label">Type</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={formik.values.metal}
+                  id="type"
+                  value={formik.values.type}
                   onChange={formik.handleChange}
-                  name="metal"
+                  name="type"
                 >
-                  {metal.map((x) => (
-                    <MenuItem key={x.id} value={x.id}>
-                      {x.name}
-                    </MenuItem>
-                  ))}
+                  <MenuItem key="collection" value="collection">
+                    Collection
+                  </MenuItem>
+                  <MenuItem key="category" value="category">
+                    Category
+                  </MenuItem>
+                  <MenuItem key="variety" value="variety">
+                    Variety
+                  </MenuItem>
+                  <MenuItem key="item" value="item">
+                    Item
+                  </MenuItem>
                 </Select>
               </CustomFormControl>
-
               <Typography
                 variant="body1"
                 sx={{
@@ -224,26 +233,56 @@ export default function EditMetalGroup() {
                   fontWeight: 600,
                 }}
               >
-                Unit
+                Slider Sub Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Unit </InputLabel>
+                <InputLabel id="demo-simple-select-label">Type</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={formik.values.unit}
+                  id="typeId"
+                  value={formik.values.typeId}
                   onChange={formik.handleChange}
-                  name="unit"
+                  name="typeId"
                 >
-                  {unit.map((x) => (
-                    <MenuItem key={x.id} value={x.id}>
-                      {x.name}
-                    </MenuItem>
-                  ))}
+                  {collection.map((x) => {
+                    if (formik.values.type === "collection") {
+                      return (
+                        <MenuItem key={x.id} value={x.id}>
+                          {x.name}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+                  {category.map((x) => {
+                    if (formik.values.type === "category") {
+                      return (
+                        <MenuItem key={x.id} value={x.id}>
+                          {x.name}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+                  {variety.map((x) => {
+                    if (formik.values.type === "variety") {
+                      return (
+                        <MenuItem key={x.id} value={x.id}>
+                          {x.name}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+                  {item.map((x) => {
+                    if (formik.values.type === "item") {
+                      return (
+                        <MenuItem key={x.id} value={x.id}>
+                          {x.name}
+                        </MenuItem>
+                      );
+                    }
+                  })}
                 </Select>
               </CustomFormControl>
-
               <Typography
                 variant="body1"
                 sx={{
@@ -253,80 +292,23 @@ export default function EditMetalGroup() {
                   fontWeight: 600,
                 }}
               >
-                Ornament
-              </Typography>
-              <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Ornament </InputLabel>
-                <Select
-                  defaultValue=""
-                  // value={age}
-                  value={formik.values.ornament}
-                  onChange={formik.handleChange}
-                  name="ornament"
-                >
-                  {ornament.map((x) => (
-                    <MenuItem key={x.id} value={x.name}>
-                      {x.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </CustomFormControl>
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "#8B5704",
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Purity
+                Slider Image
               </Typography>
               <CustomTextField
-                error={formik.touched.purity && Boolean(formik.errors.purity)}
-                helperText={formik.touched.purity && formik.errors.purity}
-                id="purity"
-                name="purity"
-                type="number"
-                value={formik.values.purity}
+                // error={formik.touched.icon && Boolean(formik.errors.icon)}
+                // helperText={formik.touched.icon && formik.errors.icon}
+                type="file"
+                id="image"
+                name="image"
+                value={formik.values.image}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Purity"
               />
 
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "#8B5704",
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Rounding Digits
-              </Typography>
-              <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Digits </InputLabel>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  // value={age}
-                  value={formik.values.roundingDigits}
-                  onChange={formik.handleChange}
-                  name="roundingDigits"
-                >
-                  <MenuItem value="1">One</MenuItem>
-                  <MenuItem value="2">Two</MenuItem>
-                  <MenuItem value="3">Three</MenuItem>
-                </Select>
-              </CustomFormControl>
-
               <LoadingButton
-                disabled={metalGroupMutation.isLoading}
-                loading={metalGroupMutation.isLoading}
+                disabled={sliderMutation.isLoading}
+                loading={sliderMutation.isLoading}
                 type="submit"
                 sx={{
                   marginTop: 2,
@@ -338,7 +320,7 @@ export default function EditMetalGroup() {
                   },
                 }}
               >
-                Edit Metal Group
+                Edit Slider
               </LoadingButton>
             </form>
           </Grid>
@@ -348,4 +330,4 @@ export default function EditMetalGroup() {
     </>
   );
 }
-EditMetalGroup.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AddSlider.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

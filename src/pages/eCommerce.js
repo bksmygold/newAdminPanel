@@ -13,7 +13,7 @@ export default function eCommerce() {
         <title>E-Commerce </title>
       </Head>
 
-      <Container sx={{ backgroundColor: "" }}>
+      <Container sx={{ padding: 4 }}>
         {/* ------------------------------ */}
 
         <Typography
@@ -95,10 +95,45 @@ export default function eCommerce() {
           </Grid>
 
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="Items" desc="create, update, delete Items" url="/item/view-item"/>
+            <InfoCard title="Items" desc="create, update, delete Items" url="/item/view-item" />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="Product Types" desc="create, update, delete Product Types" url="/productType/view-productType"/>
+            <InfoCard
+              title="Product Types"
+              desc="create, update, delete Product Types"
+              url="/productType/view-productType"
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard title="FAQ" desc="create, update, delete FAQs" url="/faq/view-faq" />
+          </Grid>
+        </Grid>
+
+        <Typography
+          sx={{
+            marginTop: 4,
+            marginBottom: 2,
+            color: "#8B5704",
+            fontWeight: "bolder",
+          }}
+          variant="h6"
+        >
+          Plans
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title="Standard Plans"
+              desc="create, update, delete Plans"
+              url="/plan/view-plan"
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title="Cycle Periods"
+              desc="create, update, delete Plans"
+              url="/cyclePeriod/view-cyclePeriod"
+            />
           </Grid>
         </Grid>
         {/* ------------------------------ */}
