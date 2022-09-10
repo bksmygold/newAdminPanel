@@ -199,7 +199,7 @@ export default function AddMetalGroup() {
               >
                 Metal
               </Typography>
-              <FormControl fullWidth>
+              <CustomFormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Metal </InputLabel>
                 <Select
                   defaultValue=""
@@ -210,10 +210,12 @@ export default function AddMetalGroup() {
                   name="metal"
                 >
                   {metal.map((x) => (
-                    <MenuItem value={x.id}>{x.name}</MenuItem>
+                    <MenuItem key={x.id} value={x.id}>
+                      {x.name}
+                    </MenuItem>
                   ))}
                 </Select>
-              </FormControl>
+              </CustomFormControl>
 
               <Typography
                 variant="body1"
@@ -226,23 +228,23 @@ export default function AddMetalGroup() {
               >
                 Unit
               </Typography>
-              <FormControl fullWidth>
+              <CustomFormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Unit </InputLabel>
                 <Select
                   defaultValue=""
-
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                 value={formik.values.unit}
+                  value={formik.values.unit}
                   onChange={formik.handleChange}
                   name="unit"
                 >
-                
                   {unit.map((x) => (
-                    <MenuItem value={x.id}>{x.name}</MenuItem>
+                    <MenuItem key={x.id} value={x.id}>
+                      {x.name}
+                    </MenuItem>
                   ))}
                 </Select>
-              </FormControl>
+              </CustomFormControl>
 
               <Typography
                 variant="body1"
@@ -255,7 +257,7 @@ export default function AddMetalGroup() {
               >
                 Ornament
               </Typography>
-              <FormControl fullWidth>
+              <CustomFormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Ornament </InputLabel>
                 <Select
                   defaultValue=""
@@ -263,12 +265,14 @@ export default function AddMetalGroup() {
                   value={formik.values.ornament}
                   onChange={formik.handleChange}
                   name="ornament"
-                >                
+                >
                   {ornament.map((x) => (
-                    <MenuItem value={x.name}>{x.name}</MenuItem>
+                    <MenuItem key={x.id} value={x.name}>
+                      {x.name}
+                    </MenuItem>
                   ))}
                 </Select>
-              </FormControl>
+              </CustomFormControl>
 
               <Typography
                 variant="body1"
@@ -305,7 +309,7 @@ export default function AddMetalGroup() {
               >
                 Rounding Digits
               </Typography>
-              <FormControl fullWidth>
+              <CustomFormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Digits </InputLabel>
                 <Select
                   defaultValue=""
@@ -314,12 +318,13 @@ export default function AddMetalGroup() {
                   // value={age}
                   value={formik.values.roundingDigits}
                   onChange={formik.handleChange}
-                  name="roundingDigits"                >
+                  name="roundingDigits"
+                >
                   <MenuItem value="1">One</MenuItem>
                   <MenuItem value="2">Two</MenuItem>
                   <MenuItem value="3">Three</MenuItem>
                 </Select>
-              </FormControl>
+              </CustomFormControl>
 
               <LoadingButton
                 disabled={metalGroupMutation.isLoading}
