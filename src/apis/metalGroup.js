@@ -1,7 +1,11 @@
 import axios from "axios";
 //==============================
 export const getMetalGroup = () => {
-  return axios.post("/metalgroup/list");
+  return axios.post("/metalgroup/list", {
+    options: {
+      populate: ["metal", "unit"],
+    },
+  });
 };
 
 export const getMetalGroupById = (id) => {

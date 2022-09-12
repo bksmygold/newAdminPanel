@@ -31,6 +31,7 @@ export default function userManagement() {
             <InfoCard
               title="Roles & Permissions"
               desc="create, update, delete user roles and manage thier permission"
+              url="/create-rolesPermission"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>

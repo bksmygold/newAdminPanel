@@ -61,7 +61,7 @@ export default function Table(props) {
             sx={{ backgroundColor: "#8B5704", color: "white" }}
           >
             Create {props.create}
-            <AddIcon />
+            <AddIcon sx={{marginLeft:1} } />
           </Button>
         </Grid>
       </Grid>

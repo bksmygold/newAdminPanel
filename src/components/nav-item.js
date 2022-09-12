@@ -12,7 +12,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 export const NavItem = (props) => {
   const { href, items, isCollapsible, icon, title, ...others } = props;
   const router = useRouter();
-  console.log("router --", router);
+  // console.log("router --", router);
   const active = href ? router.pathname === href : false;
 
   return (

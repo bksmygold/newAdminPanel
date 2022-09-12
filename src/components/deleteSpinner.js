@@ -43,8 +43,13 @@ const router = useRouter();
   //=============================================================== RENDERING
   return (
     <>
-      <Button id="delete-btn" variant="none" color="primary" onClick={handleClickOpen}>
-        <DeleteIcon/>
+      <Button
+        sx={{ backgroundColor: "#ddb070", color: "white" }}
+        id="delete-btn"
+        variant="none"
+        onClick={handleClickOpen}
+      >
+        Delete <DeleteIcon />
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Processing Deletion</DialogTitle>
