@@ -136,7 +136,7 @@ export const DashboardSidebar = (props) => {
             >
               <div>
                 
-                <Image src="/logo.png" alt="me" width="64" height="64" />
+                <Image onClick={ ()=>router.push('/')} src="/logo.png" alt="me" width="64" height="64" />
                 <Typography color="inherit" variant="subtitle1">
                   Bks MyGold
                 </Typography>

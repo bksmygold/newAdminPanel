@@ -109,6 +109,20 @@ export default function eCommerce() {
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
+              title="Policy"
+              desc="create, update, delete Policies"
+              url="eCommerce/policy/view-policy"
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title="Return Reason"
+              desc="create, update, delete return reason"
+              url="eCommerce/returnReason/view-returnReason"
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
               title="Supplier"
               desc="create, update, delete Supplier"
               url="/supplier/view-supplier"

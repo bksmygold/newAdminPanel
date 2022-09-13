@@ -3,18 +3,32 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Box, Button, Container, Link, TextField, Typography } from "@mui/material";
-import * as React from "react";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import LoadingButton from "@mui/lab/LoadingButton";
-import swal from "sweetalert";
-import { login } from "src/apis/login";
-//=====================================================
-const Login = () => {
-  //====================================
-  const [loading, setLoading] = React.useState(false);
-
-  //====================================
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  FormHelperText,
+  Link,
+  TextField,
+  Typography,
+  styled,
+} from "@mui/material";
+import { CheckBox } from "@mui/icons-material";
+import Image from "next/image";
+//========================================
+const CustomTextField = styled(TextField)`
+  & label.Mui-focused {
+    color: #a88143;
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: #a88143;
+    }
+  }
+`;
+//========================================
+const Login  = () => {
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -22,113 +36,107 @@ const Login = () => {
       password: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string("Enter your email")
-        .email("Enter a valid email")
-        .required("Email is required"),
-      password: Yup.string("Enter your password").required("Password is required"),
+      username: Yup.string().max(255).required("First name is required"),
+      password: Yup.string().max(255).required("Password is required"),
     }),
-
-    onSubmit: (values) => {
-      setLoading(true);
-      login(values)
-        .then((res) => {
-          localStorage.setItem("token", res.data.token),
-            swal("Logged In !", "Welcome To BKS My Gold Admin Panel", "success");
-          router.push("/");
-        })
-        .catch((err) => swal(err.message, "Please check the login credentials", "error"))
-        .finally(() => setLoading(false));
+    onSubmit: () => {
+      router.push("/mfa");
     },
   });
-  //====================================
-  // const Item = styled(Paper)(({ theme }) => ({
-  //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  //   ...theme.typography.body2,
-  //   padding: theme.spacing(1),
-  //   textAlign: "center",
-  //   color: theme.palette.text.secondary,
-  // }));
-  //=====================================================
-
+  //========================================
   return (
-    <div className="container">
-      <div className="login">
-        <div className="box">
-          {/* <img src={logo} /> */}
-          <h4>Sign in for MyGold Applications </h4>
+    <>
+      <Head>
+        <title>Register | MyGold Login</title>
+      </Head>
+      <Box
+        component="main"
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          minHeight: "50%",
+          width: "90%",
+          margin: "auto",
+        }}
+      >
+        <Container
+          maxWidth="sm"
+          sx={{
+            backgroundColor: "#fdfaf2",
+            borderRadius: 1.5,
+            // height: "70vh",
+            padding: 5,
+            boxShadow: "0px 4px 1px 0px #d2c6c6",
+            border: "1px solid #d2c6c657",
+          }}
+        >
           <form onSubmit={formik.handleSubmit}>
-            <TextField
-              error={formik.touched.username && Boolean(formik.errors.username)}
+            <Box sx={{ my: 7, color: "#8b5704" }}>
+              <Image src="/logo.png" alt="me" width="80" height="80" />
+
+              <Typography sx={{ fontWeight: 700 }} variant="h5">
+                Sign in for{" "}
+              </Typography>
+              <Typography sx={{ fontWeight: 400 }} variant="h5">
+                {" "}
+                MyGold Applications
+              </Typography>
+
+              <Typography color="textSecondary" sx={{ marginTop: 1 }} gutterBottom variant="body2">
+                Use your email to log in to your account
+              </Typography>
+            </Box>
+            <CustomTextField
+              error={Boolean(formik.touched.username && formik.errors.username)}
+              fullWidth
               helperText={formik.touched.username && formik.errors.username}
-              id="username"
+              label="Username/email"
+              margin="normal"
               name="username"
-              // type="email"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
               value={formik.values.username}
-              onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
-              sx={{
-                marginTop: 2,
-                borderColor: "red",
-              }}
-              label="Email Address"
               variant="outlined"
             />
-            <TextField
-              error={formik.touched.password && Boolean(formik.errors.password)}
+
+            <CustomTextField
+              error={Boolean(formik.touched.password && formik.errors.password)}
+              fullWidth
               helperText={formik.touched.password && formik.errors.password}
-              id="password"
-              type="password"
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
-              sx={{
-                marginTop: 2,
-              }}
               label="Password"
+              margin="normal"
+              name="password"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="password"
+              value={formik.values.password}
               variant="outlined"
             />
-            <LoadingButton
-              disabled={loading}
-              loading={loading}
-              type="submit"
-              sx={{
-                marginTop: 2,
-                backgroundColor: "#DDB070",
-                border: "none",
-                color: "white",
-                "&:hover": {
-                  backgroundColor: "#DBA251",
-                },
-              }}
-            >
-              Sign In
-            </LoadingButton>
-            {/* <button type="submit">Login</button> */}
+
+            <Box sx={{ py: 2 }}>
+              <Button
+                sx={{ backgroundColor: "#ddb070", color: "white" }}
+                disabled={formik.isSubmitting}
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+              >
+                Sign in
+              </Button>
+            </Box>
+            <Typography color="textSecondary" variant="body2">
+              <NextLink href="/login" passHref>
+                <Link variant="subtitle2" underline="hover">
+                  Forgot password?{" "}
+                </Link>
+              </NextLink>
+            </Typography>
           </form>
-        </div>
-        <div className="box1">
-          <h2>The all-in-one Platform for managing MyGold Eco-System </h2>
-          <p>
-            {" "}
-            <CheckCircleOutlineIcon />
-            Manage Master Data of Entire Eco-System
-          </p>{" "}
-          <p>
-            <CheckCircleOutlineIcon />
-            Manage Merchants.
-          </p>
-          <p>
-            <CheckCircleOutlineIcon />
-            Customer Relation Managmenet{" "}
-          </p>
-          <p>
-            <CheckCircleOutlineIcon />
-            Settlement Management.
-          </p>
-        </div>
-      </div>
-    </div>
+        </Container>
+      </Box>
+    </>
   );
 };
 

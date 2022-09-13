@@ -12,7 +12,7 @@ export default function promotionalSetting() {
         <title>Promotional Settings</title>
       </Head>
 
-      <Container sx={{ padding:5 }}>
+      <Container sx={{ padding: 5 }}>
         {/* ------------------------------ */}
 
         <Typography
@@ -28,10 +28,25 @@ export default function promotionalSetting() {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="Offer Sliders" desc="create, update, delete Offer Sliders" url='slider/view-slider' />
+            <InfoCard
+              title="Offer Sliders"
+              desc="create, update, delete Offer Sliders"
+              url="offer/view-offer"
+            />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="How-to Videos" desc="create, update, delete how To Videos" url='how-to-video/view-how-to-video'/>
+            <InfoCard
+              title="App slider banner"
+              desc="create, update, delete Offer Sliders"
+              url="slider/view-slider"
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title="How-to Videos"
+              desc="create, update, delete how To Videos"
+              url="how-to-video/view-how-to-video"
+            />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard title="Testimonials" desc="create, update, delete Testimonials Videos" />
@@ -43,6 +58,13 @@ export default function promotionalSetting() {
             <InfoCard
               title="Offer Popups"
               desc="create, update, delete offer popups with timeline conditions etc."
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title="Referral Type"
+              desc="create, update, delete referral type"
+              url="/promotionalSetting/referralType/view-referralType"
             />
           </Grid>
         </Grid>
@@ -62,7 +84,6 @@ export default function promotionalSetting() {
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard title="Merchant Banners" desc="Approve, disapprove Merchant Banners" />
           </Grid>
-          
         </Grid>
       </Container>
     </>
