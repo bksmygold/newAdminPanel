@@ -7,38 +7,37 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from '../../components/utility/table'
-import { useRouter } from 'next/router'
-import { getBadla,deleteBadla} from "src/apis/badla";
+import Table from "../../components/utility/table";
+import { useRouter } from "next/router";
+import { getBadla, deleteBadla } from "src/apis/badla";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "src/components/loading";
 import DeleteSpinner from "src/components/deleteSpinner";
 
 //=======================================================
 export default function Badla() {
-  const router = useRouter()
+  const router = useRouter();
   //=======================
-   const editButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "#ddb070", color: "white" }}
-           size="small"
-           onClick={() => {
-             router.push(`/badla/edit-badla/?id=${params.id}`);
-           }}
-         >
-           Edit <EditIcon />
-         </Button>
-       </strong>
-     );
-   };
-   //==========
-   const deleteButton = (params) => {
+  const editButton = (params) => {
+    return (
+      <strong>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "#ddb070", color: "white" }}
+          size="small"
+          onClick={() => {
+            router.push(`/badla/edit-badla/?id=${params.id}`);
+          }}
+        >
+          Edit <EditIcon />
+        </Button>
+      </strong>
+    );
+  };
+  //==========
+  const deleteButton = (params) => {
     return <DeleteSpinner id={params.id} deleting={deleteBadla} url={"/badla/view-badla"} />;
-
-   };
+  };
   //=======================
   const query = useQuery({
     queryKey: "Badla",
@@ -57,7 +56,6 @@ export default function Badla() {
       editable: true,
     },
 
-
     {
       field: "edit",
       headerName: "Edit",
@@ -74,7 +72,6 @@ export default function Badla() {
     },
   ];
 
-
   //=======================================================
   return (
     <>
@@ -84,7 +81,7 @@ export default function Badla() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="Badla"
         url="/badla/add-badla"

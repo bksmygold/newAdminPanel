@@ -10,7 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Table from "../../components/utility/table";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
-import { getCut, deleteCut} from "src/apis/cut";
+import { getCut, deleteCut } from "src/apis/cut";
 import React from "react";
 import DeleteSpinner from "src/components/deleteSpinner";
 import Loading from "src/components/loading";
@@ -27,7 +27,7 @@ export default function Cut() {
     onError: (err) => console.log("Error --->", err),
   });
 
-   if (query.isLoading) return <Loading />;
+  if (query.isLoading) return <Loading />;
 
   //=======================
   const editButton = (params) => {
@@ -53,7 +53,6 @@ export default function Cut() {
   //==========
   const columns = [
     { field: "name", headerName: "Cut Name", width: 250 },
-   
 
     {
       field: "edit",
@@ -71,7 +70,6 @@ export default function Cut() {
     },
   ];
 
-
   //=======================================================
   return (
     <>
@@ -80,7 +78,13 @@ export default function Cut() {
         <title>Dashboard | Cut </title>
       </Head>
 
-      <Table rows={query.data.data.data} columns={columns} create="cut" url="/cut/add-cut" title="Cut View" />
+      <Table
+        rows={query.data.docs}
+        columns={columns}
+        create="cut"
+        url="/cut/add-cut"
+        title="Cut View"
+      />
     </>
   );
 }

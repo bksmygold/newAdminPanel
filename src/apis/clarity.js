@@ -13,9 +13,9 @@ export const postClarity = (data) => {
 };
 
 export const updateClarity = ({ data, id }) => {
-  return axios.put(`/clarity/update/${id}`, data);
+  return axios.patch(`/clarity/${id}`, data);
 };
 
 export const deleteClarity = (id) => {
-  return axios.delete(`/clarity/delete/${id}`);
+  return axios.delete(`/clarity/${id}`);
 };

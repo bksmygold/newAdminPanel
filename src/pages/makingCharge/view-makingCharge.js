@@ -7,11 +7,11 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from '../../components/utility/table'
-import { useRouter } from 'next/router'
+import Table from "../../components/utility/table";
+import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
-import { getMakingCharge ,deleteMakingCharge} from "src/apis/makingCharge";
-import React from 'react'
+import { getMakingCharge, deleteMakingCharge } from "src/apis/makingCharge";
+import React from "react";
 import DeleteSpinner from "src/components/deleteSpinner";
 import Loading from "src/components/loading";
 
@@ -27,9 +27,8 @@ export default function MakingCharge() {
     onError: (err) => console.log("Error --->", err),
   });
 
-  if (query.isLoading) return <Loading/>
+  if (query.isLoading) return <Loading />;
   //===============
-
 
   const editButton = (params) => {
     return (
@@ -140,7 +139,7 @@ export default function MakingCharge() {
       renderCell: deleteButton,
     },
   ];
-console.log("MC ---",query.data.data.data)
+  console.log("MC ---", query.data.data.data);
   //=======================================================
   return (
     <>
@@ -150,7 +149,7 @@ console.log("MC ---",query.data.data.data)
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="makingCharge"
         url="/makingCharge/add-makingCharge"

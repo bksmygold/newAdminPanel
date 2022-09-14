@@ -24,9 +24,9 @@ export default function Color() {
     onSuccess: (res) => console.log("Success ---", res.message),
     onError: (err) => console.log("Error --->", err),
   });
-  if (query.isLoading) return <Loading />
-  
-  console.log('====>',query)
+  if (query.isLoading) return <Loading />;
+
+  console.log("====>", query);
   //=======================
   const editButton = (params) => {
     return (
@@ -46,16 +46,12 @@ export default function Color() {
   };
   //==========
   const deleteButton = (params) => (
-
     <DeleteSpinner id={params.id} deleting={deleteColor} url="/color/view-color" />
+  );
 
-  )
-    
-  
   //==========
   const columns = [
     { field: "name", headerName: "Color Name", width: 150 },
- 
 
     {
       field: "edit",
@@ -73,7 +69,6 @@ export default function Color() {
     },
   ];
 
-
   //=======================================================
   return (
     <>
@@ -83,7 +78,7 @@ export default function Color() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="color"
         url="/color/add-color"

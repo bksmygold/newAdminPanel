@@ -22,13 +22,13 @@ export default function Clarity() {
       <strong>
         <Button
           variant="contained"
-          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          sx={{ backgroundColor: "#ddb070", color: "white" }}
           size="small"
           onClick={() => {
             router.push(`/clarity/edit-clarity/?id=${params.id}`);
           }}
         >
-          <EditIcon />
+          Edit <EditIcon />
         </Button>
       </strong>
     );
@@ -45,7 +45,7 @@ export default function Clarity() {
     onError: (err) => console.log("Error --->", err),
   });
   if (query.isLoading) return <Loading />;
-
+console.log(query)
   //============================
   const columns = [
     {
@@ -80,7 +80,7 @@ export default function Clarity() {
       </Head>
 
       <Table
-        rows={query?.data?.data.data}
+        rows={query?.data.docs}
         columns={columns}
         create="clarity"
         url="/clarity/add-clarity"

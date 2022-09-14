@@ -8,7 +8,9 @@ import { UserCircle as UserCircleIcon } from "../icons/user-circle";
 import { Users as UsersIcon } from "../icons/users";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AddIcon from "@mui/icons-material/Add";
-import { useRouter} from 'next/router'
+import { useRouter } from 'next/router'
+import Swal from "sweetalert2";
+
 //=================================================================
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -58,6 +60,25 @@ export const DashboardNavbar = (props) => {
           <Box>
             <Button
               onClick={() => {
+                localStorage.clear();
+                Swal.fire("You have been logged out!", "Log in to continue", "error"),
+                  router.push("/login");
+              }}
+              sx={{
+                zoom: "90%",
+                backgroundColor: "#ff4b4b",
+                color: "white",
+                p: 0,
+                marginRight:1
+                // padding: "0px 12px 0px 0px",
+              }}
+            >
+              Logout
+            </Button>
+          </Box>
+          <Box>
+            <Button
+              onClick={() => {
                 router.push("/badla/view-badla");
               }}
               sx={{
@@ -68,7 +89,8 @@ export const DashboardNavbar = (props) => {
                 padding: "0px 12px 0px 0px",
               }}
             >
-              <AddIcon sx={{ marginRight: 1 }} />Badla
+              <AddIcon sx={{ marginRight: 1 }} />
+              Badla
             </Button>
           </Box>
 
@@ -78,7 +100,10 @@ export const DashboardNavbar = (props) => {
             </IconButton>
           </Tooltip>
           <Tooltip title="User">
-            <AccountCircleIcon sx={{ color: "#905e0f" }} />
+            <AccountCircleIcon
+              onClick={() => router.push("/account")}
+              sx={{ color: "#905e0f", cursor: "pointer" }}
+            />
           </Tooltip>
         </Toolbar>
       </DashboardNavbarRoot>

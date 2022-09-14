@@ -49,10 +49,7 @@ export default function Offer() {
   };
   //==========
   const deleteButton = (params) => {
-    return (
-
-      <DeleteSpinner id={params.id} deleting={deleteOffer} url="/offer/view-offer" />
-    );
+    return <DeleteSpinner id={params.id} deleting={deleteOffer} url="/offer/view-offer" />;
   };
   //==========
   const columns = [
@@ -109,7 +106,7 @@ export default function Offer() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="Offer"
         url="/offer/add-offer"

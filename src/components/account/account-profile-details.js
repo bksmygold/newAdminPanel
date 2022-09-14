@@ -7,176 +7,176 @@ import {
   CardHeader,
   Divider,
   Grid,
-  TextField
-} from '@mui/material';
+  TextField,
+  styled,
+} from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import swal from "sweetalert";
+import { updateUser, getUserById } from "src/apis/user";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { getLoggedInUser } from "src/apis/user";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
+//=======================================================
+const CustomTextField = styled(TextField)`
+  & label.Mui-focused {
+    color: #a88143;
   }
-];
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: #a88143;
+    }
+  }
+`;
+  //=======================================================
 
 export const AccountProfileDetails = (props) => {
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
+  const router = useRouter()
+  
+    const [user, setUser] = useState({});
+    useEffect(() => {
+      getLoggedInUser().then((res) => setUser(res));
+    }, []);
+    
+    //=======================================================
+  
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      email: "",
+      mobile: 0,
+    },
+    validationSchema: yup.object({
+      fullName: yup.string("Enter full name").required("full name is required"),
+      email: yup.string("Enter email").required("email is required"),
+      mobile: yup.number("Enter mobile").required("mobile is required"),
+    }),
+    onSubmit: (values) => {
+      userMutation.mutate({ data: values, id: query.data.id });
+    },
   });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
+  
+    const query = useQuery({
+      querKey: ["user", user.id],
+      queryFn: () => getLoggedInUser(),
+      onSuccess: (res) => formik.setValues(res),
+      enabled: !!user.id,
     });
-  };
+  
+    // console.log("query ---",query.data.id);
+    
+  
+    const userMutation = useMutation({
+      mutationFn: updateUser,
+      onSuccess: (res) => {
+        Swal.fire("User updated!", res.message, "success"),
+        router.push("/account")
+      },
+      onError: (err) => swal("Error !", err.message, "error"),
+    });
+
+  
+
+
+
+
+  //=======================================================
+  // const [values, setValues] = useState({
+  //   firstName: "Katarina",
+  //   lastName: "Smith",
+  //   email: "demo@devias.io",
+  //   phone: "",
+  //   state: "Alabama",
+  //   country: "USA",
+  // });
+
+  // const handleChange = (event) => {
+  //   setValues({
+  //     ...values,
+  //     [event.target.name]: event.target.value,
+  //   });
+  // };
 
   return (
-    <form
-      autoComplete="off"
-      noValidate
-      {...props}
-    >
+    <form onSubmit={formik.handleSubmit}>
       <Card>
-        <CardHeader
-          subheader="The information can be edited"
-          title="Profile"
-        />
+        <CardHeader subheader="The information can be edited" title="Profile" />
         <Divider />
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>
+              <CustomTextField
+                error={formik.touched.fullName && Boolean(formik.errors.fullName)}
+                helperText={formik.touched.fullName && formik.errors.fullName}
+                id="fullName"
                 fullWidth
-                helperText="Please specify the first name"
                 label="First name"
-                name="firstName"
-                onChange={handleChange}
+                name="fullName"
+                onChange={formik.handleChange}
                 required
-                value={values.firstName}
+                value={formik.values.fullName}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
+            <Grid item md={6} xs={12}>
+              <CustomTextField
+                error={formik.touched.mobile && Boolean(formik.errors.mobile)}
+                helperText={formik.touched.mobile && formik.errors.mobile}
+                id="mobile"
                 fullWidth
-                label="Last name"
-                name="lastName"
-                onChange={handleChange}
+                label="mobile"
+                name="mobile"
+                onChange={formik.handleChange}
                 required
-                value={values.lastName}
+                value={formik.values.mobile}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
+            <Grid item md={6} xs={12}>
+              <CustomTextField
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+                id="email"
                 fullWidth
-                label="Email Address"
+                label="Email"
                 name="email"
-                onChange={handleChange}
+                onChange={formik.handleChange}
                 required
-                value={values.email}
+                value={formik.values.email}
                 variant="outlined"
               />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Phone Number"
-                name="phone"
-                onChange={handleChange}
-                type="number"
-                value={values.phone}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Country"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Select State"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
             </Grid>
           </Grid>
         </CardContent>
         <Divider />
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            p: 2
+            display: "flex",
+            justifyContent: "flex-end",
+            p: 2,
           }}
         >
-          <Button
-            color="primary"
-            variant="contained"
-          >
+          {/* <Button sx={{ backgroundColor: "#905E0F", color: "white" }} variant="contained">
             Save details
-          </Button>
+          </Button> */}
+          <LoadingButton
+            disabled={userMutation.isLoading}
+            loading={userMutation.isLoading}
+            type="submit"
+            sx={{
+              marginTop: 2,
+              backgroundColor: "#DDB070",
+              border: "none",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#DBA251",
+              },
+            }}
+          >Save Changes</LoadingButton>
         </Box>
       </Card>
     </form>

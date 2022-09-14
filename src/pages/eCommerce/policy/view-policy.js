@@ -95,7 +95,7 @@ export default function Policy() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="Policy"
         url="/eCommerce/policy/add-policy"

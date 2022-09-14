@@ -9,12 +9,18 @@ import { theme } from "../theme";
 import "../index.css";
 import "../apis/axios.js";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 //=====================================================
 const clientSideEmotionCache = createEmotionCache();
 const queryClient = new QueryClient();
-
 //=====================================================
 const App = (props) => {
+  const router = useRouter();
+  //=====================================================
+  useEffect(() => {
+    if (!localStorage.getItem("token")) router.push("/login");
+  }, []);
   //=====================================================
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const getLayout = Component.getLayout ?? ((page) => page);

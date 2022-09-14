@@ -95,7 +95,7 @@ export default function ReturnReason() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="Return Reason"
         url="/eCommerce/returnReason/add-returnReason"

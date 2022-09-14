@@ -7,35 +7,35 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from '../../components/utility/table'
-import { useRouter } from 'next/router'
-import { getCyclePeriod,deleteCyclePeriod} from "src/apis/cyclePeriod";
+import Table from "../../components/utility/table";
+import { useRouter } from "next/router";
+import { getCyclePeriod, deleteCyclePeriod } from "src/apis/cyclePeriod";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "src/components/loading";
 import DeleteSpinner from "src/components/deleteSpinner";
 
 //=======================================================
 export default function CyclePeriod() {
-  const router = useRouter()
+  const router = useRouter();
   //=======================
-   const editButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {
-             router.push(`/cyclePeriod/edit-cyclePeriod/?id=${params.id}`);
-           }}
-         >
-           <EditIcon />
-         </Button>
-       </strong>
-     );
-   };
-   //==========
-   const deleteButton = (params) => {
+  const editButton = (params) => {
+    return (
+      <strong>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          size="small"
+          onClick={() => {
+            router.push(`/cyclePeriod/edit-cyclePeriod/?id=${params.id}`);
+          }}
+        >
+          <EditIcon />
+        </Button>
+      </strong>
+    );
+  };
+  //==========
+  const deleteButton = (params) => {
     return (
       <DeleteSpinner
         id={params.id}
@@ -43,8 +43,7 @@ export default function CyclePeriod() {
         url={"/cyclePeriod/view-cyclePeriod"}
       />
     );
-
-   };
+  };
   //=======================
   const query = useQuery({
     queryKey: "cyclePeriod",
@@ -121,7 +120,6 @@ export default function CyclePeriod() {
     },
   ];
 
-
   //=======================================================
   return (
     <>
@@ -131,7 +129,7 @@ export default function CyclePeriod() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="Cycle Period"
         url="/cyclePeriod/add-cyclePeriod"

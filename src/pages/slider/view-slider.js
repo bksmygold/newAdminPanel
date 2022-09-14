@@ -59,7 +59,7 @@ export default function Slider() {
         let result = [];
         if (params.row.typeId) {
           if (params.row.typeId.name) {
-            result.push( params.row.typeId.name);
+            result.push(params.row.typeId.name);
           }
         } else {
           result = ["Unknown"];
@@ -73,7 +73,7 @@ export default function Slider() {
       width: 250,
       renderCell: (params) => (
         <img style={{ width: "100%", height: "fit-content" }} src={params.value} />
-      ), 
+      ),
 
       editable: true,
     },
@@ -103,7 +103,7 @@ export default function Slider() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="Slider"
         url="/slider/add-slider"

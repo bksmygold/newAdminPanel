@@ -12,7 +12,7 @@ export default function userManagement() {
         <title>User Management </title>
       </Head>
 
-      <Container>
+      <Container sx={{p:5} }>
         {/* ------------------------------ */}
 
         <Typography
@@ -81,6 +81,7 @@ export default function userManagement() {
             <InfoCard
               title="Merchant"
               desc="create, update, delete merchants, commissions and manage their approvals"
+              url="/userManagement/merchant/view-merchant"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>

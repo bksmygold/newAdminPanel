@@ -1,67 +1,58 @@
 import Head from "next/head";
 import { DashboardSidebar } from "src/components/dashboard-sidebar";
 import { Box, Container, Typography, Grid, Button } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import { InfoCard } from "../../components/infoCard";
+import { DashboardLayout } from "../../../components/dashboard-layout";
+import { InfoCard } from "../../../components/infoCard";
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from "../../components/utility/table";
+import Table from "../../../components/utility/table";
 import { useRouter } from "next/router";
+import { getMerchant, deleteMerchant } from "src/apis/merchant";
 import { useQuery } from "@tanstack/react-query";
-import { getUnit, deleteUnit } from "src/apis/unit";
-import React from "react";
-import DeleteSpinner from "src/components/deleteSpinner";
 import Loading from "src/components/loading";
+import DeleteSpinner from "src/components/deleteSpinner";
 
 //=======================================================
-export default function Unit() {
+export default function Merchant() {
   const router = useRouter();
   //=======================
-
-  const query = useQuery({
-    queryKey: "Unit",
-    queryFn: () => getUnit(),
-    onSuccess: (res) => console.log("Success ---", res.message),
-    onError: (err) => console.log("Error --->", err),
-  });
-
-  if (query.isLoading) return <Loading />;
-  //===============
-
   const editButton = (params) => {
     return (
       <strong>
         <Button
           variant="contained"
-          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          sx={{ backgroundColor: "#ddb070", color: "white" }}
           size="small"
           onClick={() => {
-            router.push(`/unit/edit-unit/?id=${params.id}`);
+            router.push(`/userManagement/merchant/edit-merchant/?id=${params.id}`);
           }}
         >
-          <EditIcon />
+          Edit <EditIcon />
         </Button>
       </strong>
     );
   };
   //==========
   const deleteButton = (params) => {
-    return <DeleteSpinner id={params.id} deleting={deleteUnit} url="/unit/view-unit" />;
+    return <DeleteSpinner id={params.id} deleting={deleteMerchant} url={"/userManagement/merchant/view-merchant"} />;
   };
-  //==========
+  //=======================
+  const query = useQuery({
+    queryKey: "merchant",
+    queryFn: getMerchant,
+    onSuccess: (res) => console.log("Success ---", res.message),
+    onError: (err) => console.log("Error --->", err),
+  });
+  if (query.isLoading) return <Loading />;
+
+  //===============================
   const columns = [
     {
       field: "name",
-      headerName: "Unit Name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "conversionFactor",
-      headerName: "Conversion Factor",
-      width: 150,
+      headerName: "Merchant Name",
+      width: 250,
       editable: true,
     },
 
@@ -86,17 +77,17 @@ export default function Unit() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Unit </title>
+        <title>Dashboard | Merchant </title>
       </Head>
 
       <Table
         rows={query.data.docs}
         columns={columns}
-        create="Unit"
-        url="/unit/add-unit"
-        title="Unit View"
+        create="merchant"
+        url="/userManagement/merchant/add-merchant"
+        title="Your Merchant"
       />
     </>
   );
 }
-Unit.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Merchant.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

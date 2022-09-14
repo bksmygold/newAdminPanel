@@ -7,11 +7,11 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from '../../components/utility/table'
-import { useRouter } from 'next/router'
+import Table from "../../components/utility/table";
+import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import { getPlan, deletePlan } from "src/apis/plan";
-import React from 'react'
+import React from "react";
 import DeleteSpinner from "src/components/deleteSpinner";
 import Loading from "src/components/loading";
 
@@ -27,9 +27,8 @@ export default function Plan() {
     onError: (err) => console.log("Error --->", err),
   });
 
-  if (query.isLoading) return <Loading/>
+  if (query.isLoading) return <Loading />;
   //===============
-
 
   const editButton = (params) => {
     return (
@@ -100,7 +99,6 @@ export default function Plan() {
         return result.join(", ");
       },
     },
- 
 
     {
       field: "edit",
@@ -126,7 +124,13 @@ export default function Plan() {
         <title>Dashboard | Plan </title>
       </Head>
 
-      <Table rows={query.data.data.data} columns={columns} create="Plan" url="/plan/add-plan" title="Plan View" />
+      <Table
+        rows={query.data.docs}
+        columns={columns}
+        create="Plan"
+        url="/plan/add-plan"
+        title="Plan View"
+      />
     </>
   );
 }

@@ -13,7 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import DeleteSpinner from "src/components/deleteSpinner";
 import { getColor, deleteColor } from "src/apis/color";
 import Loading from "src/components/loading";
-import { getCustomDuty,deleteCustomDuty } from "src/apis/customDuty";
+import { getCustomDuty, deleteCustomDuty } from "src/apis/customDuty";
 
 //=======================================================
 export default function CustomDuty() {
@@ -25,9 +25,9 @@ export default function CustomDuty() {
     onSuccess: (res) => console.log("Success ---", res.message),
     onError: (err) => console.log("Error --->", err),
   });
-  if (query.isLoading) return <Loading />
-  
-  console.log('====>',query)
+  if (query.isLoading) return <Loading />;
+
+  console.log("====>", query);
   //=======================
   const editButton = (params) => {
     return (
@@ -49,8 +49,7 @@ export default function CustomDuty() {
   const deleteButton = (params) => (
     <DeleteSpinner id={params.id} deleting={deleteCustomDuty} url="/customDuty/view-customDuty" />
   );
-    
-  
+
   //==========
   const columns = [
     { field: "name", headerName: "Custom Duty Name", width: 150 },
@@ -73,7 +72,6 @@ export default function CustomDuty() {
     },
   ];
 
-
   //=======================================================
   return (
     <>
@@ -83,7 +81,7 @@ export default function CustomDuty() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="Custom Duty"
         url="/customDuty/add-customDuty"

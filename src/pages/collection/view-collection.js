@@ -7,38 +7,43 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from '../../components/utility/table'
-import { useRouter } from 'next/router'
-import { getCollection ,deleteCollection} from "src/apis/collection";
+import Table from "../../components/utility/table";
+import { useRouter } from "next/router";
+import { getCollection, deleteCollection } from "src/apis/collection";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "src/components/loading";
 import DeleteSpinner from "src/components/deleteSpinner";
 
 //=======================================================
 export default function Collection() {
-  const router = useRouter()
+  const router = useRouter();
   //=======================
-   const editButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {
-             router.push(`/collection/edit-collection/?id=${params.id}`);
-           }}
-         >
-           <EditIcon />
-         </Button>
-       </strong>
-     );
-   };
-   //==========
-   const deleteButton = (params) => {
-    return <DeleteSpinner id={params.id} deleting={deleteCollection} url={"/collection/view-collection"} />;
-
-   };
+  const editButton = (params) => {
+    return (
+      <strong>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          size="small"
+          onClick={() => {
+            router.push(`/collection/edit-collection/?id=${params.id}`);
+          }}
+        >
+          <EditIcon />
+        </Button>
+      </strong>
+    );
+  };
+  //==========
+  const deleteButton = (params) => {
+    return (
+      <DeleteSpinner
+        id={params.id}
+        deleting={deleteCollection}
+        url={"/collection/view-collection"}
+      />
+    );
+  };
   //=======================
   const query = useQuery({
     queryKey: "Collections",
@@ -57,7 +62,6 @@ export default function Collection() {
       editable: true,
     },
 
-
     {
       field: "edit",
       headerName: "Edit",
@@ -74,7 +78,6 @@ export default function Collection() {
     },
   ];
 
-
   //=======================================================
   return (
     <>
@@ -84,7 +87,7 @@ export default function Collection() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="collection"
         url="/collection/add-collection"

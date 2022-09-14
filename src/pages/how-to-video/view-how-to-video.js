@@ -108,7 +108,7 @@ export default function ViewVideo() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="How-To-Video"
         url="/how-to-video/add-how-to-video"

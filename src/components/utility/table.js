@@ -49,21 +49,23 @@ export default function Table(props) {
       {/* ------------------------------ */}
       <Grid sx={{ flexDirection: "column" }} container>
         <Grid item xl={3} lg={3} sm={6} xs={12}>
-          <Typography variant="h6" sx={{ color: "#8B5704", marginBottom: 3 }}>
+          <Typography variant="h5" sx={{ color: "#8B5704", marginBottom: 3 }}>
             {props.title}
           </Typography>
         </Grid>
-        <Grid item xl={3} lg={3} sm={6} xs={12}>
-          <Button
-            onClick={() => {
-              router.push(props.url);
-            }}
-            sx={{ backgroundColor: "#8B5704", color: "white" }}
-          >
-            Create {props.create}
-            <AddIcon sx={{marginLeft:1} } />
-          </Button>
-        </Grid>
+        {props.noButton ? null : (
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <Button
+              onClick={() => {
+                router.push(props.url);
+              }}
+              sx={{ backgroundColor: "#8B5704", color: "white" }}
+            >
+              Create {props.create}
+              <AddIcon sx={{ marginLeft: 1 }} />
+            </Button>
+          </Grid>
+        )}
       </Grid>
       {/* ------------------------------ */}
       <div

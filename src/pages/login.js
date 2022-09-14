@@ -16,6 +16,12 @@ import {
 } from "@mui/material";
 import { CheckBox } from "@mui/icons-material";
 import Image from "next/image";
+import { useMutation } from "@tanstack/react-query";
+import { validateLogin } from "src/apis/login";
+import swal from "sweetalert";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Swal from "sweetalert2";
+
 //========================================
 const CustomTextField = styled(TextField)`
   & label.Mui-focused {
@@ -28,26 +34,46 @@ const CustomTextField = styled(TextField)`
   }
 `;
 //========================================
-const Login  = () => {
+const Login = () => {
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
-      username: "",
+      email: "",
       password: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string().max(255).required("First name is required"),
+      email: Yup.string().email().required("Email is required"),
       password: Yup.string().max(255).required("Password is required"),
     }),
-    onSubmit: () => {
-      router.push("/mfa");
+    onSubmit: (values) => {
+      loginMutation.mutate(values);
+      // router.push("/mfa");
     },
   });
+
+  const loginMutation = useMutation({
+    mutationFn: validateLogin,
+    onSuccess: (res) => {
+      if (res === "OK")
+        Swal.fire("Credentials verified !", "Continue with the MFA code verification", "success"),
+          router.push({
+            pathname: "/mfa",
+            query: formik.values,
+          });
+    },
+    onError: (err) =>
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err.message,
+      }),
+  });
+
   //========================================
   return (
     <>
       <Head>
-        <title>Register | MyGold Login</title>
+        <title>Login | Bks MyGold </title>
       </Head>
       <Box
         component="main"
@@ -84,19 +110,19 @@ const Login  = () => {
               </Typography>
 
               <Typography color="textSecondary" sx={{ marginTop: 1 }} gutterBottom variant="body2">
-                Use your email to log in to your account
+                Use your credentials to log in to your account
               </Typography>
             </Box>
             <CustomTextField
-              error={Boolean(formik.touched.username && formik.errors.username)}
+              error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
-              helperText={formik.touched.username && formik.errors.username}
-              label="Username/email"
+              helperText={formik.touched.email && formik.errors.email}
+              label="email"
               margin="normal"
-              name="username"
+              name="email"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.username}
+              value={formik.values.email}
               variant="outlined"
             />
 
@@ -115,16 +141,23 @@ const Login  = () => {
             />
 
             <Box sx={{ py: 2 }}>
-              <Button
-                sx={{ backgroundColor: "#ddb070", color: "white" }}
-                disabled={formik.isSubmitting}
-                fullWidth
-                size="large"
+              <LoadingButton
+                disabled={loginMutation.isLoading}
+                loading={loginMutation.isLoading}
                 type="submit"
-                variant="contained"
+                fullWidth
+                sx={{
+                  marginTop: 2,
+                  backgroundColor: "#DDB070",
+                  border: "none",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#DBA251",
+                  },
+                }}
               >
                 Sign in
-              </Button>
+              </LoadingButton>
             </Box>
             <Typography color="textSecondary" variant="body2">
               <NextLink href="/login" passHref>

@@ -11,7 +11,7 @@ import Table from "../../components/utility/table";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import DeleteSpinner from "src/components/deleteSpinner";
-import { deleteShape ,getShape} from "src/apis/shape";
+import { deleteShape, getShape } from "src/apis/shape";
 import Loading from "src/components/loading";
 //=======================================================
 export default function Shape() {
@@ -44,11 +44,10 @@ export default function Shape() {
     onSuccess: (res) => console.log("Success ---", res.message),
     onError: (err) => console.log("Error --->", err),
   });
-if(query.isLoading)return <Loading/>
+  if (query.isLoading) return <Loading />;
   //===============================
   const columns = [
     { field: "name", headerName: "Shape Name", width: 150 },
-   
 
     {
       field: "edit",
@@ -66,7 +65,6 @@ if(query.isLoading)return <Loading/>
     },
   ];
 
-
   //=======================================================
   return (
     <>
@@ -76,7 +74,7 @@ if(query.isLoading)return <Loading/>
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="shape"
         url="/shape/add-shape"

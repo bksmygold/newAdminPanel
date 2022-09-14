@@ -126,7 +126,7 @@ export default function ReferralType() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="Referral Type"
         url="/promotionalSetting/referralType/add-referralType"

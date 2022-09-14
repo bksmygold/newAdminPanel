@@ -7,38 +7,37 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Table from '../../components/utility/table'
-import { useRouter } from 'next/router'
-import { getItem ,deleteItem} from "src/apis/item";
+import Table from "../../components/utility/table";
+import { useRouter } from "next/router";
+import { getItem, deleteItem } from "src/apis/item";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "src/components/loading";
 import DeleteSpinner from "src/components/deleteSpinner";
 
 //=======================================================
 export default function Item() {
-  const router = useRouter()
+  const router = useRouter();
   //=======================
-   const editButton = (params) => {
-     return (
-       <strong>
-         <Button
-           variant="contained"
-           sx={{ backgroundColor: "white", color: "#8B5704" }}
-           size="small"
-           onClick={() => {
-             router.push(`/item/edit-item/?id=${params.id}`);
-           }}
-         >
-           <EditIcon />
-         </Button>
-       </strong>
-     );
-   };
-   //==========
-   const deleteButton = (params) => {
+  const editButton = (params) => {
+    return (
+      <strong>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          size="small"
+          onClick={() => {
+            router.push(`/item/edit-item/?id=${params.id}`);
+          }}
+        >
+          <EditIcon />
+        </Button>
+      </strong>
+    );
+  };
+  //==========
+  const deleteButton = (params) => {
     return <DeleteSpinner id={params.id} deleting={deleteItem} url={"/item/view-item"} />;
-
-   };
+  };
   //=======================
   const query = useQuery({
     queryKey: "Item",
@@ -57,7 +56,6 @@ export default function Item() {
       editable: true,
     },
 
-
     {
       field: "edit",
       headerName: "Edit",
@@ -74,7 +72,6 @@ export default function Item() {
     },
   ];
 
-
   //=======================================================
   return (
     <>
@@ -84,7 +81,7 @@ export default function Item() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="item"
         url="/item/add-item"

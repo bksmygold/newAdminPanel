@@ -50,7 +50,6 @@ export default function Ornament() {
   //==========
   const deleteButton = (params) => {
     return (
-
       <DeleteSpinner id={params.id} deleting={deletetOrnament} url="/ornament/view-ornament" />
     );
   };
@@ -81,7 +80,7 @@ export default function Ornament() {
       </Head>
 
       <Table
-        rows={query.data.data.data}
+        rows={query.data.docs}
         columns={columns}
         create="Ornament"
         url="/ornament/add-ornament"
