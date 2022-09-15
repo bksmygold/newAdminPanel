@@ -13,9 +13,9 @@ export const postOrnament = (name) => {
 };
 
 export const updateOrnament = ({ data,id}) => {
-  return axios.put(`/ornament/update/${id}`, data);
+  return axios.patch(`/ornament/${id}`, data);
 };
 
 export const deletetOrnament = (id) => {
-  return axios.delete(`/ornament/delete/${id}`);
+  return axios.delete(`/ornament/${id}`);
 };

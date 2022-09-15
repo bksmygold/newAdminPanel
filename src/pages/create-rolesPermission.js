@@ -10,7 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Table from "../components/utility/table";
 import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { getUnit, deleteUnit } from "src/apis/unit";
+import { getUnit, deleteUnit, postUnit } from "src/apis/unit";
 import React, { useState } from "react";
 import DeleteSpinner from "src/components/deleteSpinner";
 import Loading from "src/components/loading";
@@ -19,6 +19,8 @@ import * as yup from "yup";
 import swal from "sweetalert";
 import { RoleCard } from "../components/roleCard";
 import { PermissionCard } from "../components/permissionCard";
+import LoadingButton from "@mui/lab/LoadingButton";
+
 //=============================
 const CustomTextField = styled(TextField)`
   & label.Mui-focused {
@@ -98,7 +100,29 @@ export default function RolesPermission() {
   const [reports, setReports] = useState(false);
 
   //=======================
-// 
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      permissions: [],
+    },
+    validationSchema: yup.object({
+      name: yup.string("Enter Unit Name").required("Unit is required"),
+      conversionFactor: yup
+        .number("Enter Conversion Factor")
+        .required("Conversion Factor is required"),
+    }),
+    onSubmit: (values) => {
+      roleMutation.mutate(values);
+    },
+  });
+
+  const roleMutation = useMutation({
+    mutationFn: postUnit,
+    onSuccess: (res) => {
+      swal("Unit Added !", res.message, "success"), router.push("/unit/view-unit");
+    },
+    onError: (err) => swal("Erro !", err.message, "error"),
+  });
   //=======================================================
   return (
     <>
@@ -275,6 +299,26 @@ export default function RolesPermission() {
           </Grid>
         </>
       ) : null}
+
+      <LoadingButton
+        disabled={roleMutation.isLoading}
+        loading={roleMutation.isLoading}
+        type="submit"
+        sx={{
+          backgroundColor: "#DDB070",
+          width:"50%",
+          margin:"auto",
+          marginTop: 2,
+          marginBottom: 8,
+          border: "none",
+          color: "white",
+          "&:hover": {
+            backgroundColor: "#DBA251",
+          },
+        }}
+      >
+        Add Role
+      </LoadingButton>
     </>
   );
 }

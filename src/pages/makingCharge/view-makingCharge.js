@@ -1,19 +1,19 @@
-import Head from "next/head";
-import { DashboardSidebar } from "src/components/dashboard-sidebar";
-import { Box, Container, Typography, Grid, Button } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import { InfoCard } from "../../components/infoCard";
-import { DataGrid, gridClasses } from "@mui/x-data-grid";
-import { alpha, styled } from "@mui/material/styles";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Table from "../../components/utility/table";
-import { useRouter } from "next/router";
-import { useQuery } from "@tanstack/react-query";
-import { getMakingCharge, deleteMakingCharge } from "src/apis/makingCharge";
-import React from "react";
-import DeleteSpinner from "src/components/deleteSpinner";
-import Loading from "src/components/loading";
+import Head from 'next/head';
+import { DashboardSidebar } from 'src/components/dashboard-sidebar';
+import { Box, Container, Typography, Grid, Button } from '@mui/material';
+import { DashboardLayout } from '../../components/dashboard-layout';
+import { InfoCard } from '../../components/infoCard';
+import { DataGrid, gridClasses } from '@mui/x-data-grid';
+import { alpha, styled } from '@mui/material/styles';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Table from '../../components/utility/table';
+import { useRouter } from 'next/router';
+import { useQuery } from '@tanstack/react-query';
+import { getMakingCharge, deleteMakingCharge } from 'src/apis/makingCharge';
+import React from 'react';
+import DeleteSpinner from 'src/components/deleteSpinner';
+import Loading from 'src/components/loading';
 
 //=======================================================
 export default function MakingCharge() {
@@ -21,10 +21,10 @@ export default function MakingCharge() {
   //=======================
 
   const query = useQuery({
-    queryKey: "makingCharge",
+    queryKey: 'makingCharge',
     queryFn: () => getMakingCharge(),
-    onSuccess: (res) => console.log("Success ---", res.message),
-    onError: (err) => console.log("Error --->", err),
+    onSuccess: (res) => console.log('Success ---', res.message),
+    onError: (err) => console.log('Error --->', err),
   });
 
   if (query.isLoading) return <Loading />;
@@ -35,7 +35,7 @@ export default function MakingCharge() {
       <strong>
         <Button
           variant="contained"
-          sx={{ backgroundColor: "#ddb070", color: "white" }}
+          sx={{ backgroundColor: '#ddb070', color: 'white' }}
           size="small"
           onClick={() => {
             router.push(`/makingCharge/edit-makingCharge/?id=${params.id}`);
@@ -59,8 +59,8 @@ export default function MakingCharge() {
   //==========
   const columns = [
     {
-      field: "supplier.name",
-      headerName: "Supplier Name",
+      field: 'supplier.name',
+      headerName: 'Supplier Name',
       width: 150,
       editable: true,
       valueGetter: (params) => {
@@ -70,26 +70,26 @@ export default function MakingCharge() {
             result.push(params.row.supplier.name);
           }
         } else {
-          result = ["Empty"];
+          result = ['Empty'];
         }
-        return result.join(", ");
+        return result.join(', ');
       },
     },
     {
-      field: "variety",
-      headerName: "Variety",
+      field: 'variety',
+      headerName: 'Variety',
       width: 150,
       editable: true,
     },
     {
-      field: "item",
-      headerName: "Item",
+      field: 'item',
+      headerName: 'Item',
       width: 150,
       editable: true,
     },
     {
-      field: "productType.name",
-      headerName: "Product Type",
+      field: 'productType.name',
+      headerName: 'Product Type',
       width: 200,
       editable: true,
       valueGetter: (params) => {
@@ -99,14 +99,14 @@ export default function MakingCharge() {
             result.push(params.row.productType.name);
           }
         } else {
-          result = ["Empty"];
+          result = ['Empty'];
         }
-        return result.join(", ");
+        return result.join(', ');
       },
     },
     {
-      field: "metalGroup.metal.name",
-      headerName: "Metal Group Id",
+      field: 'metalGroup.metal.name',
+      headerName: 'Metal Group Id',
       width: 200,
       editable: true,
       valueGetter: (params) => {
@@ -114,32 +114,36 @@ export default function MakingCharge() {
         if (params.row.metalGroup) {
           if (params.row.metalGroup.metal) {
             if (params.row.metalGroup.metal.name) {
-              result.push(params.row.metalGroup.shortName + "" + params.row.metalGroup.metal.name);
+              result.push(
+                params.row.metalGroup.shortName +
+                  '' +
+                  params.row.metalGroup.metal.name
+              );
             }
           }
         } else {
-          result = ["Empty"];
+          result = ['Empty'];
         }
-        return result.join(", ");
+        return result.join(', ');
       },
     },
 
     {
-      field: "edit",
-      headerName: "Edit",
+      field: 'edit',
+      headerName: 'Edit',
       width: 150,
       editable: true,
       renderCell: editButton,
     },
     {
-      field: "delete",
-      headerName: "Delete",
+      field: 'delete',
+      headerName: 'Delete',
       width: 150,
       editable: true,
       renderCell: deleteButton,
     },
   ];
-  console.log("MC ---", query.data.data.data);
+  console.log('MC ---', query.data.data.data);
   //=======================================================
   return (
     <>

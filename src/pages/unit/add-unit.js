@@ -9,8 +9,8 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import swal from "sweetalert";
-import { postUnit} from "src/apis/unit";
-import { useMutation} from '@tanstack/react-query'
+import { postUnit } from "src/apis/unit";
+import { useMutation } from "@tanstack/react-query";
 //=======================================================
 const CustomTextField = styled(TextField)`
   & label.Mui-focused {
@@ -30,7 +30,7 @@ export default function AddUnit() {
   const formik = useFormik({
     initialValues: {
       name: "",
-      conversionFactor: '',
+      conversionFactor: "",
     },
     validationSchema: yup.object({
       name: yup.string("Enter Unit Name").required("Unit is required"),
@@ -39,19 +39,17 @@ export default function AddUnit() {
         .required("Conversion Factor is required"),
     }),
     onSubmit: (values) => {
-      unitMutation.mutate(values)
+      unitMutation.mutate(values);
     },
   });
 
-    const unitMutation = useMutation({
-      mutationFn: postUnit,
-      onSuccess: (res) => {
-        swal("Unit Added !", res.message, "success"),
-          router.push("/unit/view-unit");
-      },
-      onError: (err) => 
-      swal("Erro !", err.message, "error"),
-    });
+  const unitMutation = useMutation({
+    mutationFn: postUnit,
+    onSuccess: (res) => {
+      swal("Unit Added !", res.message, "success"), router.push("/unit/view-unit");
+    },
+    onError: (err) => swal("Erro !", err.message, "error"),
+  });
   //=======================================================
   return (
     <>
@@ -104,19 +102,18 @@ export default function AddUnit() {
           container
         >
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <Typography
-              variant="body1"
-              sx={{
-                color: "#8B5704",
-                marginBottom: 2,
-                marginTop: 2,
-                fontWeight: 600,
-              }}
-            >
-              Unit Type Name
-            </Typography>
-
             <form onSubmit={formik.handleSubmit}>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#8B5704",
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Unit Type Name
+              </Typography>
               <CustomTextField
                 error={formik.touched.name && Boolean(formik.errors.name)}
                 helperText={formik.touched.name && formik.errors.name}

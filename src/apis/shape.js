@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
 export const getShape = () => {
-  return axios.post("/shape/list");
+  return axios.post('/shape/list');
 };
 
 export const getShapeById = (id) => {
@@ -9,13 +9,13 @@ export const getShapeById = (id) => {
 };
 
 export const postShape = (data) => {
-  return axios.post("/shape/create", data);
+  return axios.post('/shape/create', data);
 };
 
 export const updateShape = ({ data, id }) => {
-  return axios.put(`/shape/update/${id}`, data);
+  return axios.patch(`/shape/${id}`, data);
 };
 
 export const deleteShape = (id) => {
-  return axios.delete(`/shape/delete/${id}`);
+  return axios.delete(`/shape/${id}`);
 };

@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
 export const getBadla = () => {
-  return axios.post("/badla/list");
+  return axios.post('/badla/list');
 };
 
 export const getBadlaById = (id) => {
@@ -9,11 +9,11 @@ export const getBadlaById = (id) => {
 };
 
 export const postBadla = (data) => {
-  return axios.post("/badla/create", data);
+  return axios.post('/badla/create', data);
 };
 
 export const updateBadla = ({ data, id }) => {
-  return axios.put(`/badla/update/${id}`, data);
+  return axios.patch(`/badla/update/${id}`, data);
 };
 
 export const deleteBadla = (id) => {

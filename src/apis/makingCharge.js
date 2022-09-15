@@ -1,14 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
-export const getMakingCharge= () => {
-  return axios.post("/makingcharge/list", {
+export const getMakingCharge = () => {
+  return axios.post('/makingcharge/list', {
     options: {
       populate: [
-        "supplier",
-        "productType",
+        'supplier',
+        'productType',
         {
-          path: "metalGroup",
-          populate: "metal",
+          path: 'metalGroup',
+          populate: 'metal',
         },
       ],
     },
@@ -20,11 +20,11 @@ export const getMakingChargeById = (id) => {
 };
 
 export const postMakingCharge = (data) => {
-  return axios.post("/makingcharge/create", data);
+  return axios.post('/makingcharge/create', data);
 };
 
 export const updateMakingCharge = ({ data, id }) => {
-  return axios.put(`/makingcharge/update/${id}`, data);
+  return axios.patch(`/makingcharge/update/${id}`, data);
 };
 
 export const deleteMakingCharge = (id) => {

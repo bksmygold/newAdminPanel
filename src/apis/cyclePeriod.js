@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
 export const getCyclePeriod = () => {
-  return axios.post("/cycleperiod/list");
+  return axios.post('/cycleperiod/list');
 };
 
 export const getCyclePeriodById = (id) => {
@@ -9,11 +9,11 @@ export const getCyclePeriodById = (id) => {
 };
 
 export const postCyclePeriod = (data) => {
-  return axios.post("/cycleperiod/create", data);
+  return axios.post('/cycleperiod/create', data);
 };
 
 export const updateCyclePeriod = ({ data, id }) => {
-  return axios.put(`/cycleperiod/update/${id}`, data);
+  return axios.patch(`/cycleperiod/update/${id}`, data);
 };
 
 export const deleteCyclePeriod = (id) => {

@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
 export const getPlan = () => {
-  return axios.post("/plan/list");
+  return axios.post('/plan/list');
 };
 
 export const getPlanById = (id) => {
@@ -9,11 +9,11 @@ export const getPlanById = (id) => {
 };
 
 export const postPlan = (data) => {
-  return axios.post("/plan/create", data);
+  return axios.post('/plan/create', data);
 };
 
 export const updatePlan = ({ data, id }) => {
-  return axios.put(`/plan/update/${id}`, data);
+  return axios.patch(`/plan/update/${id}`, data);
 };
 
 export const deletePlan = (id) => {

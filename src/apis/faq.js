@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
 export const getFaq = () => {
-  return axios.post("/faq/list");
+  return axios.post('/faq/list');
 };
 
 export const getFaqById = (id) => {
@@ -9,13 +9,13 @@ export const getFaqById = (id) => {
 };
 
 export const postFaq = (data) => {
-  return axios.post("/faq/create", data);
+  return axios.post('/faq/create', data);
 };
 
 export const updateFaq = ({ data, id }) => {
-  return axios.put(`/faq/update/${id}`, data);
+  return axios.patch(`/faq/${id}`, data);
 };
 
 export const deleteFaq = (id) => {
-  return axios.delete(`/faq/delete/${id}`);
+  return axios.delete(`/faq/${id}`);
 };

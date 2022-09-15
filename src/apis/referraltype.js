@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
 export const getReferralType = () => {
-  return axios.post("/referralType/list");
+  return axios.post('/referralType/list');
 };
 
 export const getReferralTypeById = (id) => {
@@ -9,11 +9,11 @@ export const getReferralTypeById = (id) => {
 };
 
 export const postReferralType = (data) => {
-  return axios.post("/referralType/create", data);
+  return axios.post('/referralType/create', data);
 };
 
 export const updateReferralType = ({ data, id }) => {
-  return axios.put(`/referralType/update/${id}`, data);
+  return axios.patch(`/referralType/update/${id}`, data);
 };
 
 export const deleteReferralType = (id) => {

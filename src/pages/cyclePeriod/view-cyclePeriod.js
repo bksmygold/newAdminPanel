@@ -1,18 +1,18 @@
-import Head from "next/head";
-import { DashboardSidebar } from "src/components/dashboard-sidebar";
-import { Box, Container, Typography, Grid, Button } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import { InfoCard } from "../../components/infoCard";
-import { DataGrid, gridClasses } from "@mui/x-data-grid";
-import { alpha, styled } from "@mui/material/styles";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Table from "../../components/utility/table";
-import { useRouter } from "next/router";
-import { getCyclePeriod, deleteCyclePeriod } from "src/apis/cyclePeriod";
-import { useQuery } from "@tanstack/react-query";
-import Loading from "src/components/loading";
-import DeleteSpinner from "src/components/deleteSpinner";
+import Head from 'next/head';
+import { DashboardSidebar } from 'src/components/dashboard-sidebar';
+import { Box, Container, Typography, Grid, Button } from '@mui/material';
+import { DashboardLayout } from '../../components/dashboard-layout';
+import { InfoCard } from '../../components/infoCard';
+import { DataGrid, gridClasses } from '@mui/x-data-grid';
+import { alpha, styled } from '@mui/material/styles';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Table from '../../components/utility/table';
+import { useRouter } from 'next/router';
+import { getCyclePeriod, deleteCyclePeriod } from 'src/apis/cyclePeriod';
+import { useQuery } from '@tanstack/react-query';
+import Loading from 'src/components/loading';
+import DeleteSpinner from 'src/components/deleteSpinner';
 
 //=======================================================
 export default function CyclePeriod() {
@@ -23,7 +23,7 @@ export default function CyclePeriod() {
       <strong>
         <Button
           variant="contained"
-          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          sx={{ backgroundColor: 'white', color: '#8B5704' }}
           size="small"
           onClick={() => {
             router.push(`/cyclePeriod/edit-cyclePeriod/?id=${params.id}`);
@@ -40,80 +40,80 @@ export default function CyclePeriod() {
       <DeleteSpinner
         id={params.id}
         deleting={deleteCyclePeriod}
-        url={"/cyclePeriod/view-cyclePeriod"}
+        url={'/cyclePeriod/view-cyclePeriod'}
       />
     );
   };
   //=======================
   const query = useQuery({
-    queryKey: "cyclePeriod",
+    queryKey: 'cyclePeriod',
     queryFn: getCyclePeriod,
-    onSuccess: (res) => console.log("Success ---", res.message),
-    onError: (err) => console.log("Error --->", err),
+    onSuccess: (res) => console.log('Success ---', res.message),
+    onError: (err) => console.log('Error --->', err),
   });
   if (query.isLoading) return <Loading />;
 
   //===============================
   const columns = [
     {
-      field: "name",
-      headerName: "Cycle Period Name",
+      field: 'name',
+      headerName: 'Cycle Period Name',
       width: 250,
       editable: true,
     },
     {
-      field: "lockinPeriod",
-      headerName: "Locking Period",
+      field: 'lockinPeriod',
+      headerName: 'Locking Period',
       width: 250,
       editable: true,
     },
     {
-      field: "gracePeriod",
-      headerName: "Grace Period",
+      field: 'gracePeriod',
+      headerName: 'Grace Period',
       width: 250,
       editable: true,
     },
     {
-      field: "cycle",
-      headerName: "Cycle Period",
+      field: 'cycle',
+      headerName: 'Cycle Period',
       width: 250,
       editable: true,
     },
     {
-      field: "maxSkip",
-      headerName: "Maximum Skip",
+      field: 'maxSkip',
+      headerName: 'Maximum Skip',
       width: 250,
       editable: true,
     },
     {
-      field: "maxUnpaidInvestment",
-      headerName: "Max. Unpaid Investment",
+      field: 'maxUnpaidInvestment',
+      headerName: 'Max. Unpaid Investment',
       width: 250,
       editable: true,
     },
     {
-      field: "maxUnpaidSkip",
-      headerName: "Max. Unpaid skip",
+      field: 'maxUnpaidSkip',
+      headerName: 'Max. Unpaid skip',
       width: 250,
       editable: true,
     },
     {
-      field: "shortName",
-      headerName: "Short Name",
+      field: 'shortName',
+      headerName: 'Short Name',
       width: 250,
       editable: true,
     },
 
     {
-      field: "edit",
-      headerName: "Edit",
+      field: 'edit',
+      headerName: 'Edit',
       width: 150,
       editable: true,
       renderCell: editButton,
     },
     {
-      field: "delete",
-      headerName: "Delete",
+      field: 'delete',
+      headerName: 'Delete',
       width: 150,
       editable: true,
       renderCell: deleteButton,

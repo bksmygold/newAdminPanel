@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
 export const getColor = () => {
-  return axios.post("/colour/list");
+  return axios.post('/colour/list');
 };
 
 export const getColorById = (id) => {
@@ -9,13 +9,13 @@ export const getColorById = (id) => {
 };
 
 export const postColor = (data) => {
-  return axios.post("/colour/create", data);
+  return axios.post('/colour/create', data);
 };
 
 export const updateColor = ({ data, id }) => {
-  return axios.put(`/colour/update/${id}`, data);
+  return axios.patch(`/colour/${id}`, data);
 };
 
 export const deleteColor = (id) => {
-  return axios.delete(`/colour/delete/${id}`);
+  return axios.delete(`/colour/${id}`);
 };

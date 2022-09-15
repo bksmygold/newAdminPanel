@@ -17,6 +17,7 @@ import { RetailCard } from "../components/dashboard/myGoldRetail";
 import { PeopleCard } from "../components/dashboard/myGoldPeople";
 import { FinancialsCard } from "src/components/dashboard/myGoldFinancials";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 //====================================================================
 const Dashboard = () => {
@@ -28,7 +29,11 @@ const Dashboard = () => {
     color: theme.palette.text.secondary,
   }));
 
-  const router = useRouter()
+  const router = useRouter();
+  //=====================================================
+  // useEffect(() => {
+  //   if (localStorage.getItem("token") === null) router.push("/login");
+  // }, []);
   //====================================================================
   return (
     <>
@@ -123,9 +128,11 @@ const Dashboard = () => {
             sx={{
               marginTop: 5,
               marginBottom: 1,
-              cursor:"pointer"
+              cursor: "pointer",
             }}
-            onClick={() => { router.push("/myGoldFinancials");}}
+            onClick={() => {
+              router.push("/myGoldFinancials");
+            }}
           >
             MyGold Financials
           </Typography>
@@ -229,7 +236,7 @@ const Dashboard = () => {
           {/* -----------   My Gold Inventory------------------- */}
 
           {/* <Grid item lg={8} md={12} xl={9} xs={12}> */}
-            <Sales />
+          <Sales />
           {/* </Grid> */}
         </Container>
       </Box>

@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
 export const getProductType = () => {
-  return axios.post("/productType/list");
+  return axios.post('/productType/list');
 };
 
 export const getProductTypeById = (id) => {
@@ -9,13 +9,13 @@ export const getProductTypeById = (id) => {
 };
 
 export const postProductType = (data) => {
-  return axios.post("/productType/create", data);
+  return axios.post('/productType/create', data);
 };
 
 export const updateProductType = ({ data, id }) => {
-  return axios.put(`/productType/update/${id}`, data);
+  return axios.patch(`/productType/${id}`, data);
 };
 
-export const deleteProductType= (id) => {
-  return axios.delete(`/productType/delete/${id}`);
+export const deleteProductType = (id) => {
+  return axios.delete(`/productType/${id}`);
 };

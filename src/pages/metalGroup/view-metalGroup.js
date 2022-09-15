@@ -1,18 +1,18 @@
-import Head from "next/head";
-import { DashboardSidebar } from "src/components/dashboard-sidebar";
-import { Box, Container, Typography, Grid, Button } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import { InfoCard } from "../../components/infoCard";
-import { DataGrid, gridClasses } from "@mui/x-data-grid";
-import { alpha, styled } from "@mui/material/styles";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Table from "../../components/utility/table";
-import { useRouter } from "next/router";
-import { getMetalGroup, deleteMetalGroup } from "src/apis/metalGroup";
-import { useQuery } from "@tanstack/react-query";
-import Loading from "src/components/loading";
-import DeleteSpinner from "src/components/deleteSpinner";
+import Head from 'next/head';
+import { DashboardSidebar } from 'src/components/dashboard-sidebar';
+import { Box, Container, Typography, Grid, Button } from '@mui/material';
+import { DashboardLayout } from '../../components/dashboard-layout';
+import { InfoCard } from '../../components/infoCard';
+import { DataGrid, gridClasses } from '@mui/x-data-grid';
+import { alpha, styled } from '@mui/material/styles';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Table from '../../components/utility/table';
+import { useRouter } from 'next/router';
+import { getMetalGroup, deleteMetalGroup } from 'src/apis/metalGroup';
+import { useQuery } from '@tanstack/react-query';
+import Loading from 'src/components/loading';
+import DeleteSpinner from 'src/components/deleteSpinner';
 
 //=======================================================
 export default function MetalGroup() {
@@ -23,7 +23,7 @@ export default function MetalGroup() {
       <strong>
         <Button
           variant="contained"
-          sx={{ backgroundColor: "white", color: "#8B5704" }}
+          sx={{ backgroundColor: 'white', color: '#8B5704' }}
           size="small"
           onClick={() => {
             router.push(`/metalGroup/edit-metalGroup/?id=${params.id}`);
@@ -40,74 +40,74 @@ export default function MetalGroup() {
       <DeleteSpinner
         id={params.id}
         deleting={deleteMetalGroup}
-        url={"/metalGroup/view-metalGroup"}
+        url={'/metalGroup/view-metalGroup'}
       />
     );
   };
   //=======================
   const query = useQuery({
-    queryKey: "Metal Group",
+    queryKey: 'Metal Group',
     queryFn: getMetalGroup,
-    onSuccess: (res) => console.log("Success ---", res.message),
-    onError: (err) => console.log("Error --->", err),
+    onSuccess: (res) => console.log('Success ---', res.message),
+    onError: (err) => console.log('Error --->', err),
   });
   if (query.isLoading) return <Loading />;
 
   //===============================
   const columns = [
     {
-      field: "shortName",
-      headerName: "Metal Group Short Name",
+      field: 'shortName',
+      headerName: 'Metal Group Short Name',
       width: 250,
       editable: true,
     },
     {
-      field: "purity",
-      headerName: "Purity",
+      field: 'purity',
+      headerName: 'Purity',
       width: 250,
       editable: true,
     },
     {
-      field: "roundingDigits",
-      headerName: "Rounding Digits",
+      field: 'roundingDigits',
+      headerName: 'Rounding Digits',
       width: 250,
       editable: true,
     },
     {
-      field: "metal",
-      headerName: "Metal Name",
+      field: 'metal',
+      headerName: 'Metal Name',
       width: 250,
       editable: true,
     },
     {
-      field: "unit",
-      headerName: "Unit Name",
+      field: 'unit',
+      headerName: 'Unit Name',
       width: 250,
       editable: true,
     },
     {
-      field: "ornament",
-      headerName: "Ornament Name",
+      field: 'ornament',
+      headerName: 'Ornament Name',
       width: 250,
       editable: true,
     },
     {
-      field: "gst",
-      headerName: "GST",
+      field: 'gst',
+      headerName: 'GST',
       width: 250,
       editable: true,
     },
 
     {
-      field: "edit",
-      headerName: "Edit",
+      field: 'edit',
+      headerName: 'Edit',
       width: 150,
       editable: true,
       renderCell: editButton,
     },
     {
-      field: "delete",
-      headerName: "Delete",
+      field: 'delete',
+      headerName: 'Delete',
       width: 150,
       editable: true,
       renderCell: deleteButton,

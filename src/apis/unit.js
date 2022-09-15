@@ -13,9 +13,9 @@ export const postUnit = (data) => {
 };
 
 export const updateUnit = ({ data, id }) => {
-  return axios.put(`/unit/update/${id}`, data);
+  return axios.patch(`/unit/${id}`, data);
 };
 
 export const deleteUnit = (id) => {
-  return axios.delete(`/unit/delete/${id}`);
+  return axios.delete(`/unit/${id}`);
 };

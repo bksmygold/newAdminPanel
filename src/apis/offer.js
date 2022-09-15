@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
 export const getOffer = () => {
-  return axios.post("/offer/list");
+  return axios.post('/offer/list');
 };
 
 export const getOfferById = (id) => {
@@ -12,30 +12,30 @@ export const postOffer = (offer) => {
   let formData = new FormData();
   let { name, type, typeId, value, valueType, image } = offer;
 
-  formData.append("name", name);
-  formData.append("type", type);
-  formData.append("typeId", typeId);
-  formData.append("value", value);
-  formData.append("valueType", valueType);
-//   if (image instanceof File) {
-    formData.append("image", image);
-//   }
+  formData.append('name', name);
+  formData.append('type', type);
+  formData.append('typeId', typeId);
+  formData.append('value', value);
+  formData.append('valueType', valueType);
+  //   if (image instanceof File) {
+  formData.append('image', image);
+  //   }
   console.log(formData);
-  return axios.post("/offer/create", formData);
+  return axios.post('/offer/create', formData);
 };
 
 export const updateOffer = ({ data, id }) => {
-     let formData = new FormData();
-     let { name, type, typeId, value, valueType, image } = data;
+  let formData = new FormData();
+  let { name, type, typeId, value, valueType, image } = data;
 
-     formData.append("name", name);
-     formData.append("type", type);
-     formData.append("typeId", typeId);
-     formData.append("value", value);
-     formData.append("valueType", valueType);
-     //   if (image instanceof File) {
-     formData.append("image", image);
-  return axios.put(`/offer/update/${id}`, formData);
+  formData.append('name', name);
+  formData.append('type', type);
+  formData.append('typeId', typeId);
+  formData.append('value', value);
+  formData.append('valueType', valueType);
+  //   if (image instanceof File) {
+  formData.append('image', image);
+  return axios.patch(`/offer/update/${id}`, formData);
 };
 
 export const deleteOffer = (id) => {

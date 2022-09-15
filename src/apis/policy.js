@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
 export const getPolicy = () => {
-  return axios.post("/policy/list");
+  return axios.post('/policy/list');
 };
 
 export const getPolicyById = (id) => {
@@ -9,13 +9,13 @@ export const getPolicyById = (id) => {
 };
 
 export const postPolicy = (data) => {
-  return axios.post("/policy/create", data);
+  return axios.post('/policy/create', data);
 };
 
 export const updatePolicy = ({ data, id }) => {
-  return axios.put(`/policy/update/${id}`, data);
+  return axios.patch(`/policy/${id}`, data);
 };
 
 export const deletePolicy = (id) => {
-  return axios.delete(`/policy/delete/${id}`);
+  return axios.delete(`/policy/${id}`);
 };

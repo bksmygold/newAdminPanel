@@ -3,8 +3,8 @@ import { ADMIN_API } from "src/constant";
 
 axios.defaults.baseURL = ADMIN_API;
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTVhNTQ3NTU5MzEyNjE5ZGJhOTYzNSIsImlwIjoiOjpmZmZmOjE3Mi4yNC4wLjQiLCJpYXQiOjE2NjMwNzU2NzMsImV4cCI6MTY2NTY2NzY3MywiaXNzIjoiQktTIE1ZIEdPTEQifQ.yqGykwOXEGoNtMrrVgmCHD4X0EVgk-TDMIm_iF9DKkk";
-axios.interceptors.request.use((request) => {
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTVhNTQ3NTU5MzEyNjE5ZGJhOTYzNSIsImlwIjoiOjoxIiwiaWF0IjoxNjYyMzYzMDc1LCJleHAiOjE2NjQ5NTUwNzUsImlzcyI6IkJLUyBNWSBHT0xEIn0.4AE_xDfp8fltNsCMq3VvDFAm6mTFwaf1NTRnPOj1gLY';
+  axios.interceptors.request.use((request) => {
   if (!token) return request;
   request.headers["Authorization"] = `Bearer ${token}`;
   return request;
@@ -13,9 +13,10 @@ axios.interceptors.request.use((request) => {
 axios.interceptors.response.use(
   (res) => res.data,
   (err) => {
+    console.log(err);
     if (err.response) {
       return Promise.reject({
-        message: err.response.message || err.response.statusText || "Nahi mila",
+        message: err.response.message || err.response.statusText || "Unkown Error ",
         status: err.response.status,
         ...err.response.data,
       });
@@ -28,6 +29,5 @@ axios.interceptors.response.use(
         message: err.message,
       });
     }
-    console.log(err);
   }
 );

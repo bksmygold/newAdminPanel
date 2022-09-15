@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
-export const getCustomDuty= () => {
-  return axios.post("/customduty/list");
+export const getCustomDuty = () => {
+  return axios.post('/customduty/list');
 };
 
 export const getCustomDutyById = (id) => {
@@ -9,11 +9,11 @@ export const getCustomDutyById = (id) => {
 };
 
 export const postCustomDuty = (data) => {
-  return axios.post("/customduty/create", data);
+  return axios.post('/customduty/create', data);
 };
 
 export const updateCustomDuty = ({ data, id }) => {
-  return axios.put(`/customduty/update/${id}`, data);
+  return axios.patch(`/customduty/update/${id}`, data);
 };
 
 export const deleteCustomDuty = (id) => {

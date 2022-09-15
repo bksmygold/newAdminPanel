@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 //==============================
 export const getMerchant = () => {
-  return axios.post("/merchant/list");
+  return axios.post('/merchant/list');
 };
 
 export const getMerchantById = (id) => {
@@ -9,11 +9,11 @@ export const getMerchantById = (id) => {
 };
 
 export const postMerchant = (data) => {
-  return axios.post("/merchant/create", data);
+  return axios.post('/merchant/create', data);
 };
 
 export const updateMerchant = ({ data, id }) => {
-  return axios.put(`/merchant/${id}`, data);
+  return axios.patch(`/merchant/${id}`, data);
 };
 
 export const deleteItem = (id) => {
