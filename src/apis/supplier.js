@@ -13,9 +13,9 @@ export const postSupplier = (data) => {
 };
 
 export const updateSupplier = ({ data, id }) => {
-  return axios.patch(`/supplier/update/${id}`, data);
+  return axios.patch(`/supplier/${id}`, data);
 };
 
 export const deleteSupplier = (id) => {
-  return axios.delete(`/supplier/delete/${id}`);
+  return axios.delete(`/supplier/${id}`);
 };

@@ -13,9 +13,9 @@ export const postReturnReason = (data) => {
 };
 
 export const updateReturnReason = ({ data, id }) => {
-  return axios.patch(`/returnreason/update/${id}`, data);
+  return axios.patch(`/returnreason/${id}`, data);
 };
 
 export const deleteReturnReason = (id) => {
-  return axios.delete(`/returnreason/delete/${id}`);
+  return axios.delete(`/returnreason/${id}`);
 };

@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Head from 'next/head';
 import {
   Container,
   Typography,
@@ -10,23 +10,23 @@ import {
   MenuItem,
   Select,
   FormControl,
-} from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import FormInput from "../../components/utility/formInput";
-import Form from "../../components/utility/form";
-import LoadingButton from "@mui/lab/LoadingButton";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useFormik, FormikProvider, FieldArray } from "formik";
-import * as yup from "yup";
-import swal from "sweetalert";
-import { postMakingCharge } from "src/apis/makingCharge";
-import { useMutation } from "@tanstack/react-query";
-import { getSupplier } from "src/apis/supplier";
-import { getProductType } from "src/apis/productType";
-import { getItem } from "src/apis/item";
-import { getMetalGroup } from "src/apis/metalGroup";
-import { getVariety } from "src/apis/variety";
+} from '@mui/material';
+import { DashboardLayout } from '../../components/dashboard-layout';
+import FormInput from '../../components/utility/formInput';
+import Form from '../../components/utility/form';
+import LoadingButton from '@mui/lab/LoadingButton';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useFormik, FormikProvider, FieldArray } from 'formik';
+import * as yup from 'yup';
+import swal from 'sweetalert';
+import { postMakingCharge } from 'src/apis/makingCharge';
+import { useMutation } from '@tanstack/react-query';
+import { getSupplier } from 'src/apis/supplier';
+import { getProductType } from 'src/apis/productType';
+import { getItem } from 'src/apis/item';
+import { getMetalGroup } from 'src/apis/metalGroup';
+import { getVariety } from 'src/apis/variety';
 //=======================================================
 
 const CustomFormControl = styled(FormControl)`
@@ -62,43 +62,49 @@ export default function AddMakingCharge() {
   const [metalGroup, setMetalGroup] = useState([]);
 
   useEffect(() => {
-    getSupplier().then((res) => setSupplier(res.data.data));
-    getVariety().then((res) => setVariety(res.data.data));
-    getItem().then((res) => setItem(res.data.data));
-    getProductType().then((res) => setProductType(res.data.data));
-    getMetalGroup().then((res) => setMetalGroup(res.data.data));
+    getSupplier().then((res) => setSupplier(res.docs));
+    getVariety().then((res) => setVariety(res.docs));
+    getItem().then((res) => setItem(res.docs));
+    getProductType().then((res) => setProductType(res.docs));
+    getMetalGroup().then((res) => setMetalGroup(res.docs));
   }, []);
 
   //=======================================================
   const formik = useFormik({
     initialValues: {
-      supplier: "",
-      variety: "",
-      item: "",
-      productType: "",
-      metalGroup: "",
+      supplier: '',
+      variety: '',
+      item: '',
+      productType: '',
+      metalGroup: '',
       rates: [],
     },
     validationSchema: yup.object({
-      supplier: yup.string("Enter supplier Name").required("supplier is required"),
-      variety: yup.string("Enter variety").required("variety is required"),
-      item: yup.string("Enter item").required("item is required"),
-      productType: yup.string("Enter product type").required("product type is required"),
-      metalGroup: yup.string("Enter metal group").required("metal group is required"),
+      supplier: yup
+        .string('Enter supplier Name')
+        .required('supplier is required'),
+      variety: yup.string('Enter variety').required('variety is required'),
+      item: yup.string('Enter item').required('item is required'),
+      productType: yup
+        .string('Enter product type')
+        .required('product type is required'),
+      metalGroup: yup
+        .string('Enter metal group')
+        .required('metal group is required'),
     }),
     onSubmit: (values) => {
       makingChargeMutation.mutate(values);
-      console.log(values)
+      console.log(values);
     },
   });
 
   const makingChargeMutation = useMutation({
     mutationFn: postMakingCharge,
     onSuccess: (res) => {
-      swal("Making Charge Added !", res.message, "success"),
-        router.push("/makingCharge/view-makingCharge");
+      swal('Making Charge Added !', res.message, 'success'),
+        router.push('/makingCharge/view-makingCharge');
     },
-    onError: (err) => swal("Erro !", err.message, "error"),
+    onError: (err) => swal('Erro !', err.message, 'error'),
   });
 
   //=======================================================
@@ -115,16 +121,16 @@ export default function AddMakingCharge() {
         sx={{
           padding: 5,
           borderRadius: 2,
-          boxShadow: "0px 4px 1px 0px #d2c6c6",
+          boxShadow: '0px 4px 1px 0px #d2c6c6',
           marginTop: 5,
-          border: "1px solid #d2c6c657",
-          backgroundColor: "white",
+          border: '1px solid #d2c6c657',
+          backgroundColor: 'white',
         }}
       >
         <Typography
           variant="h6"
           sx={{
-            color: "#8B5704",
+            color: '#8B5704',
           }}
         >
           Add Making Charge
@@ -132,9 +138,9 @@ export default function AddMakingCharge() {
         <Typography
           variant="caption"
           sx={{
-            color: "#cba56a",
+            color: '#cba56a',
             marginBottom: 5,
-            fontWeight: "bold",
+            fontWeight: 'bold',
           }}
         >
           Add Making Charge for products used in E-commerce
@@ -145,12 +151,12 @@ export default function AddMakingCharge() {
           sx={{
             padding: 5,
             borderRadius: 2,
-            boxShadow: "0px 4px 1px 0px #d2c6c6",
+            boxShadow: '0px 4px 1px 0px #d2c6c6',
             marginTop: 5,
-            border: "1px solid #d2c6c657",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
+            border: '1px solid #d2c6c657',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}
           container
         >
@@ -159,7 +165,7 @@ export default function AddMakingCharge() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -168,7 +174,9 @@ export default function AddMakingCharge() {
                 Supplier Name
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">supplier name</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  supplier name
+                </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -188,7 +196,7 @@ export default function AddMakingCharge() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -197,7 +205,9 @@ export default function AddMakingCharge() {
                 Variety Name
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">variety name</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  variety name
+                </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -217,7 +227,7 @@ export default function AddMakingCharge() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -246,7 +256,7 @@ export default function AddMakingCharge() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -255,7 +265,9 @@ export default function AddMakingCharge() {
                 Product Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">product type </InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  product type{' '}
+                </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -275,7 +287,7 @@ export default function AddMakingCharge() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -284,7 +296,9 @@ export default function AddMakingCharge() {
                 Metal Group
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">metal group </InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  metal group{' '}
+                </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -313,7 +327,7 @@ export default function AddMakingCharge() {
                           <Typography
                             variant="body1"
                             sx={{
-                              color: "#8B5704",
+                              color: '#8B5704',
                               marginBottom: 2,
                               marginTop: 2,
                               fontWeight: 600,
@@ -331,7 +345,7 @@ export default function AddMakingCharge() {
                           <Typography
                             variant="body1"
                             sx={{
-                              color: "#8B5704",
+                              color: '#8B5704',
                               marginBottom: 2,
                               marginTop: 2,
                               fontWeight: 600,
@@ -349,7 +363,7 @@ export default function AddMakingCharge() {
                           <Typography
                             variant="body1"
                             sx={{
-                              color: "#8B5704",
+                              color: '#8B5704',
                               marginBottom: 2,
                               marginTop: 2,
                               fontWeight: 600,
@@ -358,7 +372,9 @@ export default function AddMakingCharge() {
                             Rate Type
                           </Typography>
                           <CustomFormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">supplier name</InputLabel>
+                            <InputLabel id="demo-simple-select-label">
+                              supplier name
+                            </InputLabel>
                             <Select
                               defaultValue=""
                               name={`rates.${index}.rateType`}
@@ -366,16 +382,19 @@ export default function AddMakingCharge() {
                               onChange={formik.handleChange}
                             >
                               <MenuItem value="net_weight">Net Weight</MenuItem>
-                              <MenuItem value="gross_weight"> Gross Weight</MenuItem>
+                              <MenuItem value="gross_weight">
+                                {' '}
+                                Gross Weight
+                              </MenuItem>
                               <MenuItem value="per_piece"> Per Piece</MenuItem>
                               <MenuItem value="fixed"> Fixed</MenuItem>
                               <MenuItem value="gross_weight_percentage">
-                                {" "}
+                                {' '}
                                 Gross Weight Percentage
                               </MenuItem>
 
                               <MenuItem value="net_weight_percentage">
-                                {" "}
+                                {' '}
                                 Net Weight Percentage
                               </MenuItem>
                             </Select>
@@ -384,7 +403,7 @@ export default function AddMakingCharge() {
                           <Typography
                             variant="body1"
                             sx={{
-                              color: "#8B5704",
+                              color: '#8B5704',
                               marginBottom: 2,
                               marginTop: 2,
                               fontWeight: 600,
@@ -399,7 +418,13 @@ export default function AddMakingCharge() {
                             onChange={formik.handleChange}
                           />
                           <Button
-                            sx={{ backgroundColor: "#ff6d6d", color: "white" }}
+                            sx={{
+                              background:
+                                'linear-gradient(43deg, #ff2222, #fe8f8f)',
+                              marginTop: 2,
+                              marginLeft: 1,
+                              color: 'white',
+                            }}
                             type="button"
                             onClick={() => arrayHelpers.remove(index)}
                           >
@@ -408,10 +433,20 @@ export default function AddMakingCharge() {
                         </div>
                       ))}
                       <Button
-                        sx={{ m: 2, backgroundColor: "#70dd89", color: "white" }}
+                        sx={{
+                          m: 2,
+                          background:
+                            'linear-gradient(43deg, #29cd54, #befe8f)',
+                          color: 'white',
+                        }}
                         type="button"
                         onClick={() =>
-                          arrayHelpers.push({ fromWeight: 0, toWeight: 0, rate: 0, rateType: "" })
+                          arrayHelpers.push({
+                            fromWeight: 0,
+                            toWeight: 0,
+                            rate: 0,
+                            rateType: '',
+                          })
                         }
                       >
                         Add
@@ -429,11 +464,11 @@ export default function AddMakingCharge() {
                 type="submit"
                 sx={{
                   marginTop: 2,
-                  backgroundColor: "#DDB070",
-                  border: "none",
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "#DBA251",
+                  background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+                  border: 'none',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: '#DBA251',
                   },
                 }}
               >

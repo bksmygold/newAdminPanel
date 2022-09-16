@@ -10,6 +10,7 @@ import {
   Button,
   styled,
   TextField,
+  Box
 } from "@mui/material";import { DashboardLayout } from "../../components/dashboard-layout";
 import FormInput from "../../components/utility/formInput";
 import Form from "../../components/utility/form";
@@ -47,7 +48,7 @@ const CustomFormControl = styled(FormControl)`
 export default function AddPlan() {
 const[cycle,setCycle] = useState([])
   useEffect(() => {
-    getCyclePeriod().then(res =>setCycle(res.data.data))
+    getCyclePeriod().then(res =>setCycle(res.docs))
    },[])
   //=======================
   const router = useRouter();
@@ -94,16 +95,16 @@ const[cycle,setCycle] = useState([])
         sx={{
           padding: 5,
           borderRadius: 2,
-          boxShadow: "0px 4px 1px 0px #d2c6c6",
+          boxShadow: '0px 4px 1px 0px #d2c6c6',
           marginTop: 5,
-          border: "1px solid #d2c6c657",
-          backgroundColor: "white",
+          border: '1px solid #d2c6c657',
+          backgroundColor: 'white',
         }}
       >
         <Typography
           variant="h6"
           sx={{
-            color: "#8B5704",
+            color: '#8B5704',
           }}
         >
           Add plan
@@ -111,9 +112,9 @@ const[cycle,setCycle] = useState([])
         <Typography
           variant="caption"
           sx={{
-            color: "#cba56a",
+            color: '#cba56a',
             marginBottom: 5,
-            fontWeight: "bold",
+            fontWeight: 'bold',
           }}
         >
           Add plan for Buy and Save Modules
@@ -124,21 +125,21 @@ const[cycle,setCycle] = useState([])
           sx={{
             padding: 5,
             borderRadius: 2,
-            boxShadow: "0px 4px 1px 0px #d2c6c6",
+            boxShadow: '0px 4px 1px 0px #d2c6c6',
             marginTop: 5,
-            border: "1px solid #d2c6c657",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
+            border: '1px solid #d2c6c657',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}
           container
         >
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item xs={8}>
             <form onSubmit={formik.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -161,7 +162,7 @@ const[cycle,setCycle] = useState([])
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -191,7 +192,7 @@ const[cycle,setCycle] = useState([])
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -214,7 +215,7 @@ const[cycle,setCycle] = useState([])
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -223,7 +224,9 @@ const[cycle,setCycle] = useState([])
                 Plan Duration
               </Typography>
               <CustomTextField
-                error={formik.touched.duration && Boolean(formik.errors.duration)}
+                error={
+                  formik.touched.duration && Boolean(formik.errors.duration)
+                }
                 helperText={formik.touched.duration && formik.errors.duration}
                 id="duration"
                 name="duration"
@@ -238,7 +241,7 @@ const[cycle,setCycle] = useState([])
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -262,7 +265,7 @@ const[cycle,setCycle] = useState([])
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -271,7 +274,9 @@ const[cycle,setCycle] = useState([])
                 Cycle Period
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">cycle period</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  cycle period
+                </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -287,23 +292,26 @@ const[cycle,setCycle] = useState([])
                   ))}
                 </Select>
               </CustomFormControl>
+              <Box sx={{ display:"flex",justifyContent:"center" }}>
 
               <LoadingButton
                 disabled={planMutation.isLoading}
                 loading={planMutation.isLoading}
                 type="submit"
-                sx={{
+                  sx={{
+                  width:"50%",
                   marginTop: 2,
-                  backgroundColor: "#DDB070",
-                  border: "none",
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "#DBA251",
+                  background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+                  border: 'none',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: '#DBA251',
                   },
                 }}
               >
                 Add Plan
-              </LoadingButton>
+                </LoadingButton>
+                </Box>
             </form>
           </Grid>
         </Grid>

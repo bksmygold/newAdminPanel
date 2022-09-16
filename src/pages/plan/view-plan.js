@@ -14,6 +14,7 @@ import { getPlan, deletePlan } from 'src/apis/plan';
 import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
+import AddIcon from '@mui/icons-material/Add';
 
 //=======================================================
 export default function Plan() {
@@ -35,13 +36,16 @@ export default function Plan() {
       <strong>
         <Button
           variant="contained"
-          sx={{ backgroundColor: 'white', color: '#8B5704' }}
+          sx={{
+            background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+            color: 'white',
+          }}
           size="small"
           onClick={() => {
             router.push(`/plan/edit-plan/?id=${params.id}`);
           }}
         >
-          <EditIcon />
+          Edit <EditIcon sx={{ marginLeft: 1, width: 23, height: 23 }} />
         </Button>
       </strong>
     );
@@ -129,7 +133,36 @@ export default function Plan() {
       <Head>
         <title>Dashboard | Plan </title>
       </Head>
-
+      <Grid
+        sx={{
+          marginLeft: 5,
+          marginTop: 5,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        container
+      >
+        <Grid item>
+          <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
+            Plan View
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button
+            onClick={() =>
+              // setShowAdd(true)
+              router.push('/plan/add-plan')
+            }
+            sx={{
+              background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+              color: 'white',
+            }}
+          >
+            Create Plan
+            <AddIcon sx={{ marginLeft: 1 }} />
+          </Button>
+        </Grid>
+      </Grid>{' '}
       <Table
         rows={query.data.docs}
         columns={columns}

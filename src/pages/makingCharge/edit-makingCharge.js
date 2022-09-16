@@ -62,15 +62,14 @@ export default function EditMakingCharge() {
   const [productType, setProductType] = useState([]);
   const [item, setItem] = useState([]);
   const [metalGroup, setMetalGroup] = useState([]);
-
+  
   useEffect(() => {
-    getSupplier().then((res) => setSupplier(res.data.data));
-    getVariety().then((res) => setVariety(res.data.data));
-    getItem().then((res) => setItem(res.data.data));
-    getProductType().then((res) => setProductType(res.data.data));
-    getMetalGroup().then((res) => setMetalGroup(res.data.data));
+    getSupplier().then((res) => setSupplier(res.docs));
+    getVariety().then((res) => setVariety(res.docs));
+    getItem().then((res) => setItem(res.docs));
+    getProductType().then((res) => setProductType(res.docs));
+    getMetalGroup().then((res) => setMetalGroup(res.docs));
   }, []);
-
   //=======================================================
   const formik = useFormik({
     initialValues: {
@@ -97,7 +96,7 @@ export default function EditMakingCharge() {
   const query = useQuery({
     queryKey: ["making charge", router.query.id],
     queryFn: () => getMakingChargeById(router.query.id),
-    onSuccess: (res) => formik.setValues(res.data),
+    onSuccess: (res) => formik.setValues(res),
     onError: (err) => console.log(err),
     enabled: !!router.query.id,
   });
@@ -126,16 +125,16 @@ export default function EditMakingCharge() {
         sx={{
           padding: 5,
           borderRadius: 2,
-          boxShadow: "0px 4px 1px 0px #d2c6c6",
+          boxShadow: '0px 4px 1px 0px #d2c6c6',
           marginTop: 5,
-          border: "1px solid #d2c6c657",
-          backgroundColor: "white",
+          border: '1px solid #d2c6c657',
+          backgroundColor: 'white',
         }}
       >
         <Typography
           variant="h6"
           sx={{
-            color: "#8B5704",
+            color: '#8B5704',
           }}
         >
           Edit Making Charge
@@ -143,9 +142,9 @@ export default function EditMakingCharge() {
         <Typography
           variant="caption"
           sx={{
-            color: "#cba56a",
+            color: '#cba56a',
             marginBottom: 5,
-            fontWeight: "bold",
+            fontWeight: 'bold',
           }}
         >
           Edit Making Charge for products used in E-commerce
@@ -156,12 +155,12 @@ export default function EditMakingCharge() {
           sx={{
             padding: 5,
             borderRadius: 2,
-            boxShadow: "0px 4px 1px 0px #d2c6c6",
+            boxShadow: '0px 4px 1px 0px #d2c6c6',
             marginTop: 5,
-            border: "1px solid #d2c6c657",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
+            border: '1px solid #d2c6c657',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}
           container
         >
@@ -170,7 +169,7 @@ export default function EditMakingCharge() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -179,7 +178,9 @@ export default function EditMakingCharge() {
                 Supplier Name
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">supplier name</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  supplier name
+                </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -199,7 +200,7 @@ export default function EditMakingCharge() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -208,7 +209,9 @@ export default function EditMakingCharge() {
                 Variety Name
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">variety name</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  variety name
+                </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -228,7 +231,7 @@ export default function EditMakingCharge() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -257,7 +260,7 @@ export default function EditMakingCharge() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -266,7 +269,9 @@ export default function EditMakingCharge() {
                 Product Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">product type </InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  product type{' '}
+                </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -286,7 +291,7 @@ export default function EditMakingCharge() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -295,7 +300,9 @@ export default function EditMakingCharge() {
                 Metal Group
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">metal group </InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  metal group{' '}
+                </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -324,7 +331,7 @@ export default function EditMakingCharge() {
                           <Typography
                             variant="body1"
                             sx={{
-                              color: "#8B5704",
+                              color: '#8B5704',
                               marginBottom: 2,
                               marginTop: 2,
                               fontWeight: 600,
@@ -342,7 +349,7 @@ export default function EditMakingCharge() {
                           <Typography
                             variant="body1"
                             sx={{
-                              color: "#8B5704",
+                              color: '#8B5704',
                               marginBottom: 2,
                               marginTop: 2,
                               fontWeight: 600,
@@ -360,7 +367,7 @@ export default function EditMakingCharge() {
                           <Typography
                             variant="body1"
                             sx={{
-                              color: "#8B5704",
+                              color: '#8B5704',
                               marginBottom: 2,
                               marginTop: 2,
                               fontWeight: 600,
@@ -369,7 +376,9 @@ export default function EditMakingCharge() {
                             Rate Type
                           </Typography>
                           <CustomFormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">supplier name</InputLabel>
+                            <InputLabel id="demo-simple-select-label">
+                              supplier name
+                            </InputLabel>
                             <Select
                               defaultValue=""
                               name={`rates.${index}.rateType`}
@@ -377,16 +386,19 @@ export default function EditMakingCharge() {
                               onChange={formik.handleChange}
                             >
                               <MenuItem value="net_weight">Net Weight</MenuItem>
-                              <MenuItem value="gross_weight"> Gross Weight</MenuItem>
+                              <MenuItem value="gross_weight">
+                                {' '}
+                                Gross Weight
+                              </MenuItem>
                               <MenuItem value="per_piece"> Per Piece</MenuItem>
                               <MenuItem value="fixed"> Fixed</MenuItem>
                               <MenuItem value="gross_weight_percentage">
-                                {" "}
+                                {' '}
                                 Gross Weight Percentage
                               </MenuItem>
 
                               <MenuItem value="net_weight_percentage">
-                                {" "}
+                                {' '}
                                 Net Weight Percentage
                               </MenuItem>
                             </Select>
@@ -395,7 +407,7 @@ export default function EditMakingCharge() {
                           <Typography
                             variant="body1"
                             sx={{
-                              color: "#8B5704",
+                              color: '#8B5704',
                               marginBottom: 2,
                               marginTop: 2,
                               fontWeight: 600,
@@ -409,9 +421,20 @@ export default function EditMakingCharge() {
                             value={formik.values.rates[index].rate}
                             onChange={formik.handleChange}
                           />
-                          <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                          <Box
+                            sx={{
+                              width: '100%',
+                              display: 'flex',
+                              justifyContent: 'center',
+                            }}
+                          >
                             <Button
-                              sx={{ backgroundColor: "#ff6d6d", color: "white", marginTop: 1 }}
+                              sx={{
+                                background:
+                                  'linear-gradient(43deg, #ff2222, #fe8f8f)',
+                                color: 'white',
+                                marginTop: 1,
+                              }}
                               type="button"
                               onClick={() => arrayHelpers.remove(index)}
                             >
@@ -420,17 +443,29 @@ export default function EditMakingCharge() {
                           </Box>
                         </div>
                       ))}
-                      <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                      <Box
+                        sx={{
+                          width: '100%',
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
                         <Button
                           sx={{
                             m: 2,
-                            backgroundColor: "#70dd89",
-                            color: "white",
-                            justifyContent: "center",
+                            background:
+                              'linear-gradient(43deg, #29cd54, #befe8f)',
+                            color: 'white',
+                            justifyContent: 'center',
                           }}
                           type="button"
                           onClick={() =>
-                            arrayHelpers.push({ fromWeight: 0, toWeight: 0, rate: 0, rateType: "" })
+                            arrayHelpers.push({
+                              fromWeight: 0,
+                              toWeight: 0,
+                              rate: 0,
+                              rateType: '',
+                            })
                           }
                         >
                           Add
@@ -442,18 +477,24 @@ export default function EditMakingCharge() {
               </FormikProvider>
 
               {/* --------------------------------------------------- */}
-              <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+              <Box
+                sx={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
                 <LoadingButton
                   disabled={makingChargeMutation.isLoading}
                   loading={makingChargeMutation.isLoading}
                   type="submit"
                   sx={{
                     marginTop: 2,
-                    backgroundColor: "#DDB070",
-                    border: "none",
-                    color: "white",
-                    "&:hover": {
-                      backgroundColor: "#DBA251",
+                    background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+                    border: 'none',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: '#DBA251',
                     },
                   }}
                 >

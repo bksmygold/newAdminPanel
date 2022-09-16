@@ -13,6 +13,7 @@ import { getCyclePeriod, deleteCyclePeriod } from 'src/apis/cyclePeriod';
 import { useQuery } from '@tanstack/react-query';
 import Loading from 'src/components/loading';
 import DeleteSpinner from 'src/components/deleteSpinner';
+import AddIcon from '@mui/icons-material/Add';
 
 //=======================================================
 export default function CyclePeriod() {
@@ -23,13 +24,16 @@ export default function CyclePeriod() {
       <strong>
         <Button
           variant="contained"
-          sx={{ backgroundColor: 'white', color: '#8B5704' }}
+          sx={{
+            background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+            color: 'white',
+          }}
           size="small"
           onClick={() => {
             router.push(`/cyclePeriod/edit-cyclePeriod/?id=${params.id}`);
           }}
         >
-          <EditIcon />
+          Edit <EditIcon sx={{ marginLeft: 1, width: 23, height: 23 }} />
         </Button>
       </strong>
     );
@@ -58,49 +62,49 @@ export default function CyclePeriod() {
     {
       field: 'name',
       headerName: 'Cycle Period Name',
-      width: 250,
+      width: 150,
       editable: true,
     },
     {
       field: 'lockinPeriod',
       headerName: 'Locking Period',
-      width: 250,
+      width: 150,
       editable: true,
     },
     {
       field: 'gracePeriod',
       headerName: 'Grace Period',
-      width: 250,
+      width: 150,
       editable: true,
     },
     {
       field: 'cycle',
       headerName: 'Cycle Period',
-      width: 250,
+      width: 150,
       editable: true,
     },
     {
       field: 'maxSkip',
       headerName: 'Maximum Skip',
-      width: 250,
+      width: 150,
       editable: true,
     },
     {
       field: 'maxUnpaidInvestment',
       headerName: 'Max. Unpaid Investment',
-      width: 250,
+      width: 150,
       editable: true,
     },
     {
       field: 'maxUnpaidSkip',
       headerName: 'Max. Unpaid skip',
-      width: 250,
+      width: 150,
       editable: true,
     },
     {
       field: 'shortName',
       headerName: 'Short Name',
-      width: 250,
+      width: 150,
       editable: true,
     },
 
@@ -127,7 +131,36 @@ export default function CyclePeriod() {
       <Head>
         <title>Dashboard | Cycle Period </title>
       </Head>
-
+      <Grid
+        sx={{
+          marginLeft: 5,
+          marginTop: 5,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        container
+      >
+        <Grid item>
+          <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
+            Cycle Period View
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button
+            onClick={() =>
+              // setShowAdd(true)
+              router.push('/plan/add-plan')
+            }
+            sx={{
+              background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+              color: 'white',
+            }}
+          >
+            Create Cycle Period
+            <AddIcon sx={{ marginLeft: 1 }} />
+          </Button>
+        </Grid>
+      </Grid>{' '}
       <Table
         rows={query.data.docs}
         columns={columns}

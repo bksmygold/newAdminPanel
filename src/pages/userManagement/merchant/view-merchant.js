@@ -13,17 +13,21 @@ import { getMerchant, deleteMerchant } from 'src/apis/merchant';
 import { useQuery } from '@tanstack/react-query';
 import Loading from 'src/components/loading';
 import DeleteSpinner from 'src/components/deleteSpinner';
+import { useTheme } from '@mui/material/styles';
+import AddIcon from '@mui/icons-material/Add';
 
 //=======================================================
 export default function Merchant() {
   const router = useRouter();
+  const theme = useTheme();
+
   //=======================
-  const editButton = (params) => {
+  const manageButton = (params) => {
     return (
       <strong>
         <Button
           variant="contained"
-          sx={{ backgroundColor: '#ddb070', color: 'white' }}
+          sx={theme.custom.Button}
           size="small"
           onClick={() => {
             router.push(
@@ -31,21 +35,13 @@ export default function Merchant() {
             );
           }}
         >
-          Edit <EditIcon />
+          Manage 
         </Button>
       </strong>
     );
   };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteMerchant}
-        url={'/userManagement/merchant/view-merchant'}
-      />
-    );
-  };
+  
+ 
   //=======================
   const query = useQuery({
     queryKey: 'merchant',
@@ -61,23 +57,54 @@ export default function Merchant() {
       field: 'name',
       headerName: 'Merchant Name',
       width: 250,
-      editable: true,
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),
+    },
+    {
+      field: 'modules',
+      headerName: 'Modules Applicable',
+      width: 280,
+      renderCell: (params) => {
+        params.value.map((x) => x);
+      },
+    },
+    {
+      field: 'retainershipType',
+      headerName: 'Retainership Type',
+      width: 200,
+    },
+    {
+      field: 'retainershipValue',
+      headerName: 'Retainership Value ',
+      width: 150,
+    },
+    {
+      field: 'commission',
+      headerName: 'Buy Commission ',
+      width: 200,
+      valueGetter: (params) => {
+        console.log(params.row.commission.buy);
+        let result = [];
+        if (params.row.commission) {
+          if (params.row.commission.buy) {
+            result.push(params.row.commission.buy);
+          }
+        } else {
+          result = ['Unknown'];
+        }
+        return result.join(', ');
+      },
     },
 
     {
-      field: 'edit',
-      headerName: 'Edit',
+      field: 'Action',
+      headerName: 'Action',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: manageButton,
     },
-    {
-      field: 'delete',
-      headerName: 'Delete',
-      width: 150,
-      editable: true,
-      renderCell: deleteButton,
-    },
+  
   ];
 
   //=======================================================
@@ -87,7 +114,30 @@ export default function Merchant() {
       <Head>
         <title>Dashboard | Merchant </title>
       </Head>
-
+      <Grid
+        sx={{
+          marginLeft: 5,
+          marginTop: 5,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        container
+      >
+        <Grid item>
+          <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
+            Merchant View
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button
+            onClick={() => router.push('/userManagement/merchant/add-merchant')}
+            sx={theme.custom.addButton}
+          >
+            Add Merchant
+            <AddIcon sx={{ marginLeft: 1 }} />
+          </Button>
+        </Grid>
+      </Grid>{' '}
       <Table
         rows={query.data.docs}
         columns={columns}

@@ -22,12 +22,12 @@ import { DashboardLayout } from '../../../components/dashboard-layout';
 import FormInput from '../../../components/utility/formInput';
 import Form from '../../../components/utility/form';
 import LoadingButton from '@mui/lab/LoadingButton';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import swal from 'sweetalert';
-import { postVariety } from 'src/apis/merchant';
+import { postMerhcant } from 'src/apis/merchant';
 import { useMutation } from '@tanstack/react-query';
 import GoogleMapReact from 'google-map-react';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -38,6 +38,10 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
+import { useTheme } from '@mui/material/styles';
+import { Wrapper, Status } from '@googlemaps/react-wrapper';
+import MapPicker from 'react-google-map-picker';
+
 //=======================================================
 const CustomTextField = styled(TextField)`
   & label.Mui-focused {
@@ -60,15 +64,46 @@ const CustomFormControl = styled(FormControl)`
   }
 `;
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+const modules = [
+  { name: 'custodian' },
+  { name: 'e-commerce' },
+  { name: 'verifier' },
+  { name: 'refiner' },
+];
 //=======================================================
-export default function AddVariety() {
+export default function AddMerchant() {
+  const DefaultLocation = { lat: 10, lng: 106 };
+  const DefaultZoom = 10;
+
+  const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
+
+  const [mapLocation, setMapLocation] = useState([]);
+  const [zoom, setZoom] = useState(DefaultZoom);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShow(true);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  function handleChangeLocation(lat, lng) {
+    // formik.setValues({location:[lat,lng]})
+    setMapLocation([lat, lng]);
+  }
+
+  function handleChangeZoom(newZoom) {
+    setZoom(newZoom);
+  }
+
+  function handleResetLocation() {
+    setDefaultLocation({ ...DefaultLocation });
+    setZoom(DefaultZoom);
+  }
+
+  const theme = useTheme();
+  //=======================
   const defaultProps = {
     center: {
       lat: 10.99835602,
@@ -82,23 +117,69 @@ export default function AddVariety() {
   const formik = useFormik({
     initialValues: {
       name: '',
+      email: '',
+      mobile: '',
+      aadhaar: '',
+      pan: '',
+      gstNo: '',
+      retainershipType: '',
+      retainershipValue: 0, //--->
+      address: '',
+      location: [], //--->
+      commission: {
+        buy: 0,
+        sell: 0,
+      },
+      modules: [], //--->
+      settlementInDays: 0,
+      limit: 0,
+      eInvoiceApplicable: true,
     },
     validationSchema: yup.object({
-      name: yup.string('Enter merchant Name').required('merchant is required'),
+      name: yup
+        .string('Enter Merchant Name')
+        .required('Merchant Name is required'),
+      email: yup.string('Enter email').required('email is required'),
+      mobile: yup.string('Enter mobile').required('mobile is required'),
+      aadhaar: yup.string('Enter aadhaar').required('aadhaar is required'),
+      pan: yup.string('Enter pan').required('pan is required'),
+
+      gstNo: yup.string('Enter gst no.').required('gst no. is required'),
+      retainershipType: yup
+        .string('Enter retainership type')
+        .required('retainership type is required'),
+      // retainershipValue: yup
+      //   .number('Enter retainership Value')
+      //   .required('retainership Value is required'),
+
+      address: yup.string('Enter address').required('address is required'),
+      settlementInDays: yup
+        .number('Enter settlement In Days')
+        .required('settlement is required'),
+      limit: yup.number('Enter limit').required('limit is required'),
     }),
     onSubmit: (values) => {
-      varietyMutation.mutate(values);
+      console.log('payload ---', values);
+      merchantMutation.mutate(values);
     },
   });
 
-  const varietyMutation = useMutation({
-    mutationFn: postVariety,
+  const merchantMutation = useMutation({
+    mutationFn: postMerhcant,
     onSuccess: (res) => {
-      swal('merchant Added !', res.message, 'success'),
+      swal('Merchant Added !', 'continue with the admin panel', 'success'),
         router.push('/userManagement/merchant/view-merchant');
     },
     onError: (err) => swal('Error !', err.message, 'error'),
   });
+
+  const isActive = (name) => {
+    if (formik.values.modules?.find(e => e === name)) return true;
+    return false;
+  }
+
+  console.log('error --', formik.errors);
+  console.log('values --', formik.values);
 
   //=======================================================
   return (
@@ -185,7 +266,7 @@ export default function AddVariety() {
                 value={formik.values.name}
                 onChange={formik.handleChange}
                 variant="outlined"
-                label="merchant name"
+                label=" name"
               />
             </Grid>
             <Grid item xs={6}>
@@ -202,17 +283,17 @@ export default function AddVariety() {
               </Typography>
               <CustomTextField
                 fullWidth
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-                id="name"
-                name="name"
-                value={formik.values.name}
+                error={formik.touched.mobile && Boolean(formik.errors.mobile)}
+                helperText={formik.touched.mobile && formik.errors.mobile}
+                id="mobile"
+                name="mobile"
+                value={formik.values.mobile}
                 onChange={formik.handleChange}
                 variant="outlined"
-                label="merchant phone"
+                label=" phone"
               />{' '}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item sm={6} xs={12}>
               <Typography
                 variant="body1"
                 sx={{
@@ -226,14 +307,14 @@ export default function AddVariety() {
               </Typography>
               <CustomTextField
                 fullWidth
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-                id="name"
-                name="name"
-                value={formik.values.name}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+                id="email"
+                name="email"
+                value={formik.values.email}
                 onChange={formik.handleChange}
                 variant="outlined"
-                label="merchant email"
+                label=" email"
               />{' '}
             </Grid>
           </Grid>
@@ -278,11 +359,11 @@ export default function AddVariety() {
 
               <CustomTextField
                 fullWidth
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-                id="name"
-                name="name"
-                value={formik.values.name}
+                error={formik.touched.aadhaar && Boolean(formik.errors.aadhaar)}
+                helperText={formik.touched.aadhaar && formik.errors.aadhaar}
+                id="aadhaar"
+                name="aadhaar"
+                value={formik.values.aadhaar}
                 onChange={formik.handleChange}
                 variant="outlined"
                 label="aadhaar"
@@ -302,17 +383,17 @@ export default function AddVariety() {
               </Typography>
               <CustomTextField
                 fullWidth
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-                id="name"
-                name="name"
-                value={formik.values.name}
+                error={formik.touched.pan && Boolean(formik.errors.pan)}
+                helperText={formik.touched.pan && formik.errors.pan}
+                id="pan"
+                name="pan"
+                value={formik.values.pan}
                 onChange={formik.handleChange}
                 variant="outlined"
                 label="PAN"
               />{' '}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item sm={6} xs={12}>
               <Typography
                 variant="body1"
                 sx={{
@@ -326,11 +407,11 @@ export default function AddVariety() {
               </Typography>
               <CustomTextField
                 fullWidth
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-                id="name"
-                name="name"
-                value={formik.values.name}
+                error={formik.touched.gstNo && Boolean(formik.errors.gstNo)}
+                helperText={formik.touched.gstNo && formik.errors.gstNo}
+                id="gstNo"
+                name="gstNo"
+                value={formik.values.gstNo}
                 onChange={formik.handleChange}
                 variant="outlined"
                 label="GST"
@@ -376,13 +457,38 @@ export default function AddVariety() {
             </Grid>
 
             <Grid item xs={12}>
-              <div style={{ height: '50vh', width: '100%' }}>
-                <GoogleMapReact
-                  bootstrapURLKeys={{ key: '' }}
+              {/* <div style={{ height: '50vh', width: '100%' }}> */}
+              {/* <GoogleMapReact
+                  bootstrapURLKeys={{
+                    key: 'AIzaSyCA4fXUrR-ojQbLMY9GTDKjk_OOWO1qbSo',
+                    region: 'in',
+                  }}
                   defaultCenter={defaultProps.center}
                   defaultZoom={defaultProps.zoom}
-                ></GoogleMapReact>
-              </div>
+                ></GoogleMapReact> */}
+              <button onClick={() => setShow(!show)}>Show</button>
+              {/* 
+              <button onClick={handleResetLocation}>Reset Location</button>
+              <label>Latitute:</label>
+              <input type="text" value={location.lat} disabled />
+              <label>Longitute:</label>
+              <input type="text" value={location.lng} disabled />
+              <label>Zoom:</label>
+              <input type="text" value={zoom} disabled /> */}
+              {show && (
+                <MapPicker
+                  defaultLocation={defaultLocation}
+                  zoom={zoom}
+                  mapTypeId="roadmap"
+                  onChangeLocation={
+                    (lat, lng) => formik.setFieldValue('location', [lat, lng])
+                    // formik.setValues({ ...formik.values,location: [lat, lng] })
+                  }
+                  onChangeZoom={handleChangeZoom}
+                  apiKey="AIzaSyCA4fXUrR-ojQbLMY9GTDKjk_OOWO1qbSo"
+                />
+              )}
+              {/* </div> */}
             </Grid>
             <Grid item xs={12}>
               <Typography
@@ -399,11 +505,11 @@ export default function AddVariety() {
               <CustomTextField
                 fullWidth
                 multiline
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-                id="name"
-                name="name"
-                value={formik.values.name}
+                error={formik.touched.address && Boolean(formik.errors.address)}
+                helperText={formik.touched.address && formik.errors.address}
+                id="address"
+                name="address"
+                value={formik.values.address}
                 onChange={formik.handleChange}
                 variant="outlined"
                 label=""
@@ -436,7 +542,7 @@ export default function AddVariety() {
                 4.Retainer Details
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item sm={6} xs={12}>
               <Typography
                 variant="body1"
                 sx={{
@@ -453,27 +559,21 @@ export default function AddVariety() {
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
-                  id="type"
-                  value={formik.values.type}
+                  id="retainershipType"
+                  value={formik.values.retainershipType}
                   onChange={formik.handleChange}
-                  name="type"
+                  name="retainershipType"
                 >
-                  <MenuItem key="collection" value="collection">
-                    Collection
+                  <MenuItem key="collection" value="commission_based">
+                    commission based
                   </MenuItem>
-                  <MenuItem key="category" value="category">
-                    Category
-                  </MenuItem>
-                  <MenuItem key="variety" value="variety">
-                    Variety
-                  </MenuItem>
-                  <MenuItem key="item" value="item">
-                    Item
+                  <MenuItem key="category" value="monthly_based">
+                    monthly based
                   </MenuItem>
                 </Select>
               </CustomFormControl>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item sm={6} xs={12}>
               <Typography
                 variant="body1"
                 sx={{
@@ -487,18 +587,24 @@ export default function AddVariety() {
               </Typography>
 
               <CustomTextField
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-                id="name"
-                name="name"
-                value={formik.values.name}
+                // error={
+                //   formik.touched.commission.sell &&
+                //   Boolean(formik.errors.commission.sell)
+                // }
+                // helperText={
+                //   formik.touched.commission.sell &&
+                //   formik.errors.commission.sell
+                // }
+                id="commission.sell"
+                name="commission.sell"
+                value={formik.values?.commission?.sell}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="GST number"
+                label="sell commission"
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item sm={6} xs={12}>
               <Typography
                 variant="body1"
                 sx={{
@@ -512,15 +618,20 @@ export default function AddVariety() {
               </Typography>
 
               <CustomTextField
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-                id="name"
-                name="name"
-                value={formik.values.name}
+                // error={
+                //   formik.touched.commission.buy &&
+                //   Boolean(formik.errors.commission.buy)
+                // }
+                // helperText={
+                //   formik.touched.commission.buy && formik.errors.commission.buy
+                // }
+                id="commission.buy"
+                name="commission.buy"
+                value={formik.values?.commission?.buy}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="GST number"
+                label="buy commission"
                 sx={{ marginBottom: 4 }}
               />
             </Grid>
@@ -535,149 +646,54 @@ export default function AddVariety() {
                 width: '100%',
               }}
             >
-              <Grid sx={{ marginRight: 2 }} item sm={2} xs={12}>
-                <Box
-                  sx={{
-                    backgroundColor: '',
-                    p: 3,
-                    marginTop: 2,
-                    borderRadius: 1,
-                    border: '1px solid gray',
-                  }}
-                >
-                  <Avatar sx={{ margin: 'auto', backgroundColor: 'white' }}>
-                    <ContentPasteIcon
-                      sx={{ color: 'gray', height: 30, width: 30 }}
-                    />
-                  </Avatar>
-                  <Typography
+              {modules.map((x) => (
+                <Grid sx={{ marginRight: 2 }} item sm={2} xs={12}>
+                  <Box
                     sx={{
-                      color: '#8b5704',
-                      fontWeight: 'bolder',
-                      textAlign: 'center',
+                      backgroundColor: '',
+                      p: 3,
+                      marginTop: 2,
+                      borderRadius: 1,
+                      border: `1px solid ${isActive(x.name) ? 'red' : 'gray'}`,
                     }}
-                    gutterBottom
-                    variant="h6"
-                  >
-                    Custodian
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid sx={{ marginRight: 2 }} item sm={2} xs={12}>
-                <Box
-                  sx={{
-                    backgroundColor: '',
-                    p: 3,
-                    marginTop: 2,
-                    borderRadius: 1,
-                    border: '1px solid gray',
-                  }}
-                >
-                  <Avatar sx={{ margin: 'auto', backgroundColor: 'white' }}>
-                    <DeliveryDiningIcon
-                      sx={{ color: 'gray', height: 30, width: 30 }}
-                    />
-                  </Avatar>
-                  <Typography
-                    sx={{
-                      color: '#8b5704',
-                      fontWeight: 'bolder',
-                      textAlign: 'center',
+                    onClick={() => {
+                      if (isActive(x.name)) {
+                        formik.setFieldValue('modules', formik.values.modules.filter(e=>e!== x.name))
+                        return
+                      }
+                      formik.setFieldValue('modules', [...formik.values.modules, x.name].filter(Boolean))
                     }}
-                    gutterBottom
-                    variant="h6"
+
+                    //   formik.setValues({
+                    //     ...formik.values,
+                    //     modules: formik.values.modules
+                    //       ? [...formik.values.modules, x.name]
+                    //       : [x.name],
+                    //   });
+                    // }}
                   >
-                    Pickup
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid sx={{ marginRight: 2 }} item sm={2} xs={12}>
-                <Box
-                  sx={{
-                    backgroundColor: '',
-                    p: 3,
-                    marginTop: 2,
-                    borderRadius: 1,
-                    border: '1px solid gray',
-                  }}
-                >
-                  <Avatar sx={{ margin: 'auto', backgroundColor: 'white' }}>
-                    <LocalShippingIcon
-                      sx={{ color: 'gray', height: 30, width: 30 }}
-                    />
-                  </Avatar>
-                  <Typography
-                    sx={{
-                      color: '#8b5704',
-                      fontWeight: 'bolder',
-                      textAlign: 'center',
-                    }}
-                    gutterBottom
-                    variant="h6"
-                  >
-                    Delivery
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid sx={{ marginRight: 2 }} item sm={2} xs={12}>
-                <Box
-                  sx={{
-                    backgroundColor: '',
-                    p: 3,
-                    marginTop: 2,
-                    borderRadius: 1,
-                    border: '1px solid gray',
-                  }}
-                >
-                  <Avatar sx={{ margin: 'auto', backgroundColor: 'white' }}>
-                    <VerifiedIcon
-                      sx={{ color: 'gray', height: 30, width: 30 }}
-                    />
-                  </Avatar>
-                  <Typography
-                    sx={{
-                      color: '#8b5704',
-                      fontWeight: 'bolder',
-                      textAlign: 'center',
-                    }}
-                    gutterBottom
-                    variant="h6"
-                  >
-                    Verifier
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid sx={{ marginRight: 2 }} item sm={2} xs={12}>
-                <Box
-                  sx={{
-                    backgroundColor: '',
-                    p: 3,
-                    marginTop: 2,
-                    borderRadius: 1,
-                    border: '1px solid gray',
-                  }}
-                >
-                  <Avatar sx={{ margin: 'auto', backgroundColor: 'white' }}>
-                    <FilterAltIcon
-                      sx={{ color: 'gray', height: 30, width: 30 }}
-                    />
-                  </Avatar>
-                  <Typography
-                    sx={{
-                      color: '#8b5704',
-                      fontWeight: 'bolder',
-                      textAlign: 'center',
-                    }}
-                    gutterBottom
-                    variant="h6"
-                  >
-                    Refiner
-                  </Typography>
-                </Box>
-              </Grid>
+                    <Avatar sx={{ margin: 'auto', backgroundColor: 'white' }}>
+                      <VerifiedIcon
+                        sx={{ color: 'gray', height: 30, width: 30 }}
+                      />
+                    </Avatar>
+                    <Typography
+                      sx={{
+                        color: '#8b5704',
+                        fontWeight: 'bolder',
+                        textAlign: 'center',
+                      }}
+                      gutterBottom
+                      variant="h6"
+                    >
+                      {x.name}
+                    </Typography>
+                  </Box>
+                </Grid>
+              ))}
             </Grid>
             <Grid container sx={{ marginTop: 5 }}>
-              <Grid item xs={6}>
+              <Grid item sm={4} xs={12}>
                 <Typography
                   variant="body1"
                   sx={{
@@ -692,26 +708,31 @@ export default function AddVariety() {
 
                 <Box sx={{ '& > :not( color: #a88143;)': { m: 1 } }}>
                   <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        color: '#8B5704',
-                        marginRight: 1,
-                        fontWeight: 600,
-                      }}
-                    >
-                      GRAMS
-                    </Typography>
                     <CustomTextField
-                      fullWidth
-                      id="input-with-sx"
-                      variant="standard"
+                      error={
+                        formik.touched.settlementInDays &&
+                        Boolean(formik.errors.settlementInDays)
+                      }
+                      helperText={
+                        formik.touched.settlementInDays &&
+                        formik.errors.settlementInDays
+                      }
+                      id="settlementInDays"
+                      name="settlementInDays"
+                      value={formik.values.settlementInDays}
+                      onChange={formik.handleChange}
+                      variant="outlined"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">DAYS</InputAdornment>
+                        ),
+                      }}
                     />
                   </Box>
                 </Box>
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid item sm={4} xs={12}>
                 <Typography
                   variant="body1"
                   sx={{
@@ -728,86 +749,79 @@ export default function AddVariety() {
 
                 <Box sx={{ '& > :not( color: #a88143;)': { m: 1 } }}>
                   <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        color: '#8B5704',
-                        marginRight: 1,
-                        marginLeft: 5,
-                        fontWeight: 600,
-                      }}
-                    >
-                      DAYS
-                    </Typography>
                     <CustomTextField
-                      fullWidth
-                      id="input-with-sx"
-                      variant="standard"
+                      error={
+                        formik.touched.limit && Boolean(formik.errors.limit)
+                      }
+                      helperText={formik.touched.limit && formik.errors.limit}
+                      id="limit"
+                      name="limit"
+                      value={formik.values.limit}
+                      onChange={formik.handleChange}
+                      variant="outlined"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">GRAMS</InputAdornment>
+                        ),
+                      }}
                     />
                   </Box>
                 </Box>
               </Grid>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 4,
-                  fontWeight: 600,
-                }}
-              >
-                E-invoice
-              </Typography>
-
-              <CustomFormControl fullWidth>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="type"
-                  value={formik.values.type}
-                  onChange={formik.handleChange}
-                  name="type"
+              <Grid item sm={4} xs={12}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: '#8B5704',
+                    marginBottom: 2,
+                    marginTop: 4,
+                    fontWeight: 600,
+                  }}
                 >
-                  <MenuItem key="collection" value="collection">
-                    Collection
-                  </MenuItem>
-                  <MenuItem key="category" value="category">
-                    Category
-                  </MenuItem>
-                  <MenuItem key="variety" value="variety">
-                    Variety
-                  </MenuItem>
-                  <MenuItem key="item" value="item">
-                    Item
-                  </MenuItem>
-                </Select>
-              </CustomFormControl>
+                  E-invoice
+                </Typography>
+
+                <CustomFormControl fullWidth>
+                  <Select
+                    defaultValue=""
+                    labelId="demo-simple-select-label"
+                    id="eInvoiceApplicable"
+                    value={formik.values.eInvoiceApplicable}
+                    onChange={formik.handleChange}
+                    name="eInvoiceApplicable"
+                  >
+                    <MenuItem key="collection" value={true}>
+                      Yes
+                    </MenuItem>
+                    <MenuItem key="category" value={false}>
+                      No
+                    </MenuItem>
+                  </Select>
+                </CustomFormControl>
+              </Grid>
             </Grid>
           </Grid>
 
           {/* ================================================ */}
-
-          <LoadingButton
-            disabled={varietyMutation.isLoading}
-            loading={varietyMutation.isLoading}
-            type="submit"
+          <Box
             sx={{
-              marginTop: 2,
-              backgroundColor: '#DDB070',
-              border: 'none',
-              color: 'white',
-              '&:hover': {
-                backgroundColor: '#DBA251',
-              },
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            Add merchant
-          </LoadingButton>
+            <LoadingButton
+              disabled={merchantMutation.isLoading}
+              loading={merchantMutation.isLoading}
+              type="submit"
+              sx={theme.custom.Button.margin}
+            >
+              Add merchant
+            </LoadingButton>
+          </Box>
         </Container>
       </form>
     </>
   );
 }
-AddVariety.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AddMerchant.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

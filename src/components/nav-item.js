@@ -112,13 +112,15 @@ export const NavItem = (props) => {
             <Button
               component="div"
               startIcon={icon}
-              disableRipple
+                disableRipple
+                              // background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+
               sx={{
-                backgroundColor: active && "#E5D5BC",
+                background: active && "linear-gradient(43deg, #8b5704, #ddb070)",
                 boxShadow: active && "0px 4px 1px 0px #bbb5b5",
                 border: active && "1px solid #a39a9a6e",
                 borderRadius: 1,
-                color: active ? "#935F0E" : "gray",
+                color: active ? "white" : "gray",
                 fontWeight: active && "fontWeightBold",
                 justifyContent: "flex-start",
                 // px: 3,
@@ -126,7 +128,7 @@ export const NavItem = (props) => {
                 textTransform: "none",
                 width: "100%",
                 "& .MuiButton-startIcon": {
-                  color: active ? "#925F0F" : "grey",
+                  color: active ? "white" : "grey",
                 },
                 // "&:hover": {
                 //   backgroundColor: "rgba(255,255,255, 0.08)",

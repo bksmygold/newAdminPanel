@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Container, Typography, Grid, Button, styled, TextField } from "@mui/material";
+import { Container, Typography, Grid, Button, styled, TextField ,Box} from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import FormInput from "../../components/utility/formInput";
 import Form from "../../components/utility/form";
@@ -65,7 +65,7 @@ export default function EditCyclePeriod() {
   const query = useQuery({
     queryKey: ["Cycle", router.query.id],
     queryFn: () => getCyclePeriodById(router.query.id),
-    onSuccess: (res) => formik.setValues(res.data),
+    onSuccess: (res) => formik.setValues(res),
     onError: (err) => console.log(err),
     enabled: !!router.query.id,
   });
@@ -92,17 +92,17 @@ export default function EditCyclePeriod() {
         sx={{
           padding: 5,
           borderRadius: 2,
-          boxShadow: "0px 4px 1px 0px #d2c6c6",
+          boxShadow: '0px 4px 1px 0px #d2c6c6',
           marginTop: 5,
-          border: "1px solid #d2c6c657",
-          backgroundColor: "white",
+          border: '1px solid #d2c6c657',
+          backgroundColor: 'white',
         }}
       >
         {/* ------------------------------ */}
         <Typography
           variant="h6"
           sx={{
-            color: "#8B5704",
+            color: '#8B5704',
           }}
         >
           Edit Cycle Period
@@ -110,9 +110,9 @@ export default function EditCyclePeriod() {
         <Typography
           variant="caption"
           sx={{
-            color: "#cba56a",
+            color: '#cba56a',
             marginBottom: 5,
-            fontWeight: "bold",
+            fontWeight: 'bold',
           }}
         >
           Edit Cycle Period for Buy and Save Modules
@@ -123,21 +123,21 @@ export default function EditCyclePeriod() {
           sx={{
             padding: 5,
             borderRadius: 2,
-            boxShadow: "0px 4px 1px 0px #d2c6c6",
+            boxShadow: '0px 4px 1px 0px #d2c6c6',
             marginTop: 5,
-            border: "1px solid #d2c6c657",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
+            border: '1px solid #d2c6c657',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}
           container
         >
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item  xs={8}>
             <form onSubmit={formik.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -160,7 +160,7 @@ export default function EditCyclePeriod() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -169,7 +169,9 @@ export default function EditCyclePeriod() {
                 Cycle Period short Name
               </Typography>
               <CustomTextField
-                error={formik.touched.shortName && Boolean(formik.errors.shortName)}
+                error={
+                  formik.touched.shortName && Boolean(formik.errors.shortName)
+                }
                 helperText={formik.touched.shortName && formik.errors.shortName}
                 id="shortName"
                 name="shortName"
@@ -183,7 +185,7 @@ export default function EditCyclePeriod() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -192,8 +194,13 @@ export default function EditCyclePeriod() {
                 Grace Period
               </Typography>
               <CustomTextField
-                error={formik.touched.gracePeriod && Boolean(formik.errors.gracePeriod)}
-                helperText={formik.touched.gracePeriod && formik.errors.gracePeriod}
+                error={
+                  formik.touched.gracePeriod &&
+                  Boolean(formik.errors.gracePeriod)
+                }
+                helperText={
+                  formik.touched.gracePeriod && formik.errors.gracePeriod
+                }
                 id="gracePeriod"
                 name="gracePeriod"
                 type="number"
@@ -207,7 +214,7 @@ export default function EditCyclePeriod() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -231,7 +238,7 @@ export default function EditCyclePeriod() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -240,8 +247,13 @@ export default function EditCyclePeriod() {
                 Locking Period
               </Typography>
               <CustomTextField
-                error={formik.touched.lockinPeriod && Boolean(formik.errors.lockinPeriod)}
-                helperText={formik.touched.lockinPeriod && formik.errors.lockinPeriod}
+                error={
+                  formik.touched.lockinPeriod &&
+                  Boolean(formik.errors.lockinPeriod)
+                }
+                helperText={
+                  formik.touched.lockinPeriod && formik.errors.lockinPeriod
+                }
                 id="lockinPeriod"
                 name="lockinPeriod"
                 type="number"
@@ -255,7 +267,7 @@ export default function EditCyclePeriod() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -279,7 +291,7 @@ export default function EditCyclePeriod() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -288,8 +300,13 @@ export default function EditCyclePeriod() {
                 Maximum Unpaid Skip Count
               </Typography>
               <CustomTextField
-                error={formik.touched.maxUnpaidSkip && Boolean(formik.errors.maxUnpaidSkip)}
-                helperText={formik.touched.maxUnpaidSkip && formik.errors.maxUnpaidSkip}
+                error={
+                  formik.touched.maxUnpaidSkip &&
+                  Boolean(formik.errors.maxUnpaidSkip)
+                }
+                helperText={
+                  formik.touched.maxUnpaidSkip && formik.errors.maxUnpaidSkip
+                }
                 id="maxUnpaidSkip"
                 name="maxUnpaidSkip"
                 type="number"
@@ -303,7 +320,7 @@ export default function EditCyclePeriod() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -313,9 +330,13 @@ export default function EditCyclePeriod() {
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.maxUnpaidInvestment && Boolean(formik.errors.maxUnpaidInvestment)
+                  formik.touched.maxUnpaidInvestment &&
+                  Boolean(formik.errors.maxUnpaidInvestment)
                 }
-                helperText={formik.touched.maxUnpaidInvestment && formik.errors.maxUnpaidInvestment}
+                helperText={
+                  formik.touched.maxUnpaidInvestment &&
+                  formik.errors.maxUnpaidInvestment
+                }
                 id="maxUnpaidInvestment"
                 name="maxUnpaidInvestment"
                 type="number"
@@ -325,23 +346,26 @@ export default function EditCyclePeriod() {
                 variant="outlined"
                 label="Max. Unpaid Investment"
               />
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <LoadingButton
+                  disabled={cyclePeriodMutation.isLoading}
+                  loading={cyclePeriodMutation.isLoading}
+                  type="submit"
+                  sx={{
+                    width: '50%',
 
-              <LoadingButton
-                disabled={cyclePeriodMutation.isLoading}
-                loading={cyclePeriodMutation.isLoading}
-                type="submit"
-                sx={{
-                  marginTop: 2,
-                  backgroundColor: "#DDB070",
-                  border: "none",
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "#DBA251",
-                  },
-                }}
-              >
-                Edit Cycle Period
-              </LoadingButton>
+                    marginTop: 2,
+                    background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+                    border: 'none',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: '#DBA251',
+                    },
+                  }}
+                >
+                  Edit Cycle Period
+                </LoadingButton>
+              </Box>
             </form>
           </Grid>
         </Grid>

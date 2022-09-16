@@ -13,9 +13,9 @@ export const postPlan = (data) => {
 };
 
 export const updatePlan = ({ data, id }) => {
-  return axios.patch(`/plan/update/${id}`, data);
+  return axios.patch(`/plan/${id}`, data);
 };
 
 export const deletePlan = (id) => {
-  return axios.delete(`/plan/delete/${id}`);
+  return axios.delete(`/plan/${id}`);
 };

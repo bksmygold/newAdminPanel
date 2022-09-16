@@ -13,9 +13,9 @@ export const postCyclePeriod = (data) => {
 };
 
 export const updateCyclePeriod = ({ data, id }) => {
-  return axios.patch(`/cycleperiod/update/${id}`, data);
+  return axios.patch(`/cycleperiod/${id}`, data);
 };
 
 export const deleteCyclePeriod = (id) => {
-  return axios.delete(`/cycleperiod/delete/${id}`);
+  return axios.delete(`/cycleperiod/${id}`);
 };

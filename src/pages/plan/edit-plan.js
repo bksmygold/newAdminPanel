@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Head from 'next/head';
 import {
   FormControl,
   InputLabel,
@@ -10,19 +10,20 @@ import {
   Button,
   styled,
   TextField,
-} from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import FormInput from "../../components/utility/formInput";
-import Form from "../../components/utility/form";
-import LoadingButton from "@mui/lab/LoadingButton";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import swal from "sweetalert";
-import { getPlanById, updatePlan } from "src/apis/plan";
-import { useMutation ,useQuery} from "@tanstack/react-query";
-import { getCyclePeriod } from "src/apis/cyclePeriod";
+  Box
+} from '@mui/material';
+import { DashboardLayout } from '../../components/dashboard-layout';
+import FormInput from '../../components/utility/formInput';
+import Form from '../../components/utility/form';
+import LoadingButton from '@mui/lab/LoadingButton';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import swal from 'sweetalert';
+import { getPlanById, updatePlan } from 'src/apis/plan';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getCyclePeriod } from 'src/apis/cyclePeriod';
 //=======================================================
 const CustomTextField = styled(TextField)`
   & label.Mui-focused {
@@ -48,49 +49,52 @@ const CustomFormControl = styled(FormControl)`
 export default function EditPlan() {
   const [cycle, setCycle] = useState([]);
   useEffect(() => {
-    getCyclePeriod().then((res) => setCycle(res.data.data));
+    getCyclePeriod().then((res) => setCycle(res.docs));
   }, []);
   //=======================
   const router = useRouter();
   //=======================================================
   const formik = useFormik({
     initialValues: {
-      name: "",
-      mode: "",
-      type: "",
+      name: '',
+      mode: '',
+      type: '',
       duration: 0,
-      cyclePeriod: "",
+      cyclePeriod: '',
       min: 0,
     },
     validationSchema: yup.object({
-      name: yup.string("Enter Unit Name").required("Unit is required"),
-      mode: yup.string("Enter mode").required("modeis required"),
-      type: yup.string("Enter type").required("type is required"),
-      cyclePeriod: yup.string("Enter cycle period").required("Cycle Period is required"),
-      duration: yup.number("Enter duration").required("duration is required"),
-      min: yup.number("Enter minimum").required("minimum is required"),
+      name: yup.string('Enter Unit Name').required('Unit is required'),
+      mode: yup.string('Enter mode').required('modeis required'),
+      type: yup.string('Enter type').required('type is required'),
+      cyclePeriod: yup
+        .string('Enter cycle period')
+        .required('Cycle Period is required'),
+      duration: yup.number('Enter duration').required('duration is required'),
+      min: yup.number('Enter minimum').required('minimum is required'),
     }),
     onSubmit: (values) => {
       planMutation.mutate({
         data: values,
-        id:router.query.id
+        id: router.query.id,
       });
     },
   });
 
   const query = useQuery({
-    queryKey: ["plan", router.query.id],
+    queryKey: ['plan', router.query.id],
     queryFn: () => getPlanById(router.query.id),
-    onSuccess: (res) => formik.setValues(res.data),
+    onSuccess: (res) => formik.setValues(res),
     enabled: !!router.query.id,
   });
 
   const planMutation = useMutation({
     mutationFn: updatePlan,
     onSuccess: (res) => {
-      swal("Plan Updated !", res.message, "success"), router.push("/plan/view-plan");
+      swal('Plan Updated !', res.message, 'success'),
+        router.push('/plan/view-plan');
     },
-    onError: (err) => swal("Erro !", err.message, "error"),
+    onError: (err) => swal('Erro !', err.message, 'error'),
   });
   //=======================================================
   return (
@@ -104,16 +108,16 @@ export default function EditPlan() {
         sx={{
           padding: 5,
           borderRadius: 2,
-          boxShadow: "0px 4px 1px 0px #d2c6c6",
+          boxShadow: '0px 4px 1px 0px #d2c6c6',
           marginTop: 5,
-          border: "1px solid #d2c6c657",
-          backgroundColor: "white",
+          border: '1px solid #d2c6c657',
+          backgroundColor: 'white',
         }}
       >
         <Typography
           variant="h6"
           sx={{
-            color: "#8B5704",
+            color: '#8B5704',
           }}
         >
           Edit plan
@@ -121,9 +125,9 @@ export default function EditPlan() {
         <Typography
           variant="caption"
           sx={{
-            color: "#cba56a",
+            color: '#cba56a',
             marginBottom: 5,
-            fontWeight: "bold",
+            fontWeight: 'bold',
           }}
         >
           Edit plan for Buy and Save Modules
@@ -134,21 +138,21 @@ export default function EditPlan() {
           sx={{
             padding: 5,
             borderRadius: 2,
-            boxShadow: "0px 4px 1px 0px #d2c6c6",
+            boxShadow: '0px 4px 1px 0px #d2c6c6',
             marginTop: 5,
-            border: "1px solid #d2c6c657",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
+            border: '1px solid #d2c6c657',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}
           container
         >
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item xs={12} sx={{display:"flex",flexDirection:"column",justifyContent:"center"}}>
             <form onSubmit={formik.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -171,7 +175,7 @@ export default function EditPlan() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -201,7 +205,7 @@ export default function EditPlan() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -224,7 +228,7 @@ export default function EditPlan() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -233,7 +237,9 @@ export default function EditPlan() {
                 Plan Duration
               </Typography>
               <CustomTextField
-                error={formik.touched.duration && Boolean(formik.errors.duration)}
+                error={
+                  formik.touched.duration && Boolean(formik.errors.duration)
+                }
                 helperText={formik.touched.duration && formik.errors.duration}
                 id="duration"
                 name="duration"
@@ -248,7 +254,7 @@ export default function EditPlan() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -272,7 +278,7 @@ export default function EditPlan() {
               <Typography
                 variant="body1"
                 sx={{
-                  color: "#8B5704",
+                  color: '#8B5704',
                   marginBottom: 2,
                   marginTop: 2,
                   fontWeight: 600,
@@ -281,7 +287,9 @@ export default function EditPlan() {
                 Cycle Period
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">cycle period</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  cycle period
+                </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -297,23 +305,25 @@ export default function EditPlan() {
                   ))}
                 </Select>
               </CustomFormControl>
-
-              <LoadingButton
-                disabled={planMutation.isLoading}
-                loading={planMutation.isLoading}
-                type="submit"
-                sx={{
-                  marginTop: 2,
-                  backgroundColor: "#DDB070",
-                  border: "none",
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "#DBA251",
-                  },
-                }}
-              >
-                Edit Plan
-              </LoadingButton>
+              <Box sx={{ display:"flex",justifyContent:"center" }}>
+                <LoadingButton
+                  disabled={planMutation.isLoading}
+                  loading={planMutation.isLoading}
+                  type="submit"
+                  sx={{
+                    marginTop: 2,
+                    width: '50%',
+                    background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+                    border: 'none',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: '#DBA251',
+                    },
+                  }}
+                >
+                  Edit Plan
+                </LoadingButton>
+              </Box>
             </form>
           </Grid>
         </Grid>

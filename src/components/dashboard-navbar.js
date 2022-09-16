@@ -66,7 +66,7 @@ export const DashboardNavbar = (props) => {
               }}
               sx={{
                 zoom: "90%",
-                backgroundColor: "#ff4b4b",
+                background: "linear-gradient(45deg, #ff4b4b, #ffb5b5)",
                 color: "white",
                 p: 0,
                 marginRight:1
@@ -83,7 +83,7 @@ export const DashboardNavbar = (props) => {
               }}
               sx={{
                 zoom: "90%",
-                backgroundColor: "#905E0F",
+                background: "linear-gradient(43deg, #8b5704, #ddb070)",
                 color: "white",
                 p: 0,
                 padding: "0px 12px 0px 0px",

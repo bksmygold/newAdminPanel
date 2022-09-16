@@ -24,9 +24,9 @@ export const postMakingCharge = (data) => {
 };
 
 export const updateMakingCharge = ({ data, id }) => {
-  return axios.patch(`/makingcharge/update/${id}`, data);
+  return axios.patch(`/makingcharge/${id}`, data);
 };
 
 export const deleteMakingCharge = (id) => {
-  return axios.delete(`/makingcharge/delete/${id}`);
+  return axios.delete(`/makingcharge/${id}`);
 };
