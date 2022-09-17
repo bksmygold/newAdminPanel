@@ -128,7 +128,7 @@ export default function Table(props) {
               backgroundColor: "white",
               // width: "40%",
               // height:"50%",
-              p: 8,
+              p: 2,
               borderRadius: 1,
               boxShadow: "0px 4px 1px 0px #d2c6c6",
               border: "1px solid #d2c6c657",
@@ -229,7 +229,7 @@ export default function Table(props) {
             boxShadow: "0px 4px 1px 0px #d2c6c6",
             marginTop: 5,
             border: "1px solid #d2c6c657",
-            justifyContent: "center",
+            // justifyContent: "center",
           }}
           rows={props.rows}
           columns={props.columns}

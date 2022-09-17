@@ -27,7 +27,7 @@ import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import swal from 'sweetalert';
-import { postMerhcant } from 'src/apis/merchant';
+import { postMerchant } from 'src/apis/merchant';
 import { useMutation } from '@tanstack/react-query';
 import GoogleMapReact from 'google-map-react';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -148,9 +148,6 @@ export default function AddMerchant() {
       retainershipType: yup
         .string('Enter retainership type')
         .required('retainership type is required'),
-      // retainershipValue: yup
-      //   .number('Enter retainership Value')
-      //   .required('retainership Value is required'),
 
       address: yup.string('Enter address').required('address is required'),
       settlementInDays: yup
@@ -160,26 +157,30 @@ export default function AddMerchant() {
     }),
     onSubmit: (values) => {
       console.log('payload ---', values);
-      merchantMutation.mutate(values);
+      try {
+        merchantMutation.mutate(values);
+      } catch (e) {
+        console.log('e--', e);
+      }
     },
   });
 
   const merchantMutation = useMutation({
-    mutationFn: postMerhcant,
+    mutationFn: postMerchant,
     onSuccess: (res) => {
-      swal('Merchant Added !', 'continue with the admin panel', 'success'),
-        router.push('/userManagement/merchant/view-merchant');
+      swal('Merchant Added !', 'continue with the admin panel', 'success');
+      router.push('/userManagement/merchant/view-merchant');
     },
     onError: (err) => swal('Error !', err.message, 'error'),
   });
 
   const isActive = (name) => {
-    if (formik.values.modules?.find(e => e === name)) return true;
+    if (formik.values.modules?.find((e) => e === name)) return true;
     return false;
-  }
+  };
 
   console.log('error --', formik.errors);
-  console.log('values --', formik.values);
+  // console.log('values --', formik.values);
 
   //=======================================================
   return (
@@ -583,6 +584,38 @@ export default function AddMerchant() {
                   fontWeight: 600,
                 }}
               >
+                Retainer Value
+              </Typography>
+
+              <CustomTextField
+                error={
+                  formik.touched.retainershipValue &&
+                  Boolean(formik.errors.retainershipValue)
+                }
+                helperText={
+                  formik.touched.retainershipValue &&
+                  formik.errors.retainershipValue
+                }
+                id="retainershipValue"
+                name="retainershipValue"
+                type="number"
+                value={formik.values?.retainershipValue}
+                onChange={formik.handleChange}
+                fullWidth
+                variant="outlined"
+                label="retainership value"
+              />
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
                 Sell Commission
               </Typography>
 
@@ -596,6 +629,7 @@ export default function AddMerchant() {
                 //   formik.errors.commission.sell
                 // }
                 id="commission.sell"
+                type="number"
                 name="commission.sell"
                 value={formik.values?.commission?.sell}
                 onChange={formik.handleChange}
@@ -630,6 +664,7 @@ export default function AddMerchant() {
                 value={formik.values?.commission?.buy}
                 onChange={formik.handleChange}
                 fullWidth
+                type="number"
                 variant="outlined"
                 label="buy commission"
                 sx={{ marginBottom: 4 }}
@@ -658,10 +693,16 @@ export default function AddMerchant() {
                     }}
                     onClick={() => {
                       if (isActive(x.name)) {
-                        formik.setFieldValue('modules', formik.values.modules.filter(e=>e!== x.name))
-                        return
+                        formik.setFieldValue(
+                          'modules',
+                          formik.values.modules.filter((e) => e !== x.name)
+                        );
+                        return;
                       }
-                      formik.setFieldValue('modules', [...formik.values.modules, x.name].filter(Boolean))
+                      formik.setFieldValue(
+                        'modules',
+                        [...formik.values.modules, x.name].filter(Boolean)
+                      );
                     }}
 
                     //   formik.setValues({
@@ -722,6 +763,7 @@ export default function AddMerchant() {
                       value={formik.values.settlementInDays}
                       onChange={formik.handleChange}
                       variant="outlined"
+                      type="number"
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">DAYS</InputAdornment>
@@ -756,6 +798,7 @@ export default function AddMerchant() {
                       helperText={formik.touched.limit && formik.errors.limit}
                       id="limit"
                       name="limit"
+                      type="number"
                       value={formik.values.limit}
                       onChange={formik.handleChange}
                       variant="outlined"

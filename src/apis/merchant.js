@@ -9,6 +9,7 @@ export const getMerchantById = (id) => {
 };
 
 export const postMerchant = (data) => {
+  console.log("payload hai----",data)
   return axios.post('/merchant/create', data);
 };
 
