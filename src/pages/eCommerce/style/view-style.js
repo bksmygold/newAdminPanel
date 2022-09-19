@@ -300,9 +300,7 @@ export default function Style() {
                 Metal Group
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  metal group{' '}
-                </InputLabel>
+              
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -420,9 +418,7 @@ export default function Style() {
                 Metal Group
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  metal group{' '}
-                </InputLabel>
+            
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"

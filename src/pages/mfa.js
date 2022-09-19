@@ -61,9 +61,10 @@ const Mfa = () => {
     mutationFn: login,
     onSuccess: (res) => {
       
+      localStorage.setItem("token", res.accessToken)
+      axio
       Swal.fire("Logged in successfully !", res.message, "success"),
-        router.push("/");
-      localStorage.setItem("token",res.accessToken )
+      router.push("/");
     },
     onError: (err) =>
       Swal.fire("Something went wrong !", err.message, "error"),

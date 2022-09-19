@@ -1,4 +1,4 @@
-import axios from 'axios';
+  import axios from 'axios';
 //==============================
 export const getRole = () => {
   return axios.post('/role/list');
@@ -13,9 +13,9 @@ export const postRole = (data) => {
 };
 
 export const updateRole = ({ data, id }) => {
-  return axios.patch(`/role/update/${id}`, data);
+  return axios.patch(`/role/${id}`, data);
 };
 
 export const deleteRole = (id) => {
-  return axios.delete(`/role/delete/${id}`);
+  return axios.delete(`/role/${id}`);
 };

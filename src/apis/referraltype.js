@@ -13,9 +13,9 @@ export const postReferralType = (data) => {
 };
 
 export const updateReferralType = ({ data, id }) => {
-  return axios.patch(`/referralType/update/${id}`, data);
+  return axios.patch(`/referralType/${id}`, data);
 };
 
 export const deleteReferralType = (id) => {
-  return axios.delete(`/referralType/delete/${id}`);
+  return axios.delete(`/referraltype/${id}`);
 };

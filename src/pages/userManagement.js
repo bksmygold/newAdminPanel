@@ -12,15 +12,15 @@ export default function userManagement() {
         <title>User Management </title>
       </Head>
 
-      <Container sx={{p:5} }>
+      <Container sx={{ p: 5 }}>
         {/* ------------------------------ */}
 
         <Typography
           sx={{
             marginTop: 4,
             marginBottom: 2,
-            color: "#8B5704",
-            fontWeight: "bolder",
+            color: '#8B5704',
+            fontWeight: 'bolder',
           }}
           variant="h6"
         >
@@ -31,13 +31,14 @@ export default function userManagement() {
             <InfoCard
               title="Roles & Permissions"
               desc="create, update, delete user roles and manage thier permission"
-              url="/userManagement/create-rolesPermission"
+              url="/userManagement/role/view-rolesPermission"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Organisation Users"
               desc="create, update, delete user for MyGold Organiation"
+              url="/userManagement/user/view-organisationUser"
             />
           </Grid>
         </Grid>
@@ -46,8 +47,8 @@ export default function userManagement() {
           sx={{
             marginTop: 4,
             marginBottom: 2,
-            color: "#8B5704",
-            fontWeight: "bolder",
+            color: '#8B5704',
+            fontWeight: 'bolder',
           }}
           variant="h6"
         >
@@ -55,13 +56,23 @@ export default function userManagement() {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="VIP Referrals" desc="create, update, delete VIP/influencer Referral" />
+            <InfoCard
+              title="Referrals Users"
+              desc="create, update, delete VIP/influencer Referral"
+              url="/userManagement/referralUsers/view-referralUsers"
+            />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="GBP Users" desc="create, update, delete GBP Users" />
+            <InfoCard
+              title="GBP Users"
+              desc="create, update, delete GBP Users"
+            />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="Sales Referrals" desc="create, update, delete sales referrals" />
+            <InfoCard
+              title="Sales Referrals"
+              desc="create, update, delete sales referrals"
+            />
           </Grid>
         </Grid>
         {/* ------------------------------ */}
@@ -69,8 +80,8 @@ export default function userManagement() {
           sx={{
             marginTop: 4,
             marginBottom: 2,
-            color: "#8B5704",
-            fontWeight: "bolder",
+            color: '#8B5704',
+            fontWeight: 'bolder',
           }}
           variant="h6"
         >
@@ -91,7 +102,10 @@ export default function userManagement() {
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="Suppliers" desc="create, update, delete suppliers for e-commerce" />
+            <InfoCard
+              title="Suppliers"
+              desc="create, update, delete suppliers for e-commerce"
+            />
           </Grid>
         </Grid>
         {/* ------------------------------ */}

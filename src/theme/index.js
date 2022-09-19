@@ -146,6 +146,9 @@ export const theme = createTheme({
     },
     editButton: {
       background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+      color: 'white',
+      // width: '50%',
+      
     },
     addButton: {
       background: 'linear-gradient(43deg, #098b04, #35f531)',

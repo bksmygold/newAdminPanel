@@ -1,20 +1,35 @@
 import axios from "axios";
 import { ADMIN_API } from "src/constant";
 
+
 axios.defaults.baseURL = ADMIN_API;
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTVhNTQ3NTU5MzEyNjE5ZGJhOTYzNSIsImlwIjoiOjoxIiwiaWF0IjoxNjYyMzYzMDc1LCJleHAiOjE2NjQ5NTUwNzUsImlzcyI6IkJLUyBNWSBHT0xEIn0.4AE_xDfp8fltNsCMq3VvDFAm6mTFwaf1NTRnPOj1gLY';
+
+const ISSERVER = typeof window === 'undefined';
+
+if (!ISSERVER) {
+  let token = localStorage.getItem('token')
   axios.interceptors.request.use((request) => {
-  if (!token) return request;
-  request.headers["Authorization"] = `Bearer ${token}`;
-  return request;
-});
+    if (!token) {
+      token = localStorage.getItem("token")
+    }
+    if (!token) return request;
+    request.headers["Authorization"] = `Bearer ${token}`;
+    return request;
+  });
+}
 
 axios.interceptors.response.use(
   (res) => res.data,
   (err) => {
     console.log(err);
+
     if (err.response) {
+      if (err.response.status == 401) {
+        localStorage.clear();
+        token = null
+        window.location.href = "/login"
+        return Promise.reject({message:"Logged out"})
+    }
       return Promise.reject({
         message: err.response.message || err.response.statusText || "Unkown Error ",
         status: err.response.status,

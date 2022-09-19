@@ -22,13 +22,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import {
-  getCertificate,
-  deleteCertificate,
-  postCertificate,
-  updateCertificate,
-} from 'src/apis/certificate';
-import React from 'react';
+import { getLabel, deleteLabel, postLabel, updateLabel } from 'src/apis/label';
+import React, { useEffect } from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -37,6 +32,7 @@ import * as yup from 'yup';
 import swal from 'sweetalert';
 import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
+import { getStyle } from 'src/apis/style';
 
 //=======================================================
 const CustomTextField = styled(TextField)`
@@ -61,20 +57,36 @@ const CustomFormControl = styled(FormControl)`
   }
 `;
 //=======================================================
-export default function Certificate() {
+export default function Label() {
   const router = useRouter();
 
   const [showAdd, setShowAdd] = React.useState(false);
   const [showEdit, setShowEdit] = React.useState(false);
   const [id, setId] = useState('');
   //=======================
+
+  const [style, setStyle] = useState([]);
+
+  useEffect(() => {
+    getStyle().then((res) => setStyle(res.docs));
+  }, []);
+
+  //=======================
+
   const addFormik = useFormik({
     initialValues: {
-     name:""
+      name: '',
+      style: '',
+      mode: '',
+      weight: 0,
+      piece: 0,
     },
     validationSchema: yup.object({
       name: yup.string('Enter name').required('Name is required'),
-      
+      style: yup.string('Enter style').required('style is required'),
+      mode: yup.string('Enter mode').required('mode is required'),
+      weight: yup.number('Enter weight').required('weight is required'),
+      piece: yup.number('Enter piece').required('piece is required'),
     }),
     onSubmit: (values) => {
       console.log('payload --', values);
@@ -85,9 +97,17 @@ export default function Certificate() {
   const editFormik = useFormik({
     initialValues: {
       name: '',
+      style: '',
+      mode: '',
+      weight: 0,
+      piece: 0,
     },
     validationSchema: yup.object({
       name: yup.string('Enter name').required('Name is required'),
+      style: yup.string('Enter style').required('style is required'),
+      mode: yup.string('Enter mode').required('mode is required'),
+      weight: yup.number('Enter weight').required('weight is required'),
+      piece: yup.number('Enter piece').required('piece is required'),
     }),
     onSubmit: (values) => {
       editMutation.mutate({ data: values, id: id });
@@ -95,31 +115,27 @@ export default function Certificate() {
   });
 
   const query = useQuery({
-    queryKey: 'Certificate',
-    queryFn: () => getCertificate(),
+    queryKey: 'Label',
+    queryFn: () => getLabel(),
   });
 
   const addMutation = useMutation({
-    mutationFn: postCertificate,
+    mutationFn: postLabel,
     onSuccess: (res) => {
       query.refetch();
       setShowAdd(false);
       addFormik.resetForm();
-      swal('Certificate Added !', 'Continue with the e-comm panel', 'success');
+      swal('Label Added !', 'Continue with the e-comm panel', 'success');
     },
     onError: (err) => swal('Erro !', err.message, 'error'),
   });
 
   const editMutation = useMutation({
-    mutationFn: updateCertificate,
+    mutationFn: updateLabel,
     onSuccess: (res) => {
       query.refetch();
       setShowEdit(false);
-      swal(
-        'Certificate Updated !',
-        'Continue with the e-comm panel',
-        'success'
-      );
+      swal('Label Updated !', 'Continue with the e-comm panel', 'success');
     },
     onError: (err) => swal('Erro !', err.message, 'error'),
   });
@@ -154,8 +170,8 @@ export default function Certificate() {
     return (
       <DeleteSpinner
         id={params.id}
-        deleting={deletePolicy}
-        url="/certificate/view-certificate"
+        deleting={deleteLabel}
+        url="/eCommerce/label/view-label"
       />
     );
   };
@@ -163,11 +179,35 @@ export default function Certificate() {
   const columns = [
     {
       field: 'name',
-      headerName: 'certificate name',
+      headerName: 'label name',
       width: 150,
       editable: true,
     },
-    
+    {
+      field: 'mode',
+      headerName: 'mode',
+      width: 150,
+      editable: true,
+    },
+    {
+      field: 'weight',
+      headerName: 'weight',
+      width: 150,
+      editable: true,
+    },
+    {
+      field: 'piece',
+      headerName: 'piece',
+      width: 150,
+      editable: true,
+    },
+    {
+      field: 'style.name',
+      headerName: 'style name',
+      width: 150,
+      editable: true,
+    },
+
     {
       field: 'edit',
       headerName: 'Edit',
@@ -188,7 +228,7 @@ export default function Certificate() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Certificate </title>
+        <title>Dashboard | Label </title>
       </Head>
       {/* ================= EDIT ================================== */}
       <Modal
@@ -221,7 +261,7 @@ export default function Certificate() {
                 fontWeight: 'bolder',
               }}
             >
-              Edit Certificate
+              Edit Label
             </Typography>
             <Typography
               variant="caption"
@@ -231,7 +271,7 @@ export default function Certificate() {
                 fontWeight: 'bold',
               }}
             >
-              Edit Certificate for products used in E-commerce
+              Edit Label for products used in E-commerce
             </Typography>
 
             <form onSubmit={editFormik.handleSubmit}>
@@ -244,66 +284,21 @@ export default function Certificate() {
                   fontWeight: 600,
                 }}
               >
-                Certificate title
-              </Typography>
-              <CustomFormControl fullWidth>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="title"
-                  value={editFormik.values.title}
-                  onChange={editFormik.handleChange}
-                  name="title"
-                >
-                  <MenuItem key="collection" value="privacy">
-                    Privacy
-                  </MenuItem>
-                  <MenuItem key="category" value="terms">
-                    Terms
-                  </MenuItem>
-                  <MenuItem key="variety" value="shipping">
-                    Shipping
-                  </MenuItem>
-                  <MenuItem key="item" value="cancellation">
-                    Cancellation
-                  </MenuItem>
-                  <MenuItem key="variety" value="return">
-                    Return
-                  </MenuItem>
-                  <MenuItem key="item" value="refund">
-                    Refund
-                  </MenuItem>
-                </Select>
-              </CustomFormControl>
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Certificate description
+                Label name
               </Typography>
               <CustomTextField
                 multiline
                 error={
-                  editFormik.touched.description &&
-                  Boolean(editFormik.errors.description)
+                  editFormik.touched.name && Boolean(editFormik.errors.name)
                 }
-                helperText={
-                  editFormik.touched.description &&
-                  editFormik.errors.description
-                }
-                id="description"
-                name="description"
-                value={editFormik.values.description}
+                helperText={editFormik.touched.name && editFormik.errors.name}
+                id="name"
+                name="name"
+                value={editFormik.values.name}
                 onChange={editFormik.handleChange}
                 fullWidth
                 variant="outlined"
-                label=" description"
+                label=" name"
               />
 
               <Typography
@@ -315,25 +310,106 @@ export default function Certificate() {
                   fontWeight: 600,
                 }}
               >
-                Consignment
+                Style
               </Typography>
               <CustomFormControl fullWidth>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="consignmentRequired"
-                  value={editFormik.values.consignmentRequired}
+                  value={editFormik.values.style}
                   onChange={editFormik.handleChange}
-                  name="consignmentRequired"
+                  name="style"
                 >
-                  <MenuItem key="weight" value={true}>
-                    yes
+                  {style.map((x) => (
+                    <MenuItem key="weight" value={x.id}>
+                      {x.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </CustomFormControl>
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Mode
+              </Typography>
+              <CustomFormControl fullWidth>
+                <Select
+                  defaultValue=""
+                  labelId="demo-simple-select-label"
+                  id="mode"
+                  value={editFormik.values.mode}
+                  onChange={editFormik.handleChange}
+                  name="mode"
+                >
+                  <MenuItem key="weight" value="weight">
+                    Weight
                   </MenuItem>
-                  <MenuItem key="value" value={false}>
-                    no
+                  <MenuItem key="value" value="value">
+                    Value
                   </MenuItem>
                 </Select>
               </CustomFormControl>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Weight
+              </Typography>
+              <CustomTextField
+                error={
+                  editFormik.touched.weight && Boolean(editFormik.errors.weight)
+                }
+                helperText={
+                  editFormik.touched.weight && editFormik.errors.weight
+                }
+                id="weight"
+                name="weight"
+                value={editFormik.values.weight}
+                onChange={editFormik.handleChange}
+                fullWidth
+                type="number"
+                variant="outlined"
+                label=" weight"
+              />
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                piece
+              </Typography>
+              <CustomTextField
+                error={
+                  editFormik.touched.piece && Boolean(editFormik.errors.piece)
+                }
+                helperText={editFormik.touched.piece && editFormik.errors.piece}
+                id="piece"
+                name="piece"
+                value={editFormik.values.piece}
+                onChange={editFormik.handleChange}
+                fullWidth
+                type="number"
+                variant="outlined"
+                label=" piece"
+              />
 
               <LoadingButton
                 disabled={editMutation.isLoading}
@@ -349,7 +425,7 @@ export default function Certificate() {
                   },
                 }}
               >
-                Edit Certificate
+                Edit Label
               </LoadingButton>
             </form>
           </Grid>
@@ -386,7 +462,7 @@ export default function Certificate() {
                 fontWeight: 'bolder',
               }}
             >
-              Add Certificate
+              Add Label
             </Typography>
             <Typography
               variant="caption"
@@ -396,7 +472,7 @@ export default function Certificate() {
                 fontWeight: 'bold',
               }}
             >
-              Add Certificate for products used in E-commerce
+              Add Label for products used in E-commerce
             </Typography>
 
             <form onSubmit={addFormik.handleSubmit}>
@@ -409,65 +485,19 @@ export default function Certificate() {
                   fontWeight: 600,
                 }}
               >
-                Certificate title
-              </Typography>
-              <CustomFormControl fullWidth>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="title"
-                  value={addFormik.values.title}
-                  onChange={addFormik.handleChange}
-                  name="title"
-                >
-                  <MenuItem key="collection" value="privacy">
-                    Privacy
-                  </MenuItem>
-                  <MenuItem key="category" value="terms">
-                    Terms
-                  </MenuItem>
-                  <MenuItem key="variety" value="shipping">
-                    Shipping
-                  </MenuItem>
-                  <MenuItem key="item" value="cancellation">
-                    Cancellation
-                  </MenuItem>
-                  <MenuItem key="variety" value="return">
-                    Return
-                  </MenuItem>
-                  <MenuItem key="item" value="refund">
-                    Refund
-                  </MenuItem>
-                </Select>
-              </CustomFormControl>
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Certificate description
+                Label name
               </Typography>
               <CustomTextField
                 multiline
-                error={
-                  addFormik.touched.description &&
-                  Boolean(addFormik.errors.description)
-                }
-                helperText={
-                  addFormik.touched.description && addFormik.errors.description
-                }
-                id="description"
-                name="description"
-                value={addFormik.values.description}
+                error={addFormik.touched.name && Boolean(addFormik.errors.name)}
+                helperText={addFormik.touched.name && addFormik.errors.name}
+                id="name"
+                name="name"
+                value={addFormik.values.name}
                 onChange={addFormik.handleChange}
                 fullWidth
                 variant="outlined"
-                label=" description"
+                label=" name"
               />
 
               <Typography
@@ -479,25 +509,105 @@ export default function Certificate() {
                   fontWeight: 600,
                 }}
               >
-                Consignment
+                Style
               </Typography>
               <CustomFormControl fullWidth>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="consignmentRequired"
-                  value={addFormik.values.consignmentRequired}
+                  value={addFormik.values.style}
                   onChange={addFormik.handleChange}
-                  name="consignmentRequired"
+                  name="style"
                 >
-                  <MenuItem key="weight" value={true}>
-                    yes
+                  {style.map((x) => (
+                    <MenuItem key="weight" value={x.id}>
+                      {x.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </CustomFormControl>
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Mode
+              </Typography>
+              <CustomFormControl fullWidth>
+                <Select
+                  defaultValue=""
+                  labelId="demo-simple-select-label"
+                  id="consignmentRequired"
+                  value={addFormik.values.mode}
+                  onChange={addFormik.handleChange}
+                  name="mode"
+                >
+                  <MenuItem key="weight" value="weight">
+                    Weight
                   </MenuItem>
-                  <MenuItem key="value" value={false}>
-                    no
+                  <MenuItem key="value" value="value">
+                    Value
                   </MenuItem>
                 </Select>
               </CustomFormControl>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Weight
+              </Typography>
+              <CustomTextField
+                error={
+                  addFormik.touched.weight && Boolean(addFormik.errors.weight)
+                }
+                helperText={addFormik.touched.weight && addFormik.errors.weight}
+                id="weight"
+                name="weight"
+                value={addFormik.values.weight}
+                onChange={addFormik.handleChange}
+                fullWidth
+                type="number"
+                variant="outlined"
+                label=" weight"
+              />
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                piece
+              </Typography>
+              <CustomTextField
+                error={
+                  addFormik.touched.piece && Boolean(addFormik.errors.piece)
+                }
+                helperText={addFormik.touched.piece && addFormik.errors.piece}
+                id="piece"
+                name="piece"
+                value={addFormik.values.piece}
+                onChange={addFormik.handleChange}
+                fullWidth
+                type="number"
+                variant="outlined"
+                label=" piece"
+              />
+
               <LoadingButton
                 disabled={addMutation.isLoading}
                 loading={addMutation.isLoading}
@@ -510,7 +620,7 @@ export default function Certificate() {
                   color: 'white',
                 }}
               >
-                Add Certificate
+                Add Label
               </LoadingButton>
             </form>
           </Grid>
@@ -528,7 +638,7 @@ export default function Certificate() {
       >
         <Grid item>
           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-            Certificate View
+            Label View
           </Typography>
         </Grid>
         <Grid item>
@@ -539,7 +649,7 @@ export default function Certificate() {
               color: 'white',
             }}
           >
-            Create Certificate
+            Create Label
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>
         </Grid>
@@ -548,4 +658,4 @@ export default function Certificate() {
     </>
   );
 }
-Certificate.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Label.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

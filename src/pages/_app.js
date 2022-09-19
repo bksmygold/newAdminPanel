@@ -14,6 +14,9 @@ import { useEffect } from "react";
 //=====================================================
 const clientSideEmotionCache = createEmotionCache();
 const queryClient = new QueryClient();
+// if (typeof window == 'undefined') { 
+//   window = {}
+// }
 //=====================================================
 const App = (props) => {
   const router = useRouter();

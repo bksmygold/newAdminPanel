@@ -8,13 +8,13 @@ import {
   Button,
   TextField,
 } from '@mui/material';
-import { DashboardLayout } from '../../components/dashboard-layout';
-import { InfoCard } from '../../components/infoCard';
+import { DashboardLayout } from '../../../components/dashboard-layout';
+import { InfoCard } from '../../../components/infoCard';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { alpha, styled } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Table from '../../components/utility/table';
+import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { postRole } from 'src/apis/role';
@@ -24,8 +24,8 @@ import Loading from 'src/components/loading';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import swal from 'sweetalert';
-import { RoleCard } from '../../components/roleCard';
-import { PermissionCard } from '../../components/permissionCard';
+import { RoleCard } from '../../../components/roleCard';
+import { PermissionCard } from '../../../components/permissionCard';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 //=============================
@@ -359,10 +359,9 @@ export default function RolesPermission() {
         type="submit"
         onClick={() =>
           postRole({ permissions: permissions, name: name }).then(
-            () => swal('Role Added !', "continue with the panel", 'success'),
-                  router.push('/unit/view-role'))
-              
-          
+            () => swal('Role Added !', 'continue with the panel', 'success'),
+            router.push('/userManagement/role/view-rolesPermission')
+          )
         }
         sx={{
           backgroundColor: '#DDB070',

@@ -1,8 +1,16 @@
 import axios from 'axios';
 //==============================
 export const getLabel = () => {
-  return axios.post('/label/list');
+  return axios.post('/label/list', {
+    options: {
+      populate: ['style'],
+    },
+  });
 };
+
+// export const getLabel = () => {
+//   return axios.post('/label/list');
+// };
 
 export const getLabelById = (id) => {
   return axios.get(`/label/${id}`);

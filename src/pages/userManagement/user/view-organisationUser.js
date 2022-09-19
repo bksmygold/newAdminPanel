@@ -1,29 +1,32 @@
 import Head from 'next/head';
 import { DashboardSidebar } from 'src/components/dashboard-sidebar';
 import { Box, Container, Typography, Grid, Button } from '@mui/material';
-import { DashboardLayout } from '../../components/dashboard-layout';
-import { InfoCard } from '../../components/infoCard';
+import { DashboardLayout } from '../../../components/dashboard-layout';
+import { InfoCard } from '../../../components/infoCard';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { alpha, styled } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Table from '../../components/utility/table';
+import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getPlan, deletePlan } from 'src/apis/plan';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
 import AddIcon from '@mui/icons-material/Add';
+import { getRole } from 'src/apis/role';
+import { deleteUser, getOrganisationUser } from 'src/apis/user';
 
 //=======================================================
-export default function ViewRole() {
+export default function ViewOrganisationUser() {
   const router = useRouter();
+
   //=======================
 
   const query = useQuery({
-    queryKey: 'Plan',
-    queryFn: () => getPlan(),
+    queryKey: 'OrgaUser',
+    queryFn: () => getOrganisationUser(),
     onSuccess: (res) => console.log('Success ---', res.message),
     onError: (err) => console.log('Error --->', err),
   });
@@ -42,7 +45,7 @@ export default function ViewRole() {
           }}
           size="small"
           onClick={() => {
-            router.push(`/plan/edit-plan/?id=${params.id}`);
+            router.push(`/userManagement/user/edit-organisationUser/?id=${params.id}`);
           }}
         >
           Edit <EditIcon sx={{ marginLeft: 1, width: 23, height: 23 }} />
@@ -55,56 +58,43 @@ export default function ViewRole() {
     return (
       <DeleteSpinner
         id={params.id}
-        deleting={deletePlan}
-        url="/plan/view-plan"
+        deleting={deleteUser}
+        url="/userManagement/user/view-organisationUser"
       />
     );
   };
   //==========
   const columns = [
     {
-      field: 'name',
-      headerName: 'Plan Name',
+      field: 'fullName',
+      headerName: 'Name',
       width: 150,
-      editable: true,
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),
     },
     {
-      field: 'mode',
-      headerName: 'Mode',
+      field: 'email',
+      headerName: 'Email',
       width: 150,
-      editable: true,
     },
     {
-      field: 'type',
-      headerName: 'Plan Type',
+      field: 'mobile',
+      headerName: 'Mobile',
       width: 150,
-      editable: true,
     },
     {
-      field: 'min',
-      headerName: 'Minimum',
+      field: 'role.name',
+      headerName: 'Role',
       width: 150,
-      editable: true,
-    },
-    {
-      field: 'duration',
-      headerName: 'Duration',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'cyclePeriod.name',
-      headerName: 'Cycle Period',
-      width: 160,
       valueGetter: (params) => {
-        console.log(params.row.cyclePeriod.name);
         let result = [];
-        if (params.row.cyclePeriod) {
-          if (params.row.cyclePeriod.name) {
-            result.push(params.row.cyclePeriod.name);
+        if (params.row.role) {
+          if (params.row.role.name) {
+            result.push(params.row.role .name);
           }
         } else {
-          result = ['Unknown'];
+          result = ['Empty'];
         }
         return result.join(', ');
       },
@@ -131,7 +121,7 @@ export default function ViewRole() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Plan </title>
+        <title>Dashboard | Organisation User </title>
       </Head>
       <Grid
         sx={{
@@ -144,33 +134,28 @@ export default function ViewRole() {
       >
         <Grid item>
           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-            Plan View
+            Organiation User
           </Typography>
         </Grid>
         <Grid item>
           <Button
             onClick={() =>
-              // setShowAdd(true)
-              router.push('/plan/add-plan')
+              router.push('/userManagement/user/create-organisationUser')
             }
             sx={{
               background: 'linear-gradient(43deg, #8b5704, #ddb070)',
               color: 'white',
             }}
           >
-            Create Plan
+            Add User
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>
         </Grid>
       </Grid>{' '}
-      <Table
-        rows={query.data.docs}
-        columns={columns}
-        create="Plan"
-        url="/plan/add-plan"
-        title="Plan View"
-      />
+      <Table rows={query?.data?.docs} columns={columns} />
     </>
   );
 }
-ViewRole.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+ViewOrganisationUser.getLayout = (page) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
