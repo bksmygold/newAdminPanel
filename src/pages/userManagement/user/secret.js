@@ -52,10 +52,7 @@ const CustomFormControl = styled(FormControl)`
 export default function AddOrganisationUser() {
   const router = useRouter();
 
-
-
-  
-  console.log('secret --', router.query);
+  let mfa = router.query;
   //=======================================================
   return (
     <>
@@ -65,7 +62,8 @@ export default function AddOrganisationUser() {
       </Head>
       <Container
         sx={{
-          padding: 5,
+          padding: 1,
+          mb: 5,
           borderRadius: 2,
           boxShadow: '0px 4px 1px 0px #d2c6c6',
           marginTop: 5,
@@ -79,7 +77,7 @@ export default function AddOrganisationUser() {
             color: '#8B5704',
           }}
         >
-          Add User
+          Your 2FA Secret
         </Typography>
         <Typography
           variant="caption"
@@ -89,27 +87,76 @@ export default function AddOrganisationUser() {
             fontWeight: 'bold',
           }}
         >
-          Add Bks MyGold organisation user
+          Keep these secret with you securily for your next authentication
         </Typography>
-        {/* ------------------------------ */}
-
+        {/* -------------------------------------------------------------------- */}
         <Grid
-          sx={{
-            padding: 5,
-            borderRadius: 2,
-            boxShadow: '0px 4px 1px 0px #d2c6c6',
-            marginTop: 5,
-            border: '1px solid #d2c6c657',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-          }}
           container
+          sx={{
+            mt: 5,
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+          }}
         >
-          <Grid item sm={8} xs={12}>
-           <Typography color='primary'>Secret</Typography>
+          <Grid item md={12} xs={12}>
+            <Box
+              sx={{
+                boxShadow: '0px 4px 1px 0px #d2c6c6',
+                marginTop: 2,
+                p: 5,
+                borderRadius: 1.5,
+                border: '1px solid #d2c6c657',
+                height: '100%',
+                // display: 'flex',
+                // flexDirection: 'column',
+                // justifyContent: 'center',
+                // alignItems: 'center',
+                overflowWrap: 'break-word',
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{
+                  color: '#8B5704',
+                  textAlign: 'center',
+                }}
+              >
+                MFA QR
+              </Typography>
+              <Box sx={{
+                display: "flex",
+            justifyContent:"center"
+              }}>
+                <img src={mfa.qr} />
+              </Box>
+              <Typography
+                variant="h6"
+                sx={{
+                  mt: 4,
+                  color: '#8B5704',
+                  textAlign: 'center',
+                }}
+              >
+                MFA Secret
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  mt: 1,
+                  color: '#8B5704',
+                  textAlign: 'center',
+                  overflowWrap: 'break-word',
+                }}
+              >
+                {mfa.secret}
+              </Typography>
+            </Box>
           </Grid>
+
+          {/* -------------------------------------- */}
         </Grid>
+
         {/* ------------------------------ */}
       </Container>
     </>

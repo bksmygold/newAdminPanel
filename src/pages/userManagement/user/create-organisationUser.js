@@ -89,7 +89,7 @@ export default function AddOrganisationUser() {
       swal('User Added !', 'User has been added', 'success'),
         router.push({
           pathname: '/userManagement/user/secret',
-          query: { state: res },
+          query: res.mfa,
         });
     },
     onError: (err) => swal('Error !', err.message, 'error'),
@@ -238,12 +238,12 @@ export default function AddOrganisationUser() {
                 error={formik.touched.dob && Boolean(formik.errors.dob)}
                 helperText={formik.touched.dob && formik.errors.dob}
                 id="dob"
+                type='date'
                 name="dob"
                 value={formik.values.dob}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="dob"
               />
 
               <Typography
