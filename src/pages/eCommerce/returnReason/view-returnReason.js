@@ -37,6 +37,7 @@ import * as yup from 'yup';
 import swal from 'sweetalert';
 import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
+import { useTheme } from '@mui/styles';
 
 //=======================================================
 const CustomTextField = styled(TextField)`
@@ -63,6 +64,7 @@ const CustomFormControl = styled(FormControl)`
 //=======================================================
 export default function ReturnReason() {
   const router = useRouter();
+  const theme = useTheme();
 
   const [showAdd, setShowAdd] = React.useState(false);
   const [showEdit, setShowEdit] = React.useState(false);
@@ -139,10 +141,7 @@ export default function ReturnReason() {
       <strong>
         <Button
           variant="contained"
-          sx={{
-            background: 'linear-gradient(43deg, #8b5704, #ddb070)',
-            color: 'white',
-          }}
+          sx={theme.custom.editButton}
           size="small"
           onClick={() => {
             // console.log("params ---", params.row);
@@ -151,7 +150,7 @@ export default function ReturnReason() {
             setShowEdit(params.row);
           }}
         >
-          Edit <EditIcon />
+          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
         </Button>
       </strong>
     );
@@ -216,17 +215,7 @@ export default function ReturnReason() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box
-          sx={{
-            background: 'linear-gradient(11deg, rgb(252 252 253), #f5f5f5)',
-            // width: "40%",
-            // height:"50%",
-            p: 8,
-            borderRadius: 1,
-            boxShadow: '0px 4px 1px 0px #d2c6c6',
-            border: '1px solid #d2c6c657',
-          }}
-        >
+        <Box sx={theme.custom.modal}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <Typography
               variant="h4"
@@ -262,7 +251,9 @@ export default function ReturnReason() {
               </Typography>
               <CustomTextField
                 multiline
-                error={editFormik.touched.title && Boolean(editFormik.errors.title)}
+                error={
+                  editFormik.touched.title && Boolean(editFormik.errors.title)
+                }
                 helperText={editFormik.touched.title && editFormik.errors.title}
                 id="title"
                 name="title"
@@ -305,15 +296,7 @@ export default function ReturnReason() {
                 disabled={editMutation.isLoading}
                 loading={editMutation.isLoading}
                 type="submit"
-                sx={{
-                  marginTop: 2,
-                  background: 'linear-gradient(43deg, #8b5704, #ddb070)',
-                  border: 'none',
-                  color: 'white',
-                  '&:hover': {
-                    backgroundColor: '#DBA251',
-                  },
-                }}
+                sx={theme.custom.addButton}
               >
                 Edit Return Reason
               </LoadingButton>
@@ -333,17 +316,7 @@ export default function ReturnReason() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box
-          sx={{
-            background: 'linear-gradient(11deg, rgb(252 252 253), #f5f5f5)',
-            // width: "40%",
-            // height:"50%",
-            p: 8,
-            borderRadius: 1,
-            boxShadow: '0px 4px 1px 0px #d2c6c6',
-            border: '1px solid #d2c6c657',
-          }}
-        >
+        <Box sx={theme.custom.modal}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <Typography
               variant="h4"
@@ -423,13 +396,7 @@ export default function ReturnReason() {
                 disabled={addMutation.isLoading}
                 loading={addMutation.isLoading}
                 type="submit"
-                sx={{
-                  marginTop: 2,
-                  background: 'linear-gradient(43deg, #8b5704, #ddb070)',
-
-                  border: 'none',
-                  color: 'white',
-                }}
+                sx={theme.custom.addButton}
               >
                 Add Return Reason
               </LoadingButton>
@@ -453,13 +420,7 @@ export default function ReturnReason() {
           </Typography>
         </Grid>
         <Grid item>
-          <Button
-            onClick={() => setShowAdd(true)}
-            sx={{
-              background: 'linear-gradient(43deg, #8b5704, #ddb070)',
-              color: 'white',
-            }}
-          >
+          <Button onClick={() => setShowAdd(true)} sx={theme.custom.addButton}>
             Create Return Reason
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>

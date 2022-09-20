@@ -1,7 +1,11 @@
 import axios from 'axios';
 //==============================
 export const getPlan = () => {
-  return axios.post('/plan/list');
+  return axios.post('/plan/list', {
+    options: {
+      populate:"cyclePeriod"
+    }
+  });
 };
 
 export const getPlanById = (id) => {

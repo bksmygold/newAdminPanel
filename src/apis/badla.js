@@ -13,9 +13,9 @@ export const postBadla = (data) => {
 };
 
 export const updateBadla = ({ data, id }) => {
-  return axios.patch(`/badla/update/${id}`, data);
+  return axios.patch(`/badla/${id}`, data);
 };
 
 export const deleteBadla = (id) => {
-  return axios.delete(`/badla/delete/${id}`);
+  return axios.delete(`/badla/${id}`);
 };

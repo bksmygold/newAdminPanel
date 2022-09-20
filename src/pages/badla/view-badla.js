@@ -52,7 +52,7 @@ export default function Badla() {
     onError: (err) => console.log('Error --->', err),
   });
   if (query.isLoading) return <Loading />;
-
+console.log("badla--",query)
   //===============================
   const columns = [
     {
@@ -87,7 +87,7 @@ export default function Badla() {
       </Head>
 
       <Table
-        rows={query.data.docs}
+        rows={query.data?.docs}
         columns={columns}
         create="Badla"
         url="/badla/add-badla"

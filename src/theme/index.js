@@ -136,30 +136,29 @@ export const theme = createTheme({
     Button: {
       background: 'linear-gradient(43deg, #8b5704, #ddb070)',
       color: 'white',
-
-      margin: {
-        background: 'linear-gradient(43deg, #8b5704, #ddb070)',
-        color: 'white',
-        width: '50%',
-        marginTop: 5,
-      },
     },
     editButton: {
       background: 'linear-gradient(43deg, #8b5704, #ddb070)',
       color: 'white',
-      // width: '50%',
-      
+      iconStyle: {
+        marginLeft: 1,
+        width: 23,
+        height: 23,
+      },
     },
     addButton: {
-      background: 'linear-gradient(43deg, #098b04, #35f531)',
+      background: 'linear-gradient(43deg, #8b5704, #ddb070)',
       color: 'white',
+      mt: 1,
       fontWeight: 'bolder',
-      halfWidth: {
-        background: 'linear-gradient(43deg, #8b5704, #ddb070)',
-        color: 'white',
-        width: '50%',
-        marginTop: 5,
-      },
+    },
+    modal: {
+      background: 'linear-gradient(11deg, rgb(252 252 253), #f5f5f5)',
+     
+      p: 7,
+      borderRadius: 1,
+      boxShadow: '0px 4px 1px 0px #d2c6c6',
+      border: '1px solid #d2c6c657',
     },
   },
   //==================================================================

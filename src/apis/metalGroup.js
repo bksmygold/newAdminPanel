@@ -18,9 +18,9 @@ export const postMetalGroup = (data) => {
 };
 
 export const updateMetalGroup = ({ data, id }) => {
-  return axios.patch(`/metalgroup/update/${id}`, data);
+  return axios.patch(`/metalgroup/${id}`, data);
 };
 
 export const deleteMetalGroup = (id) => {
-  return axios.delete(`/metalgroup/delete/${id}`);
+  return axios.delete(`/metalgroup/${id}`);
 };

@@ -30,7 +30,7 @@ export default function eCommerce() {
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              url="/metal/view-metal"
+              url="/eCommerce/metal/view-metal"
               title="Metal"
               desc="create, update, delete Metals"
             />
@@ -39,7 +39,7 @@ export default function eCommerce() {
             <InfoCard
               title="Metal Groups"
               desc="create, update, delete Metal Groups relate them to Metal"
-              url="/metalGroup/view-metalGroup"
+              url="/eCommerce/metalGroup/view-metalGroup"
             />
           </Grid>
 
@@ -47,14 +47,14 @@ export default function eCommerce() {
             <InfoCard
               title="Ornaments"
               desc="create, update, delete Ornaments"
-              url="/ornament/view-ornament"
+              url="/eCommerce/ornament/view-ornament"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Units"
               desc="create, update, delete Units"
-              url="/unit/view-unit"
+              url="/eCommerce/unit/view-unit"
             />
           </Grid>
 
@@ -62,14 +62,14 @@ export default function eCommerce() {
             <InfoCard
               title="Cut"
               desc="create, update, delete Cut"
-              url="/cut/view-cut"
+              url="/eCommerce/cut/view-cut"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Colors"
               desc="create, update, delete Colors"
-              url="/color/view-color"
+              url="/eCommerce/color/view-color"
             />
           </Grid>
 
@@ -77,14 +77,14 @@ export default function eCommerce() {
             <InfoCard
               title="Shape"
               desc="create, update, delete Shape"
-              url="/shape/view-shape"
+              url="/eCommerce/shape/view-shape"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Clarity"
               desc="create, update, delete Clarity"
-              url="/clarity/view-clarity"
+              url="/eCommerce/clarity/view-clarity"
             />
           </Grid>
 
@@ -99,7 +99,7 @@ export default function eCommerce() {
             <InfoCard
               title="Collections"
               desc="create, update, delete Collections"
-              url="/collection/view-collection"
+              url="/eCommerce/collection/view-collection"
             />
           </Grid>
 
@@ -107,14 +107,14 @@ export default function eCommerce() {
             <InfoCard
               title="Categories"
               desc="create, update, delete Categories"
-              url="/category/view-category"
+              url="/eCommerce/category/view-category"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Varieties"
               desc="create, update, delete Varieties"
-              url="/variety/view-variety"
+              url="/eCommerce/variety/view-variety"
             />
           </Grid>
 
@@ -122,49 +122,49 @@ export default function eCommerce() {
             <InfoCard
               title="Items"
               desc="create, update, delete Items"
-              url="/item/view-item"
+              url="/eCommerce/item/view-item"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Product Types"
               desc="create, update, delete Product Types"
-              url="/productType/view-productType"
+              url="/eCommerce/productType/view-productType"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="FAQ"
               desc="create, update, delete FAQs"
-              url="/faq/view-faq"
+              url="/eCommerce/faq/view-faq"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Policy"
               desc="create, update, delete Policies"
-              url="eCommerce/policy/view-policy"
+              url="/eCommerce/policy/view-policy"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Return Reason"
               desc="create, update, delete return reason"
-              url="eCommerce/returnReason/view-returnReason"
+              url="/eCommerce/returnReason/view-returnReason"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Supplier"
               desc="create, update, delete Supplier"
-              url="/supplier/view-supplier"
+              url="/eCommerce/supplier/view-supplier"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Making Charges"
               desc="create, update, delete making charges"
-              url="/makingCharge/view-makingCharge"
+              url="/eCommerce/makingCharge/view-makingCharge"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
@@ -199,14 +199,14 @@ export default function eCommerce() {
             <InfoCard
               title="Standard Plans"
               desc="create, update, delete Plans"
-              url="/plan/view-plan"
+              url="/eCommerce/plan/view-plan"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title="Cycle Periods"
               desc="create, update, delete Plans"
-              url="/cyclePeriod/view-cyclePeriod"
+              url="/eCommerce/cyclePeriod/view-cyclePeriod"
             />
           </Grid>
         </Grid>

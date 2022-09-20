@@ -57,7 +57,7 @@ export const DashboardNavbar = (props) => {
             <MenuIcon fontSize="small" />
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
-          <Box>
+          {/* <Box>
             <Button
               onClick={() => {
                 localStorage.clear();
@@ -75,7 +75,7 @@ export const DashboardNavbar = (props) => {
             >
               Logout
             </Button>
-          </Box>
+          </Box> */}
           <Box>
             <Button
               onClick={() => {

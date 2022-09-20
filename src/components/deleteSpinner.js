@@ -7,7 +7,8 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useRouter } from 'next/router';
-
+import Image from 'next/image';
+//=======================================================
 export default function DeleteSpinner({ url, deleting, collection, id }) {
   const router = useRouter();
 
@@ -50,7 +51,7 @@ export default function DeleteSpinner({ url, deleting, collection, id }) {
         variant="none"
         onClick={handleClickOpen}
       >
-        Delete <DeleteIcon sx={{marginLeft:1,width:23,height:23}} />
+        Delete <DeleteIcon sx={{ marginLeft: 1, width: 23, height: 23 }} />
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Processing Deletion</DialogTitle>
@@ -70,8 +71,10 @@ export default function DeleteSpinner({ url, deleting, collection, id }) {
       <Dialog open={isOpen} onClose={handleClose}>
         <DialogTitle>Deleting</DialogTitle>
         <DialogContent>
-          {/* <DialogContentText>{loader}</DialogContentText> */}
-          {/* <img src={loader} /> */}
+          <DialogContentText>
+            {' '}
+            <Image src="/loader.gif" alt="me" width="250" height="250" />
+          </DialogContentText>
         </DialogContent>
       </Dialog>
     </>

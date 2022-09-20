@@ -28,57 +28,62 @@ import Image from "next/image";
 //=======================================================
 const items = [
   {
-    href: "/",
+    href: '/',
     icon: <DashboardIcon />,
-    title: "Dashboard",
+    title: 'Dashboard',
     childrens: [
       {
-        href: "/dashboard/retail-dashboard",
+        href: '/dashboard/retail-dashboard',
         icon: <ChartBarIcon fontSize="small" />,
-        title: "Retail Dashboard",
+        title: 'Retail Dashboard',
       },
       {
-        href: "/dashboard/analytics-dashboard",
+        href: '/dashboard/analytics-dashboard',
         icon: <ChartBarIcon fontSize="small" />,
-        title: "Analytics Dashboard",
+        title: 'Analytics Dashboard',
       },
       {
-        href: "/dashboard/goldbank-dashboard",
+        href: '/dashboard/goldbank-dashboard',
         icon: <ChartBarIcon fontSize="small" />,
-        title: "Gold Bank",
+        title: 'Gold Bank',
       },
     ],
   },
   {
-    href: "/userManagement",
+    href: '/userManagement',
     icon: <ManageAccountsIcon />,
-    title: "User Management",
+    title: 'User Management',
   },
   {
-    href: "/taxSettings",
+    href: '/taxSettings',
     icon: <AccountBalanceWalletIcon />,
-    title: "Tax Setting",
+    title: 'Tax Setting',
   },
   {
-    href: "/eCommerce",
+    href: '/eCommerce',
     icon: <StoreIcon />,
-    title: "E-Commerce",
+    title: 'E-Commerce',
   },
   {
-    href: "/promotionalSetting",
+    href: '/promotionalSetting',
     icon: <ConnectWithoutContactIcon />,
-    title: "Promotional Setting",
+    title: 'Promotional Setting',
   },
   {
-    href: "/reports",
+    href: '/reports',
     icon: <SummarizeIcon />,
-    title: "Reports",
+    title: 'Reports',
   },
- 
+
   {
-    href: "/settings",
+    href: '/settings',
     icon: <CogIcon />,
-    title: "Settings",
+    title: 'Settings',
+  },
+  {
+    href: '',
+    // icon: <CogIcon />,
+    title: 'Logout',
   },
 ];
 //========================================================================

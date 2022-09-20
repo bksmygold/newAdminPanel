@@ -12,7 +12,10 @@ export const postMetal = (data) => {
   let formData = new FormData();
   let { name, icon } = data;
   formData.append('name', name);
-  formData.append('icon', icon);
+  if (icon instanceof File) { 
+
+    formData.append('icon', icon);
+  }
   return axios.post('/metal/create', formData);
 };
 //==============================
@@ -21,10 +24,10 @@ export const updateMetal = (data, id) => {
   // let { name, icon } = data;
   // formData.append("name", name);
   // formData.append("icon", icon);
-  return axios.patch(`/metal/update/${id}`, data);
+  return axios.patch(`/metal/${id}`, data);
 };
 //==============================
 export const deleteMetal = (id) => {
-  return axios.delete(`/metal/delete/${id}`);
+  return axios.delete(`/metal/${id}`);
 };
 //==============================

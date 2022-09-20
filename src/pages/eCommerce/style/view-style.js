@@ -33,7 +33,7 @@ import swal from 'sweetalert';
 import { useState,useEffect } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { getMetalGroup } from 'src/apis/metalGroup';
-
+import { useTheme } from '@mui/styles';
 //=======================================================
 const CustomTextField = styled(TextField)`
   & label.Mui-focused {
@@ -60,7 +60,7 @@ const CustomFormControl = styled(FormControl)`
 export default function Style() {
   const router = useRouter();
 
-
+const theme = useTheme() 
     const [metalGroup, setMetalGroup] = useState([]);
 
     useEffect(() => {
