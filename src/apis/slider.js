@@ -1,7 +1,11 @@
 import axios from 'axios';
 //==============================
 export const getSlider = () => {
-  return axios.post('/slider/list');
+  return axios.post('/slider/list',{
+    options:{
+      populate:"typeId"
+    }
+  });
 };
 
 export const getSliderById = (id) => {
@@ -19,7 +23,7 @@ export const postSlider = (data) => {
     formData.append('image', image);
   }
 
-  return axios.post('/slider/create', data);
+  return axios.post('/slider/create', formData);
 };
 
 export const updateSlider = ({ data, id }) => {
@@ -32,9 +36,9 @@ export const updateSlider = ({ data, id }) => {
   if (image instanceof File) {
     formData.append('image', image);
   }
-  return axios.patch(`/slider/update/${id}`, data);
+  return axios.patch(`/slider/${id}`, formData);
 };
 
 export const deleteSlider = (id) => {
-  return axios.delete(`/slider/delete/${id}`);
+  return axios.delete(`/slider/${id}`);
 };

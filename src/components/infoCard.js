@@ -19,10 +19,10 @@ export const InfoCard = (props) => {
       {...props}
     >
       <CardContent
-        sx={{ background: 'linear-gradient(45deg, #fbf3e0, #fff5db)' }}
+        sx={{ background: 'linear-gradient(45deg, #ffcaca, #fff5db)' }}
       >
         {/* -------------------------------------------------------------- */}
-        <Grid container spacing={3} sx={{ alignItems: 'center' }}>
+        <Grid container spacing={5} sx={{ alignItems: 'center' }}>
           <Grid item>
             <Avatar
               sx={{

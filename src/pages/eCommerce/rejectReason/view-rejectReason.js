@@ -1,14 +1,17 @@
 import Head from 'next/head';
 import { DashboardSidebar } from 'src/components/dashboard-sidebar';
 import {
-  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   Container,
   Typography,
   Grid,
   Button,
-  Modal,
   TextField,
-  TablePagination 
+  Modal,
+  Box,
 } from '@mui/material';
 import { DashboardLayout } from '../../../components/dashboard-layout';
 import { InfoCard } from '../../../components/infoCard';
@@ -19,7 +22,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getCut, deleteCut, updateCut, postCut } from 'src/apis/cut';
+import {
+  getRejectReason,
+  deleteRejectReason,
+  postRejectReason,
+  updateRejectReason,
+} from 'src/apis/rejectReason';
 import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
@@ -42,8 +50,19 @@ const CustomTextField = styled(TextField)`
     }
   }
 `;
+
+const CustomFormControl = styled(FormControl)`
+  & label.Mui-focused {
+    color: #a88143;
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: #a88143;
+    }
+  }
+`;
 //=======================================================
-export default function Cut() {
+export default function RejectReason() {
   const router = useRouter();
   const theme = useTheme();
 
@@ -53,10 +72,11 @@ export default function Cut() {
   //=======================
   const addFormik = useFormik({
     initialValues: {
-      name: '',
+      title: '',
+     
     },
     validationSchema: yup.object({
-      name: yup.string('Enter Cut Name').required('Cut is required'),
+      title: yup.string('Enter Title').required('Title is required'),
     }),
     onSubmit: (values) => {
       console.log('payload --', values);
@@ -66,40 +86,50 @@ export default function Cut() {
 
   const editFormik = useFormik({
     initialValues: {
-      name: '',
+      title: '',
     },
     validationSchema: yup.object({
-      name: yup.string('Enter Cut Name').required('Cut is required'),
+      title: yup.string('Enter Title').required('Title is required'),
     }),
     onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
+      editMutation.mutate({  values, id: id });
     },
   });
 
+  
+
   const query = useQuery({
-    queryKey: 'Cut',
-    queryFn: () => getCut(),
+    queryKey: 'Reject Reason',
+    queryFn: () => getRejectReason(),
   });
 
   const addMutation = useMutation({
-    mutationFn: postCut,
+    mutationFn: postRejectReason,
     onSuccess: (res) => {
       query.refetch();
       setShowAdd(false);
       addFormik.resetForm();
-      swal('Cut Added !', 'Continue with the e-comm panel', 'success');
+      swal(
+        'Reject Reason Added !',
+        'Continue with the e-comm panel',
+        'success'
+      );
     },
-    onError: (err) => swal('Erro !', err.message, 'error'),
+    onError: (err) => swal('Error!', err.message, 'error'),
   });
 
   const editMutation = useMutation({
-    mutationFn: updateCut,
+    mutationFn: updateRejectReason,
     onSuccess: (res) => {
       query.refetch();
       setShowEdit(false);
-      swal('Cut Updated !', 'Continue with the e-comm panel', 'success');
+      swal(
+        'Reject Reason Updated !',
+        'Continue with the e-comm panel',
+        'success'
+      );
     },
-    onError: (err) => swal('Erro !', err.message, 'error'),
+    onError: (err) => swal('Error !', err.message, 'error'),
   });
 
   if (query.isLoading) return <Loading />;
@@ -127,41 +157,45 @@ export default function Cut() {
   //==========
   const deleteButton = (params) => {
     return (
-      <DeleteSpinner id={params.id} deleting={deleteCut} url="/cut/view-cut" />
+      <DeleteSpinner
+        id={params.id}
+        deleting={deleteRejectReason}
+        url="/eCommerce/RejectReason/view-RejectReason"
+      />
     );
   };
   //==========
-  const columns = [
-    {
-      field: 'name',
-      headerName: 'Cut Name',
-      width: 150,
-      editable: true,
-    },
- 
+ const columns = [
+   {
+     field: 'title',
+     headerName: 'reject reason title',
+     width: 350,
+     editable: true,
+   },
 
-    {
-      field: 'edit',
-      headerName: 'Edit',
-      width: 150,
-      editable: true,
-      renderCell: editButton,
-    },
-    {
-      field: 'delete',
-      headerName: 'Delete',
-      width: 150,
-      editable: true,
-      renderCell: deleteButton,
-    },
-  ];
-
+  
+   {
+     field: 'edit',
+     headerName: 'Edit',
+     width: 250,
+     editable: true,
+     renderCell: editButton,
+   },
+   {
+     field: 'delete',
+     headerName: 'Delete',
+     width: 250,
+     editable: true,
+     renderCell: deleteButton,
+   },
+ ];
+ console.log("----------",query.data.docs);
   //=======================================================
   return (
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Cut </title>
+        <title>Dashboard | Return Reason </title>
       </Head>
       {/* ================= EDIT ================================== */}
       <Modal
@@ -184,7 +218,7 @@ export default function Cut() {
                 fontWeight: 'bolder',
               }}
             >
-              Edit Cut
+              Edit Reject Reason
             </Typography>
             <Typography
               variant="caption"
@@ -194,7 +228,7 @@ export default function Cut() {
                 fontWeight: 'bold',
               }}
             >
-              Edit Cut for products used in E-commerce
+              Edit Reject Reason for products used in E-commerce
             </Typography>
 
             <form onSubmit={editFormik.handleSubmit}>
@@ -207,21 +241,23 @@ export default function Cut() {
                   fontWeight: 600,
                 }}
               >
-                Cut Type Name
+                Reject Reason Description
               </Typography>
               <CustomTextField
+                multiline
                 error={
-                  editFormik.touched.name && Boolean(editFormik.errors.name)
+                  editFormik.touched.title && Boolean(editFormik.errors.title)
                 }
-                helperText={editFormik.touched.name && editFormik.errors.name}
-                id="name"
-                name="name"
-                value={editFormik.values.name}
+                helperText={editFormik.touched.title && editFormik.errors.title}
+                id="title"
+                name="title"
+                value={editFormik.values.title}
                 onChange={editFormik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Cut Type name"
+                label=" title"
               />
+            
 
               <LoadingButton
                 disabled={editMutation.isLoading}
@@ -229,7 +265,7 @@ export default function Cut() {
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Edit Cut
+                Edit Reject Reason
               </LoadingButton>
             </form>
           </Grid>
@@ -256,7 +292,7 @@ export default function Cut() {
                 fontWeight: 'bolder',
               }}
             >
-              Add Cut
+              Add Reject Reason
             </Typography>
             <Typography
               variant="caption"
@@ -266,7 +302,7 @@ export default function Cut() {
                 fontWeight: 'bold',
               }}
             >
-              Add Cut for products used in E-commerce
+              Add Reject Reason for products used in E-commerce
             </Typography>
 
             <form onSubmit={addFormik.handleSubmit}>
@@ -279,27 +315,30 @@ export default function Cut() {
                   fontWeight: 600,
                 }}
               >
-                Cut Type Name
+                Reject Reason Description
               </Typography>
               <CustomTextField
-                error={addFormik.touched.name && Boolean(addFormik.errors.name)}
-                helperText={addFormik.touched.name && addFormik.errors.name}
-                id="name"
-                name="name"
-                value={addFormik.values.name}
+                multiline
+                error={
+                  addFormik.touched.title && Boolean(addFormik.errors.title)
+                }
+                helperText={addFormik.touched.title && addFormik.errors.title}
+                id="title"
+                name="title"
+                value={addFormik.values.title}
                 onChange={addFormik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Cut Type name"
+                label=" title"
               />
-
+           
               <LoadingButton
                 disabled={addMutation.isLoading}
                 loading={addMutation.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Add Cut
+                Add Reject Reason
               </LoadingButton>
             </form>
           </Grid>
@@ -317,18 +356,18 @@ export default function Cut() {
       >
         <Grid item>
           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-            Cut View
+            Reject Reason View
           </Typography>
         </Grid>
         <Grid item>
           <Button onClick={() => setShowAdd(true)} sx={theme.custom.addButton}>
-            Create Cut
+            Create Reject Reason
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>
         </Grid>
       </Grid>{' '}
-      <Table rows={query.data.docs} columns={columns} />
+      <Table columns={columns} rows={query.data.docs}/>
     </>
   );
 }
-Cut.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+RejectReason.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

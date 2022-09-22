@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { getLoggedInUser } from "src/apis/user";
 import { useEffect, useState } from "react";
+import {useTheme} from "@mui/styles"
 
 //==============================================
 // const user = {
@@ -22,6 +23,7 @@ import { useEffect, useState } from "react";
 // };
 
 export const AccountProfile = (props) => {
+  const theme = useTheme()
   //=================================================
   const [user, setUser] = useState({});
   useEffect(() => {
@@ -64,7 +66,7 @@ export const AccountProfile = (props) => {
       </CardContent>
       <Divider />
       <CardActions>
-        <Button sx={{ backgroundColor: "#905E0F", color: "white" }} fullWidth variant="text">
+        <Button sx={theme.custom.addButton} fullWidth variant="text">
           Upload picture
         </Button>
       </CardActions>

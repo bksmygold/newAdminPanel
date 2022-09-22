@@ -72,7 +72,7 @@ const modules = [
 ];
 //=======================================================
 export default function AddMerchant() {
-  const DefaultLocation = { lat: 10, lng: 106 };
+  const DefaultLocation = { lat: 20.5937, lng: 78.9629 };
   const DefaultZoom = 10;
 
   const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
@@ -685,11 +685,13 @@ export default function AddMerchant() {
                 <Grid sx={{ marginRight: 2 }} item sm={2} xs={12}>
                   <Box
                     sx={{
-                      backgroundColor: '',
+
                       p: 3,
                       marginTop: 2,
                       borderRadius: 1,
-                      border: `1px solid ${isActive(x.name) ? 'red' : 'gray'}`,
+                      border:`${isActive(x.name) ? "1px solid #976413" :"1px solid gray"}`,
+                      background : ` ${isActive(x.name) ?  'linear-gradient(43deg, #8b5704, #ddb070)' : null}`,
+
                     }}
                     onClick={() => {
                       if (isActive(x.name)) {
@@ -720,7 +722,7 @@ export default function AddMerchant() {
                     </Avatar>
                     <Typography
                       sx={{
-                        color: '#8b5704',
+                        color : `${isActive(x.name) ?  'white' : "#a65704"}`,
                         fontWeight: 'bolder',
                         textAlign: 'center',
                       }}

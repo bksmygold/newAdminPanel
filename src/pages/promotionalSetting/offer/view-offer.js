@@ -1,13 +1,13 @@
 import Head from 'next/head';
 import { DashboardSidebar } from 'src/components/dashboard-sidebar';
 import { Box, Container, Typography, Grid, Button } from '@mui/material';
-import { DashboardLayout } from '../../components/dashboard-layout';
-import { InfoCard } from '../../components/infoCard';
+import { DashboardLayout } from '../../../components/dashboard-layout';
+import { InfoCard } from '../../../components/infoCard';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { alpha, styled } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Table from '../../components/utility/table';
+import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getOffer } from 'src/apis/offer';
@@ -15,10 +15,14 @@ import DeleteSpinner from 'src/components/deleteSpinner';
 import { deleteOffer } from 'src/apis/offer';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import Loading from 'src/components/loading';
+import { useTheme } from '@mui/styles';
+import AddIcon from '@mui/icons-material/Add';
 
 //=======================================================
 export default function Offer() {
   const router = useRouter();
+  const theme = useTheme();
+
   //=======================
 
   const query = useQuery({
@@ -36,13 +40,13 @@ export default function Offer() {
       <strong>
         <Button
           variant="contained"
-          sx={{ backgroundColor: '#ddb070', color: 'white' }}
+          sx={theme.custom.editButton}
           size="small"
           onClick={() => {
-            router.push(`/offer/edit-offer/?id=${params.id}`);
+            router.push(`/promotionalSetting/offer/edit-offer/?id=${params.id}`);
           }}
         >
-          Edit <EditIcon />
+          Edit <EditIcon sx={theme.custom.editButton.iconStyle}/>
         </Button>
       </strong>
     );
@@ -59,12 +63,12 @@ export default function Offer() {
   };
   //==========
   const columns = [
-    { field: 'type', headerName: 'Type', width: 250 },
+    { field: 'type', headerName: 'Type', width: 150 },
 
     {
       field: 'typeId.name',
       headerName: 'Type ID',
-      width: 250,
+      width: 150,
       valueGetter: (params) => {
         let result = [];
         if (params.row.typeId) {
@@ -80,7 +84,7 @@ export default function Offer() {
     {
       field: 'image',
       headerName: 'Offer Image',
-      width: 250,
+      width: 150,
       renderCell: (params) => (
         <img
           style={{ width: '18%', height: 'fit-content' }}
@@ -88,9 +92,9 @@ export default function Offer() {
         />
       ),
     },
-    { field: 'name', headerName: 'Offer Name', width: 250 },
-    { field: 'valueType', headerName: 'Offer Type', width: 250 },
-    { field: 'value', headerName: 'Offer Value', width: 250 },
+    { field: 'name', headerName: 'Offer Name', width: 150 },
+    { field: 'valueType', headerName: 'Offer Type', width: 150 },
+    { field: 'value', headerName: 'Offer Value', width: 150 },
 
     {
       field: 'edit',
@@ -106,6 +110,7 @@ export default function Offer() {
     },
   ];
 
+  console.log("----",query.data.docs)
   //=======================================================
   return (
     <>
@@ -113,7 +118,27 @@ export default function Offer() {
       <Head>
         <title>Dashboard | Offer </title>
       </Head>
-
+      <Grid
+        sx={{
+          marginLeft: 5,
+          marginTop: 5,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        container
+      >
+        <Grid item>
+          <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
+            Offer View
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button sx={theme.custom.addButton} onClick={() => router.push("/promotionalSetting/offer/add-offer")}>
+            Create Offer
+            <AddIcon sx={{ marginLeft: 1 }} />
+          </Button>
+        </Grid>
+      </Grid>{' '}
       <Table
         rows={query.data.docs}
         columns={columns}

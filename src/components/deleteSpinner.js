@@ -69,11 +69,11 @@ export default function DeleteSpinner({ url, deleting, collection, id }) {
       </Dialog>
 
       <Dialog open={isOpen} onClose={handleClose}>
-        <DialogTitle>Deleting</DialogTitle>
+        <DialogTitle sx={{textAlign:"center"}}>Deleting</DialogTitle>
         <DialogContent>
           <DialogContentText>
             {' '}
-            <Image src="/loader.gif" alt="me" width="250" height="250" />
+            <Image src="/loader.gif" alt="me" width="250" height="200" />
           </DialogContentText>
         </DialogContent>
       </Dialog>

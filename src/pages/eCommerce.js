@@ -13,7 +13,7 @@ export default function eCommerce() {
         <title>E-Commerce </title>
       </Head>
 
-      <Container sx={{ padding: 4 }}>
+      <Container  sx={{ padding: 2, }}>
         {/* ------------------------------ */}
 
         <Typography
@@ -151,6 +151,13 @@ export default function eCommerce() {
               title="Return Reason"
               desc="create, update, delete return reason"
               url="/eCommerce/returnReason/view-returnReason"
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title="Reject Reason"
+              desc="create, update, delete return reason"
+              url="/eCommerce/rejectReason/view-rejectReason"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>

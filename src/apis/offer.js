@@ -1,7 +1,11 @@
 import axios from 'axios';
 //==============================
 export const getOffer = () => {
-  return axios.post('/offer/list');
+  return axios.post('/offer/list', {
+    options: {
+      populate: ['typeId']
+    }
+  });
 };
 
 export const getOfferById = (id) => {
@@ -17,10 +21,10 @@ export const postOffer = (offer) => {
   formData.append('typeId', typeId);
   formData.append('value', value);
   formData.append('valueType', valueType);
-  //   if (image instanceof File) {
+    if (image instanceof File) {
   formData.append('image', image);
-  //   }
-  console.log(formData);
+    }
+  console.log('payload----->',formData);
   return axios.post('/offer/create', formData);
 };
 
@@ -33,11 +37,12 @@ export const updateOffer = ({ data, id }) => {
   formData.append('typeId', typeId);
   formData.append('value', value);
   formData.append('valueType', valueType);
-  //   if (image instanceof File) {
-  formData.append('image', image);
-  return axios.patch(`/offer/update/${id}`, formData);
+  if (image instanceof File) {
+    formData.append('image', image);
+  }
+  return axios.patch(`/offer/${id}`, formData);
 };
 
 export const deleteOffer = (id) => {
-  return axios.delete(`/offer/delete/${id}`);
+  return axios.delete(`/offer/${id}`);
 };

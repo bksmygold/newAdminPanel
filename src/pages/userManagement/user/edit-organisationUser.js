@@ -26,6 +26,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { getCyclePeriod } from 'src/apis/cyclePeriod';
 import { getRole } from 'src/apis/role';
 import { getUserById, postUser, updateUser } from 'src/apis/user';
+import Loading from 'src/components/loading';
+
 //=======================================================
 const CustomTextField = styled(TextField)`
   & label.Mui-focused {
@@ -105,6 +107,11 @@ const query = useQuery({
   });
   //===============
   console.log("error --", formik.errors)
+  if(query.isLoading){
+    return(
+      <Loading/>
+    )
+  }
   //=======================================================
   return (
     <>

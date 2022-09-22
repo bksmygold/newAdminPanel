@@ -51,7 +51,7 @@ const Mfa = () => {
         password: password,
         code: values.code,
       };
-      console.log("payload ==>",payload);
+      console.log("payload ==>",payload); 
       loginMutation.mutate(payload)
       // router.push("/");
     },
@@ -62,7 +62,7 @@ const Mfa = () => {
     onSuccess: (res) => {
       
       localStorage.setItem("token", res.accessToken)
-      axio
+      
       Swal.fire("Logged in successfully !", res.message, "success"),
       router.push("/");
     },

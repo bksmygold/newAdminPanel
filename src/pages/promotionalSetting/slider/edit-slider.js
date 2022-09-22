@@ -11,23 +11,25 @@ import {
   styled,
   TextField,
 } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import FormInput from "../../components/utility/formInput";
-import Form from "../../components/utility/form";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { postOffer } from "src/apis/offer";
+import { DashboardLayout } from "../../../components/dashboard-layout";
+import FormInput from "../../../components/utility/formInput";
+import Form from "../../../components/utility/form";
 import LoadingButton from "@mui/lab/LoadingButton";
 import React from "react";
 import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import swal from "sweetalert";
-import { useMutation } from "@tanstack/react-query";
-import Loading from "src/components/loading";
+import { updateSlider, getSliderById } from "src/apis/slider";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { AddModeratorRounded } from "@mui/icons-material";
 
 import { getCollection } from "src/apis/collection";
 import { getCategory } from "src/apis/category";
 import { getVariety } from "src/apis/variety";
 import { getItem } from "src/apis/item";
+import Loading from "src/components/loading";
+import { useTheme } from '@mui/styles';
 
 //=======================================================
 const CustomTextField = styled(TextField)`
@@ -52,38 +54,30 @@ const CustomFormControl = styled(FormControl)`
   }
 `;
 //=======================================================
-export default function AddOffer() {
-  const [loading, setLoading] = React.useState(false);
+export default function AddSlider() {
+  //=======================
   const router = useRouter();
+  const theme = useTheme();
+
   //=======================================================
   const formik = useFormik({
     initialValues: {
       name: "",
       type: "",
       typeId: "",
-      value: 0,
-      valueType: "",
-      image: "",
+      image: [],
     },
     validationSchema: yup.object({
-      name: yup.string("Enter Offer Name").required("Offer Name is required"),
-      type: yup.string("Enter Type").required("Type  is required"),
-      typeId: yup.string("Enter Type Id").required("Type ID is required"),
-      value: yup.string("Enter Offer value").required("Offer value is required"),
-      valueType: yup.string("Enter Offer value type").required("Offer value type is required"),
+      name: yup.string("Enter Slider Name").required("Slider name is required"),
+      type: yup.string("Enter Slider Type Name").required("Slider Type is required"),
+      typeId: yup.string("Enter Slider Sub Type Name").required("Slider Sub Type is required"),
     }),
     onSubmit: (values) => {
-      offerMutation.mutate(values);
+      sliderMutation.mutate({ data: values, id: router.query.id });
+      // console.log('hua ')
     },
   });
-
-  const offerMutation = useMutation({
-    mutationFn: postOffer,
-    onSuccess: (res) => {
-      swal("Offer Added !", res.message, "success"), router.push("/offer/view-offer");
-    },
-    onError: (err) => swal("Erro !", err.message, "error"),
-  });
+  console.log(formik.values);
 
   const [collection, setCollection] = React.useState([]);
   const [category, setCategory] = React.useState([]);
@@ -91,20 +85,42 @@ export default function AddOffer() {
   const [item, setItem] = React.useState([]);
 
   React.useEffect(() => {
-    getCollection().then((res) => setCollection(res.data.data));
-    getCategory().then((res) => setCategory(res.data.data));
-    getVariety().then((res) => setVariety(res.data.data));
-    getItem().then((res) => setItem(res.data.data));
+    getCollection().then((res) => setCollection(res.docs));
+    getCategory().then((res) => setCategory(res.docs));
+    getVariety().then((res) => setVariety(res.docs));
+    getItem().then((res) => setItem(res.docs));
   }, []);
 
-  // if (offerMutation.isLoading) return <Loading />;
+  //----------
 
+  const query = useQuery({
+    querKey: ["Slider", router.query.id],
+    queryFn: () => getSliderById(router.query.id),
+    onSuccess: (res) =>
+      formik.setValues({
+        name: res.name,
+        type: res.type,
+        typeId: res.typeId,
+      }),
+    enabled: !!router.query.id,
+  });
+
+  
+  const sliderMutation = useMutation({
+    mutationFn: updateSlider,
+    onSuccess: (res) => {
+      swal("Slider Updated !", "Continue with the promotional setting panel", "success"), router.push("/promotionalSetting/slider/view-slider");
+    },
+    onError: (err) => swal("Error !", err.message, "error"),
+  });
+  
+  if (query.isLoading) return <Loading />;
   //=======================================================
   return (
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Add-Offer </title>
+        <title>Dashboard | Edit-Slider</title>
       </Head>
       <Container
         sx={{
@@ -123,7 +139,7 @@ export default function AddOffer() {
             color: "#8B5704",
           }}
         >
-          Add Offer
+          Edit Metal Group
         </Typography>
         <Typography
           variant="caption"
@@ -133,7 +149,7 @@ export default function AddOffer() {
             fontWeight: "bold",
           }}
         >
-          Add Offer for products used in E-commerce
+          Edit Slider used in as a Banner in the App
         </Typography>
         {/* ------------------------------ */}
 
@@ -151,18 +167,19 @@ export default function AddOffer() {
           container
         >
           <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <Typography
+              variant="body1"
+              sx={{
+                color: "#8B5704",
+                marginBottom: 2,
+                marginTop: 2,
+                fontWeight: 600,
+              }}
+            >
+              Slider Name
+            </Typography>
+
             <form onSubmit={formik.handleSubmit}>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "#8B5704",
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Offer Name
-              </Typography>
               <CustomTextField
                 error={formik.touched.name && Boolean(formik.errors.name)}
                 helperText={formik.touched.name && formik.errors.name}
@@ -172,7 +189,7 @@ export default function AddOffer() {
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Offer name"
+                label="Slider name"
               />
 
               <Typography
@@ -184,7 +201,7 @@ export default function AddOffer() {
                   fontWeight: 600,
                 }}
               >
-                Offer Type
+                Slider Type
               </Typography>
               <CustomFormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Type</InputLabel>
@@ -210,7 +227,6 @@ export default function AddOffer() {
                   </MenuItem>
                 </Select>
               </CustomFormControl>
-
               <Typography
                 variant="body1"
                 sx={{
@@ -220,10 +236,10 @@ export default function AddOffer() {
                   fontWeight: 600,
                 }}
               >
-                Offer Sub Type
+                Slider Sub Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Sub Type</InputLabel>
+                <InputLabel id="demo-simple-select-label">Type</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -270,7 +286,6 @@ export default function AddOffer() {
                   })}
                 </Select>
               </CustomFormControl>
-
               <Typography
                 variant="body1"
                 sx={{
@@ -280,88 +295,29 @@ export default function AddOffer() {
                   fontWeight: 600,
                 }}
               >
-                Value
+                Slider Image
               </Typography>
               <CustomTextField
-                error={formik.touched.value && Boolean(formik.errors.value)}
-                helperText={formik.touched.value && formik.errors.value}
-                id="value"
-                name="value"
-                value={formik.values.value}
-                onChange={formik.handleChange}
-                fullWidth
-                type="number"
-                variant="outlined"
-              />
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "#8B5704",
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Value Type
-              </Typography>
-              <CustomTextField
-                error={formik.touched.valueType && Boolean(formik.errors.valueType)}
-                helperText={formik.touched.valueType && formik.errors.valueType}
-                id="valueType"
-                name="valueType"
-                value={formik.values.valueType}
-                onChange={formik.handleChange}
-                fullWidth
-                variant="outlined"
-                label="value type "
-              />
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "#8B5704",
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Offer Image
-              </Typography>
-              <CustomTextField
-                error={formik.touched.image && Boolean(formik.errors.image)}
-                helperText={formik.touched.image && formik.errors.image}
+                // error={formik.touched.icon && Boolean(formik.errors.icon)}
+                // helperText={formik.touched.icon && formik.errors.icon}
+                type="file"
                 id="image"
                 name="image"
-                value={formik.values.image}
-                onChange={formik.handleChange}
+                onChange={(e)=>{
+                  formik.setFieldValue("image", e.target.files[0])
+                }}
                 fullWidth
-                type="file"
                 variant="outlined"
               />
 
-              {/* <Button
-                type="submit"
-                variant="outlined"
-                sx={{ marginTop: 2, color: "#8B5704", border: "1px solid #8B5704" }}
-              >
-                Add Offer
-              </Button> */}
               <LoadingButton
-                disabled={offerMutation.isLoading}
-                loading={offerMutation.isLoading}
+                disabled={sliderMutation.isLoading}
+                loading={sliderMutation.isLoading}
                 type="submit"
-                sx={{
-                  marginTop: 2,
-                  backgroundColor: "#DDB070",
-                  border: "none",
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "#DBA251",
-                  },
-                }}
-                // sx={{ marginTop: 2, color: "#8B5704", border: "1px solid #8B5704" }}
+                fullWidth
+sx={theme.custom.addButton}
               >
-                Add Offer
+                Edit Slider
               </LoadingButton>
             </form>
           </Grid>
@@ -371,4 +327,4 @@ export default function AddOffer() {
     </>
   );
 }
-AddOffer.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AddSlider.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

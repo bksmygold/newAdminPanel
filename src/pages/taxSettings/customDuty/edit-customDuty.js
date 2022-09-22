@@ -1,16 +1,18 @@
 import Head from "next/head";
 import { Container, Typography, Grid, Button, styled, TextField } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import FormInput from "../../components/utility/formInput";
-import Form from "../../components/utility/form";
+import { DashboardLayout } from "../../../components/dashboard-layout";
+import FormInput from "../../../components/utility/formInput";
+import Form from "../../../components/utility/form";
 import LoadingButton from "@mui/lab/LoadingButton";
 import React from "react";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import swal from "sweetalert";
-import { postCustomDuty } from "src/apis/customDuty";
-import { useMutation } from "@tanstack/react-query";
+import { getCustomDutyById, updateCustomDuty } from "src/apis/customDuty";
+import { useMutation,useQuery } from "@tanstack/react-query";
+import Loading from "src/components/loading";
+
 //=======================================================
 const CustomTextField = styled(TextField)`
   & label.Mui-focused {
@@ -23,7 +25,7 @@ const CustomTextField = styled(TextField)`
   }
 `;
 //=======================================================
-export default function AddColor() {
+export default function EditCustomDuty() {
   //=======================
   const router = useRouter();
   //=======================================================
@@ -41,24 +43,37 @@ export default function AddColor() {
         .required("Custom Duty surcharge is required"),
     }),
     onSubmit: (values) => {
-      customDutyMutation.mutate(values);
+      customDutyMutation.mutate({
+        data: values,
+        id:router.query.id
+      });
     },
   });
 
+ const query = useQuery({
+   queryKey: ["Custom Duty", router.query.id],
+   queryFn: () => getCustomDutyById(router.query.id),
+   onSuccess: (res) => formik.setValues(res.data),
+   onError: (err) => console.log(err),
+   enabled: !!router.query.id,
+ });
+
   const customDutyMutation = useMutation({
-    mutationFn: postCustomDuty,
+    mutationFn: updateCustomDuty,
     onSuccess: (res) => {
-      swal("Custom Duty Added !", res.message, "success"),
+      swal("Custom Duty Updated !", res.message, "success"),
         router.push("/customDuty/view-customDuty");
     },
     onError: (err) => swal("Error !", err.message, "error"),
   });
+        if (query.isLoading) return <Loading />;
+
   //=======================================================
   return (
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Add-Custom Duty </title>
+        <title>Dashboard | Edit-Custom Duty </title>
       </Head>
       <Container
         sx={{
@@ -77,7 +92,7 @@ export default function AddColor() {
             color: "#8B5704",
           }}
         >
-          Add Custom Duty
+          Edit Custom Duty
         </Typography>
         <Typography
           variant="caption"
@@ -87,7 +102,7 @@ export default function AddColor() {
             fontWeight: "bold",
           }}
         >
-          Add Custom Duty
+          Edit Custom Duty
         </Typography>
         {/* ------------------------------ */}
 
@@ -191,7 +206,7 @@ export default function AddColor() {
                   },
                 }}
               >
-                Add Custom Duty
+                Edit Custom Duty
               </LoadingButton>
             </form>
           </Grid>
@@ -201,4 +216,4 @@ export default function AddColor() {
     </>
   );
 }
-AddColor.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+EditCustomDuty.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

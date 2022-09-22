@@ -13,9 +13,9 @@ export const postLoanInterest = (data) => {
 };
 
 export const updateLoanInterest = ({ data, id }) => {
-  return axios.patch(`/loaninterest/update/${id}`, data);
+  return axios.patch(`/loaninterest/${id}`, data);
 };
 
 export const deleteLoanInterest = (id) => {
-  return axios.delete(`/loaninterest/delete/${id}`);
+  return axios.delete(`/loaninterest/${id}`);
 };

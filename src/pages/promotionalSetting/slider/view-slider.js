@@ -1,34 +1,38 @@
 import Head from 'next/head';
 import { DashboardSidebar } from 'src/components/dashboard-sidebar';
 import { Box, Container, Typography, Grid, Button } from '@mui/material';
-import { DashboardLayout } from '../../components/dashboard-layout';
-import { InfoCard } from '../../components/infoCard';
+import { DashboardLayout } from '../../../components/dashboard-layout';
+import { InfoCard } from '../../../components/infoCard';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { alpha, styled } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Table from '../../components/utility/table';
+import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import { deleteSlider, getSlider } from 'src/apis/slider';
 import Loading from 'src/components/loading';
+import { useTheme } from '@mui/styles';
+import AddIcon from '@mui/icons-material/Add';
 //=======================================================
 export default function Slider() {
   const router = useRouter();
+  const theme = useTheme();
+
   //=======================
   const editButton = (params) => {
     return (
       <strong>
         <Button
           variant="contained"
-          sx={{ backgroundColor: 'white', color: '#8B5704' }}
+          sx={theme.custom.editButton}
           size="small"
           onClick={() => {
-            router.push(`/slider/edit-slider/?id=${params.id}`);
+            router.push(`/promotionalSetting/slider/edit-slider/?id=${params.id}`);
           }}
         >
-          <EditIcon />
+          Edit <EditIcon sx={theme.custom.editButton.iconStyle}/>
         </Button>
       </strong>
     );
@@ -78,10 +82,13 @@ export default function Slider() {
       headerName: 'Slider Image',
       width: 250,
       renderCell: (params) => (
-        <img
-          style={{ width: '100%', height: 'fit-content' }}
-          src={params.value}
-        />
+        <div style={{padding:50}}>
+
+          <img
+            style={{ width: "100%"  }}
+            src={params.value}
+          />
+        </div>
       ),
 
       editable: true,
@@ -103,6 +110,7 @@ export default function Slider() {
     },
   ];
 
+  console.log(query.data.docs)
   //=======================================================
   return (
     <>
@@ -110,7 +118,27 @@ export default function Slider() {
       <Head>
         <title>Dashboard | Slider </title>
       </Head>
-
+      <Grid
+        sx={{
+          marginLeft: 5,
+          marginTop: 5,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        container
+      >
+        <Grid item>
+          <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
+            Slider View
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button sx={theme.custom.addButton} onClick={() => router.push("/promotionalSetting/slider/add-slider")}>
+            Create Slider
+            <AddIcon sx={{ marginLeft: 1 }} />
+          </Button>
+        </Grid>
+      </Grid>{' '}
       <Table
         rows={query.data.docs}
         columns={columns}

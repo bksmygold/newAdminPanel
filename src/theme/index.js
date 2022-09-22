@@ -160,6 +160,11 @@ export const theme = createTheme({
       boxShadow: '0px 4px 1px 0px #d2c6c6',
       border: '1px solid #d2c6c657',
     },
+    selected:{
+      background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+      color: 'white',
+
+    }
   },
   //==================================================================
   palette: {

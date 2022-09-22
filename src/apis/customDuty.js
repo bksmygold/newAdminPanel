@@ -13,9 +13,9 @@ export const postCustomDuty = (data) => {
 };
 
 export const updateCustomDuty = ({ data, id }) => {
-  return axios.patch(`/customduty/update/${id}`, data);
+  return axios.patch(`/customduty/${id}`, data);
 };
 
 export const deleteCustomDuty = (id) => {
-  return axios.delete(`/customduty/delete/${id}`);
+  return axios.delete(`/customduty/${id}`);
 };

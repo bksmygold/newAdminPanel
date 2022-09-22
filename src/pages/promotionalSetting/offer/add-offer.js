@@ -11,23 +11,24 @@ import {
   styled,
   TextField,
 } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import FormInput from "../../components/utility/formInput";
-import Form from "../../components/utility/form";
+import { DashboardLayout } from "../../../components/dashboard-layout";
+import FormInput from "../../../components/utility/formInput";
+import Form from "../../../components/utility/form";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { updateOffer,getOfferById } from "src/apis/offer";
+import { postOffer } from "src/apis/offer";
 import LoadingButton from "@mui/lab/LoadingButton";
 import React from "react";
 import { useRouter } from "next/router";
 import swal from "sweetalert";
-import { useMutation,useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import Loading from "src/components/loading";
 
 import { getCollection } from "src/apis/collection";
 import { getCategory } from "src/apis/category";
 import { getVariety } from "src/apis/variety";
 import { getItem } from "src/apis/item";
+import { useTheme } from '@mui/styles';
 
 //=======================================================
 const CustomTextField = styled(TextField)`
@@ -55,6 +56,8 @@ const CustomFormControl = styled(FormControl)`
 export default function AddOffer() {
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
+  const theme = useTheme();
+
   //=======================================================
   const formik = useFormik({
     initialValues: {
@@ -63,7 +66,7 @@ export default function AddOffer() {
       typeId: "",
       value: 0,
       valueType: "",
-      image: "",
+      image: [],
     },
     validationSchema: yup.object({
       name: yup.string("Enter Offer Name").required("Offer Name is required"),
@@ -73,31 +76,16 @@ export default function AddOffer() {
       valueType: yup.string("Enter Offer value type").required("Offer value type is required"),
     }),
     onSubmit: (values) => {
-      offerMutation.mutate({data:values,id:router.query.id});
+      offerMutation.mutate(values);
     },
   });
 
-    const query = useQuery({
-      querKey: ["offer", router.query.id],
-      queryFn: () => getOfferById(router.query.id),
-      onSuccess: (res) =>
-        formik.setValues({
-          name: res.data.name,
-          type: res.data.type,
-          typeId: res.data.typeId,
-          value: res.data.value,
-          valueType: res.data.valueType,
-        }),
-      enabled: !!router.query.id,
-    });
-
-
   const offerMutation = useMutation({
-    mutationFn: updateOffer,
+    mutationFn: postOffer,
     onSuccess: (res) => {
-      swal("Offer updated !", res.message, "success"), router.push("/offer/view-offer");
+      swal("Offer Added !", "Continue with the promotional settings panel", "success"), router.push("/offer/view-offer");
     },
-    onError: (err) => swal("Erro !", err.message, "error"),
+    onError: (err) => swal("Error !", err.message, "error"),
   });
 
   const [collection, setCollection] = React.useState([]);
@@ -106,10 +94,10 @@ export default function AddOffer() {
   const [item, setItem] = React.useState([]);
 
   React.useEffect(() => {
-    getCollection().then((res) => setCollection(res.data.data));
-    getCategory().then((res) => setCategory(res.data.data));
-    getVariety().then((res) => setVariety(res.data.data));
-    getItem().then((res) => setItem(res.data.data));
+    getCollection().then((res) => setCollection(res.docs));
+    getCategory().then((res) => setCategory(res.docs));
+    getVariety().then((res) => setVariety(res.docs));
+    getItem().then((res) => setItem(res.docs));
   }, []);
 
   // if (offerMutation.isLoading) return <Loading />;
@@ -119,7 +107,7 @@ export default function AddOffer() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Edit-Offer </title>
+        <title>Dashboard | Add-Offer </title>
       </Head>
       <Container
         sx={{
@@ -138,7 +126,7 @@ export default function AddOffer() {
             color: "#8B5704",
           }}
         >
-          Edit Offer
+          Add Offer
         </Typography>
         <Typography
           variant="caption"
@@ -148,7 +136,7 @@ export default function AddOffer() {
             fontWeight: "bold",
           }}
         >
-          Edit Offer for products used in E-commerce
+          Add Offer for products used in E-commerce
         </Typography>
         {/* ------------------------------ */}
 
@@ -165,7 +153,7 @@ export default function AddOffer() {
           }}
           container
         >
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item sm={8} xs={12}>
             <form onSubmit={formik.handleSubmit}>
               <Typography
                 variant="body1"
@@ -202,7 +190,6 @@ export default function AddOffer() {
                 Offer Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Type</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -238,7 +225,6 @@ export default function AddOffer() {
                 Offer Sub Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Sub Type</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -295,6 +281,34 @@ export default function AddOffer() {
                   fontWeight: 600,
                 }}
               >
+                Value Type
+              </Typography>
+              <CustomFormControl fullWidth>
+                <Select
+                  defaultValue=""
+                  labelId="demo-simple-select-label"
+                  id="valueType"
+                  value={formik.values.valueType}
+                  onChange={formik.handleChange}
+                  name="valueType"
+                >
+                  <MenuItem key="percentage" value="percentage">
+                    percentage
+                  </MenuItem>
+                  <MenuItem key="value" value="value">
+                    value
+                  </MenuItem>
+                </Select>
+              </CustomFormControl>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#8B5704",
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
                 Value
               </Typography>
               <CustomTextField
@@ -318,28 +332,6 @@ export default function AddOffer() {
                   fontWeight: 600,
                 }}
               >
-                Value Type
-              </Typography>
-              <CustomTextField
-                error={formik.touched.valueType && Boolean(formik.errors.valueType)}
-                helperText={formik.touched.valueType && formik.errors.valueType}
-                id="valueType"
-                name="valueType"
-                value={formik.values.valueType}
-                onChange={formik.handleChange}
-                fullWidth
-                variant="outlined"
-                label="value type "
-              />
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "#8B5704",
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
                 Offer Image
               </Typography>
               <CustomTextField
@@ -347,8 +339,10 @@ export default function AddOffer() {
                 helperText={formik.touched.image && formik.errors.image}
                 id="image"
                 name="image"
-                value={formik.values.image}
-                onChange={formik.handleChange}
+                // value={formik.values.image}
+                onChange={(e)=>{
+                formik.setFieldValue("image",e.target.files[0])
+                }}
                 fullWidth
                 type="file"
                 variant="outlined"
@@ -359,24 +353,17 @@ export default function AddOffer() {
                 variant="outlined"
                 sx={{ marginTop: 2, color: "#8B5704", border: "1px solid #8B5704" }}
               >
-                Edit Offer
+                Add Offer
               </Button> */}
               <LoadingButton
                 disabled={offerMutation.isLoading}
                 loading={offerMutation.isLoading}
                 type="submit"
-                sx={{
-                  marginTop: 2,
-                  backgroundColor: "#DDB070",
-                  border: "none",
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "#DBA251",
-                  },
-                }}
-                // sx={{ marginTop: 2, color: "#8B5704", border: "1px solid #8B5704" }}
+                sx={theme.custom.addButton}
+                fullWidth
+              // sx={{ marginTop: 2, color: "#8B5704", border: "1px solid #8B5704" }}
               >
-                Edit Offer
+                Add Offer
               </LoadingButton>
             </form>
           </Grid>

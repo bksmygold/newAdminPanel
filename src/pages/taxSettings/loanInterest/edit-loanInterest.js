@@ -1,17 +1,16 @@
 import Head from "next/head";
 import { Container, Typography, Grid, Button, styled, TextField } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import FormInput from "../../components/utility/formInput";
-import Form from "../../components/utility/form";
+import { DashboardLayout } from "../../../components/dashboard-layout";
+import FormInput from "../../../components/utility/formInput";
+import Form from "../../../components/utility/form";
 import LoadingButton from "@mui/lab/LoadingButton";
 import React from "react";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import swal from "sweetalert";
-import { getCustomDutyById, updateCustomDuty } from "src/apis/customDuty";
+import { updateLoanInterest,getLoanInterestById } from "src/apis/loanInterest";
 import { useMutation,useQuery } from "@tanstack/react-query";
-import Loading from "src/components/loading";
 
 //=======================================================
 const CustomTextField = styled(TextField)`
@@ -25,55 +24,51 @@ const CustomTextField = styled(TextField)`
   }
 `;
 //=======================================================
-export default function EditCustomDuty() {
+export default function EditLoanInterest() {
   //=======================
   const router = useRouter();
   //=======================================================
   const formik = useFormik({
     initialValues: {
-      name: "",
-      value: 0,
-      surcharge: 0,
+      minMonth: 0,
+      maxMonth: 0,
+      interest: 0,
     },
     validationSchema: yup.object({
-      name: yup.string("Enter Custom Duty Name").required("Custom Duty Name is required"),
-      value: yup.number("Enter Custom Duty value ").required("Custom Duty value is required"),
-      surcharge: yup
-        .number("Enter Custom Duty surcharge ")
-        .required("Custom Duty surcharge is required"),
+      minMonth: yup.number("Enter minimum month").required("minimum month is required"),
+      maxMonth: yup.number("Enter maximum month").required("maximum monthis required"),
+      interest: yup.number("Enter Interest").required("Interest is required"),
     }),
     onSubmit: (values) => {
-      customDutyMutation.mutate({
+      loanInterestMutation.mutate({
         data: values,
         id:router.query.id
       });
     },
   });
 
- const query = useQuery({
-   queryKey: ["Custom Duty", router.query.id],
-   queryFn: () => getCustomDutyById(router.query.id),
-   onSuccess: (res) => formik.setValues(res.data),
-   onError: (err) => console.log(err),
-   enabled: !!router.query.id,
- });
+const query = useQuery({
+  querKey: ["loanInterest", router.query.id],
+  queryFn: () => getLoanInterestById(router.query.id),
+  onSuccess: (res) => formik.setValues(res.data),
+  enabled: !!router.query.id,
+});
 
-  const customDutyMutation = useMutation({
-    mutationFn: updateCustomDuty,
+  const loanInterestMutation = useMutation({
+    mutationFn: updateLoanInterest,
     onSuccess: (res) => {
-      swal("Custom Duty Updated !", res.message, "success"),
-        router.push("/customDuty/view-customDuty");
+      swal("Loan Interest Updated !", res.message, "success"),
+        router.push("/loanInterest/view-loanInterest");
     },
     onError: (err) => swal("Error !", err.message, "error"),
   });
-        if (query.isLoading) return <Loading />;
 
   //=======================================================
   return (
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Edit-Custom Duty </title>
+        <title>Dashboard | Edit-Loan Interest</title>
       </Head>
       <Container
         sx={{
@@ -92,7 +87,7 @@ export default function EditCustomDuty() {
             color: "#8B5704",
           }}
         >
-          Edit Custom Duty
+          Edit Loan Interest
         </Typography>
         <Typography
           variant="caption"
@@ -102,7 +97,7 @@ export default function EditCustomDuty() {
             fontWeight: "bold",
           }}
         >
-          Edit Custom Duty
+          Edit Loan Interest
         </Typography>
         {/* ------------------------------ */}
 
@@ -130,18 +125,20 @@ export default function EditCustomDuty() {
                   fontWeight: 600,
                 }}
               >
-                Custom Duty Name
+                Minimum Month
               </Typography>
+
               <CustomTextField
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-                id="name"
-                name="name"
-                value={formik.values.name}
+                error={formik.touched.minMonth && Boolean(formik.errors.minMonth)}
+                helperText={formik.touched.minMonth && formik.errors.minMonth}
+                id="minMonth"
+                name="minMonth"
+                typ="number"
+                value={formik.values.minMonth}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Custom Duty name"
+                label="Min.Month"
               />
 
               <Typography
@@ -153,19 +150,20 @@ export default function EditCustomDuty() {
                   fontWeight: 600,
                 }}
               >
-                Custom Duty Value
+                Maximum Month
               </Typography>
+
               <CustomTextField
-                error={formik.touched.value && Boolean(formik.errors.value)}
-                helperText={formik.touched.value && formik.errors.value}
-                id="value"
-                name="value"
-                type="number"
-                value={formik.values.value}
+                error={formik.touched.maxMonth && Boolean(formik.errors.maxMonth)}
+                helperText={formik.touched.maxMonth && formik.errors.maxMonth}
+                id="maxMonth"
+                name="maxMonth"
+                typ="number"
+                value={formik.values.maxMonth}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Custom Duty value"
+                label="Max.Month"
               />
 
               <Typography
@@ -177,24 +175,25 @@ export default function EditCustomDuty() {
                   fontWeight: 600,
                 }}
               >
-                Custom Duty surcharge
+                Loan Interest
               </Typography>
+
               <CustomTextField
-                error={formik.touched.surcharge && Boolean(formik.errors.surcharge)}
-                helperText={formik.touched.surcharge && formik.errors.surcharge}
-                id="surcharge"
-                name="surcharge"
-                type="number"
-                value={formik.values.surcharge}
+                error={formik.touched.interest && Boolean(formik.errors.interest)}
+                helperText={formik.touched.interest && formik.errors.interest}
+                id="interest"
+                name="interest"
+                typ="number"
+                value={formik.values.interest}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Custom Duty surcharge"
+                label="interest"
               />
 
               <LoadingButton
-                disabled={customDutyMutation.isLoading}
-                loading={customDutyMutation.isLoading}
+                disabled={loanInterestMutation.isLoading}
+                loading={loanInterestMutation.isLoading}
                 type="submit"
                 sx={{
                   marginTop: 2,
@@ -206,7 +205,7 @@ export default function EditCustomDuty() {
                   },
                 }}
               >
-                Edit Custom Duty
+                Edit Loan Interest
               </LoadingButton>
             </form>
           </Grid>
@@ -216,4 +215,4 @@ export default function EditCustomDuty() {
     </>
   );
 }
-EditCustomDuty.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+EditLoanInterest.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

@@ -11,9 +11,9 @@ import {
   styled,
   TextField,
 } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import FormInput from "../../components/utility/formInput";
-import Form from "../../components/utility/form";
+import { DashboardLayout } from "../../../components/dashboard-layout";
+import FormInput from "../../../components/utility/formInput";
+import Form from "../../../components/utility/form";
 import LoadingButton from "@mui/lab/LoadingButton";
 import React from "react";
 import { useRouter } from "next/router";
@@ -28,6 +28,7 @@ import { getCollection } from "src/apis/collection";
 import { getCategory } from "src/apis/category";
 import { getVariety } from "src/apis/variety";
 import { getItem } from "src/apis/item";
+import { useTheme } from '@mui/styles';
 
 //=======================================================
 const CustomTextField = styled(TextField)`
@@ -55,13 +56,15 @@ const CustomFormControl = styled(FormControl)`
 export default function AddSlider() {
   //=======================
   const router = useRouter();
+  const theme = useTheme();
+
   //=======================================================
   const formik = useFormik({
     initialValues: {
       name: "",
       type: "",
       typeId: "",
-      image: "",
+      image: [],
     },
     validationSchema: yup.object({
       name: yup.string("Enter Slider Name").required("Slider name is required"),
@@ -81,10 +84,10 @@ export default function AddSlider() {
   const [item, setItem] = React.useState([]);
 
   React.useEffect(() => {
-    getCollection().then((res) => setCollection(res.data.data));
-    getCategory().then((res) => setCategory(res.data.data));
-    getVariety().then((res) => setVariety(res.data.data));
-    getItem().then((res) => setItem(res.data.data));
+    getCollection().then((res) => setCollection(res.docs));
+    getCategory().then((res) => setCategory(res.docs));
+    getVariety().then((res) => setVariety(res.docs));
+    getItem().then((res) => setItem(res.docs));
   }, []);
 
   //----------
@@ -297,8 +300,10 @@ export default function AddSlider() {
                 type="file"
                 id="image"
                 name="image"
-                value={formik.values.image}
-                onChange={formik.handleChange}
+                // value={formik.values.image}
+                onChange={(w) => {
+                  formik.setFieldValue("image", w.target.files[0])
+                }}
                 fullWidth
                 variant="outlined"
               />
@@ -307,15 +312,8 @@ export default function AddSlider() {
                 disabled={sliderMutation.isLoading}
                 loading={sliderMutation.isLoading}
                 type="submit"
-                sx={{
-                  marginTop: 2,
-                  backgroundColor: "#DDB070",
-                  border: "none",
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "#DBA251",
-                  },
-                }}
+                fullWidth
+                sx={theme.custom.addButton}
               >
                 Add Slider
               </LoadingButton>

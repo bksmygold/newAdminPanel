@@ -31,7 +31,7 @@ export default function taxSettings() {
             <InfoCard
               title="Government Taxes"
               desc="create, update, delete taxes imposed by government like Central Excise etc.,"
-              url='customDuty/view-customDuty'
+              url='/taxSettings/customDuty/view-customDuty'
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
@@ -70,7 +70,7 @@ export default function taxSettings() {
             <InfoCard
               title="Interest Rates"
               desc="Create , Update, delete interest rates for Reserving gold , gold loans."
-              url="/loanInterest/view-loanInterest"
+              url="/taxSettings/loanInterest/view-loanInterest"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>

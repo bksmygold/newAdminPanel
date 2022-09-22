@@ -1,7 +1,7 @@
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Container, Typography, Grid, Button, Modal, TextField } from "@mui/material";
+import { Box, Container, Typography, Grid, Button, Modal, TextField,TablePagination  } from "@mui/material";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -72,12 +72,18 @@ export default function Table(props) {
       {/* ------------------------------ */}
       <div
         style={{
-          height: 400,
+          height: 500,
           width: '100%',
         }}
       >
         <StripedDataGrid
           sx={{
+            ".MuiTablePagination-displayedRows": {
+              color: "#3c2400",
+            },
+            ".MuiTablePagination-selectLabel": {
+              color: "#3c2400",
+            },
             padding: 1,
             borderRadius: 2,
 

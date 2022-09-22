@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { DashboardSidebar } from "src/components/dashboard-sidebar";
-import { Box, Container, Typography, Grid } from "@mui/material";
+import { Box, Container, Typography, Grid ,Divider} from "@mui/material";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { InfoCard } from "../components/infoCard";
 //=======================================================
@@ -31,14 +31,14 @@ export default function promotionalSetting() {
             <InfoCard
               title="Offer Sliders"
               desc="create, update, delete Offer Sliders"
-              url="offer/view-offer"
+              url="/promotionalSetting/offer/view-offer"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="App slider banner"
+              title="App slider"
               desc="create, update, delete Offer Sliders"
-              url="slider/view-slider"
+              url="/promotionalSetting/slider/view-slider"
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
@@ -79,10 +79,11 @@ export default function promotionalSetting() {
           variant="h6"
         >
           Business Related
+<Divider/>
         </Typography>
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="Merchant Banners" desc="Approve, disapprove Merchant Banners" />
+            <InfoCard sx={{overFlowWrap:"break-word"}} title="Merchant Banners" desc="Approve, disapprove Merchant Banners" />
           </Grid>
         </Grid>
       </Container>

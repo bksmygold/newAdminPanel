@@ -1,17 +1,16 @@
 import Head from "next/head";
 import { Container, Typography, Grid, Button, styled, TextField } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
-import FormInput from "../../components/utility/formInput";
-import Form from "../../components/utility/form";
+import { DashboardLayout } from "../../../components/dashboard-layout";
+import FormInput from "../../../components/utility/formInput";
+import Form from "../../../components/utility/form";
 import LoadingButton from "@mui/lab/LoadingButton";
 import React from "react";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import swal from "sweetalert";
-import { updateLoanInterest,getLoanInterestById } from "src/apis/loanInterest";
-import { useMutation,useQuery } from "@tanstack/react-query";
-
+import { postCustomDuty } from "src/apis/customDuty";
+import { useMutation } from "@tanstack/react-query";
 //=======================================================
 const CustomTextField = styled(TextField)`
   & label.Mui-focused {
@@ -24,51 +23,42 @@ const CustomTextField = styled(TextField)`
   }
 `;
 //=======================================================
-export default function EditLoanInterest() {
+export default function AddColor() {
   //=======================
   const router = useRouter();
   //=======================================================
   const formik = useFormik({
     initialValues: {
-      minMonth: 0,
-      maxMonth: 0,
-      interest: 0,
+      name: "",
+      value: 0,
+      surcharge: 0,
     },
     validationSchema: yup.object({
-      minMonth: yup.number("Enter minimum month").required("minimum month is required"),
-      maxMonth: yup.number("Enter maximum month").required("maximum monthis required"),
-      interest: yup.number("Enter Interest").required("Interest is required"),
+      name: yup.string("Enter Custom Duty Name").required("Custom Duty Name is required"),
+      value: yup.number("Enter Custom Duty value ").required("Custom Duty value is required"),
+      surcharge: yup
+        .number("Enter Custom Duty surcharge ")
+        .required("Custom Duty surcharge is required"),
     }),
     onSubmit: (values) => {
-      loanInterestMutation.mutate({
-        data: values,
-        id:router.query.id
-      });
+      customDutyMutation.mutate(values);
     },
   });
 
-const query = useQuery({
-  querKey: ["loanInterest", router.query.id],
-  queryFn: () => getLoanInterestById(router.query.id),
-  onSuccess: (res) => formik.setValues(res.data),
-  enabled: !!router.query.id,
-});
-
-  const loanInterestMutation = useMutation({
-    mutationFn: updateLoanInterest,
+  const customDutyMutation = useMutation({
+    mutationFn: postCustomDuty,
     onSuccess: (res) => {
-      swal("Loan Interest Updated !", res.message, "success"),
-        router.push("/loanInterest/view-loanInterest");
+      swal("Custom Duty Added !", res.message, "success"),
+        router.push("/customDuty/view-customDuty");
     },
     onError: (err) => swal("Error !", err.message, "error"),
   });
-
   //=======================================================
   return (
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Edit-Loan Interest</title>
+        <title>Dashboard | Add-Custom Duty </title>
       </Head>
       <Container
         sx={{
@@ -87,7 +77,7 @@ const query = useQuery({
             color: "#8B5704",
           }}
         >
-          Edit Loan Interest
+          Add Custom Duty
         </Typography>
         <Typography
           variant="caption"
@@ -97,7 +87,7 @@ const query = useQuery({
             fontWeight: "bold",
           }}
         >
-          Edit Loan Interest
+          Add Custom Duty
         </Typography>
         {/* ------------------------------ */}
 
@@ -125,20 +115,18 @@ const query = useQuery({
                   fontWeight: 600,
                 }}
               >
-                Minimum Month
+                Custom Duty Name
               </Typography>
-
               <CustomTextField
-                error={formik.touched.minMonth && Boolean(formik.errors.minMonth)}
-                helperText={formik.touched.minMonth && formik.errors.minMonth}
-                id="minMonth"
-                name="minMonth"
-                typ="number"
-                value={formik.values.minMonth}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+                id="name"
+                name="name"
+                value={formik.values.name}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Min.Month"
+                label="Custom Duty name"
               />
 
               <Typography
@@ -150,20 +138,19 @@ const query = useQuery({
                   fontWeight: 600,
                 }}
               >
-                Maximum Month
+                Custom Duty Value
               </Typography>
-
               <CustomTextField
-                error={formik.touched.maxMonth && Boolean(formik.errors.maxMonth)}
-                helperText={formik.touched.maxMonth && formik.errors.maxMonth}
-                id="maxMonth"
-                name="maxMonth"
-                typ="number"
-                value={formik.values.maxMonth}
+                error={formik.touched.value && Boolean(formik.errors.value)}
+                helperText={formik.touched.value && formik.errors.value}
+                id="value"
+                name="value"
+                type="number"
+                value={formik.values.value}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Max.Month"
+                label="Custom Duty value"
               />
 
               <Typography
@@ -175,25 +162,24 @@ const query = useQuery({
                   fontWeight: 600,
                 }}
               >
-                Loan Interest
+                Custom Duty surcharge
               </Typography>
-
               <CustomTextField
-                error={formik.touched.interest && Boolean(formik.errors.interest)}
-                helperText={formik.touched.interest && formik.errors.interest}
-                id="interest"
-                name="interest"
-                typ="number"
-                value={formik.values.interest}
+                error={formik.touched.surcharge && Boolean(formik.errors.surcharge)}
+                helperText={formik.touched.surcharge && formik.errors.surcharge}
+                id="surcharge"
+                name="surcharge"
+                type="number"
+                value={formik.values.surcharge}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="interest"
+                label="Custom Duty surcharge"
               />
 
               <LoadingButton
-                disabled={loanInterestMutation.isLoading}
-                loading={loanInterestMutation.isLoading}
+                disabled={customDutyMutation.isLoading}
+                loading={customDutyMutation.isLoading}
                 type="submit"
                 sx={{
                   marginTop: 2,
@@ -205,7 +191,7 @@ const query = useQuery({
                   },
                 }}
               >
-                Edit Loan Interest
+                Add Custom Duty
               </LoadingButton>
             </form>
           </Grid>
@@ -215,4 +201,4 @@ const query = useQuery({
     </>
   );
 }
-EditLoanInterest.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AddColor.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

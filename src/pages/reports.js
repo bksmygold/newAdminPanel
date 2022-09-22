@@ -22,8 +22,10 @@ import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import AssessmentIcon from "@mui/icons-material/Assessment";
+import {useRouter} from "next/router"
 //=======================================================
 export default function reports() {
+  const router = useRouter()
   //=======================================================
 
   return (
@@ -52,7 +54,7 @@ export default function reports() {
           {" "}
           <Box
             sx={{
-              backgroundColor: "#fdfaf2",
+              background: 'linear-gradient(45deg, #ffcaca, #fff5db)',
               height: "20vh",
               display: "flex",
               justifyContent: "space-around",
@@ -60,6 +62,8 @@ export default function reports() {
               boxShadow: "1px 3px 11px 0px #a1a1a1",
             }}
           >
+            {/* --------------- Financials ---------------------------------------- */}
+
             <Typography
               variant="h6"
               sx={{
@@ -74,7 +78,7 @@ export default function reports() {
             </Box>
           </Box>
           <List>
-            {/* ------------------------------ */}
+            {/* ------------------------------------------------------- */}
             <ListItem alignItems="center">
               <ListItemIcon>
                 <AccountCircleIcon />
@@ -171,7 +175,7 @@ export default function reports() {
           {" "}
           <Box
             sx={{
-              backgroundColor: "#fdfaf2",
+              background: 'linear-gradient(45deg, #ffcaca, #fff5db)',
               height: "20vh",
               display: "flex",
               justifyContent: "space-around",
@@ -179,6 +183,8 @@ export default function reports() {
               boxShadow: "1px 3px 11px 0px #a1a1a1",
             }}
           >
+            {/* ---------------  Metals ---------------------------------------- */}
+
             <Typography
               variant="h6"
               sx={{
@@ -255,7 +261,7 @@ export default function reports() {
           </List>
         </Grid>
         <Grid
-          sx={{ backgroundColor: "white", boxShadow: "0 0 7px 0px #a1a1a1" }}
+          sx={{cursor:'pointer', backgroundColor: "white", boxShadow: "0 0 7px 0px #a1a1a1" }}
           item
           xl={3}
           lg={3}
@@ -264,7 +270,7 @@ export default function reports() {
         >
           <Box
             sx={{
-              backgroundColor: "#fdfaf2",
+              background: 'linear-gradient(45deg, #ffcaca, #fff5db)',
               height: "20vh",
               display: "flex",
               justifyContent: "space-around",
@@ -279,6 +285,7 @@ export default function reports() {
                 fontWeight: "bolder",
               }}
             >
+              {/* --------------- Smart Reports---------------------------------------------------- */}
               Smart Reports{" "}
             </Typography>
             <Box>
@@ -295,7 +302,7 @@ export default function reports() {
             </ListItem>
             {/* ------------------------------ */}
             <ListItem>
-              <ListItemText secondary="Buy and Save Module" />
+              <ListItemText secondary="Buy and Save Module" onClick={()=>router.push("/reports/buy&save")}/>
             </ListItem>
             <ListItem>
               <ListItemText secondary="Instant Gold Module" />

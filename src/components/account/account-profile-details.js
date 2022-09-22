@@ -20,6 +20,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { getLoggedInUser } from "src/apis/user";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import {useTheme} from "@mui/styles"
 
 //=======================================================
 const CustomTextField = styled(TextField)`
@@ -36,6 +37,7 @@ const CustomTextField = styled(TextField)`
 
 export const AccountProfileDetails = (props) => {
   const router = useRouter()
+  const theme = useTheme()
   
     const [user, setUser] = useState({});
     useEffect(() => {
@@ -167,15 +169,7 @@ export const AccountProfileDetails = (props) => {
             disabled={userMutation.isLoading}
             loading={userMutation.isLoading}
             type="submit"
-            sx={{
-              marginTop: 2,
-              backgroundColor: "#DDB070",
-              border: "none",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "#DBA251",
-              },
-            }}
+            sx={theme.custom.addButton}
           >Save Changes</LoadingButton>
         </Box>
       </Card>
