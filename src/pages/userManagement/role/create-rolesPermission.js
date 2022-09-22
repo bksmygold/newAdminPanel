@@ -129,6 +129,8 @@ export default function RolesPermission() {
 
   const [permissions, setPermissions] = useState([]);
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+
   //=======================
   // const formik = useFormik({
   //   initialValues: {
@@ -146,10 +148,10 @@ export default function RolesPermission() {
   // });
 
   // const roleMutation = useMutation({
-  //   mutationFn: postUnit,
+  //   mutationFn: postRole,
   //   onSuccess: (res) => {
-  //     swal('Unit Added !', res.message, 'success'),
-  //       router.push('/unit/view-unit');
+  //     swal('Role Added !', res.message, 'success'),
+  //       router.push('/userManagement/role/view-rolesPermission');
   //   },
   //   onError: (err) => swal('Erro !', err.message, 'error'),
   // });
@@ -190,7 +192,7 @@ export default function RolesPermission() {
               name="name"
               variant="outlined"
               label="Description"
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setDescription(e.target.value)}
               sx={{ mt: 1, width: '50%' }}
             />{' '}
           </Box>
@@ -358,7 +360,7 @@ export default function RolesPermission() {
         // loading={roleMutation.isLoading}
         type="submit"
         onClick={() =>
-          postRole({ permissions: permissions, name: name }).then(
+          postRole({ permissions: permissions, name: name,description:description }).then(
             () => swal('Role Added !', 'continue with the panel', 'success'),
             router.push('/userManagement/role/view-rolesPermission')
           )

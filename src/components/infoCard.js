@@ -4,9 +4,12 @@ import MoneyIcon from "@mui/icons-material/Money";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { useRouter } from "next/router";
+import {useTheme} from "@mui/styles";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 //=========================================================
 export const InfoCard = (props) => { 
   const router = useRouter()
+  const theme = useTheme()
   //-------------------------------------------
   return (
     <Card
@@ -19,20 +22,20 @@ export const InfoCard = (props) => {
       {...props}
     >
       <CardContent
-        sx={{ background: 'linear-gradient(45deg, #ffcaca, #fff5db)' }}
-      >
+            sx={theme.custom.typography.infoCard.bg}
+            >
         {/* -------------------------------------------------------------- */}
-        <Grid container spacing={5} sx={{ alignItems: 'center' }}>
+        <Grid container spacing={2} sx={{ alignItems: 'center' }}>
           <Grid item>
             <Avatar
               sx={{
                 color: '#8B5704',
-                backgroundColor: 'white',
+                backgroundColor: '#FDFAF2',
                 alignItems: 'center',
-                border: '1px dashed ',
-                padding: 2,
-                height: 25,
-                width: 25,
+
+                // padding: 2,
+                height: 21,
+                width: 27,
               }}
             >
               <ManageAccountsIcon />
@@ -40,8 +43,8 @@ export const InfoCard = (props) => {
           </Grid>
           <Grid item>
             <Typography
-              sx={{ fontWeight: 'bold' }}
-              color="#905E0F"
+              sx={theme.custom.typography.infoCard.h2}
+              
               gutterBottom
               variant="h6"
             >
@@ -52,15 +55,10 @@ export const InfoCard = (props) => {
         {/* -------------------------------------------------------------- */}
 
         <Box
-          sx={{
-            pt: 2,
-            display: 'flex',
-            alignItems: 'center',
-          }}
+          sx={theme.custom.typography.infoCard.h3}
         >
           <Typography
             sx={{ fontWeight: 'bold' }}
-            color="textSecondary"
             variant="caption"
           >
             {props.desc}
@@ -70,19 +68,8 @@ export const InfoCard = (props) => {
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Box
-            sx={{
-              background: 'linear-gradient(45deg, #eeeeee, #ffffff)',
-              borderRadius: 1,
-              boxShadow: '-2px 2px 2px 0px grey',
-              marginTop: 3,
-              padding: 1.5,
-              width: 'fit-content',
-              border: '1px solid #e6e8f0',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'flex-end',
-            }}
+        sx={[theme.custom.typography.infoCard.h3,{border:"2px solid #DBDAD8",borderRadius:1,p:.5,backgroundColor:"#FFFDFA"}]}
+
             onClick={() => {
               router.push(props.url);
             }}
@@ -92,7 +79,7 @@ export const InfoCard = (props) => {
               color="textSecondary"
               variant="caption"
             >
-              View Details
+              View Details <ArrowForwardIosIcon sx={{fontSize:10}}/>
             </Typography>
           </Box>
         </Box>

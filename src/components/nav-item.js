@@ -9,8 +9,12 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Swal from 'sweetalert2';
+import {useTheme} from '@mui/styles';
 //===========================================================
 export const NavItem = (props) => {
+
+  const theme = useTheme()
+//==================
   const { href, items, isCollapsible, icon, title, ...others } = props;
   const router = useRouter();
   // console.log("router --", router);
@@ -23,6 +27,7 @@ export const NavItem = (props) => {
       disableGutters
       sx={{
         display: 'flex',
+
         mb: 0.5,
         py: 0,
         px: 2,
@@ -58,8 +63,9 @@ export const NavItem = (props) => {
             component="div"
             startIcon={icon}
             disableRipple
-            sx={{
-              backgroundColor: active && '#E5D5BC',
+            sx={[theme.custom.typography.sideBar,
+              
+              {backgroundColor: active && 'white',
               boxShadow: '0px 4px 1px 0px #bbb5b5',
               border: '1px solid #a39a9a6e',
               borderRadius: 1,
@@ -76,7 +82,7 @@ export const NavItem = (props) => {
               // "&:hover": {
               //   backgroundColor: "rgba(255,255,255, 0.08)",
               // },
-            }}
+            }]}
           >
             <NextLink href={href} passHref>
               <Box sx={{ flexGrow: 1 }}>{title}</Box>
@@ -118,13 +124,14 @@ export const NavItem = (props) => {
               disableRipple
               // background: 'linear-gradient(43deg, #8b5704, #ddb070)',
 
-              sx={{
-                background:
-                  active && 'linear-gradient(43deg, #8b5704, #ddb070)',
+              sx={[theme.custom.typography.sideBar,{
+
+                // background:
+                //   active && 'linear-gradient(43deg, #8b5704, #ddb070)',
                 boxShadow: active && '0px 4px 1px 0px #bbb5b5',
                 border: active && '1px solid #a39a9a6e',
                 borderRadius: 1,
-                color: active ? 'white' : 'gray',
+                color: active ? '#905E0F' : 'gray',
                 fontWeight: active && 'fontWeightBold',
                 justifyContent: 'flex-start',
                 // px: 3,
@@ -132,12 +139,12 @@ export const NavItem = (props) => {
                 textTransform: 'none',
                 width: '100%',
                 '& .MuiButton-startIcon': {
-                  color: active ? 'white' : 'grey',
+                  color: active ? '#905E0F' : 'grey',
                 },
                 // "&:hover": {
                 //   backgroundColor: "rgba(255,255,255, 0.08)",
                 // },
-              }}
+              }]}
             >
               {title === 'Logout' ? (
                 <Box

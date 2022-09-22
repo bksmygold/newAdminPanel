@@ -2,52 +2,84 @@ import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import MoneyIcon from '@mui/icons-material/Money';
 import TimelineIcon from "@mui/icons-material/Timeline";
+import { useTheme } from '@mui/styles';
+import { Line } from 'react-chartjs-2';
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
-export const Budget = (props) => (
-  <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }} {...props}>
-    <CardContent sx={{ backgroundColor: "#FDFAF2" }}>
-      <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
-        <Grid item>
-          <Typography color="#905E0F" gutterBottom variant="overline">
-            {props.title}
-          </Typography>
-          <Typography color="textPrimary" variant="h5">
-            {props.stats}
-          </Typography>
+//============================================================
+export const Budget = (props) => {
+
+  const theme = useTheme()
+  //======================================
+  return (
+    <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }} {...props}>
+      <CardContent sx={{ backgroundColor: "#FDFAF2" }}>
+        <Grid container spacing={1} >
+          <Box sx={{ display: "flex" }}>
+
+            <Grid item >
+              <Typography sx={theme.custom.typography.dashBoard.h1}>
+                {props.title}
+              </Typography>
+              <Typography sx={theme.custom.typography.dashBoard.h2}>
+                {props.stats}
+              </Typography>
+            </Grid>
+            {/* <Grid item> */}
+            <Grid item >
+              <Box sx={{ zoom: "80%" }}>
+
+                <Line
+
+                  datasetIdKey='id'
+
+                  data={{
+                    labels: ['Jun', 'Jul', 'Aug', 'Jun', 'Jul', 'Aug'],
+                    datasets: [
+                      {
+                        backgroundColor: "#AD700E",
+                        color: "red",
+                        borderColor: 'white',
+                        fill: true,
+                        id: 1,
+                        data: [1, 2, 3, 2, 2, 4],
+                      },
+
+                    ],
+                  }}
+                />
+              </Box>
+            </Grid >
+          </Box>
+
         </Grid>
-        <Grid item>
-          <Avatar
+        {/* </Grid> */}
+        <Grid item >
+
+          <Box
             sx={{
-              backgroundColor: "error.main",
-              height: 56,
-              width: 56,
+              pt: 2,
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            <TimelineIcon />
-          </Avatar>
-        </Grid>
-      </Grid>
-      <Box
-        sx={{
-          pt: 2,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <ArrowDownwardIcon color="error" />
-        <Typography
-          color="error"
-          sx={{
-            mr: 1,
-          }}
-          variant="body2"
-        >
-          {props.statsPer}%
-        </Typography>
-        <Typography color="textSecondary" variant="caption">
-          Since last month
-        </Typography>
-      </Box>
-    </CardContent>
-  </Card>
-);
+             {props.statsPer >= 10 ? (
+          <ArrowUpwardIcon color="success" />
+        ) : (
+          <ArrowDownwardIcon color="error" />
+        )}
+            <Typography
+              sx={props.statsPer >=10 ?theme.custom.typography.dashBoard.h3.success : theme.custom.typography.dashBoard.h3.error}
+              >
+              {props.statsPer}%
+            </Typography>
+            <Typography sx={theme.custom.typography.dashBoard.h3}>
+              Since last month
+            </Typography>
+          </Box>
+        </Grid  >
+
+      </CardContent>
+    </Card>
+  )
+}

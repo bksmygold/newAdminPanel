@@ -1,10 +1,12 @@
 import Head from "next/head";
 import { DashboardSidebar } from "src/components/dashboard-sidebar";
-import { Box, Container, Typography, Grid ,Divider} from "@mui/material";
+import { Box, Container, Typography, Grid, Divider } from "@mui/material";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { InfoCard } from "../components/infoCard";
+import { useTheme } from "@mui/styles";
 //=======================================================
 export default function promotionalSetting() {
+  const theme = useTheme()
   return (
     <>
       {/* ------------------------------ */}
@@ -12,17 +14,12 @@ export default function promotionalSetting() {
         <title>Promotional Settings</title>
       </Head>
 
-      <Container sx={{ padding: 5 }}>
+      <Container sx={{ padding: 2, marginLeft: 2 }}>
         {/* ------------------------------ */}
 
         <Typography
-          sx={{
-            marginTop: 4,
-            marginBottom: 2,
-            color: "#8B5704",
-            fontWeight: "bolder",
-          }}
-          variant="h6"
+          sx={theme.custom.typography.infoCard.h1}
+
         >
           App Related
         </Typography>
@@ -70,20 +67,15 @@ export default function promotionalSetting() {
         </Grid>
         {/* ------------------------------ */}
         <Typography
-          sx={{
-            marginTop: 4,
-            marginBottom: 2,
-            color: "#8B5704",
-            fontWeight: "bolder",
-          }}
-          variant="h6"
+          sx={theme.custom.typography.infoCard.h1}
+
         >
           Business Related
-<Divider/>
+          <Divider />
         </Typography>
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard sx={{overFlowWrap:"break-word"}} title="Merchant Banners" desc="Approve, disapprove Merchant Banners" />
+            <InfoCard sx={{ overFlowWrap: "break-word" }} title="Merchant Banners" desc="Approve, disapprove Merchant Banners" />
           </Grid>
         </Grid>
       </Container>

@@ -132,6 +132,7 @@ export const theme = createTheme({
     },
   },
   //======================= Custom Styling =========================
+  //----------- Button ----------------------------------
   custom: {
     Button: {
       background: 'linear-gradient(43deg, #8b5704, #ddb070)',
@@ -154,18 +155,94 @@ export const theme = createTheme({
     },
     modal: {
       background: 'linear-gradient(11deg, rgb(252 252 253), #f5f5f5)',
-     
       p: 7,
       borderRadius: 1,
       boxShadow: '0px 4px 1px 0px #d2c6c6',
       border: '1px solid #d2c6c657',
     },
-    selected:{
+    selected: {
       background: 'linear-gradient(43deg, #8b5704, #ddb070)',
       color: 'white',
+    },
 
+    //----------- Typography ----------------------------------
+    typography: {
+      infoCard: {
+        bg: {
+          backgroundColor: "#FDFAF2",
+
+        },
+        h1: {
+          fontFamily: "poppins",
+          color: "#0B0B0A",
+          fontSize: 20,
+          fontWeight: "medium",
+          mt: 5,
+          mb: 1
+
+        },
+        h2: {
+          fontFamily: "poppins",
+          fontSize: 16,
+          fontWeight: "medium",
+        },
+        h3: {
+          fontFamily: "poppins",
+          fontSize: 14,
+          // fontWeight: "regular",
+          mt: 2,
+          cursor: "pointer"
+        },
+      },
+      sideBar: {
+        fontFamily: "poppins",
+        fontSize: 18,
+        fontWeight: "medium",
+      },
+      dashBoard: {
+        heading: {
+          fontSize: 22,
+          color: "black",
+          fontWeight:"bold"
+        },
+        h1: {
+          fontFamily: "poppins",
+          color: "#905E0F",
+          fontSize: "125%",
+          fontWeight: "medium",
+          // overflowWrap:"wrap"
+          black: {
+            color: "black"
+          }
+
+
+        },
+        h2: {
+          fontFamily: "poppins",
+          fontSize: 26,
+          color: "#001737",
+          fontWeight: "bold",
+
+        },
+        h3: {
+          fontFamily: "poppins",
+          fontSize: 17,
+          color: "#495463",
+
+          error: {
+            color: "red",
+            mr: 1
+          },
+          success: {
+            color: "#14b8a6",
+            mr: 1
+          }
+        },
+      }
     }
   },
+
+
   //==================================================================
   palette: {
     neutral: {
@@ -264,73 +341,73 @@ export const theme = createTheme({
     '0px 25px 50px rgba(100, 116, 139, 0.25)',
     '0px 25px 50px rgba(100, 116, 139, 0.25)',
   ],
-  typography: {
-    button: {
-      fontWeight: 600,
-    },
-    fontFamily:
-      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
-    body1: {
-      fontSize: '1rem',
-      fontWeight: 400,
-      lineHeight: 1.5,
-    },
-    body2: {
-      fontSize: '0.875rem',
-      fontWeight: 400,
-      lineHeight: 1.57,
-    },
-    subtitle1: {
-      fontSize: '1rem',
-      fontWeight: 500,
-      lineHeight: 1.75,
-    },
-    subtitle2: {
-      fontSize: '0.875rem',
-      fontWeight: 500,
-      lineHeight: 1.57,
-    },
-    overline: {
-      fontSize: '0.75rem',
-      fontWeight: 600,
-      letterSpacing: '0.5px',
-      lineHeight: 2.5,
-      textTransform: 'uppercase',
-    },
-    caption: {
-      fontSize: '0.75rem',
-      fontWeight: 400,
-      lineHeight: 1.66,
-    },
-    h1: {
-      fontWeight: 700,
-      fontSize: '3.5rem',
-      lineHeight: 1.375,
-    },
-    h2: {
-      fontWeight: 700,
-      fontSize: '3rem',
-      lineHeight: 1.375,
-    },
-    h3: {
-      fontWeight: 700,
-      fontSize: '2.25rem',
-      lineHeight: 1.375,
-    },
-    h4: {
-      fontWeight: 700,
-      fontSize: '2rem',
-      lineHeight: 1.375,
-    },
-    h5: {
-      fontWeight: 600,
-      fontSize: '1.5rem',
-      lineHeight: 1.375,
-    },
-    h6: {
-      fontWeight: 600,
-      fontSize: '1.125rem',
-      lineHeight: 1.375,
-    },
-  },
+  // typography: {
+  //   button: {
+  //     fontWeight: 600,
+  //   },
+  //   fontFamily:
+  //     '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+  //   body1: {
+  //     fontSize: '1rem',
+  //     fontWeight: 400,
+  //     lineHeight: 1.5,
+  //   },
+  //   body2: {
+  //     fontSize: '0.875rem',
+  //     fontWeight: 400,
+  //     lineHeight: 1.57,
+  //   },
+  //   subtitle1: {
+  //     fontSize: '1rem',
+  //     fontWeight: 500,
+  //     lineHeight: 1.75,
+  //   },
+  //   subtitle2: {
+  //     fontSize: '0.875rem',
+  //     fontWeight: 500,
+  //     lineHeight: 1.57,
+  //   },
+  //   overline: {
+  //     fontSize: '0.75rem',
+  //     fontWeight: 600,
+  //     letterSpacing: '0.5px',
+  //     lineHeight: 2.5,
+  //     textTransform: 'uppercase',
+  //   },
+  //   caption: {
+  //     fontSize: '0.75rem',
+  //     fontWeight: 400,
+  //     lineHeight: 1.66,
+  //   },
+  //   h1: {
+  //     fontWeight: 700,
+  //     fontSize: '3.5rem',
+  //     lineHeight: 1.375,
+  //   },
+  //   h2: {
+  //     fontWeight: 700,
+  //     fontSize: '3rem',
+  //     lineHeight: 1.375,
+  //   },
+  //   h3: {
+  //     fontWeight: 700,
+  //     fontSize: '2.25rem',
+  //     lineHeight: 1.375,
+  //   },
+  //   h4: {
+  //     fontWeight: 700,
+  //     fontSize: '2rem',
+  //     lineHeight: 1.375,
+  //   },
+  //   h5: {
+  //     fontWeight: 600,
+  //     fontSize: '1.5rem',
+  //     lineHeight: 1.375,
+  //   },
+  //   h6: {
+  //     fontWeight: 600,
+  //     fontSize: '1.125rem',
+  //     lineHeight: 1.375,
+  //   },
+  // },
 });

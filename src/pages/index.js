@@ -18,17 +18,11 @@ import { PeopleCard } from "../components/dashboard/myGoldPeople";
 import { FinancialsCard } from "src/components/dashboard/myGoldFinancials";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-
+import { useTheme } from "@mui/styles";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 //====================================================================
 const Dashboard = () => {
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
-
+  const theme = useTheme()
   const router = useRouter();
   //=====================================================
   // useEffect(() => {
@@ -51,37 +45,35 @@ const Dashboard = () => {
       >
         <Container
           sx={{
-            width: "100%",
+            // width: "100vw",
             height: "100%",
-            border: "1px solid gray",
-            padding: "10px",
+            marginLeft: 2
           }}
-          // maxWidth={true}
+          maxWidth={true}
         >
           {/* -----------   General Information------------------- */}
 
           <Typography
-            sx={{
-              marginTop: 5,
-              marginBottom: 1,
-            }}
-            variant="h6"
+            sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 }]}
           >
             General Information
           </Typography>
-          <Grid container spacing={3}>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
+          <Grid container spacing={2}>
+            <Grid item lg={3} xs={12}>
               <Budget title="Visits" stats={32451} statsPer={14} />
             </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <Budget title="Apps Downloads" stats={15451} statsPer={14} />
+            <Grid item lg={3} xs={12}>
+              <Budget title="Apps Downloads" stats={15451} statsPer={4} />
             </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <Budget title="Conversions" stats={42451} statsPer={21} />
+            <Grid item lg={3} xs={12}>
+              <Budget title="Conversions" stats={421} statsPer={21} />
             </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <Budget title="Orders" stats={30451} statsPer={21} />
+            <Grid item lg={3} xs={12}>
+              <Budget title="Orders" stats={30451} statsPer={8} />
             </Grid>
+            {/* </Grid>
+
+          {/* -------------------------------------------------------------- */}
 
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <TotalCustomers
@@ -115,26 +107,22 @@ const Dashboard = () => {
                 updatedAt={"2:04"}
               />
             </Grid>
+          </Grid >
 
-            {/* <Grid item xl={3} lg={3} sm={6} xs={12}>
+          {/* <Grid item xl={3} lg={3} sm={6} xs={12}>
                 <TotalProfit sx={{ height: "100%" }} />
               </Grid> */}
-          </Grid>
+          {/* </Grid> */}
 
           {/* -----------   My Gold Financials------------------- */}
           <Typography
-            xl={1}
-            variant="h6"
-            sx={{
-              marginTop: 5,
-              marginBottom: 1,
-              cursor: "pointer",
-            }}
+            sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 }]}
+
             onClick={() => {
               router.push("/myGoldFinancials");
             }}
           >
-            MyGold Financials
+            MyGold Financials <ArrowForwardIosIcon />
           </Typography>
           <Grid container spacing={3}>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
@@ -156,12 +144,8 @@ const Dashboard = () => {
           {/* -----------   My Gold Retails------------------- */}
 
           <Typography
-            xl={1}
-            variant="h6"
-            sx={{
-              marginTop: 5,
-              marginBottom: 1,
-            }}
+            sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 }]}
+
           >
             MyGold Retials
           </Typography>
@@ -200,27 +184,23 @@ const Dashboard = () => {
           </Grid>
           {/* -----------   My Gold Peopple------------------- */}
           <Typography
-            xl={1}
-            variant="h6"
-            sx={{
-              marginTop: 5,
-              marginBottom: 1,
-            }}
+            sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 }]}
+
           >
             MyGold People
           </Typography>
           <Grid container spacing={3}>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item lg={3} xs={12}>
               <PeopleCard totalOrder title="Total Customers" stats={369} percentage={10} />
             </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <PeopleCard totalOrder title="Total Merchants" stats={36} percentage={12} />
+            <Grid item lg={3} xs={12}>
+              <PeopleCard totalOrder title="Total Merchants" stats={36} percentage={2} />
             </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <Grid item lg={3} xs={12}>
               <PeopleCard totalOrder title="Total Retails" stats={12} percentage={14} />
             </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <PeopleCard totalOrder title="Total VIP Referrals" stats={786} percentage={54} />
+            <Grid item lg={3} xs={12}>
+              <PeopleCard totalOrder title="Total VIP Referrals" stats={786} percentage={7} />
             </Grid>
           </Grid>
 

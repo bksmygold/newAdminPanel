@@ -3,8 +3,10 @@ import { DashboardSidebar } from "src/components/dashboard-sidebar";
 import { Box, Container, Typography, Grid } from "@mui/material";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { InfoCard } from "../components/infoCard";
+import { useTheme } from "@mui/styles";
 //=======================================================
 export default function userManagement() {
+  const theme = useTheme()
   return (
     <>
       {/* ------------------------------ */}
@@ -12,17 +14,12 @@ export default function userManagement() {
         <title>User Management </title>
       </Head>
 
-      <Container sx={{ p: 5 }}>
+      <Container sx={{ marginLeft: 2 }}>
         {/* ------------------------------ */}
 
         <Typography
-          sx={{
-            marginTop: 4,
-            marginBottom: 2,
-            color: '#8B5704',
-            fontWeight: 'bolder',
-          }}
-          variant="h6"
+          sx={theme.custom.typography.infoCard.h1}
+          // variant="h6"
         >
           Organization Related
         </Typography>
@@ -44,13 +41,8 @@ export default function userManagement() {
         </Grid>
         {/* ------------------------------ */}
         <Typography
-          sx={{
-            marginTop: 4,
-            marginBottom: 2,
-            color: '#8B5704',
-            fontWeight: 'bolder',
-          }}
-          variant="h6"
+          sx={theme.custom.typography.infoCard.h1}
+
         >
           Marketing Related
         </Typography>
@@ -77,13 +69,8 @@ export default function userManagement() {
         </Grid>
         {/* ------------------------------ */}
         <Typography
-          sx={{
-            marginTop: 4,
-            marginBottom: 2,
-            color: '#8B5704',
-            fontWeight: 'bolder',
-          }}
-          variant="h6"
+                sx={theme.custom.typography.infoCard.h1}
+
         >
           Buisness Related
         </Typography>

@@ -9,8 +9,11 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import MoveToInboxIcon from "@mui/icons-material/MoveToInbox";
 import CancelIcon from "@mui/icons-material/Cancel";
+import {useTheme} from "@mui/styles"
 //=====================================================
-export const RetailCard = (props) => (
+export const RetailCard = (props) => {
+  const theme = useTheme()
+  return(
   <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }} {...props}>
     <CardContent sx={{ backgroundColor: "#FDFAF2" }}>
       <Grid container spacing={3} sx={{ justifyContent: "center" }}>
@@ -146,10 +149,10 @@ export const RetailCard = (props) => (
         </Box>
         <Grid item>
           {/* ----------------------- */}
-          <Typography color="#905E0F" gutterBottom variant="overline">
+          <Typography sx={theme.custom.typography.dashBoard.h1}>
             {props.title}
           </Typography>
-          <Typography color="textPrimary" variant="h6">
+          <Typography sx={theme.custom.typography.dashBoard.h2}>
             {props.stats}
           </Typography>
           {/* ----------------------- */}
@@ -157,4 +160,4 @@ export const RetailCard = (props) => (
       </Grid>
     </CardContent>
   </Card>
-);
+)}

@@ -3,8 +3,12 @@ import { DashboardSidebar } from "src/components/dashboard-sidebar";
 import { Box, Container, Typography, Grid } from "@mui/material";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { InfoCard } from "../components/infoCard";
+import { useTheme } from "@mui/styles";
+import { infoCard } from "src/constant";
 //=======================================================
 export default function taxSettings() {
+  const theme = useTheme()
+
   return (
     <>
       {/* ------------------------------ */}
@@ -12,49 +16,41 @@ export default function taxSettings() {
         <title>Tax Settings </title>
       </Head>
 
-      <Container sx={{ padding: 1 }}>
+      <Container sx={{ padding: 1, marginLeft: 2 }}>
         {/* ------------------------------ */}
 
         <Typography
-          sx={{
-            marginTop: 4,
-            marginBottom: 2,
-            color: "#8B5704",
-            fontWeight: "bolder",
-          }}
-          variant="h6"
+          sx={theme.custom.typography.infoCard.h1}
         >
           Third Party Tax Settings
         </Typography>
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Government Taxes"
-              desc="create, update, delete taxes imposed by government like Central Excise etc.,"
-              url='/taxSettings/customDuty/view-customDuty'
+              title={infoCard.taxes.governmentTax.title}
+              desc={infoCard.taxes.governmentTax.desc}
+              url={infoCard.taxes.governmentTax.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="HSN & GST"
-              desc="create, update, delete HSN and GST related Information  "
+              title={infoCard.taxes.gst.title}
+              desc={infoCard.taxes.gst.desc}
+              url={infoCard.taxes.gst.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="TDS & TCS "
-              desc="create, update, delete TDS and TCS related Information    "
+              title={infoCard.taxes.tds.title}
+              desc={infoCard.taxes.tds.desc}
+              url={infoCard.taxes.tds.url}
             />
           </Grid>
         </Grid>
         {/* ------------------------------ */}
         <Typography
-          sx={{
-            marginTop: 4,
-            marginBottom: 2,
-            color: "#8B5704",
-            fontWeight: "bolder",
-          }}
+          sx={theme.custom.typography.infoCard.h1}
+
           variant="h6"
         >
           Modules Related
@@ -101,12 +97,8 @@ export default function taxSettings() {
         </Grid>
         {/* ------------------------------ */}
         <Typography
-          sx={{
-            marginTop: 4,
-            marginBottom: 2,
-            color: "#8B5704",
-            fontWeight: "bolder",
-          }}
+          sx={theme.custom.typography.infoCard.h1}
+
           variant="h6"
         >
           Business Related

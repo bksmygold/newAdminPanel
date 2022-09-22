@@ -4,8 +4,10 @@ import { Box, Container, Typography, Grid } from "@mui/material";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { InfoCard } from "../components/infoCard";
 import { useRouter } from "next/router";
+import { useTheme } from "@mui/styles";
 //=======================================================
 export default function eCommerce() {
+  const theme = useTheme()
   return (
     <>
       {/* ------------------------------ */}
@@ -13,17 +15,12 @@ export default function eCommerce() {
         <title>E-Commerce </title>
       </Head>
 
-      <Container  sx={{ padding: 2, }}>
+      <Container  sx={{ padding: 2,marginLeft:2 }}>
         {/* ------------------------------ */}
 
         <Typography
-          sx={{
-            marginTop: 4,
-            marginBottom: 2,
-            color: '#8B5704',
-            fontWeight: 'bolder',
-          }}
-          variant="h6"
+               sx={theme.custom.typography.infoCard.h1}
+
         >
           E-commerce Master
         </Typography>
@@ -191,13 +188,8 @@ export default function eCommerce() {
         </Grid>
 
         <Typography
-          sx={{
-            marginTop: 4,
-            marginBottom: 2,
-            color: '#8B5704',
-            fontWeight: 'bolder',
-          }}
-          variant="h6"
+                   sx={theme.custom.typography.infoCard.h1}
+
         >
           Plans
         </Typography>

@@ -2,8 +2,12 @@ import { Avatar, Box, Card, CardContent, Grid, Typography } from "@mui/material"
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import PeopleIcon from "@mui/icons-material/PeopleOutlined";
-
-export const TotalCustomers = (props) => (
+import {useTheme} from "@mui/styles"
+//============================================================
+export const TotalCustomers = (props) => {
+const theme = useTheme()
+  //===========================
+  return(
   <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }} {...props}>
     <CardContent
       sx={{
@@ -13,10 +17,10 @@ export const TotalCustomers = (props) => (
     >
       <Grid container spacing={3} sx={{ justifyContent: "center" }}>
         <Grid item>
-          <Typography color="#905E0F" gutterBottom variant="overline">
+          <Typography sx={theme.custom.typography.dashBoard.h1}>
             {props.title}
           </Typography>
-          <Typography color="textPrimary" variant="h5">
+          <Typography sx={theme.custom.typography.dashBoard.h2}>
             ₹ {props.rate} /gm
           </Typography>
         </Grid>
@@ -45,18 +49,16 @@ export const TotalCustomers = (props) => (
           <ArrowDownwardIcon color="error" />
         )}
         <Typography
-          variant="body2"
-          sx={{
-            mr: 1,
-            color: "black",
-          }}
-        >
+          
+          sx={props.percentage >=10 ?theme.custom.typography.dashBoard.h3.success : theme.custom.typography.dashBoard.h3.error}
+          >
           {props.percentage}%
         </Typography>
-        <Typography color="textSecondary" variant="caption">
+        <Typography sx={theme.custom.typography.dashBoard.h3}>
           Updated at {props.updatedAt}
         </Typography>
       </Box>
     </CardContent>
   </Card>
-);
+  )
+}

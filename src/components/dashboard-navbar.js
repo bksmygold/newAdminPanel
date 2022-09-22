@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import { AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip, Button } from "@mui/material";
+import { AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip, Button, TextField } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Bell as BellIcon } from "../icons/bell";
@@ -39,50 +39,35 @@ export const DashboardNavbar = (props) => {
         <Toolbar
           disableGutters
           sx={{
-            minHeight: 64,
+            height: 100,
             left: 0,
-            px: 2,
+            p: 3,
           }}
         >
           <p id="welcomeText">👋 Welcome Nischal </p>
           <IconButton
             onClick={onSidebarOpen}
             sx={{
+              
               display: {
                 xs: "inline-flex",
                 lg: "none",
               },
             }}
           >
-            <MenuIcon fontSize="small" />
-          </IconButton>
+            <MenuIcon  />
+          </IconButton >
           <Box sx={{ flexGrow: 1 }} />
-          {/* <Box>
-            <Button
-              onClick={() => {
-                localStorage.clear();
-                Swal.fire("You have been logged out!", "Log in to continue", "error"),
-                  router.push("/login");
-              }}
-              sx={{
-                zoom: "90%",
-                background: "linear-gradient(45deg, #ff4b4b, #ffb5b5)",
-                color: "white",
-                p: 0,
-                marginRight:1
-                // padding: "0px 12px 0px 0px",
-              }}
-            >
-              Logout
-            </Button>
-          </Box> */}
+          <Box>
+           <TextField type="date"sx={{mr:5}}/>
+          </Box>
           <Box>
             <Button
               onClick={() => {
                 router.push("/badla/view-badla");
               }}
               sx={{
-                zoom: "90%",
+                // zoom: "90%",
                 background: "linear-gradient(43deg, #8b5704, #ddb070)",
                 color: "white",
                 p: 0,
@@ -96,13 +81,13 @@ export const DashboardNavbar = (props) => {
 
           <Tooltip title="Notifications">
             <IconButton sx={{ ml: 1 }}>
-              <BellIcon sx={{ color: "#905e0f" }} fontSize="small" />
+              <BellIcon sx={{width:31.5,height:36, color: "#905e0f" }} fontSize="small" />
             </IconButton>
           </Tooltip>
           <Tooltip title="User">
             <AccountCircleIcon
               onClick={() => router.push("/account")}
-              sx={{ color: "#905e0f", cursor: "pointer" }}
+              sx={{ width:31.5,height:36,color: "#905e0f", cursor: "pointer" }}
             />
           </Tooltip>
         </Toolbar>
