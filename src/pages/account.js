@@ -5,6 +5,8 @@ import { AccountProfileDetails } from '../components/account/account-profile-det
 import { DashboardLayout } from '../components/dashboard-layout';
 import { useEffect, useState } from 'react';
 import { getLoggedInUser } from 'src/apis/login';
+import { useRouter } from "next/router";
+
 //=============================================================
 const Account = () => {
   //=============================================================
@@ -12,6 +14,10 @@ const Account = () => {
   useEffect(() => {
     getLoggedInUser().then(res => setUser(res))
   }, [])
+  const router = useRouter()
+
+  console.log("user <--->",router.query)
+
   //=============================================================
   return (
     <>

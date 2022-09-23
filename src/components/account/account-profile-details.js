@@ -21,7 +21,7 @@ import { getLoggedInUser } from "src/apis/user";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import {useTheme} from "@mui/styles"
-
+import { useContext } from 'react';
 //=======================================================
 const CustomTextField = styled(TextField)`
   & label.Mui-focused {
@@ -38,7 +38,8 @@ const CustomTextField = styled(TextField)`
 export const AccountProfileDetails = (props) => {
   const router = useRouter()
   const theme = useTheme()
-  
+  // console.log("user <--->",local)
+
     const [user, setUser] = useState({});
     useEffect(() => {
       getLoggedInUser().then((res) => setUser(res));
@@ -63,7 +64,7 @@ export const AccountProfileDetails = (props) => {
   });
   
     const query = useQuery({
-      querKey: ["user", user.id],
+      querKey: ["user"],
       queryFn: () => getLoggedInUser(),
       onSuccess: (res) => formik.setValues(res),
       enabled: !!user.id,

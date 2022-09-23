@@ -79,6 +79,8 @@ export default function Cut() {
   const query = useQuery({
     queryKey: 'Cut',
     queryFn: () => getCut(),
+        enabled: !!router.query.id,
+
   });
 
   const addMutation = useMutation({
@@ -101,6 +103,9 @@ export default function Cut() {
     },
     onError: (err) => swal('Erro !', err.message, 'error'),
   });
+
+  console.log("settings ---", query.data?.docs)
+
 
   if (query.isLoading) return <Loading />;
   //===============

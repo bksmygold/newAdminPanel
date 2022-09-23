@@ -69,8 +69,8 @@ export const PeopleCard = (props) => {
               </Typography>
             </Grid>
             {/* <Grid item> */}
-            <Grid item >
-              <Box sx={{ zoom: "80%" }}>
+            <Grid item  xs={12}md={12}>
+              <Box sx={{ zoom: "70%" }}>
 
                 <Line
 

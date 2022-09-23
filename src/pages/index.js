@@ -59,16 +59,16 @@ const Dashboard = () => {
             General Information
           </Typography>
           <Grid container spacing={2}>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} sm={6} xs={12}>
               <Budget title="Visits" stats={32451} statsPer={14} />
             </Grid>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} sm={6} xs={12}>
               <Budget title="Apps Downloads" stats={15451} statsPer={4} />
             </Grid>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} sm={6} xs={12}>
               <Budget title="Conversions" stats={421} statsPer={21} />
             </Grid>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} sm={6} xs={12}>
               <Budget title="Orders" stats={30451} statsPer={8} />
             </Grid>
             {/* </Grid>
@@ -116,7 +116,7 @@ const Dashboard = () => {
 
           {/* -----------   My Gold Financials------------------- */}
           <Typography
-            sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 }]}
+            sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 ,cursor:"pointer"}]}
 
             onClick={() => {
               router.push("/myGoldFinancials");
@@ -190,16 +190,16 @@ const Dashboard = () => {
             MyGold People
           </Typography>
           <Grid container spacing={3}>
-          <Grid item lg={3} xs={12}>
+          <Grid item lg={3} sm={6} xs={12}>
               <PeopleCard totalOrder title="Total Customers" stats={369} percentage={10} />
             </Grid>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} sm={6} xs={12}>
               <PeopleCard totalOrder title="Total Merchants" stats={36} percentage={2} />
             </Grid>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} sm={6} xs={12}>
               <PeopleCard totalOrder title="Total Retails" stats={12} percentage={14} />
             </Grid>
-            <Grid item lg={3} xs={12}>
+            <Grid item lg={3} sm={6} xs={12}>
               <PeopleCard totalOrder title="Total VIP Referrals" stats={786} percentage={7} />
             </Grid>
           </Grid>

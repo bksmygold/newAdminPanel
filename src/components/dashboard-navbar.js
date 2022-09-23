@@ -10,7 +10,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from 'next/router'
 import Swal from "sweetalert2";
-
+import { useState, createContext, useEffect } from "react";
+import { getLoggedInUser } from "src/apis/login";
 //=================================================================
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -21,7 +22,13 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 export const DashboardNavbar = (props) => {
   const { onSidebarOpen, ...other } = props;
 
+
   const router = useRouter()
+
+  const [user, setUser] = useState({})
+  useEffect(() => {
+    getLoggedInUser().then(res => setUser(res))
+  }, [])
   //=================================================================
   return (
     <>
@@ -44,22 +51,22 @@ export const DashboardNavbar = (props) => {
             p: 3,
           }}
         >
-          <p id="welcomeText">👋 Welcome Nischal </p>
+          <p id="welcomeText">👋 Welcome {user.fullName} </p>
           <IconButton
             onClick={onSidebarOpen}
             sx={{
-              
+
               display: {
                 xs: "inline-flex",
                 lg: "none",
               },
             }}
           >
-            <MenuIcon  />
+            <MenuIcon />
           </IconButton >
           <Box sx={{ flexGrow: 1 }} />
           <Box>
-           <TextField type="date"sx={{mr:5}}/>
+            <TextField type="date" sx={{ mr: 5 }} />
           </Box>
           <Box>
             <Button
@@ -81,15 +88,18 @@ export const DashboardNavbar = (props) => {
 
           <Tooltip title="Notifications">
             <IconButton sx={{ ml: 1 }}>
-              <BellIcon sx={{width:31.5,height:36, color: "#905e0f" }} fontSize="small" />
+              <BellIcon sx={{ width: 31.5, height: 36, color: "#905e0f" }} fontSize="small" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="User">
-            <AccountCircleIcon
-              onClick={() => router.push("/account")}
-              sx={{ width:31.5,height:36,color: "#905e0f", cursor: "pointer" }}
-            />
-          </Tooltip>
+            <Tooltip title="User">
+              <AccountCircleIcon
+                onClick={() => router.push({
+                  pathname: '/account',
+                  query: { user: user }
+                })}
+                sx={{ width: 31.5, height: 36, color: "#905e0f", cursor: "pointer" }}
+              />
+            </Tooltip>
         </Toolbar>
       </DashboardNavbarRoot>
     </>
