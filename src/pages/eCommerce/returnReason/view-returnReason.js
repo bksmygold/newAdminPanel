@@ -171,13 +171,13 @@ export default function ReturnReason() {
      field: 'title',
      headerName: 'return reason title',
      width: 150,
-     editable: true,
+     editable: true,      flex:1
    },
    {
      field: 'type',
      headerName: 'Type',
      width: 150,
-     editable: true,
+     editable: true,      flex:1
    },
   
    {
@@ -185,14 +185,14 @@ export default function ReturnReason() {
      headerName: 'Edit',
      width: 250,
      editable: true,
-     renderCell: editButton,
+     renderCell: editButton,      flex:1
    },
    {
      field: 'delete',
      headerName: 'Delete',
      width: 250,
      editable: true,
-     renderCell: deleteButton,
+     renderCell: deleteButton,      flex:1
    },
  ];
  console.log(query.data.docs);

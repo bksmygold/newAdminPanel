@@ -170,7 +170,7 @@ export default function RejectReason() {
      field: 'title',
      headerName: 'reject reason title',
      width: 350,
-     editable: true,
+     editable: true,      flex:1
    },
 
   
@@ -179,14 +179,14 @@ export default function RejectReason() {
      headerName: 'Edit',
      width: 250,
      editable: true,
-     renderCell: editButton,
+     renderCell: editButton,      flex:1
    },
    {
      field: 'delete',
      headerName: 'Delete',
      width: 250,
      editable: true,
-     renderCell: deleteButton,
+     renderCell: deleteButton,      flex:1
    },
  ];
  console.log("----------",query.data.docs);

@@ -63,7 +63,7 @@ export default function Offer() {
   };
   //==========
   const columns = [
-    { field: 'type', headerName: 'Type', width: 150 },
+    { field: 'type', headerName: 'Type', width: 150 ,      flex:1},
 
     {
       field: 'typeId.name',
@@ -79,12 +79,12 @@ export default function Offer() {
           result.push(['empty']);
         }
         return result;
-      },
+      },      flex:1
     },
     {
       field: 'image',
       headerName: 'Offer Image',
-      width: 150,
+      width: 150,      flex:1,
       renderCell: (params) => (
         <img
           style={{ width: '18%', height: 'fit-content' }}
@@ -92,21 +92,21 @@ export default function Offer() {
         />
       ),
     },
-    { field: 'name', headerName: 'Offer Name', width: 150 },
-    { field: 'valueType', headerName: 'Offer Type', width: 150 },
-    { field: 'value', headerName: 'Offer Value', width: 150 },
+    { field: 'name', headerName: 'Offer Name', width: 150       ,flex:1},
+    { field: 'valueType', headerName: 'Offer Type', width: 150 ,      flex:1},
+    { field: 'value', headerName: 'Offer Value', width: 150 ,      flex:1},
 
     {
       field: 'edit',
       headerName: 'Edit',
       width: 150,
-      renderCell: editButton,
+      renderCell: editButton,      flex:1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
-      renderCell: deleteButton,
+      renderCell: deleteButton,      flex:1
     },
   ];
 

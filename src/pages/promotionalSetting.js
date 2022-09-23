@@ -4,6 +4,7 @@ import { Box, Container, Typography, Grid, Divider } from "@mui/material";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { InfoCard } from "../components/infoCard";
 import { useTheme } from "@mui/styles";
+import { infoCard } from "src/constant";
 //=======================================================
 export default function promotionalSetting() {
   const theme = useTheme()
@@ -26,42 +27,50 @@ export default function promotionalSetting() {
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Offer Sliders"
-              desc="create, update, delete Offer Sliders"
-              url="/promotionalSetting/offer/view-offer"
+              title={infoCard.promo.offer.title}
+              desc={infoCard.promo.offer.desc}
+              url={infoCard.promo.offer.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="App slider"
-              desc="create, update, delete Offer Sliders"
-              url="/promotionalSetting/slider/view-slider"
+              title={infoCard.promo.appSlider.title}
+              desc={infoCard.promo.appSlider.desc}
+              url={infoCard.promo.appSlider.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="How-to Videos"
-              desc="create, update, delete how To Videos"
-              url="how-to-video/view-how-to-video"
-            />
-          </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="Testimonials" desc="create, update, delete Testimonials Videos" />
-          </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard title="Ad Position" desc="create, update, delete Ad Position" />
-          </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title="Offer Popups"
-              desc="create, update, delete offer popups with timeline conditions etc."
+              title={infoCard.promo.video.title}
+              desc={infoCard.promo.video.desc}
+              url={infoCard.promo.video.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Referral Type"
-              desc="create, update, delete referral type"
-              url="/promotionalSetting/referralType/view-referralType"
+              title={infoCard.promo.testi.title}
+              desc={infoCard.promo.testi.desc}
+              url={infoCard.promo.testi.url}
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title={infoCard.promo.offerPopup.title}
+              desc={infoCard.promo.offerPopup.desc}
+              url={infoCard.promo.offerPopup.url} />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title={infoCard.promo.referratlType.title}
+              desc={infoCard.promo.referratlType.desc}
+              url={infoCard.promo.referratlType.url}
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title={infoCard.promo.merchNatBanner.title}
+              desc={infoCard.promo.merchNatBanner.desc}
+              url={infoCard.promo.merchNatBanner.url}
             />
           </Grid>
         </Grid>
@@ -75,7 +84,10 @@ export default function promotionalSetting() {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard sx={{ overFlowWrap: "break-word" }} title="Merchant Banners" desc="Approve, disapprove Merchant Banners" />
+            <InfoCard sx={{ overFlowWrap: "break-word" }}
+              title={infoCard.promo.offer.title}
+              desc={infoCard.promo.offer.desc}
+              url={infoCard.promo.offer.url} />
           </Grid>
         </Grid>
       </Container>

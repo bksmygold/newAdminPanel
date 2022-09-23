@@ -39,6 +39,7 @@ export default function reports() {
         sx={{
           justifyContent: "center",
           padding: 2,
+          minWidth:"100%"
         }}
         container
         spacing={0}

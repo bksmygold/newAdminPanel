@@ -14,7 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import Loading from 'src/components/loading';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import AddIcon from '@mui/icons-material/Add';
-import {useTheme } from '@mui/styles'
+import { useTheme } from '@mui/styles'
 //=======================================================
 export default function MetalGroup() {
   const router = useRouter();
@@ -55,7 +55,7 @@ export default function MetalGroup() {
   });
   if (query.isLoading) return <Loading />;
 
-  console.log("---" ,query.data.docs)
+  console.log("---", query.data.docs)
   //===============================
   const columns = [
     {
@@ -85,9 +85,9 @@ export default function MetalGroup() {
         let result = [];
         if (params.row.metal) {
           if (params.row.metal.name) {
-            
-              result.push(params.row.metal.name);
-            
+
+            result.push(params.row.metal.name);
+
           }
         } else {
           result = ['Empty'];
@@ -103,11 +103,11 @@ export default function MetalGroup() {
       valueGetter: (params) => {
         let result = [];
         if (params.row.unit) {
-          
-            if (params.row.unit.name) {
-              result.push(params.row.unit.name);
-            }
-          
+
+          if (params.row.unit.name) {
+            result.push(params.row.unit.name);
+          }
+
         } else {
           result = ['Empty'];
         }
@@ -150,7 +150,7 @@ export default function MetalGroup() {
       <Head>
         <title>Dashboard | Metal Group </title>
       </Head>
-<Grid
+      <Grid
         sx={{
           marginLeft: 5,
           marginTop: 5,
@@ -164,7 +164,7 @@ export default function MetalGroup() {
             Metal Group View
           </Typography>
         </Grid>
-        <Grid item>
+        <Grid item >
           <Button
             onClick={() => router.push('/eCommerce/metalGroup/add-metalGroup')}
             sx={{
@@ -177,11 +177,11 @@ export default function MetalGroup() {
           </Button>
         </Grid>
       </Grid>{' '}
-      
+
       <Table
         rows={query.data.docs}
         columns={columns}
- 
+
       />
     </>
   );

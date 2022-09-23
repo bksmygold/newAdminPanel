@@ -59,19 +59,19 @@ export default function ViewVideo() {
       field: 'title',
       headerName: 'Video Title',
       width: 250,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'category',
       headerName: 'Video Category',
       width: 250,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'language',
       headerName: 'Video Language',
       width: 250,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'url',
@@ -80,7 +80,7 @@ export default function ViewVideo() {
       editable: true,
       renderCell: (params) => {
         <a target="_blank" rel="noreferrer" href={params.value} />;
-      },
+      },      flex:1
     },
 
     {

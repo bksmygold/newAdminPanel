@@ -3,7 +3,9 @@ import { DashboardSidebar } from "src/components/dashboard-sidebar";
 import { Box, Container, Typography, Grid } from "@mui/material";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { InfoCard } from "../components/infoCard";
+
 import { useTheme } from "@mui/styles";
+import { infoCard } from "src/constant";
 //=======================================================
 export default function userManagement() {
   const theme = useTheme()
@@ -19,23 +21,23 @@ export default function userManagement() {
 
         <Typography
           sx={theme.custom.typography.infoCard.h1}
-          // variant="h6"
+        // variant="h6"
         >
           Organization Related
         </Typography>
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Roles & Permissions"
-              desc="create, update, delete user roles and manage thier permission"
-              url="/userManagement/role/view-rolesPermission"
+              title={infoCard.userManagement.rolesPerma.title}
+              desc={infoCard.userManagement.rolesPerma.desc}
+              url={infoCard.userManagement.rolesPerma.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Organisation Users"
-              desc="create, update, delete user for MyGold Organiation"
-              url="/userManagement/user/view-organisationUser"
+              title={infoCard.userManagement.orgaUser.title}
+              desc={infoCard.userManagement.orgaUser.desc}
+              url={infoCard.userManagement.orgaUser.url}
             />
           </Grid>
         </Grid>
@@ -49,27 +51,29 @@ export default function userManagement() {
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Referrals Users"
-              desc="create, update, delete VIP/influencer Referral"
-              url="/userManagement/referralUsers/view-referralUsers"
+              title={infoCard.userManagement.referUser.title}
+              desc={infoCard.userManagement.referUser.desc}
+              url={infoCard.userManagement.referUser.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="GBP Users"
-              desc="create, update, delete GBP Users"
+              title={infoCard.userManagement.gbpUser.title}
+              desc={infoCard.userManagement.gbpUser.desc}
+              url={infoCard.userManagement.gbpUser.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Sales Referrals"
-              desc="create, update, delete sales referrals"
+              title={infoCard.userManagement.saleRefer.title}
+              desc={infoCard.userManagement.saleRefer.desc}
+              url={infoCard.userManagement.saleRefer.url}
             />
           </Grid>
         </Grid>
         {/* ------------------------------ */}
         <Typography
-                sx={theme.custom.typography.infoCard.h1}
+          sx={theme.custom.typography.infoCard.h1}
 
         >
           Buisness Related
@@ -77,21 +81,23 @@ export default function userManagement() {
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Merchant"
-              desc="create, update, delete merchants, commissions and manage their approvals"
-              url="/userManagement/merchant/view-merchant"
+              title={infoCard.userManagement.merchant.title}
+              desc={infoCard.userManagement.merchant.desc}
+              url={infoCard.userManagement.merchant.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Retail"
-              desc="create, update, delete retail Merchant Accounts and manage them"
+              title={infoCard.userManagement.retail.title}
+              desc={infoCard.userManagement.retail.desc}
+              url={infoCard.userManagement.retail.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Suppliers"
-              desc="create, update, delete suppliers for e-commerce"
+              title={infoCard.userManagement.supplier.title}
+              desc={infoCard.userManagement.supplier.desc}
+              url={infoCard.userManagement.supplier.url}
             />
           </Grid>
         </Grid>

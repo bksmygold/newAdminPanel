@@ -231,19 +231,19 @@ export default function MakingCharge() {
             result = ['Empty'];
           }
           return result.join(', ');
-        },
+        },      flex:1
       },
       {
         field: 'variety',
         headerName: 'Variety',
         width: 150,
-        editable: true,
+        editable: true,      flex:1
       },
       {
         field: 'item',
         headerName: 'Item',
         width: 150,
-        editable: true,
+        editable: true,      flex:1
       },
       {
         field: 'productType.name',
@@ -260,7 +260,7 @@ export default function MakingCharge() {
             result = ['Empty'];
           }
           return result.join(', ');
-        },
+        },      flex:1
       },
       {
         field: 'metalGroup.metal.name',
@@ -283,7 +283,7 @@ export default function MakingCharge() {
             result = ['Empty'];
           }
           return result.join(', ');
-        },
+        },      flex:1
       },
 
       {
@@ -291,14 +291,14 @@ export default function MakingCharge() {
         headerName: 'Edit',
         width: 150,
         editable: true,
-        renderCell: editButton,
+        renderCell: editButton,      flex:1
       },
       {
         field: 'delete',
         headerName: 'Delete',
         width: 150,
         editable: true,
-        renderCell: deleteButton,
+        renderCell: deleteButton,      flex:1
       },
     ];
   //=======================================================

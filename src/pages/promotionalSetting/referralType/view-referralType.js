@@ -349,7 +349,7 @@ export default function ReferralType() {
             res.push('empty');
           }
           return res;
-        },
+        },      flex:1
       },
       {
         field: 'joiningBonus.max',
@@ -365,22 +365,22 @@ export default function ReferralType() {
             res.push('empty');
           }
           return res;
-        },
+        },      flex:1
       },
       {
         field: 'referredBonus',
         headerName: 'referred bonus',
-        width: 150,
+        width: 150,      flex:1
       },
       {
         field: 'userType',
         headerName: 'user type ',
-        width: 150,
+        width: 150,      flex:1
       },
       {
         field: 'criteria',
         headerName: 'criteria',
-        width: 150,
+        width: 150,      flex:1
       },
 
       {
@@ -388,14 +388,14 @@ export default function ReferralType() {
         headerName: 'Edit',
         width: 150,
         editable: true,
-        renderCell: editButton,
+        renderCell: editButton,      flex:1
       },
       {
         field: 'delete',
         headerName: 'Delete',
         width: 150,
         editable: true,
-        renderCell: deleteButton,
+        renderCell: deleteButton,      flex:1
       },
     ];
 

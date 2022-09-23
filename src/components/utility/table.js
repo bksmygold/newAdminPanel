@@ -1,7 +1,7 @@
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Container, Typography, Grid, Button, Modal, TextField,TablePagination  } from "@mui/material";
+import { Box, Container, Typography, Grid, Button, Modal, TextField, TablePagination } from "@mui/material";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -30,7 +30,7 @@ export default function Table(props) {
   const ODD_OPACITY = 0.2;
 
   const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-    tablePagination: {backgroundColor:"red"},
+    tablePagination: { backgroundColor: "red" },
     [`& .${gridClasses.row}.even`]: {
       marginTop: 20,
       marginBottom: 20,
@@ -50,8 +50,8 @@ export default function Table(props) {
           backgroundColor: alpha(
             theme.palette.primary.main,
             ODD_OPACITY +
-              theme.palette.action.selectedOpacity +
-              theme.palette.action.hoverOpacity
+            theme.palette.action.selectedOpacity +
+            theme.palette.action.hoverOpacity
           ),
           // Reset on touch devices, it doesn't add specificity
           '@media (hover: none)': {
@@ -68,14 +68,10 @@ export default function Table(props) {
   //=======================================================
 
   return (
-    <Container sx={{ padding: 2 }}>
+    <Grid container >
       {/* ------------------------------ */}
-      <div
-        style={{
-          height: 500,
-          width: '100%',
-        }}
-      >
+      <Grid item lg={12} xs={12}>
+
         <StripedDataGrid
           sx={{
             ".MuiTablePagination-displayedRows": {
@@ -87,18 +83,22 @@ export default function Table(props) {
             padding: 1,
             borderRadius: 2,
 
+
             boxShadow: '0px 4px 1px 0px #d2c6c6',
             marginTop: 5,
+            height:500,
             border: '1px solid #d2c6c657',
             // justifyContent: "center",
           }}
+
           rows={props.rows}
           columns={props.columns}
           getRowClassName={(params) =>
             params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
           }
         />
-      </div>
-    </Container>
+      </Grid>
+
+    </Grid>
   );
 }

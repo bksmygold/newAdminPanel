@@ -139,7 +139,7 @@ export default function Color() {
       field: 'name',
       headerName: 'Color Name',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
    
 
@@ -148,14 +148,14 @@ export default function Color() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: editButton,      flex:1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: deleteButton,      flex:1
     },
   ];
 

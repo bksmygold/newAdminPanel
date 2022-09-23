@@ -68,36 +68,36 @@ export default function ViewRole() {
       field: 'name',
       headerName: 'Plan Name',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'mode',
       headerName: 'Mode',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'type',
       headerName: 'Plan Type',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'min',
       headerName: 'Minimum',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'duration',
       headerName: 'Duration',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'cyclePeriod.name',
       headerName: 'Cycle Period',
-      width: 160,
+      width: 160,      flex:1,
       valueGetter: (params) => {
         let result = [];
         if (params.row.cyclePeriod) {
@@ -116,14 +116,14 @@ export default function ViewRole() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: editButton,      flex:1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: deleteButton,      flex:1
     },
   ];
 

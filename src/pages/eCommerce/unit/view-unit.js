@@ -153,13 +153,13 @@ export default function Unit() {
       field: 'name',
       headerName: 'Unit Name',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'conversionFactor',
       headerName: 'Conversion Factor',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
 
     {
@@ -167,15 +167,15 @@ export default function Unit() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: editButton,      flex:1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
-    },
+      renderCell: deleteButton,      flex:1
+    }
   ];
 
   //=======================================================

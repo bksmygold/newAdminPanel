@@ -66,7 +66,7 @@ export const DashboardNavbar = (props) => {
           </IconButton >
           <Box sx={{ flexGrow: 1 }} />
           <Box>
-            <TextField type="date" sx={{ mr: 5 }} />
+            <TextField type="date" sx={{ mr: 5,width:"100%" }} />
           </Box>
           <Box>
             <Button
@@ -88,7 +88,7 @@ export const DashboardNavbar = (props) => {
 
           <Tooltip title="Notifications">
             <IconButton sx={{ ml: 1 }}>
-              <BellIcon sx={{ width: 31.5, height: 36, color: "#905e0f" }} fontSize="small" />
+              <BellIcon sx={{ width:"100%", height: 36, color: "#905e0f" }} fontSize="small" />
             </IconButton>
           </Tooltip>
             <Tooltip title="User">

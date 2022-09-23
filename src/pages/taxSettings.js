@@ -58,40 +58,45 @@ export default function taxSettings() {
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Buy & Save"
-              desc="Create , Update, delete bonus and calculation percentages applicable on buy and save plans"
+              title={infoCard.taxes.buySave.title}
+              desc={infoCard.taxes.buySave.desc}
+              url={infoCard.taxes.buySave.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Interest Rates"
-              desc="Create , Update, delete interest rates for Reserving gold , gold loans."
-              url="/taxSettings/loanInterest/view-loanInterest"
+            title={infoCard.taxes.interest.title}
+            desc={infoCard.taxes.interest.desc}
+            url={infoCard.taxes.interest.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Treasury Gold Mandi "
-              desc="Update Mandi Government Treasury Gold for the gold declared"
+               title={infoCard.taxes.mandi.title}
+               desc={infoCard.taxes.mandi.desc}
+               url={infoCard.taxes.mandi.url}
             />
           </Grid>
 
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Refer and Earn"
-              desc="Create , Update, delete referral and joining bonus"
+            title={infoCard.taxes.referEarn.title}
+            desc={infoCard.taxes.referEarn.desc}
+            url={infoCard.taxes.referEarn.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Bid - Buy and Sell"
-              desc="Create , Update, delete commissions and calculation percentages applicable on Bids"
+           title={infoCard.taxes.buySell.title}
+           desc={infoCard.taxes.buySell.desc}
+           url={infoCard.taxes.buySell.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="E-commerce"
-              desc="Create , Update, delete commissions and calculation percentages applicable on Bids"
+                   title={infoCard.taxes.eComm.title}
+                   desc={infoCard.taxes.eComm.desc}
+                   url={infoCard.taxes.eComm.url}
             />
           </Grid>
         </Grid>
@@ -106,26 +111,30 @@ export default function taxSettings() {
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Retailer Commissions"
-              desc="Create , Update, delete commission percentages "
+             title={infoCard.taxes.retailComm.title}
+                   desc={infoCard.taxes.retailComm.desc}
+                   url={infoCard.taxes.retailComm.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Subscriptions(Bids)"
-              desc="Create , Update, delete subscription plans for Bid-Buy and Sell Users"
+            title={infoCard.taxes.subBid.title}
+            desc={infoCard.taxes.subBid.desc}
+            url={infoCard.taxes.subBid.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Subscriptions(Ads)"
-              desc="Create , Update, delete subscription plans for Ads for Retailers"
+                title={infoCard.taxes.subAds.title}
+                desc={infoCard.taxes.subAds.desc}
+                url={infoCard.taxes.subAds.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="GBP Levels"
-              desc="Create , Update, delete GBP levels, commissions etc settings"
+               title={infoCard.taxes.gbpLevel.title}
+               desc={infoCard.taxes.gbpLevel.desc}
+               url={infoCard.taxes.gbpLevel.url}
             />
           </Grid>
         </Grid>

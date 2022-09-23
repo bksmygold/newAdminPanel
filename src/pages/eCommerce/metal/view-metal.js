@@ -22,7 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { deleteMetal, getMetal,updateMetal,postMetal } from 'src/apis/metal';
+import { deleteMetal, getMetal, updateMetal, postMetal } from 'src/apis/metal';
 import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
@@ -156,39 +156,41 @@ export default function Metal() {
     );
   };
   //==========
-    const columns = [
-      {
-        field: 'name',
-        headerName: 'Metal Name',
-        width: 250,
-        editable: true,
-      },
+  const columns = [
+    {
+      field: 'name',
+      headerName: 'Metal Name',
+      width: 250,
+      editable: true,
+      flex:1
 
-      {
-        field: 'icon',
-        headerName: 'Metal Icon',
-        width: 250,
-        renderCell: (params) => (
-          <img width="50px" height="50px" src={params.value} />
-        ), // renderCell will render the component
+    },
 
-        editable: true,
-      },
-      {
-        field: 'edit',
-        headerName: 'Edit',
-        width: 150,
-        editable: true,
-        renderCell: editButton,
-      },
-      {
-        field: 'delete',
-        headerName: 'Delete',
-        width: 150,
-        editable: true,
-        renderCell: deleteButton,
-      },
-    ];
+    {
+      field: 'icon',
+      headerName: 'Metal Icon', flex: 1,
+      width: 250,
+      renderCell: (params) => (
+        <img width="50px" height="50px" src={params.value} />
+      ), // renderCell will render the component
+
+      editable: true,
+    },
+    {
+      field: 'edit',
+      headerName: 'Edit',
+      width: 150,
+      editable: true,
+      renderCell: editButton, flex: 1
+    },
+    {
+      field: 'delete',
+      headerName: 'Delete',
+      width: 150,
+      editable: true,
+      renderCell: deleteButton, flex: 1
+    },
+  ];
   //=======================================================
   return (
     <>

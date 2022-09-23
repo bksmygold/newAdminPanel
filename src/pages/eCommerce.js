@@ -5,6 +5,7 @@ import { DashboardLayout } from "../components/dashboard-layout";
 import { InfoCard } from "../components/infoCard";
 import { useRouter } from "next/router";
 import { useTheme } from "@mui/styles";
+import { infoCard } from "src/constant";
 //=======================================================
 export default function eCommerce() {
   const theme = useTheme()
@@ -15,11 +16,11 @@ export default function eCommerce() {
         <title>E-Commerce </title>
       </Head>
 
-      <Container  sx={{ padding: 2,marginLeft:2 }}>
+      <Container sx={{ padding: 2, marginLeft: 2 }}>
         {/* ------------------------------ */}
 
         <Typography
-               sx={theme.custom.typography.infoCard.h1}
+          sx={theme.custom.typography.infoCard.h1}
 
         >
           E-commerce Master
@@ -27,168 +28,176 @@ export default function eCommerce() {
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              url="/eCommerce/metal/view-metal"
-              title="Metal"
-              desc="create, update, delete Metals"
+              title={infoCard.eComm.metal.title}
+              desc={infoCard.eComm.metal.desc}
+              url={infoCard.eComm.metal.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Metal Groups"
-              desc="create, update, delete Metal Groups relate them to Metal"
-              url="/eCommerce/metalGroup/view-metalGroup"
-            />
-          </Grid>
-
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title="Ornaments"
-              desc="create, update, delete Ornaments"
-              url="/eCommerce/ornament/view-ornament"
-            />
-          </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title="Units"
-              desc="create, update, delete Units"
-              url="/eCommerce/unit/view-unit"
+              title={infoCard.eComm.metalGroup.title}
+              desc={infoCard.eComm.metalGroup.desc}
+              url={infoCard.eComm.metalGroup.url}
             />
           </Grid>
 
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Cut"
-              desc="create, update, delete Cut"
-              url="/eCommerce/cut/view-cut"
+              title={infoCard.eComm.ornament.title}
+              desc={infoCard.eComm.ornament.desc}
+              url={infoCard.eComm.ornament.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Colors"
-              desc="create, update, delete Colors"
-              url="/eCommerce/color/view-color"
-            />
-          </Grid>
-
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title="Shape"
-              desc="create, update, delete Shape"
-              url="/eCommerce/shape/view-shape"
-            />
-          </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title="Clarity"
-              desc="create, update, delete Clarity"
-              url="/eCommerce/clarity/view-clarity"
+              title={infoCard.eComm.unit.title}
+              desc={infoCard.eComm.unit.desc}
+              url={infoCard.eComm.unit.url}
             />
           </Grid>
 
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Style"
-              desc="create, update, delete Style"
-              url="/eCommerce/style/view-style"
+              title={infoCard.eComm.cut.title}
+              desc={infoCard.eComm.cut.desc}
+              url={infoCard.eComm.cut.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Collections"
-              desc="create, update, delete Collections"
-              url="/eCommerce/collection/view-collection"
-            />
-          </Grid>
-
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title="Categories"
-              desc="create, update, delete Categories"
-              url="/eCommerce/category/view-category"
-            />
-          </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title="Varieties"
-              desc="create, update, delete Varieties"
-              url="/eCommerce/variety/view-variety"
+              title={infoCard.eComm.color.title}
+              desc={infoCard.eComm.color.desc}
+              url={infoCard.eComm.color.url}
             />
           </Grid>
 
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Items"
-              desc="create, update, delete Items"
-              url="/eCommerce/item/view-item"
+              title={infoCard.eComm.shape.title}
+              desc={infoCard.eComm.shape.desc}
+              url={infoCard.eComm.shape.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Product Types"
-              desc="create, update, delete Product Types"
-              url="/eCommerce/productType/view-productType"
+              title={infoCard.eComm.clarity.title}
+              desc={infoCard.eComm.clarity.desc}
+              url={infoCard.eComm.clarity.url}
+
+            />
+          </Grid>
+
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title={infoCard.eComm.style.title}
+              desc={infoCard.eComm.style.desc}
+              url={infoCard.eComm.style.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="FAQ"
-              desc="create, update, delete FAQs"
-              url="/eCommerce/faq/view-faq"
+              title={infoCard.eComm.collection.title}
+              desc={infoCard.eComm.collection.desc}
+              url={infoCard.eComm.collection.url}
+            />
+          </Grid>
+
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title={infoCard.eComm.category.title}
+              desc={infoCard.eComm.category.desc}
+              url={infoCard.eComm.category.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Policy"
-              desc="create, update, delete Policies"
-              url="/eCommerce/policy/view-policy"
+              title={infoCard.eComm.variety.title}
+              desc={infoCard.eComm.variety.desc}
+              url={infoCard.eComm.variety.url}
+            />
+          </Grid>
+
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title={infoCard.eComm.item.title}
+              desc={infoCard.eComm.item.desc}
+              url={infoCard.eComm.item.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Return Reason"
-              desc="create, update, delete return reason"
-              url="/eCommerce/returnReason/view-returnReason"
+              title={infoCard.eComm.productType.title}
+              desc={infoCard.eComm.productType.desc}
+              url={infoCard.eComm.productType.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Reject Reason"
-              desc="create, update, delete return reason"
-              url="/eCommerce/rejectReason/view-rejectReason"
+              title={infoCard.eComm.faq.title}
+              desc={infoCard.eComm.faq.desc}
+              url={infoCard.eComm.faq.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Supplier"
-              desc="create, update, delete Supplier"
-              url="/eCommerce/supplier/view-supplier"
+              title={infoCard.eComm.faq.title}
+              desc={infoCard.eComm.faq.desc}
+              url={infoCard.eComm.faq.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Making Charges"
-              desc="create, update, delete making charges"
-              url="/eCommerce/makingCharge/view-makingCharge"
+              title={infoCard.eComm.policy.title}
+              desc={infoCard.eComm.policy.desc}
+              url={infoCard.eComm.policy.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Certificates"
-              desc="create, update, delete making charges"
-              url="/eCommerce/certificate/view-certificate"
+              title={infoCard.eComm.retReason.title}
+              desc={infoCard.eComm.retReason.desc}
+              url={infoCard.eComm.retReason.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Label"
-              desc="create, update, delete making charges"
-              url="/eCommerce/label/view-label"
+              title={infoCard.eComm.rejReturn.title}
+              desc={infoCard.eComm.rejReturn.desc}
+              url={infoCard.eComm.rejReturn.url}
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title={infoCard.eComm.supplier.title}
+              desc={infoCard.eComm.supplier.desc}
+              url={infoCard.eComm.supplier.url}
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title={infoCard.eComm.makingCharge.title}
+              desc={infoCard.eComm.makingCharge.desc}
+              url={infoCard.eComm.makingCharge.url}
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title={infoCard.eComm.certi.title}
+              desc={infoCard.eComm.certi.desc}
+              url={infoCard.eComm.certi.url}
+            />
+          </Grid>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title={infoCard.eComm.label.title}
+              desc={infoCard.eComm.label.desc}
+              url={infoCard.eComm.label.url}
             />
           </Grid>
         </Grid>
 
         <Typography
-                   sx={theme.custom.typography.infoCard.h1}
+          sx={theme.custom.typography.infoCard.h1}
 
         >
           Plans
@@ -196,16 +205,16 @@ export default function eCommerce() {
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Standard Plans"
-              desc="create, update, delete Plans"
-              url="/eCommerce/plan/view-plan"
+              title={infoCard.eComm.plan.title}
+              desc={infoCard.eComm.plan.desc}
+              url={infoCard.eComm.plan.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title="Cycle Periods"
-              desc="create, update, delete Plans"
-              url="/eCommerce/cyclePeriod/view-cyclePeriod"
+              title={infoCard.eComm.cycle.title}
+              desc={infoCard.eComm.cycle.desc}
+              url={infoCard.eComm.cycle.url}
             />
           </Grid>
         </Grid>

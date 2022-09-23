@@ -23,7 +23,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
-
+import Table from "src/components/utility/table";
 //=============================================
 const myGoldFinancials = () => {
   const columns = [
@@ -33,40 +33,41 @@ const myGoldFinancials = () => {
       headerName: "First name",
       width: 150,
       editable: true,
+      flex: 1, minWidth: 100,
     },
     {
       field: "lastName",
       headerName: "Last name",
       width: 150,
-      editable: true,
+      editable: true, flex: 1, minWidth: 100,
     },
     {
       field: "age",
       headerName: "Age",
       type: "number",
       width: 110,
-      editable: true,
+      editable: true, flex: 1, minWidth: 100,
     },
     {
       field: "fullName",
       headerName: "Full name",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
-      width: 160,
+      width: 160, flex: 1, minWidth: 100,
       valueGetter: (params) => `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
   ];
 
   const rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-    { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-    { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+    { id: 1, lastName: "Snow", flex: 1, minWidth: 100, firstName: "Jon", age: 35 },
+    { id: 2, lastName: "Lannister", flex: 1, minWidth: 100, firstName: "Cersei", age: 42 },
+    { id: 3, lastName: "Lannister", flex: 1, minWidth: 100, firstName: "Jaime", age: 45 },
+    { id: 4, lastName: "Stark", flex: 1, minWidth: 100, firstName: "Arya", age: 16 },
+    { id: 5, lastName: "Targaryen", flex: 1, minWidth: 100, firstName: "Daenerys", age: null },
+    { id: 6, lastName: "Melisandre", flex: 1, minWidth: 100, firstName: null, age: 150 },
+    { id: 7, lastName: "Clifford", flex: 1, minWidth: 100, firstName: "Ferrara", age: 44 },
+    { id: 8, lastName: "Frances", flex: 1, minWidth: 100, firstName: "Rossini", age: 36 },
+    { id: 9, lastName: "Roxie", flex: 1, minWidth: 100, firstName: "Harvey", age: 65 },
   ];
 
   const ODD_OPACITY = 0.2;
@@ -106,11 +107,14 @@ const myGoldFinancials = () => {
     <>
       {/* //------------------------------------------------------- */}
       <Container
+        fullWidth
         sx={{
           display: "flex",
           justifyContent: "center",
           flexDirection: "column",
-          padding:5
+          padding: 5,
+          minWidth: "100%",
+
         }}
       >
         <Box
@@ -208,28 +212,23 @@ const myGoldFinancials = () => {
           </Grid> */}
         </Box>
 
-        <div
-          style={{
-            height: 400,
-            width: "100%",
-            color: "red",
-          }}
-        >
-          <StripedDataGrid
+    
+          <Table
             sx={{
               padding: 5,
               borderRadius: 2,
               boxShadow: "0px 4px 1px 0px #d2c6c6",
               marginTop: 5,
+
               //   backgroundColor: "#e8d8c0",
             }}
+                
             rows={rows}
             columns={columns}
             getRowClassName={(params) =>
               params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
             }
           />
-        </div>
         {/* //------------------------------------------------------- */}
       </Container>
     </>

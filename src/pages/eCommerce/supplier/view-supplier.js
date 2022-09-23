@@ -171,39 +171,39 @@ export default function Supplier() {
       field: 'name',
       headerName: 'Supplier Name',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'phone',
       headerName: 'Mobile No.',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'email',
       headerName: 'Email',
       width: 250,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'code',
       headerName: 'Code',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'edit',
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: editButton,      flex:1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: deleteButton,      flex:1
     },
   ];
   //=======================================================

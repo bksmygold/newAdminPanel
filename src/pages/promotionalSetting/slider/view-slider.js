@@ -58,12 +58,12 @@ export default function Slider() {
   if (query.isLoading) return <Loading />;
   //===============================
   const columns = [
-    { field: 'name', headerName: 'Slider Name', width: 150 },
-    { field: 'type', headerName: 'Slider Type', width: 150 },
+    { field: 'name', headerName: 'Slider Name', width: 150,      flex:1 },
+    { field: 'type', headerName: 'Slider Type', width: 150,      flex:1 },
     {
       field: 'typeId.name',
       headerName: 'Sub Type',
-      width: 160,
+      width: 160,      flex:1,
       valueGetter: (params) => {
         console.log(params.row.typeId.name);
         let result = [];
@@ -80,7 +80,7 @@ export default function Slider() {
     {
       field: 'image',
       headerName: 'Slider Image',
-      width: 250,
+      width: 250,      flex:1,
       renderCell: (params) => (
         <div style={{padding:50}}>
 
@@ -99,14 +99,14 @@ export default function Slider() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: editButton,      flex:1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: deleteButton,      flex:1
     },
   ];
 

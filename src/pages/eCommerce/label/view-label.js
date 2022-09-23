@@ -180,31 +180,31 @@ export default function Label() {
       field: 'name',
       headerName: 'label name',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'mode',
       headerName: 'mode',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'weight',
       headerName: 'weight',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'piece',
       headerName: 'piece',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'style.name',
       headerName: 'style name',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
 
     {
@@ -212,14 +212,14 @@ export default function Label() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: editButton,      flex:1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: deleteButton,      flex:1
     },
   ];
   //=======================================================

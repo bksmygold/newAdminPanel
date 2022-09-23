@@ -168,33 +168,33 @@ export default function Policy() {
       field: 'title',
       headerName: 'policy title',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'description',
       headerName: 'description',
       width: 450,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'consignmentRequired',
       headerName: 'Consignment',
       width: 100,
-      editable: true,
+      editable: true,      flex:1
     },
     {
       field: 'edit',
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: editButton,      flex:1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: deleteButton,      flex:1
     },
   ];
   //=======================================================
