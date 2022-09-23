@@ -69,7 +69,7 @@ export default function ViewRolePermission() {
     {
       field: 'name',
       headerName: 'Name',
-      width: 150,
+      width: 150,      
       renderCell: (params) => (
         <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
       ),
@@ -78,7 +78,7 @@ export default function ViewRolePermission() {
     {
       field: 'description',
       headerName: 'Description',
-      width: 150,
+      width: 150,      flex:1
     },
     {
       field: 'parentRole',
@@ -99,14 +99,14 @@ export default function ViewRolePermission() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: editButton,      flex:1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: deleteButton,      flex:1
     },
   ];
 

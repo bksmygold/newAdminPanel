@@ -71,17 +71,17 @@ export default function ViewOrganisationUser() {
       width: 150,
       renderCell: (params) => (
         <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
-      ),
+      ),      flex:1
     },
     {
       field: 'email',
       headerName: 'Email',
-      width: 150,
+      width: 150,      flex:1
     },
     {
       field: 'mobile',
       headerName: 'Mobile',
-      width: 150,
+      width: 150,      flex:1
     },
     {
       field: 'role.name',
@@ -97,7 +97,7 @@ export default function ViewOrganisationUser() {
           result = ['Empty'];
         }
         return result.join(', ');
-      },
+      },      flex:1
     },
 
     {
@@ -105,14 +105,14 @@ export default function ViewOrganisationUser() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: editButton,  flex:1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: deleteButton,  flex:1
     },
   ];
 
