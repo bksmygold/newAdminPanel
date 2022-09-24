@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { DashboardSidebar } from "src/components/dashboard-sidebar";
+import { DashboardSidebar } from "src/components/sidebar/dashboard-sidebar";
 import {
   Box,
   Container,
@@ -10,7 +10,7 @@ import {
   List,
   ListItemText,
 } from "@mui/material";
-import { DashboardLayout } from "../../components/dashboard-layout";
+import { DashboardLayout } from "../../components/layout/dashboard-layout";
 import FolderIcon from "@mui/icons-material/Folder";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { styled } from "@mui/material/styles";

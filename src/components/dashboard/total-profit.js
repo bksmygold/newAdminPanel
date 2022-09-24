@@ -7,9 +7,9 @@ export const TotalProfit = (props) => (
       <Grid
         container
         spacing={3}
-        sx={{ justifyContent: 'space-between' }}
+      sx={{ p: 5 }}
       >
-        <Grid item>
+        <Grid item xs={10}>
           <Typography
             color="textSecondary"
             gutterBottom
@@ -24,7 +24,7 @@ export const TotalProfit = (props) => (
             $23k
           </Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={1} sx={{display:"flex",alignItems:"center"}}>
           <Avatar
             sx={{
               backgroundColor: 'primary.main',

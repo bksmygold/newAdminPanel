@@ -112,7 +112,7 @@
 
 
 import Head from 'next/head';
-import { DashboardSidebar } from 'src/components/dashboard-sidebar';
+import { DashboardSidebar } from 'src/components/sidebar/dashboard-sidebar';
 import {
   Box,
   Container,
@@ -122,8 +122,8 @@ import {
   Modal,
   TextField,
 } from '@mui/material';
-import { DashboardLayout } from '../../../components/dashboard-layout';
-import { InfoCard } from '../../../components/infoCard';
+import { DashboardLayout } from '../../../components/layout/dashboard-layout';
+import { InfoCard } from '../../../components/cards/infoCard';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { alpha, styled } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';

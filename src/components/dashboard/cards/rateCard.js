@@ -4,7 +4,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import PeopleIcon from "@mui/icons-material/PeopleOutlined";
 import {useTheme} from "@mui/styles"
 //============================================================
-export const TotalCustomers = (props) => {
+export const RateCard = (props) => {
 const theme = useTheme()
   //===========================
   return(

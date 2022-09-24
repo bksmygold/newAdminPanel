@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { DashboardSidebar } from "src/components/dashboard-sidebar";
+import { DashboardSidebar } from "src/components/sidebar/dashboard-sidebar";
 import {
   TextField,
   Box,

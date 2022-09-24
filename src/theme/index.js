@@ -196,8 +196,8 @@ export const theme = createTheme({
       },
       sideBar: {
         fontFamily: "poppins",
-        fontSize: 18,
-        fontWeight: "medium",
+        fontSize: 17,
+        fontWeight: "bold",
       },
       dashBoard: {
         heading: {

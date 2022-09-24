@@ -6,92 +6,88 @@ import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from "@mui/ma
 import { Menu, MenuItem } from "@material-ui/core";
 
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { ChartBar as ChartBarIcon } from "../icons/chart-bar";
+import { ChartBar as ChartBarIcon } from "../../icons/chart-bar";
 
-import { Cog as CogIcon } from "../icons/cog";
-import { Lock as LockIcon } from "../icons/lock";
-import { Selector as SelectorIcon } from "../icons/selector";
-import { ShoppingBag as ShoppingBagIcon } from "../icons/shopping-bag";
-import { User as UserIcon } from "../icons/user";
-import { UserAdd as UserAddIcon } from "../icons/user-add";
-import { Users as UsersIcon } from "../icons/users";
-import { XCircle as XCircleIcon } from "../icons/x-circle";
-import { NavItem } from "./nav-item";
+import { Cog as CogIcon } from "../../icons/cog";
+import { Lock as LockIcon } from "../../icons/lock";
+import { Selector as SelectorIcon } from "../../icons/selector";
+import { ShoppingBag as ShoppingBagIcon } from "../../icons/shopping-bag";
+import { User as UserIcon } from "../../icons/user";
+import { UserAdd as UserAddIcon } from "../../icons/user-add";
+import { Users as UsersIcon } from "../../icons/users";
+import { XCircle as XCircleIcon } from "../../icons/x-circle";
+import { NavItem } from "../nav-item";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import StoreIcon from "@mui/icons-material/Store";
-import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import Image from "next/image";
-import ReceiptIcon from "@mui/icons-material/Receipt";
+
 //=======================================================
 const items = [
   {
-    href: "/",
-    icon: <ReceiptIcon />,
-    title: "Sale Invoices",
+    href: '/',
+    icon: <DashboardIcon />,
+    title: 'Dashboard',
     childrens: [
       {
-        href: "/dashboard/retail-dashboard",
+        href: '/dashboard/retail-dashboard',
         icon: <ChartBarIcon fontSize="small" />,
-        title: "Customer",
+        title: 'Retail Dashboard',
       },
       {
-        href: "/dashboard/analytics-dashboard",
+        href: '/dashboard/analytics-dashboard',
         icon: <ChartBarIcon fontSize="small" />,
-        title: "Retailer",
+        title: 'Analytics Dashboard',
       },
       {
-        href: "/dashboard/goldbank-dashboard",
+        href: '/dashboard/goldbank-dashboard',
         icon: <ChartBarIcon fontSize="small" />,
-        title: "Referral",
-      },
-      {
-        href: "/dashboard/goldbank-dashboard",
-        icon: <ChartBarIcon fontSize="small" />,
-        title: "Merchant",
+        title: 'Gold Bank',
       },
     ],
   },
   {
-    href: "/userManagement",
+    href: '/userManagement',
     icon: <ManageAccountsIcon />,
-    title: "Purchase Invoices",
+    title: 'User Management',
   },
   {
-    href: "/taxSettings",
+    href: '/taxSettings',
     icon: <AccountBalanceWalletIcon />,
-    title: "Settlements",
+    title: 'Tax Setting',
   },
   {
-    href: "/eCommerce",
+    href: '/eCommerce',
     icon: <StoreIcon />,
-    title: "Expense Management",
+    title: 'E-Commerce',
   },
   {
-    href: "/promotionalSetting",
+    href: '/promotionalSetting',
     icon: <ConnectWithoutContactIcon />,
-    title: "Credit Notes",
+    title: 'Promotional Setting',
   },
   {
-    href: "/reports",
+    href: '/reports',
     icon: <SummarizeIcon />,
-    title: "Debit Notes",
+    title: 'Reports',
+  },
+
+  {
+    href: '/settings',
+    icon: <CogIcon />,
+    title: 'Settings',
   },
   {
-    href: "/reports",
-    icon: <SummarizeIcon />,
-    title: "Bank Reciepts",
-  },
-  {
-    href: "/reports",
-    icon: <SummarizeIcon />,
-    title: "Bank Payments",
+    href: '',
+    // icon: <CogIcon />,
+    title: 'Logout',
   },
 ];
 //========================================================================
-export const MyGoldFinancialsDashboardSidebar = (props) => {
+export const DashboardSidebar = (props) => {
   //========================================================================
   const { open, onClose } = props;
   const router = useRouter();
@@ -144,7 +140,8 @@ export const MyGoldFinancialsDashboardSidebar = (props) => {
               }}
             >
               <div>
-                <Image src="/logo.png" alt="me" width="64" height="64" />
+                
+                <Image onClick={ ()=>router.push('/')} src="/logo.png" alt="me" width="64" height="64" />
                 <Typography color="inherit" variant="subtitle1">
                   Bks MyGold
                 </Typography>
@@ -265,7 +262,7 @@ export const MyGoldFinancialsDashboardSidebar = (props) => {
   );
 };
 //========================================================================
-MyGoldFinancialsDashboardSidebar.propTypes = {
+DashboardSidebar.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool,
 };

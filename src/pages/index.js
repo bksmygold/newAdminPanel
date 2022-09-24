@@ -1,21 +1,21 @@
 import Head from "next/head";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import { Budget } from "../components/dashboard/budget";
+import { GraphCard } from "../components/dashboard/cards/graphCard";
 import { LatestOrders } from "../components/dashboard/latest-orders";
 import { LatestProducts } from "../components/dashboard/latest-products";
-import { Sales } from "../components/dashboard/sales";
+import { Graph } from "../components/dashboard/graph";
 import { TasksProgress } from "../components/dashboard/tasks-progress";
-import { TotalCustomers } from "../components/dashboard/total-customers";
+import { RateCard } from "../components/dashboard/cards/rateCard";
 import { TotalProfit } from "../components/dashboard/total-profit";
 import { TrafficByDevice } from "../components/dashboard/traffic-by-device";
-import { DashboardLayout } from "../components/dashboard-layout";
+import { DashboardLayout } from "../components/layout/dashboard-layout";
 import { Line } from "react-chartjs-2";
 import { styled } from "@mui/material/styles";
 import "chart.js/auto";
 import Paper from "@mui/material/Paper";
-import { RetailCard } from "../components/dashboard/myGoldRetail";
-import { PeopleCard } from "../components/dashboard/myGoldPeople";
-import { FinancialsCard } from "src/components/dashboard/myGoldFinancials";
+import { RetailCard } from "../components/dashboard/cards/myGoldRetailCard";
+import { PeopleCard } from "../components/dashboard/cards/myGoldPeopleCard";
+import { FinancialsCard } from "src/components/dashboard/cards/myGoldFinancialsCard";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useTheme } from "@mui/styles";
@@ -60,23 +60,23 @@ const Dashboard = () => {
           </Typography>
           <Grid container spacing={2}>
             <Grid item lg={3} sm={6} xs={12}>
-              <Budget title="Visits" stats={32451} statsPer={14} />
+              <GraphCard title="Visits" stats={32451} statsPer={14} />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
-              <Budget title="Apps Downloads" stats={15451} statsPer={4} />
+              <GraphCard title="Apps Downloads" stats={15451} statsPer={4} />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
-              <Budget title="Conversions" stats={421} statsPer={21} />
+              <GraphCard title="Conversions" stats={421} statsPer={21} />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
-              <Budget title="Orders" stats={30451} statsPer={8} />
+              <GraphCard title="Orders" stats={30451} statsPer={8} />
             </Grid>
             {/* </Grid>
 
           {/* -------------------------------------------------------------- */}
 
             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <TotalCustomers
+              <RateCard
                 title="Current Buy Rate"
                 rate={5840}
                 percentage={10}
@@ -84,7 +84,7 @@ const Dashboard = () => {
               />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <TotalCustomers
+              <RateCard
                 title="Current Sell Rate"
                 rate={5440}
                 percentage={8}
@@ -92,7 +92,7 @@ const Dashboard = () => {
               />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <TotalCustomers
+              <RateCard
                 title="Average Buy Rate"
                 rate={5650}
                 percentage={10}
@@ -100,7 +100,7 @@ const Dashboard = () => {
               />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <TotalCustomers
+              <RateCard
                 title="Average Sell Rate"
                 rate={5320}
                 percentage={4}
@@ -181,6 +181,9 @@ const Dashboard = () => {
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <RetailCard returnRejected title="Return Rejected" stats={369} />
             </Grid>
+
+
+
           </Grid>
           {/* -----------   My Gold Peopple------------------- */}
           <Typography
@@ -216,8 +219,13 @@ const Dashboard = () => {
           {/* -----------   My Gold Inventory------------------- */}
 
           {/* <Grid item lg={8} md={12} xl={9} xs={12}> */}
-          <Sales />
-          {/* </Grid> */}
+          <Typography
+            sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 }]}
+
+          >
+            MyGold Inventory  <ArrowForwardIosIcon/>
+          </Typography>
+          <Graph />
         </Container>
       </Box>
     </>

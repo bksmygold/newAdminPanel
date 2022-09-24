@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
-import { DashboardLayout } from '../../../components/dashboard-layout';
+import { DashboardLayout } from '../../../components/layout/dashboard-layout';
 import FormInput from '../../../components/utility/formInput';
 import Form from '../../../components/utility/form';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -31,7 +31,7 @@ import { postMerchant } from 'src/apis/merchant';
 import { useMutation } from '@tanstack/react-query';
 import GoogleMapReact from 'google-map-react';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { RoleCard } from '../../../components/roleCard';
+import { RoleCard } from '../../../components/cards/roleCard';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';

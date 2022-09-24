@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { Grid, Box, Container, Typography, Divider, TextField, Button, Label, Card, CardHeader, CardContent, styled } from "@mui/material";
-import { DashboardLayout } from '../components/dashboard-layout';
+import { DashboardLayout } from '../components/layout/dashboard-layout';
 import { SettingsNotifications } from '../components/settings/settings-notifications';
 import { SettingsPassword } from '../components/settings/settings-password';
 import Image from "next/image";

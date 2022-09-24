@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { DashboardNavbar } from "./dashboard-navbar";
-import { MyGoldFinancialsDashboardSidebar } from "./myGoldFinancialsDashboard-sidebar";
+import { DashboardNavbar } from "../dashboard-navbar";
+import { MyGoldFinancialsDashboardSidebar } from "../sidebar/myGoldFinancialsDashboard-sidebar";
 //===============================================================
 const DashboardLayoutRoot = styled("div")(({ theme }) => ({
   display: "flex",
@@ -33,7 +33,9 @@ export const MyGoldFinancialsDashboardLayout = (props) => {
           {children}
         </Box>
       </DashboardLayoutRoot>
-      <DashboardNavbar onSidebarOpen={() => setSidebarOpen(true)} />
+      <DashboardNavbar
+        onSidebarOpen={() => setSidebarOpen(true)}
+      />
       <MyGoldFinancialsDashboardSidebar
         onClose={() => setSidebarOpen(false)}
         open={isSidebarOpen}

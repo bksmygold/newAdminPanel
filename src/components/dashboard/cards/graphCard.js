@@ -7,7 +7,7 @@ import { Line } from 'react-chartjs-2';
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 //============================================================
-export const Budget = (props) => {
+export const GraphCard = (props) => {
 
   const theme = useTheme()
   //======================================
