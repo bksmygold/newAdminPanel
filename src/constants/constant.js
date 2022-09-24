@@ -230,45 +230,136 @@ export const infoCard = {
 
     promo: {
         offer: {
-            title:"Offer Sliders",
-            desc:"create, update, delete Offer Sliders",
-            url:"/promotionalSetting/offer/view-offer"
+            title: "Offer Sliders",
+            desc: "create, update, delete Offer Sliders",
+            url: "/promotionalSetting/offer/view-offer"
         },
         appSlider: {
-            title:"App slider",
-            desc:"create, update, delete Offer Sliders",
-            url:"/promotionalSetting/slider/view-slider"
+            title: "App slider",
+            desc: "create, update, delete Offer Sliders",
+            url: "/promotionalSetting/slider/view-slider"
         },
         video: {
-            title:"How-to Videos",
-              desc:"create, update, delete how To Videos",
-              url:"how-to-video/view-how-to-video"
+            title: "How-to Videos",
+            desc: "create, update, delete how To Videos",
+            url: "how-to-video/view-how-to-video"
         },
         testi: {
-            title:"Testimonials"  ,
-            desc:"create, update, delete Testimonials Videos",
+            title: "Testimonials",
+            desc: "create, update, delete Testimonials Videos",
 
         },
         governmentTax: {
-            title:"Ad Position" ,
-         desc:"create, update, delete Ad Position",
+            title: "Ad Position",
+            desc: "create, update, delete Ad Position",
 
         },
         offerPopup: {
-            title:"Offer Popups",
-              desc:"create, update, delete offer popups with timeline conditions etc.",
+            title: "Offer Popups",
+            desc: "create, update, delete offer popups with timeline conditions etc.",
         },
         referratlType: {
-            title:"Referral Type",
-            desc:"create, update, delete referral type",
-            url:"/promotionalSetting/referralType/view-referralType"
+            title: "Referral Type",
+            desc: "create, update, delete referral type",
+            url: "/promotionalSetting/referralType/view-referralType"
         },
         merchNatBanner: {
-            title:"Merchant Banners" ,
-        
-            desc:"Approve, disapprove Merchant Banners",
+            title: "Merchant Banners",
+
+            desc: "Approve, disapprove Merchant Banners",
         },
 
     },
+}
+
+
+
+export const reportList = {
+    smartReport: [
+        {
+            title: "Buy and Save Module"
+        },
+        {
+            title: "Instant Gold Module"
+        },
+        {
+            title: "Sell and Reserve Module"
+        },
+        {
+            title: "E-commerce Module"
+        },
+        {
+            title: "Sell old gold Module"
+        },
+        {
+            title: "Upload gold Module"
+        },
+        {
+            title: "Referral Module"
+        },
+        {
+            title: "Bid buy and sell Module"
+        },
+        {
+            title: "Loan Module"
+        }
+    ],
+    metal: [
+        {
+            head:"Customer",
+            title1: "Custody Given",
+            title2: "Custody Released"
+        },
+        {
+            head:"VIP/Sale Referral",
+            title1: "Custody Given",
+            title2: "Custody Released"
+        },
+        {
+            head:"Merchant",
+            title1: "Custody Given",
+            title2: "Custody Released"
+        },
+        {
+            head:"Retailer",
+            title1: "Custody Given",
+            title2: "Custody Released"
+        },
+    
+    ],
+    financial: [
+        {
+            head:"Customer",
+            title1: "Customer Sale Invoices",
+            title2: "Customer Purchase Invoices",
+            title3:"Customer Settlements"
+        },
+        {
+            head:"VIP / Sales Referral",
+            title1: "Referral  Sale Invoices",
+            title2: "Referral  Purchase Invoices",
+            title3:"Referral  Settlements"
+        },
+        {
+            head:"Merchant",
+            title1: "Merchant Sale Invoices",
+            title2: "Merchant Purchase Invoices",
+            title3:"Merchant Settlements"
+        },
+        {
+            head:"Retailer",
+            title1: "Retailer Sale Invoices",
+            title2: "Retailer Purchase Invoices",
+            title3:"Retailer Settlements"
+        },
+        {
+            head:"Bank",
+            title1: "Bank Receipts",
+            title2: "Bank Payment",
+            
+        },
+  
+    
+    ]
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

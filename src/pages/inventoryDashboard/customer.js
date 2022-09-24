@@ -36,15 +36,15 @@ const customer = () => {
         return (
             <strong>
                 <Button
-                    sx={theme.custom.editButton}
-
-
+                    sx={[theme.custom.editButton,{width:"100%"}]}
                 >
                     Check Custodians
                 </Button>
             </strong>
         );
     };
+
+
     //==========
     const checkInvoice = (params) => {
         return (
@@ -59,7 +59,7 @@ const customer = () => {
     const columns = [
         {
             field: "firstName",
-            headerName: "First name",
+            headerName: "Sale Invoice ID",
             width: 150,
             editable: true,
             flex: 1,
@@ -68,25 +68,49 @@ const customer = () => {
             ),
         },
         {
-            field: "lastName",
-            headerName: "Last name",
+            field: "d",
+            headerName: "Customer ",
+            width: 150,
+            flex: 1
+        },
+        {
+            field: "ss",
+            headerName: "Phone Number  ",
+            width: 150,
+            flex: 1
+        },
+        {
+            field: "s",
+            headerName: "Email Address  ",
+            width: 150,
+            flex: 1
+        },      
+        {
+            field: "sa",
+            headerName: "Weight ",
+            width: 150,
+            flex: 1
+        },
+        {
+            field: "x",
+            headerName: "Number of Custodian ",
             width: 150,
             flex: 1
         },
         {
             field: 'delete',
             headerName: 'Delete',
-            width: 150,
+            width: 50,
             editable: true,
             renderCell: checkInvoice, flex: 1
         },
-        // {
-        //     field: 'delete',
-        //     headerName: 'Delete',
-        //     width: 150,
-        //     editable: true,
-        //     renderCell: checkCustodian, flex: 1
-        // },
+        {
+            field: 'qqqq',
+            headerName: 'Delete',
+            width: 550,
+            editable: true,
+            renderCell: checkCustodian, flex: 1
+        },
 
     ];
 

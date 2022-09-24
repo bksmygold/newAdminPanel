@@ -274,6 +274,12 @@ export const theme = createTheme({
           fontWeight: "bold",
           color: "#001737"
         }
+      },
+      reports:{
+        fontWeight:'regular',
+        fontSize:20,
+        color:"gray",
+        lineHeight:2.2
       }
     }
   },
