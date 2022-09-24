@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { DashboardSidebar } from "src/components/sidebar/dashboard-sidebar";
+import { DashboardSidebar } from "src/components/sidebar.js/dashboard-sidebar";
 import {
   Box,
   Container,
@@ -36,24 +36,26 @@ export default function reports() {
       </Head>
 
       <Grid
+      
         sx={{
           justifyContent: "center",
           padding: 2,
-          minWidth:"100%"
+          marginTop:5,
+          // minWidth:"100%"
         }}
         container
         spacing={0}
       >
         <Grid
+        
           sx={{ backgroundColor: "white", marginRight: 1, boxShadow: "0 0 7px 0px #a1a1a1" }}
           item
-          xl={3}
-          lg={3}
-          sm={6}
+          sm={3}
           xs={12}
         >
           {" "}
           <Box
+          fullWidth
             sx={{
               background: 'linear-gradient(45deg, #ffcaca, #fff5db)',
               height: "20vh",
@@ -168,9 +170,7 @@ export default function reports() {
         <Grid
           sx={{ backgroundColor: "white", marginRight: 1, boxShadow: "0 0 7px 0px #a1a1a1" }}
           item
-          xl={3}
-          lg={3}
-          sm={6}
+          sm={4}
           xs={12}
         >
           {" "}
@@ -264,9 +264,8 @@ export default function reports() {
         <Grid
           sx={{cursor:'pointer', backgroundColor: "white", boxShadow: "0 0 7px 0px #a1a1a1" }}
           item
-          xl={3}
-          lg={3}
-          sm={6}
+        
+          sm={4}
           xs={12}
         >
           <Box

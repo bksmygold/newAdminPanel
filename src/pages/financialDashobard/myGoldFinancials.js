@@ -15,7 +15,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { MyGoldFinancialsDashboardLayout } from "src/components/layout/myGoldFinancialsDashboard-layout";
+import { FinancialsDashboardLayout } from "src/components/layout/financialsDashboard-layout";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -237,7 +237,7 @@ const myGoldFinancials = () => {
 //=============================================
 
 myGoldFinancials.getLayout = (page) => (
-  <MyGoldFinancialsDashboardLayout>{page}</MyGoldFinancialsDashboardLayout>
+  <FinancialsDashboardLayout>{page}</FinancialsDashboardLayout>
 );
 
 export default myGoldFinancials;

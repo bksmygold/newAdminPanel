@@ -22,7 +22,7 @@ export const InfoCard = (props) => {
       {...props}
     >
       <CardContent
-            sx={theme.custom.typography.infoCard.bg}
+            sx={theme.custom.infoCard.bg}
             >
         {/* -------------------------------------------------------------- */}
         <Grid container spacing={2} sx={{ alignItems: 'center' }}>

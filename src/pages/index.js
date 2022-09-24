@@ -119,7 +119,7 @@ const Dashboard = () => {
             sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 ,cursor:"pointer"}]}
 
             onClick={() => {
-              router.push("/myGoldFinancials");
+              router.push("/financialDashobard/myGoldFinancials");
             }}
           >
             MyGold Financials <ArrowForwardIosIcon />
@@ -184,10 +184,11 @@ const Dashboard = () => {
 
 
 
-          </Grid>
-          {/* -----------   My Gold Peopple------------------- */}
+          </Grid>   
+          {/* -----------   My Gold People------------------- */}
           <Typography
             sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 }]}
+          
 
           >
             MyGold People
@@ -221,7 +222,9 @@ const Dashboard = () => {
           {/* <Grid item lg={8} md={12} xl={9} xs={12}> */}
           <Typography
             sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 }]}
-
+            onClick={() => {
+              router.push("/inventoryDashboard/inventory");
+            }}
           >
             MyGold Inventory  <ArrowForwardIosIcon/>
           </Typography>

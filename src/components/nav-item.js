@@ -9,15 +9,14 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Swal from 'sweetalert2';
-import {useTheme} from '@mui/styles';
+import { useTheme } from '@mui/styles';
 //===========================================================
 export const NavItem = (props) => {
 
   const theme = useTheme()
-//==================
-  const { href, items, isCollapsible, icon, title, ...others } = props;
+  //==================
+  const { href, isCollapsible, icon, title, items, ...others } = props;
   const router = useRouter();
-  // console.log("router --", router);
 
   const active = href
     ? router.pathname.split('/')[1] === href.split('/')[1]
@@ -64,10 +63,12 @@ export const NavItem = (props) => {
             startIcon={icon}
             disableRipple
             sx={[theme.custom.typography.sideBar,
-              
-              {backgroundColor: active && 'white',
-              boxShadow: '0px 4px 1px 0px #bbb5b5',
-              border: '1px solid #a39a9a6e',
+
+            {
+              backgroundColor: active && 'white',
+              // boxShadow: '0px 4px 1px 0px #bbb5b5',
+              // border: '1px solid #a39a9a6e',
+              mb:2,
               borderRadius: 1,
               color: active ? '#935F0E' : 'gray',
               fontWeight: active && 'fontWeightBold',
@@ -84,25 +85,29 @@ export const NavItem = (props) => {
               // },
             }]}
           >
-            <NextLink href={href} passHref>
-              <Box sx={{ flexGrow: 1 }}>{title}</Box>
-            </NextLink>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            ></AccordionSummary>
+            {/* {items.map((x) => ( */}
+              <>
+                <NextLink href={href} passHref>
+                  <Box sx={{ flexGrow: 1 }}>{title}</Box>
+                </NextLink>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                ></AccordionSummary>
+              </>
+            {/* ))} */}
           </Button>
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'flex-end',
-              alignItems: 'flex-end',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
             }}
           >
             {items?.map((x) => (
-              <Button key={x.title}>
+              <Button onClick={()=>router.push(x.href)} key={x.title}>
                 <Typography
                   sx={{
                     color: 'gray',
@@ -124,12 +129,12 @@ export const NavItem = (props) => {
               disableRipple
               // background: 'linear-gradient(43deg, #8b5704, #ddb070)',
 
-              sx={[theme.custom.typography.sideBar,{
+              sx={[theme.custom.typography.sideBar, {
 
                 // background:
                 //   active && 'linear-gradient(43deg, #8b5704, #ddb070)',
-                boxShadow: active && '0px 4px 1px 0px #bbb5b5',
-                border: active && '1px solid #a39a9a6e',
+                // boxShadow: active && '0px 4px 1px 0px #bbb5b5',
+                // border: active && '1px solid #a39a9a6e',
                 borderRadius: 1,
                 color: active ? '#905E0F' : 'gray',
                 fontWeight: active && 'fontWeightBold',

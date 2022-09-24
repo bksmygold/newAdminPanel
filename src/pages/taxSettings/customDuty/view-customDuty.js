@@ -118,7 +118,7 @@
 // CustomDuty.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 import Head from 'next/head';
-import { DashboardSidebar } from 'src/components/sidebar/dashboard-sidebar';
+import { DashboardSidebar } from 'src/components/sidebar.js/dashboard-sidebar';
 import {
   Box,
   Container,

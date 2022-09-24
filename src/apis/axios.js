@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADMIN_API } from "src/constant";
+import { ADMIN_API } from "src/constants/constant";
 
 
 axios.defaults.baseURL = ADMIN_API;

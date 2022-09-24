@@ -3,95 +3,11 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
-import { Menu, MenuItem } from "@material-ui/core";
-
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { ChartBar as ChartBarIcon } from "../../icons/chart-bar";
-
-import { Cog as CogIcon } from "../../icons/cog";
-import { Lock as LockIcon } from "../../icons/lock";
-import { Selector as SelectorIcon } from "../../icons/selector";
-import { ShoppingBag as ShoppingBagIcon } from "../../icons/shopping-bag";
-import { User as UserIcon } from "../../icons/user";
-import { UserAdd as UserAddIcon } from "../../icons/user-add";
-import { Users as UsersIcon } from "../../icons/users";
-import { XCircle as XCircleIcon } from "../../icons/x-circle";
 import { NavItem } from "../nav-item";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import StoreIcon from "@mui/icons-material/Store";
-import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
-import SummarizeIcon from "@mui/icons-material/Summarize";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import Image from "next/image";
-import ReceiptIcon from "@mui/icons-material/Receipt";
-//=======================================================
-const items = [
-  {
-    href: "/",
-    icon: <ReceiptIcon />,
-    title: "Sale Invoices",
-    childrens: [
-      {
-        href: "/dashboard/retail-dashboard",
-        icon: <ChartBarIcon fontSize="small" />,
-        title: "Customer",
-      },
-      {
-        href: "/dashboard/analytics-dashboard",
-        icon: <ChartBarIcon fontSize="small" />,
-        title: "Retailer",
-      },
-      {
-        href: "/dashboard/goldbank-dashboard",
-        icon: <ChartBarIcon fontSize="small" />,
-        title: "Referral",
-      },
-      {
-        href: "/dashboard/goldbank-dashboard",
-        icon: <ChartBarIcon fontSize="small" />,
-        title: "Merchant",
-      },
-    ],
-  },
-  {
-    href: "/userManagement",
-    icon: <ManageAccountsIcon />,
-    title: "Purchase Invoices",
-  },
-  {
-    href: "/taxSettings",
-    icon: <AccountBalanceWalletIcon />,
-    title: "Settlements",
-  },
-  {
-    href: "/eCommerce",
-    icon: <StoreIcon />,
-    title: "Expense Management",
-  },
-  {
-    href: "/promotionalSetting",
-    icon: <ConnectWithoutContactIcon />,
-    title: "Credit Notes",
-  },
-  {
-    href: "/reports",
-    icon: <SummarizeIcon />,
-    title: "Debit Notes",
-  },
-  {
-    href: "/reports",
-    icon: <SummarizeIcon />,
-    title: "Bank Reciepts",
-  },
-  {
-    href: "/reports",
-    icon: <SummarizeIcon />,
-    title: "Bank Payments",
-  },
-];
+import { dashboardMenuList } from "src/constants/sidebarMenu";
 //========================================================================
-export const MyGoldFinancialsDashboardSidebar = (props) => {
+export const DashboardSidebar = (props) => {
   //========================================================================
   const { open, onClose } = props;
   const router = useRouter();
@@ -144,7 +60,8 @@ export const MyGoldFinancialsDashboardSidebar = (props) => {
               }}
             >
               <div>
-                <Image src="/logo.png" alt="me" width="64" height="64" />
+                
+                <Image onClick={ ()=>router.push('/')} src="/logo.png" alt="me" width="64" height="64" />
                 <Typography color="inherit" variant="subtitle1">
                   Bks MyGold
                 </Typography>
@@ -169,7 +86,7 @@ export const MyGoldFinancialsDashboardSidebar = (props) => {
           }}
         />
         <Box sx={{ flexGrow: 1 }}>
-          {items.map((item) => (
+          {dashboardMenuList.map((item) => (
             <>
               {" "}
               <NavItem
@@ -265,7 +182,7 @@ export const MyGoldFinancialsDashboardSidebar = (props) => {
   );
 };
 //========================================================================
-MyGoldFinancialsDashboardSidebar.propTypes = {
+DashboardSidebar.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool,
 };

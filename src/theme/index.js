@@ -164,7 +164,24 @@ export const theme = createTheme({
       background: 'linear-gradient(43deg, #8b5704, #ddb070)',
       color: 'white',
     },
+    //----------- Cards ----------------------------------
 
+    infoCard: {
+      bg: {
+        backgroundColor: "#FDFAF2",
+      },
+    },
+    inventoryCard: {
+      bg: {
+        backgroundColor: "#FDFAF2",
+        width: "fit-content",
+        borderRadius: 1,
+        p: "10% 20%",
+        height:"100%",
+        boxShadow: '-3px 3px 4px -2px #d2c6c6',
+        border: '1px solid #d2c6c657',
+      },
+    },
     //----------- Typography ----------------------------------
     typography: {
       infoCard: {
@@ -196,14 +213,15 @@ export const theme = createTheme({
       },
       sideBar: {
         fontFamily: "poppins",
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: "bold",
       },
       dashBoard: {
         heading: {
+          cursor: "pointer",
           fontSize: 22,
           color: "black",
-          fontWeight:"bold"
+          fontWeight: "bold"
         },
         h1: {
           fontFamily: "poppins",
@@ -238,6 +256,24 @@ export const theme = createTheme({
             mr: 1
           }
         },
+      },
+      inventoryCard: {
+        heading: {
+          fontSize: 21,
+          fontWeight: "bolder",
+          color: "#8B5704",
+          mb:2,
+          mt:5
+        },
+        h1: {
+          fontSize: 21,
+          color: "#8B5704"
+        },
+        h2: {
+          fontSize: 27,
+          fontWeight: "bold",
+          color: "#001737"
+        }
       }
     }
   },
