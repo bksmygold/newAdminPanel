@@ -223,4 +223,4 @@ export default function eCommerce() {
     </>
   );
 }
-eCommerce.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+eCommerce.getLayout = (page) => <DashboardLayout showFilter={false}>{page}</DashboardLayout>;

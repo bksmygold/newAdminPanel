@@ -124,3 +124,18 @@ input[type="color"] {
   border-radius: 10%;
 	height: 66px ;
 }
+
+@media screen and (max-width: 650px) {
+  .zoom {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    /* background-color: #8b570436; */
+    zoom:90%;
+    margin-left: 0;
+  }
+  /* .card {
+    width: 80%;
+    padding: 16px;
+  } */
+}

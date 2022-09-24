@@ -507,4 +507,4 @@ export default function Certificate() {
     </>
   );
 }
-Certificate.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Certificate.getLayout = (page) => <DashboardLayout >{page}</DashboardLayout>;
