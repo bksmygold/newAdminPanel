@@ -191,12 +191,14 @@ export default function AddMerchant() {
       </Head>
       <form onSubmit={formik.handleSubmit}>
         <Container
+        
           sx={{
             padding: 5,
             borderRadius: 2,
             boxShadow: '0px 4px 1px 0px #d2c6c6',
             marginTop: 5,
             border: '1px solid #d2c6c657',
+            minWidth:"100%"
           }}
         >
           {/* ------------------------------ */}
@@ -221,6 +223,7 @@ export default function AddMerchant() {
           {/* -------------------------------- General Data ----------------------------------------- */}
 
           <Grid
+          fullWidth
             container
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
