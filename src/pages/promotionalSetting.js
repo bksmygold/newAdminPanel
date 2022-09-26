@@ -59,13 +59,7 @@ export default function promotionalSetting() {
               desc={infoCard.promo.offerPopup.desc}
               url={infoCard.promo.offerPopup.url} />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title={infoCard.promo.referratlType.title}
-              desc={infoCard.promo.referratlType.desc}
-              url={infoCard.promo.referratlType.url}
-            />
-          </Grid>
+       
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title={infoCard.promo.merchNatBanner.title}

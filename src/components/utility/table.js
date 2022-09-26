@@ -88,6 +88,7 @@ export default function Table(props) {
             ".MuiTablePagination-selectLabel": {
               color: "#3c2400",
             },
+            margin:5,
             padding: 1,
             borderRadius: 2,
 

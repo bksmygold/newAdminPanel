@@ -67,6 +67,7 @@ export const infoCard = {
             title: "Interest Rates",
             desc: "create, update, delete HSN and GST related Information",
             url: '/taxSettings/loanInterest/view-loanInterest'
+            
         },
         mandi: {
             title: "Treasury Gold Mandi ",
@@ -74,7 +75,9 @@ export const infoCard = {
         },
         referEarn: {
             title: "Refer and Earn",
-            desc: "Create , Update, delete referral and joining bonus"
+            desc: "Create , Update, delete referral and joining bonus",
+            url: "/taxSettings/referralType/view-referralType"
+
         },
         buySell: {
             title: "Bid - Buy and Sell",

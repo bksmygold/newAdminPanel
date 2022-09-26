@@ -85,6 +85,7 @@ export default function taxSettings() {
             url={infoCard.taxes.referEarn.url}
             />
           </Grid>
+        
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
            title={infoCard.taxes.buySell.title}
