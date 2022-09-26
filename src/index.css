@@ -130,8 +130,8 @@ input[type="color"] {
     display: flex;
     flex-direction: row;
     flex-wrap:wrap;
-    /* background-color: #8b570436; */
-    zoom:90%;
+    background-color: #8b570436;
+    zoom:50%;
     margin-left: 0;
   }
   /* .card {

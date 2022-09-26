@@ -164,7 +164,7 @@ export const theme = createTheme({
       background: 'linear-gradient(43deg, #8b5704, #ddb070)',
       color: 'white',
     },
-    //----------- Cards ----------------------------------
+    //----------- Cards/Grid ----------------------------------
 
     infoCard: {
       bg: {
@@ -177,10 +177,26 @@ export const theme = createTheme({
         width: "fit-content",
         borderRadius: 1,
         p: "10% 20%",
-        height:"100%",
+        height: "100%",
         boxShadow: '-3px 3px 4px -2px #d2c6c6',
         border: '1px solid #d2c6c657',
       },
+    },
+    invoiceCard: {
+
+      p: 6,
+      borderRadius: 5,
+      backgroundColor: "white",
+      boxShadow: '-3px 3px 4px -2px #d2c6c6',
+      border: '1px solid #d2c6c657',
+    },
+    invoiceGrid: {
+      minWidth: "100%",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "space-between",
+      mb: 4
+
     },
     //----------- Typography ----------------------------------
     typography: {
@@ -262,8 +278,8 @@ export const theme = createTheme({
           fontSize: 21,
           fontWeight: "bolder",
           color: "#8B5704",
-          mb:2,
-          mt:5
+          mb: 2,
+          mt: 5
         },
         h1: {
           fontSize: 21,
@@ -275,11 +291,46 @@ export const theme = createTheme({
           color: "#001737"
         }
       },
-      reports:{
-        fontWeight:'regular',
-        fontSize:20,
-        color:"gray",
-        lineHeight:2.2
+      reports: {
+        fontWeight: 'regular',
+        fontSize: 20,
+        color: "gray",
+        lineHeight: 2.2
+      },
+      invoice: {
+        text_12: {
+          fontSize: 12,
+          
+          fontWeight: "regular",
+          color: "black",
+          bold: {
+            fontWeight: "bold", color: "black", mr: 6
+          },
+          light: {
+            fontWeight: "light", color: "black"
+          }
+        },
+        text_16: {
+          fontSize: 16,
+          fontWeight: "bold",
+          color: "black"
+        },
+        text_24: {
+          fontSize: 24,
+          fontWeight: "medium",
+          color: "black",
+          mb: 3,
+          mt: 3
+        },
+        text_14: {
+          fontSzie: 14,
+          bold: {
+            fontWeight: "bold", color: "black"
+          },
+          light: {
+            fontWeight: "light", color: "black"
+          }
+        }
       }
     }
   },

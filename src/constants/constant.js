@@ -271,9 +271,7 @@ export const infoCard = {
 
     },
 }
-
-
-
+//-----------------------------------------------------------------
 export const reportList = {
     smartReport: [
         {
@@ -306,60 +304,66 @@ export const reportList = {
     ],
     metal: [
         {
-            head:"Customer",
+            head: "Customer",
             title1: "Custody Given",
             title2: "Custody Released"
         },
         {
-            head:"VIP/Sale Referral",
+            head: "VIP/Sale Referral",
             title1: "Custody Given",
             title2: "Custody Released"
         },
         {
-            head:"Merchant",
+            head: "Merchant",
             title1: "Custody Given",
             title2: "Custody Released"
         },
         {
-            head:"Retailer",
+            head: "Retailer",
             title1: "Custody Given",
             title2: "Custody Released"
         },
-    
+
     ],
     financial: [
         {
-            head:"Customer",
+            head: "Customer",
             title1: "Customer Sale Invoices",
             title2: "Customer Purchase Invoices",
-            title3:"Customer Settlements"
+            title3: "Customer Settlements"
         },
         {
-            head:"VIP / Sales Referral",
+            head: "VIP / Sales Referral",
             title1: "Referral  Sale Invoices",
             title2: "Referral  Purchase Invoices",
-            title3:"Referral  Settlements"
+            title3: "Referral  Settlements"
         },
         {
-            head:"Merchant",
+            head: "Merchant",
             title1: "Merchant Sale Invoices",
             title2: "Merchant Purchase Invoices",
-            title3:"Merchant Settlements"
+            title3: "Merchant Settlements"
         },
         {
-            head:"Retailer",
+            head: "Retailer",
             title1: "Retailer Sale Invoices",
             title2: "Retailer Purchase Invoices",
-            title3:"Retailer Settlements"
+            title3: "Retailer Settlements"
         },
         {
-            head:"Bank",
+            head: "Bank",
             title1: "Bank Receipts",
             title2: "Bank Payment",
-            
+
         },
-  
-    
+
+
     ]
+}
+//---------------------------------------------------
+
+export const invoice = {
+    declaration: "We declare that the above quantity of goods are kept by the seller in a safe vault on behalf of the buyer. It can be delivered in minted product as per the Terms & Conditions.",
+    disclaimer: "   The gold grams you own are calculated by dividing the amount paid net of GST by the gold rate and rounded down to 4 decimal places. For example, .00054 grams will be rounded down to .0005 grams."
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

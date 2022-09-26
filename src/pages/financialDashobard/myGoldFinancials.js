@@ -9,6 +9,9 @@ import {
   FormControlLabel,
   FormGroup,
   Checkbox,
+  Modal,
+  Alert,
+  Divider
 } from "@mui/material";
 import * as React from "react";
 import InputLabel from "@mui/material/InputLabel";
@@ -24,84 +27,74 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { alpha, styled } from "@mui/material/styles";
 import Table from "src/components/utility/table";
+import { useTheme } from "@mui/styles";
+import Image from 'next/image'
+import Invoice from "src/components/invoice";
+import { invoice } from "src/constants/constant";
+
 //=============================================
 const myGoldFinancials = () => {
+  const [invoice, setInvoice] = React.useState('')
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  const theme = useTheme()
+
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    {
-      field: "firstName",
-      headerName: "First name",
-      width: 150,
-      editable: true,
-      flex: 1, minWidth: 100,
-    },
-    {
-      field: "lastName",
-      headerName: "Last name",
-      width: 150,
-      editable: true, flex: 1, minWidth: 100,
-    },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      width: 110,
-      editable: true, flex: 1, minWidth: 100,
-    },
     {
       field: "fullName",
-      headerName: "Full name",
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 160, flex: 1, minWidth: 100,
-      valueGetter: (params) => `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+      headerName: "Name",
+      width: 150,
+      flex: 1,
+      minWidth: 100,
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),   
     },
+    {
+      field: "mobile",
+      headerName: "Phone",
+      width: 150,
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 150,
+      flex: 1,
+      minWidth: 100,
+    },
+ 
   ];
 
   const rows = [
-    { id: 1, lastName: "Snow", flex: 1, minWidth: 100, firstName: "Jon", age: 35 },
-    { id: 2, lastName: "Lannister", flex: 1, minWidth: 100, firstName: "Cersei", age: 42 },
-    { id: 3, lastName: "Lannister", flex: 1, minWidth: 100, firstName: "Jaime", age: 45 },
-    { id: 4, lastName: "Stark", flex: 1, minWidth: 100, firstName: "Arya", age: 16 },
-    { id: 5, lastName: "Targaryen", flex: 1, minWidth: 100, firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", flex: 1, minWidth: 100, firstName: null, age: 150 },
-    { id: 7, lastName: "Clifford", flex: 1, minWidth: 100, firstName: "Ferrara", age: 44 },
-    { id: 8, lastName: "Frances", flex: 1, minWidth: 100, firstName: "Rossini", age: 36 },
-    { id: 9, lastName: "Roxie", flex: 1, minWidth: 100, firstName: "Harvey", age: 65 },
+    {
+      id: 1,
+      fullName: "Nischal Gupta",
+      mobile: 7392988369,
+      email: "gupta.nischal014@gmail.com",
+    },
+    {
+      id: 12,
+      fullName: "Ankit Gupta",
+      mobile: 7589744128,
+      email: "gupta.ankit@gmail.com",
+    },
+    {
+      id: 13,
+      fullName: "Suyash Aggarwal",
+      mobile: 9651473369,
+      email: "suyahRocks007@gmail.com",
+    },
+    
   ];
 
-  const ODD_OPACITY = 0.2;
+  const handleClick = (params) => {
+    setIsOpen((prevState) => !prevState)
+    setInvoice(params.row)
 
-  const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-    [`& .${gridClasses.row}.even`]: {
-      backgroundColor: "#f9efd4",
-      "&:hover, &.Mui-hovered": {
-        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
-        "@media (hover: none)": {
-          backgroundColor: "transparent",
-        },
-      },
-      "&.Mui-selected": {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          ODD_OPACITY + theme.palette.action.selectedOpacity
-        ),
-        "&:hover, &.Mui-hovered": {
-          backgroundColor: alpha(
-            theme.palette.primary.main,
-            ODD_OPACITY + theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity
-          ),
-          // Reset on touch devices, it doesn't add specificity
-          "@media (hover: none)": {
-            backgroundColor: alpha(
-              theme.palette.primary.main,
-              ODD_OPACITY + theme.palette.action.selectedOpacity
-            ),
-          },
-        },
-      },
-    },
-  }));
+  }
+  console.log("isOpen----", isOpen)
   //=============================================
   return (
     <>
@@ -212,24 +205,45 @@ const myGoldFinancials = () => {
           </Grid> */}
         </Box>
 
-    
-          <Table
-            sx={{
-              padding: 5,
-              borderRadius: 2,
-              boxShadow: "0px 4px 1px 0px #d2c6c6",
-              marginTop: 5,
 
-              //   backgroundColor: "#e8d8c0",
-            }}
-                
-            rows={rows}
-            columns={columns}
-            getRowClassName={(params) =>
-              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-            }
+        <Table
+          sx={{
+            padding: 5,
+            borderRadius: 2,
+            boxShadow: "0px 4px 1px 0px #d2c6c6",
+            marginTop: 5,
+
+            //   backgroundColor: "#e8d8c0",
+          }}
+
+          rows={rows}
+          columns={columns}
+          handleClick={handleClick}
+          getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+          }
+        />
+        {/* ================================================================== */}
+        <Modal
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zoom: "75%"
+          }}
+          open={!!isOpen}
+          onClose={() => setIsOpen(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Invoice
+            invoice={invoice}
           />
-        {/* //------------------------------------------------------- */}
+
+        </Modal>
+        {/* ================================================================== */}
+
+
       </Container>
     </>
   );

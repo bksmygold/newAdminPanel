@@ -65,6 +65,12 @@ export default function Table(props) {
     },
   }));
 
+
+  const handleClick = ()=> {
+
+    console.log("------>>>", params.row.title)
+
+  }
   //=======================================================
 
   return (
@@ -73,6 +79,8 @@ export default function Table(props) {
       <Grid item lg={12} xs={12}>
 
         <StripedDataGrid
+          onRowClick={props.handleClick}
+
           sx={{
             ".MuiTablePagination-displayedRows": {
               color: "#3c2400",
@@ -86,7 +94,7 @@ export default function Table(props) {
 
             boxShadow: '0px 4px 1px 0px #d2c6c6',
             marginTop: 5,
-            height:500,
+            height: 500,
             border: '1px solid #d2c6c657',
             // justifyContent: "center",
           }}
