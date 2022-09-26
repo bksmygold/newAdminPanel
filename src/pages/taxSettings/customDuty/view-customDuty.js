@@ -1,122 +1,3 @@
-// import Head from 'next/head';
-// import { DashboardSidebar } from 'src/components/dashboard-sidebar';
-// import { Box, Container, Typography, Grid, Button } from '@mui/material';
-// import { DashboardLayout } from '../../../components/dashboard-layout';
-// import { InfoCard } from '../../../components/infoCard';
-// import { DataGrid, gridClasses } from '@mui/x-data-grid';
-// import { alpha, styled } from '@mui/material/styles';
-// import EditIcon from '@mui/icons-material/Edit';
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import Table from '../../../components/utility/table';
-// import { useRouter } from 'next/router';
-// import { useQuery } from '@tanstack/react-query';
-// import DeleteSpinner from 'src/components/deleteSpinner';
-// import { getColor, deleteColor } from 'src/apis/color';
-// import Loading from 'src/components/loading';
-// import { getCustomDuty, deleteCustomDuty } from 'src/apis/customDuty';
-// import { useTheme } from '@mui/styles';
-// import AddIcon from '@mui/icons-material/Add';
-
-// //=======================================================
-// export default function CustomDuty() {
-//   const router = useRouter();
-//   const theme = useTheme();
-
-//   const query = useQuery({
-//     queryKey: 'CustomDuty',
-//     queryFn: getCustomDuty,
-//     onSuccess: (res) => console.log('Success ---', res.message),
-//     onError: (err) => console.log('Error --->', err),
-//   });
-//   if (query.isLoading) return <Loading />;
-
-//   console.log('====>', query);
-//   //=======================
-//   const editButton = (params) => {
-//     return (
-//       <strong>
-//         <Button
-//           variant="contained"
-//           sx={{ backgroundColor: 'white', color: '#8B5704' }}
-//           size="small"
-//           onClick={() => {
-//             router.push(`/customDuty/edit-customDuty/?id=${params.id}`);
-//           }}
-//         >
-//           <EditIcon />
-//         </Button>
-//       </strong>
-//     );
-//   };
-//   //==========
-//   const deleteButton = (params) => (
-//     <DeleteSpinner
-//       id={params.id}
-//       deleting={deleteCustomDuty}
-//       url="/customDuty/view-customDuty"
-//     />
-//   );
-
-//   //==========
-//   const columns = [
-//     { field: 'name', headerName: 'Custom Duty Name', width: 150 },
-//     { field: 'value', headerName: 'Custom Duty value', width: 150 },
-//     { field: 'surcharge', headerName: 'Custom Duty surcharge', width: 150 },
-
-//     {
-//       field: 'edit',
-//       headerName: 'Edit',
-//       width: 150,
-//       editable: true,
-//       renderCell: editButton,
-//     },
-//     {
-//       field: 'delete',
-//       headerName: 'Delete',
-//       width: 150,
-//       editable: true,
-//       renderCell: deleteButton,
-//     },
-//   ];
-
-//   //=======================================================
-//   return (
-//     <>
-//       {/* ------------------------------ */}
-//       <Head>
-//         <title>Dashboard | Color </title>
-//       </Head>
-//       <Grid
-//         sx={{
-//           marginLeft: 5,
-//           marginTop: 5,
-//           display: 'flex',
-//           flexDirection: 'column',
-//         }}
-//         container
-//       >
-//         <Grid item>
-//           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-//             Custom Duty View
-//           </Typography>
-//         </Grid>
-//         <Grid item>
-//           <Button onClick={() => setShowAdd(true)} sx={theme.custom.addButton}>
-//             Create Custom Duty
-//             <AddIcon sx={{ marginLeft: 1 }} />
-//           </Button>
-//         </Grid>
-//       </Grid>{' '}
-//       <Table
-//         rows={query.data.docs}
-//         columns={columns}
-
-//       />
-//     </>
-//   );
-// }
-// CustomDuty.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
-
 import Head from 'next/head';
 import { DashboardSidebar } from 'src/components/sidebar.js/dashboard-sidebar';
 import {
@@ -137,7 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getCustomDuty, deleteCustomDuty ,postCustomDuty, updateCustomDuty} from 'src/apis/customDuty';
+import { getCustomDuty, deleteCustomDuty, postCustomDuty, updateCustomDuty } from 'src/apis/customDuty';
 
 import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
@@ -266,9 +147,15 @@ export default function CustomDuty() {
   };
   //==========
   const columns = [
-    { field: 'name', headerName: 'Custom Duty Name', width: 150 },
-    { field: 'value', headerName: 'Custom Duty value', width: 150 },
-    { field: 'surcharge', headerName: 'Custom Duty surcharge', width: 150 },
+    {
+      field: 'name', headerName: 'Custom Duty Name', width: 150, flex: 1
+    },
+    {
+      field: 'value', headerName: 'Custom Duty value', width: 150, flex: 1
+    },
+    {
+      field: 'surcharge', headerName: 'Custom Duty surcharge', width: 150, flex: 1
+    },
 
     {
       field: 'edit',
@@ -276,6 +163,7 @@ export default function CustomDuty() {
       width: 150,
       editable: true,
       renderCell: editButton,
+      flex: 1
     },
     {
       field: 'delete',
@@ -283,6 +171,8 @@ export default function CustomDuty() {
       width: 150,
       editable: true,
       renderCell: deleteButton,
+      flex: 1
+
     },
   ];
   //=======================================================
@@ -327,7 +217,7 @@ export default function CustomDuty() {
             </Typography>
 
             <form onSubmit={editFormik.handleSubmit}>
-            <Typography
+              <Typography
                 variant="body1"
                 sx={{
                   color: "#8B5704",
@@ -444,7 +334,7 @@ export default function CustomDuty() {
             </Typography>
 
             <form onSubmit={addFormik.handleSubmit}>
-            <Typography
+              <Typography
                 variant="body1"
                 sx={{
                   color: "#8B5704",

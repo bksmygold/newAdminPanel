@@ -190,13 +190,25 @@ export const theme = createTheme({
       boxShadow: '-3px 3px 4px -2px #d2c6c6',
       border: '1px solid #d2c6c657',
     },
-    invoiceGrid: {
+    invoiceGridItem: {
       minWidth: "100%",
       display: "flex",
       justifyContent: "space-between",
       alignItems: "space-between",
       mb: 4
 
+    },
+    retailCard:{
+      bg: {
+        backgroundColor: "#FDFAF2",
+        width: "fit-content",
+        borderRadius: 1,
+        p: "10% 20%",
+        height: "100%",
+        boxShadow: '-3px 3px 4px -2px #d2c6c6',
+        border: '1px solid #d2c6c657',
+      },
+      
     },
     //----------- Typography ----------------------------------
     typography: {
@@ -330,6 +342,25 @@ export const theme = createTheme({
           light: {
             fontWeight: "light", color: "black"
           }
+        }
+      },
+      retailCard:{
+     
+        h1: {
+          fontSize: "21px",
+          color: "#8B5704"
+        },
+        h2: {
+          fontSize: 27,
+          fontWeight: "bold",
+          color: "#001737",
+          mt:3
+        },
+        h3: {
+          fontSize: 17,
+          fontWeight: "regular",
+          color: "#001737",
+          mt:1
         }
       }
     }

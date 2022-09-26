@@ -66,7 +66,7 @@ export const infoCard = {
         interest: {
             title: "Interest Rates",
             desc: "create, update, delete HSN and GST related Information",
-            url: '/taxSettings/customDuty/view-customDuty'
+            url: '/taxSettings/loanInterest/view-loanInterest'
         },
         mandi: {
             title: "Treasury Gold Mandi ",
@@ -79,6 +79,11 @@ export const infoCard = {
         buySell: {
             title: "Bid - Buy and Sell",
             desc: "Create , Update, delete commissions and calculation percentages applicable on Bids"
+        },
+        makingCharge: {
+            title: "Making Charges",
+            desc: "create, update, delete making charges",
+            url: "/taxSettings/makingCharge/view-makingCharge"
         },
         eComm: {
             title: "E-commerce",
@@ -199,19 +204,15 @@ export const infoCard = {
             desc: "create, update, delete Supplier",
             url: "/eCommerce/supplier/view-supplier"
         },
-        makingCharge: {
-            title: "Making Charges",
-            desc: "create, update, delete making charges",
-            url: "/eCommerce/makingCharge/view-makingCharge"
-        },
+      
         certi: {
             title: "Certificates",
-            desc: "create, update, delete making charges",
+            desc: "create, update, delete Certificates",
             url: "/eCommerce/certificate/view-certificate"
         },
         label: {
             title: "Label",
-            desc: "create, update, delete making charges",
+            desc: "create, update, delete Certificates",
             url: "/eCommerce/label/view-label"
         },
         plan: {

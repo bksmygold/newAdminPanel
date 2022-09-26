@@ -78,7 +78,7 @@ const Invoice = (props) => {
                     </Typography>
 
                     <Grid
-                        sx={theme.custom.invoiceGrid}
+                        sx={theme.custom.invoiceGridItem}
                         item lg={6} sm={6} xs={12}>
                         <Box>
 
@@ -127,7 +127,7 @@ const Invoice = (props) => {
 
 
                     <Grid
-                        sx={theme.custom.invoiceGrid}
+                        sx={theme.custom.invoiceGridItem}
                         item lg={6} sm={6} xs={12}>
                         <Box>
 
@@ -167,7 +167,7 @@ const Invoice = (props) => {
 
 
                     <Grid
-                        sx={theme.custom.invoiceGrid}
+                        sx={theme.custom.invoiceGridItem}
                         item lg={6} sm={6} xs={12}>
                         <Box>
 
@@ -204,7 +204,7 @@ const Invoice = (props) => {
 
 
                     <Grid
-                        sx={theme.custom.invoiceGrid}
+                        sx={theme.custom.invoiceGridItem}
                         item lg={6} sm={6} xs={12}>
                         <Box>
 

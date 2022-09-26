@@ -9,7 +9,7 @@ import ReceiptIcon from "@mui/icons-material/Receipt";
 import { ChartBar as ChartBarIcon } from "../icons/chart-bar";
 import { Cog as CogIcon } from "../icons/cog";
 
-//========================
+//================================================
 
 export const dashboardMenuList = [
     {
@@ -23,7 +23,7 @@ export const dashboardMenuList = [
                 title: 'Financials',
             },
             {
-                href: '/dashboard/analytics-dashboard',
+                href: '/retailDashboard/retail',
                 icon: <ChartBarIcon fontSize="small" />,
                 title: 'Retail',
             },
@@ -203,4 +203,28 @@ export const inventoryMenuList = [
         icon: <ManageAccountsIcon />,
         title: "Stock Adjustment",
     }
+];
+
+export const retailMenuList = [
+    {
+        href: "/inventoryDashboard/inventory",
+        icon: <DashboardIcon />,
+        title: "Dashboard",
+    },
+    {
+        href: "/inventoryDashboard/inventory",
+        icon: <DashboardIcon />,
+        title: "Orders",
+    },
+    {
+        href: "/inventoryDashboard/inventory",
+        icon: <DashboardIcon />,
+        title: "Settlement Requests",
+    },
+    {
+        href: "/inventoryDashboard/inventory",
+        icon: <DashboardIcon />,
+        title: "Retailers Data",
+    },
+   
 ];
