@@ -92,13 +92,7 @@ export default function taxSettings() {
            url={infoCard.taxes.buySell.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-                   title={infoCard.taxes.eComm.title}
-                   desc={infoCard.taxes.eComm.desc}
-                   url={infoCard.taxes.eComm.url}
-            />
-          </Grid>
+       
           <Grid item xl={3} lg={3} sm={6} xs={12}>
           <InfoCard
               title={infoCard.taxes.makingCharge.title}

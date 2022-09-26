@@ -25,28 +25,8 @@ import { postUnit } from 'src/apis/unit';
 import { useMutation } from '@tanstack/react-query';
 import { useTheme } from '@emotion/react';
 import { getReferralType } from 'src/apis/referraltype';
-
-//=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
-const CustomFormControl = styled(FormControl)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+import { CustomFormControl } from 'src/components/customMUI';
+import { CustomTextField } from 'src/components/customMUI';
 //=======================================================
 export default function AddReferralUser() {
   //=======================

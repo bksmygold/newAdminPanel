@@ -28,28 +28,9 @@ import { getUnit } from "src/apis/unit";
 import { getOrnament } from "src/apis/ornament";
 import Loading from "src/components/loading";
 import { useTheme} from "@mui/styles"
+import { CustomFormControl } from 'src/components/customMUI';
+import { CustomTextField } from 'src/components/customMUI';
 //=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
-
-const CustomFormControl = styled(FormControl)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
 //=======================================================
 export default function EditMetalGroup() {
   //=======================
@@ -125,6 +106,7 @@ export default function EditMetalGroup() {
           marginTop: 5,
           border: '1px solid #d2c6c657',
           backgroundColor: 'white',
+          minWidth:"100%"
         }}
       >
         {/* ------------------------------ */}
@@ -201,7 +183,6 @@ export default function EditMetalGroup() {
                 Metal
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Metal </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -230,7 +211,6 @@ export default function EditMetalGroup() {
                 Unit
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Unit </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -259,7 +239,6 @@ export default function EditMetalGroup() {
                 Ornament
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Ornament </InputLabel>
                 <Select
                   defaultValue=""
                   // value={age}
@@ -311,7 +290,6 @@ export default function EditMetalGroup() {
                 Rounding Digits
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Digits </InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"

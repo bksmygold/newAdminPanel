@@ -12,18 +12,8 @@ import swal from "sweetalert";
 import { getCustomDutyById, updateCustomDuty } from "src/apis/customDuty";
 import { useMutation,useQuery } from "@tanstack/react-query";
 import Loading from "src/components/loading";
-
-//=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+import { CustomFormControl } from 'src/components/customMUI';
+import { CustomTextField } from 'src/components/customMUI';
 //=======================================================
 export default function EditCustomDuty() {
   //=======================

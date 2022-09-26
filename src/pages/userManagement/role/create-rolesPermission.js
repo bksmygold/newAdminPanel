@@ -27,18 +27,8 @@ import swal from 'sweetalert';
 import { RoleCard } from '../../../components/cards/roleCard';
 import { PermissionCard } from '../../../components/cards/permissionCard';
 import LoadingButton from '@mui/lab/LoadingButton';
-
-//=============================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+import { CustomFormControl } from 'src/components/customMUI';
+import { CustomTextField } from 'src/components/customMUI';
 //=======================================================
 export default function RolesPermission() {
   const router=useRouter()

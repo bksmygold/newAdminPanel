@@ -13,18 +13,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { updateCyclePeriod,getCyclePeriodById } from "src/apis/cyclePeriod";
 import Loading from "src/components/loading";
 import { useTheme } from '@mui/styles';
+import { CustomTextField } from 'src/components/customMUI';
 
-//=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+
 //=======================================================
 export default function EditCyclePeriod() {
   //=======================

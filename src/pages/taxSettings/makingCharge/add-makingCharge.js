@@ -5,7 +5,6 @@ import {
   Grid,
   Button,
   styled,
-  TextField,
   InputLabel,
   MenuItem,
   Select,
@@ -27,29 +26,8 @@ import { getProductType } from 'src/apis/productType';
 import { getItem } from 'src/apis/item';
 import { getMetalGroup } from 'src/apis/metalGroup';
 import { getVariety } from 'src/apis/variety';
-//=======================================================
-
-const CustomFormControl = styled(FormControl)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
-
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+import { CustomFormControl } from 'src/components/customMUI';
+import { CustomTextField } from 'src/components/customMUI';
 //=======================================================
 export default function AddMakingCharge() {
   //=======================
@@ -101,7 +79,7 @@ export default function AddMakingCharge() {
   const makingChargeMutation = useMutation({
     mutationFn: postMakingCharge,
     onSuccess: (res) => {
-      swal('Making Charge Added !', res.message, 'success'),
+      swal('Making Charge Added !', "Continue with the Taxes Panel", 'success'),
         router.push('/makingCharge/view-makingCharge');
     },
     onError: (err) => swal('Erro !', err.message, 'error'),
@@ -118,7 +96,9 @@ export default function AddMakingCharge() {
       </Head>
       {/* ------------------------------ */}
       <Container
+      
         sx={{
+           minWidth:"100%",
           padding: 5,
           borderRadius: 2,
           boxShadow: '0px 4px 1px 0px #d2c6c6',
@@ -160,7 +140,7 @@ export default function AddMakingCharge() {
           }}
           container
         >
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item xl={8} lg={8} sm={8} xs={12}>
             <form onSubmit={formik.handleSubmit}>
               <Typography
                 variant="body1"
@@ -174,9 +154,7 @@ export default function AddMakingCharge() {
                 Supplier Name
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  supplier name
-                </InputLabel>
+             
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -205,9 +183,7 @@ export default function AddMakingCharge() {
                 Variety Name
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  variety name
-                </InputLabel>
+               
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -236,7 +212,6 @@ export default function AddMakingCharge() {
                 Item Name
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">item name</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -265,11 +240,10 @@ export default function AddMakingCharge() {
                 Product Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  product type{' '}
-                </InputLabel>
+             
                 <Select
                   defaultValue=""
+                  placeholder='product type'
                   labelId="demo-simple-select-label"
                   id="productType"
                   value={formik.values.productType}
@@ -296,9 +270,7 @@ export default function AddMakingCharge() {
                 Metal Group
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  metal group{' '}
-                </InputLabel>
+            
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -335,7 +307,8 @@ export default function AddMakingCharge() {
                           >
                             From Weight
                           </Typography>
-                          <TextField
+                          <CustomTextField
+                          fullWidth
                             name={`rates[${index}].fromWeight`}
                             type="number"
                             value={formik.values.rates[index].fromWeight}
@@ -353,7 +326,8 @@ export default function AddMakingCharge() {
                           >
                             To Weight
                           </Typography>
-                          <TextField
+                          <CustomTextField
+                          fullWidth
                             name={`rates.${index}.toWeight`}
                             type="number"
                             value={formik.values.rates[index].toWeight}
@@ -372,9 +346,7 @@ export default function AddMakingCharge() {
                             Rate Type
                           </Typography>
                           <CustomFormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">
-                              supplier name
-                            </InputLabel>
+                  
                             <Select
                               defaultValue=""
                               name={`rates.${index}.rateType`}
@@ -411,13 +383,16 @@ export default function AddMakingCharge() {
                           >
                             Rate
                           </Typography>
-                          <TextField
+                          <CustomTextField
+                          fullWidth
                             name={`rates.${index}.rate`}
                             type="number"
                             value={formik.values.rates[index].rate}
                             onChange={formik.handleChange}
                           />
                           <Button
+                fullWidth
+
                             sx={{
                               background:
                                 'linear-gradient(43deg, #ff2222, #fe8f8f)',
@@ -433,6 +408,8 @@ export default function AddMakingCharge() {
                         </div>
                       ))}
                       <Button
+                fullWidth
+
                         sx={{
                           m: 2,
                           background:
@@ -462,6 +439,7 @@ export default function AddMakingCharge() {
                 disabled={makingChargeMutation.isLoading}
                 loading={makingChargeMutation.isLoading}
                 type="submit"
+                fullWidth
                 sx={{
                   marginTop: 2,
                   background: 'linear-gradient(43deg, #8b5704, #ddb070)',

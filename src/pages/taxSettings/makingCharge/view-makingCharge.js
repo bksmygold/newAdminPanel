@@ -42,29 +42,8 @@ import { getMetalGroup } from 'src/apis/metalGroup';
 import { getVariety } from 'src/apis/variety';
 import React, { useEffect, useState } from 'react';
 import { useTheme } from '@mui/styles';
-
-//=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
-
-const CustomFormControl = styled(FormControl)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+import { CustomFormControl } from 'src/components/customMUI';
+import { CustomTextField } from 'src/components/customMUI';
 //=======================================================
 export default function MakingCharge() {
   const router = useRouter();
@@ -196,7 +175,7 @@ export default function MakingCharge() {
             // setId(params.row.id);
             // editFormik.setValues(params.row);
             // setShowEdit(params.row);
-            router.push(`/makingCharge/edit-makingCharge?id=${params.row.id}`);
+            router.push(`/taxSettings/makingCharge/edit-makingCharge?id=${params.row.id}`);
           }}
         >
           Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
@@ -828,7 +807,7 @@ export default function MakingCharge() {
           <Button
             onClick={() =>
               // setShowAdd(true)
-              router.push('/makingCharge/add-makingCharge')
+              router.push('/taxSettings/makingCharge/add-makingCharge')
             }
             sx={theme.custom.addButton}
           >

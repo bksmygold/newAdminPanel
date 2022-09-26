@@ -12,18 +12,9 @@ import swal from "sweetalert";
 import { useMutation } from "@tanstack/react-query";
 import { postCyclePeriod } from "src/apis/cyclePeriod";
 import { useTheme } from '@mui/styles';
+import { CustomTextField } from 'src/components/customMUI';
 
-//=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+
 //=======================================================
 export default function AddCyclePeriod() {
   //=======================

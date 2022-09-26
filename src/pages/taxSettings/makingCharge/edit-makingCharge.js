@@ -29,29 +29,10 @@ import { getItem } from "src/apis/item";
 import { getMetalGroup } from "src/apis/metalGroup";
 import { getVariety } from "src/apis/variety";
 import Loading from "src/components/loading";
+import { CustomFormControl } from "src/components/customMUI";
 //=======================================================
 
-const CustomFormControl = styled(FormControl)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
 
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
 //=======================================================
 export default function EditMakingCharge() {
   //=======================
@@ -62,7 +43,7 @@ export default function EditMakingCharge() {
   const [productType, setProductType] = useState([]);
   const [item, setItem] = useState([]);
   const [metalGroup, setMetalGroup] = useState([]);
-  
+
   useEffect(() => {
     getSupplier().then((res) => setSupplier(res.docs));
     getVariety().then((res) => setVariety(res.docs));
@@ -104,8 +85,8 @@ export default function EditMakingCharge() {
   const makingChargeMutation = useMutation({
     mutationFn: updateMakingCharge,
     onSuccess: (res) => {
-      swal("Making Charge Updated !", res.message, "success"),
-        router.push("/makingCharge/view-makingCharge");
+      swal("Making Charge Updated !", "Continue with the Taxes Panel", "success"),
+        router.push("/taxSettings/makingCharge/view-makingCharge");
     },
     onError: (err) => swal("Erro !", err.message, "error"),
   });
@@ -129,6 +110,7 @@ export default function EditMakingCharge() {
           marginTop: 5,
           border: '1px solid #d2c6c657',
           backgroundColor: 'white',
+          minWidth: "100%"
         }}
       >
         <Typography
@@ -164,7 +146,7 @@ export default function EditMakingCharge() {
           }}
           container
         >
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item xl={8} lg={8} sm={8} xs={12}>
             <form onSubmit={formik.handleSubmit}>
               <Typography
                 variant="body1"
@@ -178,9 +160,7 @@ export default function EditMakingCharge() {
                 Supplier Name
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  supplier name
-                </InputLabel>
+
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -209,9 +189,7 @@ export default function EditMakingCharge() {
                 Variety Name
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  variety name
-                </InputLabel>
+
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -240,7 +218,6 @@ export default function EditMakingCharge() {
                 Item Name
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">item name</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -269,9 +246,7 @@ export default function EditMakingCharge() {
                 Product Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  product type{' '}
-                </InputLabel>
+
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -300,9 +275,7 @@ export default function EditMakingCharge() {
                 Metal Group
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  metal group{' '}
-                </InputLabel>
+
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -376,9 +349,7 @@ export default function EditMakingCharge() {
                             Rate Type
                           </Typography>
                           <CustomFormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">
-                              supplier name
-                            </InputLabel>
+
                             <Select
                               defaultValue=""
                               name={`rates.${index}.rateType`}
@@ -429,6 +400,8 @@ export default function EditMakingCharge() {
                             }}
                           >
                             <Button
+                              fullWidth
+
                               sx={{
                                 background:
                                   'linear-gradient(43deg, #ff2222, #fe8f8f)',
@@ -451,6 +424,8 @@ export default function EditMakingCharge() {
                         }}
                       >
                         <Button
+                          fullWidth
+
                           sx={{
                             m: 2,
                             background:
@@ -488,6 +463,7 @@ export default function EditMakingCharge() {
                   disabled={makingChargeMutation.isLoading}
                   loading={makingChargeMutation.isLoading}
                   type="submit"
+                  fullWidth
                   sx={{
                     marginTop: 2,
                     background: 'linear-gradient(43deg, #8b5704, #ddb070)',

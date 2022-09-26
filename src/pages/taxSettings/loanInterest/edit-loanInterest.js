@@ -12,17 +12,8 @@ import swal from "sweetalert";
 import { updateLoanInterest,getLoanInterestById } from "src/apis/loanInterest";
 import { useMutation,useQuery } from "@tanstack/react-query";
 
-//=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+import { CustomFormControl } from 'src/components/customMUI';
+import { CustomTextField } from 'src/components/customMUI';
 //=======================================================
 export default function EditLoanInterest() {
   //=======================
