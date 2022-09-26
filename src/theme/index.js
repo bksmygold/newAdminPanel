@@ -184,7 +184,8 @@ export const theme = createTheme({
     },
     invoiceCard: {
 
-      p: 6,
+      p: 10,
+      
       borderRadius: 5,
       backgroundColor: "white",
       boxShadow: '-3px 3px 4px -2px #d2c6c6',

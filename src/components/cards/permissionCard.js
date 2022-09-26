@@ -20,6 +20,7 @@ import PaymentsIcon from '@mui/icons-material/Payments';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StoreIcon from '@mui/icons-material/Store';
 import GroupsIcon from '@mui/icons-material/Groups';
+import { useState } from 'react';
 
 //=====================================
 const CustomTextCheckbox = styled(Checkbox)`
@@ -36,7 +37,8 @@ const CustomTextCheckbox = styled(Checkbox)`
 export const PermissionCard = (props) => {
   const router = useRouter();
   let { permissions } = props
-    //-------------------------------------------
+  const [checked, setChecked] = useState(false)
+  //-------------------------------------------
   return (
     <>
       <Card
@@ -74,12 +76,29 @@ export const PermissionCard = (props) => {
             {props.perm.map((x) => (
               <FormGroup>
                 <FormControlLabel
-                  sx={{ color: '#8B5704' }}
                   control={
                     <Checkbox
-                      onChange={(e) =>
-                        props.setPermissions(e.target.value)
-                      }
+                    sx={{ color: 'green' }}
+                      checked={checked}
+                      // defaultChecked={checked}
+                      onChange={(e) => {
+                        console.log("e -->", e.target.value)
+
+                        if (x.name === "all") {
+
+                          setChecked((prev) => !prev),
+                            props.setPermissions(x.value)
+
+                        }else(
+
+                          props.setPermissions(e.target.value)
+                        )
+                        // setChecked(true)
+
+
+
+
+                      }}
                       value={x.value}
                     />
                   }

@@ -67,7 +67,7 @@ export const infoCard = {
             title: "Interest Rates",
             desc: "create, update, delete HSN and GST related Information",
             url: '/taxSettings/loanInterest/view-loanInterest'
-            
+
         },
         mandi: {
             title: "Treasury Gold Mandi ",
@@ -207,7 +207,7 @@ export const infoCard = {
             desc: "create, update, delete Supplier",
             url: "/eCommerce/supplier/view-supplier"
         },
-      
+
         certi: {
             title: "Certificates",
             desc: "create, update, delete Certificates",
@@ -364,8 +364,107 @@ export const reportList = {
 
     ]
 }
-//---------------------------------------------------
+//-------------  PERMISSIONS  --------------------------------------
+export const userManagementPerma = [
+    {
+        title: 'Role & Permission',
+        perm: [
+            {
+                name: 'create',
+                value: 'createX',
+            },
+            {
+                name: 'read',
+                value: 'readX',
+            },
+            {
+                name: 'update',
+                value: 'updateX',
+            },
+            {
+                name: 'delete',
+                value: 'deleteX',
+            },
+        ],
+    },
+    {
+        title: 'User Management',
+        perm: [
+            {
+                name: 'create',
+                value: 'createX',
+            },
+            {
+                name: 'read',
+                value: 'readX',
+            },
+            {
+                name: 'update',
+                value: 'updateX',
+            },
+            {
+                name: 'delete',
+                value: 'deleteX',
+            },
+        ],
+    },
+]
+export const ecommPerma = [
+    {
+        title: 'Metal',
+        perm: [
+            {
+                name: 'all',
+                value: ['create_metal', 'view_metal', 'update_metal', "delete_metal"],
+            },
+            {
+                name: 'create',
+                value: 'create_metal',
+            },
+            {
+                name: 'read',
+                value: 'view_metal',
+            },
+            {
+                name: 'update',
+                value: 'update_metal',
+            },
+            {
+                name: 'delete',
+                value: 'delete_metal',
+            },
+        ],
+    },
+    {
+        title: 'Metal Group',
+        perm: [
+            {
+                name: 'all',
+                value: ['create_metalGroup', 'view_metalGroup', 'update_metalGroup', "delete_metalGroup"],
+            },
+            {
+                name: 'create',
+                value: 'create_metalGroup',
+            },
+            {
+                name: 'read',
+                value: 'view_metalGroup',
+            },
+            {
+                name: 'update',
+                value: 'update_metalGroup',
+            },
+            {
+                name: 'delete',
+                value: 'delete_metalGroup',
+            },
+        ],
+    },
 
+
+]
+
+//---------------------------------------------------
 export const invoice = {
     declaration: "We declare that the above quantity of goods are kept by the seller in a safe vault on behalf of the buyer. It can be delivered in minted product as per the Terms & Conditions.",
     disclaimer: "   The gold grams you own are calculated by dividing the amount paid net of GST by the gold rate and rounded down to 4 decimal places. For example, .00054 grams will be rounded down to .0005 grams."

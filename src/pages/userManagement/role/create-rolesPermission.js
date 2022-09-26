@@ -29,86 +29,16 @@ import { PermissionCard } from '../../../components/cards/permissionCard';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { useTheme } from '@mui/styles';
+// import {userManagementPerma} from '../../../constants/userManagementPerma'
+import { userManagementPerma, ecommPerma } from 'src/constants/constant';
 //=======================================================
 export default function RolesPermission() {
-  const router=useRouter()
-  //=======================================================
-  let taxList = ['Governement Tax'];
-  let userManagementList = [
-    {
-      title: 'Role & Permission',
-      perm: [
-        {
-          name: 'create',
-          value: 'createX',
-        },
-        {
-          name: 'read',
-          value: 'readX',
-        },
-        {
-          name: 'update',
-          value: 'updateX',
-        },
-        {
-          name: 'delete',
-          value: 'deleteX',
-        },
-      ],
-    },
-    {
-      title: 'User Management',
-      perm: [
-        {
-          name: 'create',
-          value: 'createX',
-        },
-        {
-          name: 'read',
-          value: 'readX',
-        },
-        {
-          name: 'update',
-          value: 'updateX',
-        },
-        {
-          name: 'delete',
-          value: 'deleteX',
-        },
-      ],
-    },
-  ];
-  let ecommList = [
-    'Metal',
-    'Metal Group',
-    'Ornaments',
-    'Units',
-    'Cuts',
-    'Colors',
-    'Shape',
-    'Clarity',
-    'Style',
-    'Collections',
-    'Categories',
-    'Varieties',
-    'Items',
-    'Product Types',
-    'FAQ',
-    'Standard Plans',
-    'Cycle Period',
-  ];
-  let promotionalList = [
-    'Offer Sliders',
-    'How-to Videos',
-    'Testimonials',
-    'Ad Position',
-    'Offer Popups',
-    'Merchant Banners',
-  ];
-  let reportsList = ['Financials', 'Metal', 'Smart Reports'];
+  const router = useRouter()
+  const theme = useTheme()
   //=======================================================
 
-
+  //=======================================================
   const [generalSelected, setGeneralSelected] = useState(false);
   const [financialSelected, setFinancialSelected] = useState(false);
   const [tax, setTax] = useState(false);
@@ -120,32 +50,8 @@ export default function RolesPermission() {
   const [permissions, setPermissions] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-
-  //=======================
-  // const formik = useFormik({
-  //   initialValues: {
-  //     name: '',
-  //   },
-  //   validationSchema: yup.object({
-  //     name: yup.string('Enter Unit Name').required('Unit is required'),
-  //     conversionFactor: yup
-  //       .number('Enter Conversion Factor')
-  //       .required('Conversion Factor is required'),
-  //   }),
-  //   onSubmit: (values) => {
-  //     roleMutation.mutate(values);
-  //   },
-  // });
-
-  // const roleMutation = useMutation({
-  //   mutationFn: postRole,
-  //   onSuccess: (res) => {
-  //     swal('Role Added !', res.message, 'success'),
-  //       router.push('/userManagement/role/view-rolesPermission');
-  //   },
-  //   onError: (err) => swal('Erro !', err.message, 'error'),
-  // });
   //=======================================================
+
   return (
     <>
       <Typography
@@ -155,37 +61,35 @@ export default function RolesPermission() {
           color: '#8B5704',
           marginLeft: 1,
           // fontWeight: "bolder",
+
         }}
         variant="h5"
       >
         Create Roles & Permissions
       </Typography>
-      <Grid container spacing={3} sx={{ p: 2 }}>
-        <Grid item xl={3} lg={3} sm={6} xs={12}>
-          <Box
-            sx={{
-              width: '70vw',
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <CustomTextField
-              id="name"
-              name="name"
-              variant="outlined"
-              onChange={(e) => setName(e.target.value)}
-              label="Role name "
-              sx={{ mt: 1, width: '40%' }}
-            />{' '}
-            <CustomTextField
-              id="name"
-              name="name"
-              variant="outlined"
-              label="Description"
-              onChange={(e) => setDescription(e.target.value)}
-              sx={{ mt: 1, width: '50%' }}
-            />{' '}
-          </Box>
+      <Grid container spacing={1} sx={{ p: 2, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Grid item xl={6} lg={6} sm={6} xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+
+          <CustomTextField
+
+            id="name"
+            name="name"
+            variant="outlined"
+            onChange={(e) => setName(e.target.value)}
+            label="Role name "
+            sx={{ mt: 1, width: '40%' }}
+          />{' '}
+        </Grid>
+        <Grid item xl={6} lg={6} sm={6} xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+
+          <CustomTextField
+            id="name"
+            name="name"
+            variant="outlined"
+            label="Description"
+            onChange={(e) => setDescription(e.target.value)}
+            sx={{ mt: 1, width: '50%' }}
+          />{' '}
         </Grid>
       </Grid>
       <Typography
@@ -292,7 +196,7 @@ export default function RolesPermission() {
       {userManagement ? (
         <>
           <Grid container spacing={3} sx={{ p: 2 }}>
-            {userManagementList.map((x) => (
+            {userManagementPerma.map((x) => (
               <Grid item xl={3} lg={3} sm={6} xs={12}>
                 <PermissionCard
                   title={x.title}
@@ -314,9 +218,20 @@ export default function RolesPermission() {
       {ecomm ? (
         <>
           <Grid container spacing={3} sx={{ p: 2 }}>
-            {ecommList.map((x) => (
+            {ecommPerma.map((x) => (
               <Grid key={x} item xl={3} lg={3} sm={6} xs={12}>
-                <PermissionCard key={x} title={x} />
+                <PermissionCard
+                  title={x.title}
+                  perm={x.perm}
+                  permissions={permissions}
+                  setPermissions={(e) =>{
+                    setPermissions(
+                      permissions.includes(e)
+                        ? permissions.filter((z) => z !== e)
+                        : permissions.concat(e)
+                    )}
+                  }
+                />
               </Grid>
             ))}
           </Grid>
@@ -346,27 +261,17 @@ export default function RolesPermission() {
       ) : null}
 
       <LoadingButton
-        // disabled={roleMutation.isLoading}
+        // disabled={roleMutation.isLoading}  
         // loading={roleMutation.isLoading}
         type="submit"
         onClick={() =>
-          postRole({ permissions: permissions, name: name,description:description }).then(
-            () => swal('Role Added !', 'continue with the panel', 'success'),
-            router.push('/userManagement/role/view-rolesPermission')
-          )
+          console.log("permissions ----:", permissions)
+          // postRole({ permissions: permissions, name: name, description: description }).then(
+          //   () => swal('Role Added !', 'continue with the panel', 'success'),
+          //   router.push('/userManagement/role/view-rolesPermission')
+          // )
         }
-        sx={{
-          backgroundColor: '#DDB070',
-          width: '50%',
-          margin: 'auto',
-          marginTop: 2,
-          marginBottom: 8,
-          border: 'none',
-          color: 'white',
-          '&:hover': {
-            backgroundColor: '#DBA251',
-          },
-        }}
+        sx={[theme.custom.editButton, { width: "50%", margin: "auto" }]}
       >
         Add Role
       </LoadingButton>
