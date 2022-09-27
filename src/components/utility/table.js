@@ -98,6 +98,7 @@ export default function Table(props) {
             height: 500,
             border: '1px solid #d2c6c657',
             // justifyContent: "center",
+            backgroundColor:"white"
           }}
 
           rows={props.rows}

@@ -66,7 +66,9 @@ export const infoCard = {
         },
         buySave: {
             title: "Buy & Save",
-            desc: "Create , Update, delete bonus and calculation percentages applicable on buy and save plans"
+            desc: "Create , Update, delete bonus and calculation percentages applicable on buy and save plans",
+            url: '/taxSettings/buySave/view-buySave'
+
         },
         interest: {
             title: "Interest Rates",
@@ -76,7 +78,9 @@ export const infoCard = {
         },
         mandi: {
             title: "Treasury Gold Mandi ",
-            desc: "Update Mandi Government Treasury Gold for the gold declared"
+            desc: "Update Mandi Government Treasury Gold for the gold declared",
+            url: '/taxSettings/mandi/view-mandi'
+
         },
         referEarn: {
             title: "Refer and Earn",
@@ -86,7 +90,9 @@ export const infoCard = {
         },
         buySell: {
             title: "Bid - Buy and Sell",
-            desc: "Create , Update, delete commissions and calculation percentages applicable on Bids"
+            desc: "Create , Update, delete commissions and calculation percentages applicable on Bids",
+            url: "/taxSettings/bidBuySell/view-bidBuySell"
+
         },
         makingCharge: {
             title: "Making Charges",

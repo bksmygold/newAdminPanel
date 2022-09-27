@@ -137,6 +137,8 @@ export const theme = createTheme({
     Button: {
       background: 'linear-gradient(43deg, #8b5704, #ddb070)',
       color: 'white',
+      width:"40%",
+      mt:3
     },
     editButton: {
       background: 'linear-gradient(43deg, #8b5704, #ddb070)',
@@ -205,10 +207,22 @@ export const theme = createTheme({
         width: "fit-content",
         borderRadius: 1,
         p: "10% 20%",
-        height: "100%",
+        // height: "100%",
         boxShadow: '-3px 3px 4px -2px #d2c6c6',
         border: '1px solid #d2c6c657',
-      },
+      }},
+      buySaveCard:{
+        bg: {
+          backgroundColor: "#FDFAF2",
+          // minWidth: "100%",
+          borderRadius: 1,
+          
+          p: "10% 15%",
+          height: "100%",
+          boxShadow: '-3px 3px 4px -2px #d2c6c6',
+          border: '1px solid #d2c6c657',
+        
+        },
       
     },
     //----------- Typography ----------------------------------
@@ -250,7 +264,8 @@ export const theme = createTheme({
           cursor: "pointer",
           fontSize: 22,
           color: "black",
-          fontWeight: "bold"
+          fontWeight: "bold",
+          mt:1
         },
         h1: {
           fontFamily: "poppins",
