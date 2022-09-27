@@ -366,7 +366,7 @@ export default function BuySave() {
       {/* =============================================================== */}
 
       <Typography sx={[theme.custom.typography.dashBoard.h1, { mt: 8, mb: 5, p: 2 }]}>
-        Buy & Save View
+        Bid Buy & Save View
       </Typography>
       <Grid
 spacing={5}
@@ -374,25 +374,12 @@ spacing={5}
         sx={{ p: 5 }}
       >
 
-
         <Grid item lg={4} sm={4} xs={12}>
-          <BuySaveCard  name="Bonus Plan" value={12} />
-          {/* <Box sx={{ display: 'flex',marginLeft:7 }}>
-            <Grid item lg={3} sm={4} xs={12}>
-              <Button sx={[theme.custom.Button]}fullWidth>Add</Button>
-            </Grid>
-            <Grid item lg={3} sm={4} xs={12}>
-              <Button sx={[theme.custom.Button,{ml:1}]} fullWidth>Edit</Button>
-            </Grid>
-          </Box> */}
+          <BuySaveCard name="Buy Percentage" value={10} />
         </Grid>
 
         <Grid item lg={4} sm={4} xs={12}>
-          <BuySaveCard name="Handling" value={12} />
-        </Grid>
-
-        <Grid item lg={4} sm={4} xs={12}>
-          <BuySaveCard name="Hold" value={12} />
+          <BuySaveCard name="Sell Percentage" value={12} />
         </Grid>
       </Grid>
       {/* <Table rows={row} columns={columns} /> */}

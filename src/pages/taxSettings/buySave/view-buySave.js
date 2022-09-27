@@ -213,7 +213,7 @@ export default function BuySave() {
                   fontWeight: 600,
                 }}
               >
-                HSN Code
+                calculation name
               </Typography>
               <CustomTextField
                 error={editFormik.touched.name && Boolean(editFormik.errors.name)}
@@ -236,7 +236,7 @@ export default function BuySave() {
                   fontWeight: 600,
                 }}
               >
-                GST Value
+                calculation value
               </Typography>
               <CustomTextField
                 error={editFormik.touched.value && Boolean(editFormik.errors.value)}

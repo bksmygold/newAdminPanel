@@ -12,6 +12,9 @@ import { useRouter } from 'next/router';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@emotion/react';
 import DeleteSpinner from 'src/components/deleteSpinner';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { getVipReferral } from 'src/apis/referralUser';
+import Loading from 'src/components/loading';
 
 //=======================================================
 export default function VipReferral() {
@@ -44,35 +47,117 @@ export default function VipReferral() {
       />
     );
   };
+
+
+
   //==========
   const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: 'metal',
-      headerName: 'Metal Name',
+      field: 'user.fullName',
+      headerName: 'Name',
       width: 150,
-      editable: true,  flex:1
+      editable: true,
+      flex: 1,
+      valueGetter: (params) => {
+        let result = [];
+        if (params.row.user) {
+          if (params.row.user.fullName) {
+
+            result.push(params.row.user.fullName);
+
+          }
+        } else {
+          result = ['Empty'];
+        }
+        return result.join(', ');
+      },
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),
     },
     {
-      field: 'icon',
-      headerName: 'Icon',
+      field: 'user.mobile',
+      headerName: 'Mobile',
       width: 150,
-      editable: true,  flex:1
+      editable: true, flex: 1,
+      valueGetter: (params) => {
+        let result = [];
+        if (params.row.user) {
+          if (params.row.user.mobile) {
+
+            result.push(params.row.user.mobile);
+
+          }
+        } else {
+          result = ['Empty'];
+        }
+        return result.join(', ');
+      },
     },
+
+    {
+      field: 'code',
+      headerName: 'Code',
+      width: 150,
+      editable: true, flex: 1,
+
+    },
+    {
+      field: 'user.referralCriteria.subscriptions',
+      headerName: 'Subscriptions',
+      width: 150,
+      editable: true, flex: 1,
+      valueGetter: (params) => {
+        let result = [];
+        if (params.row.user) {
+          if (params.row.user.referralCriteria) {
+            if (params.row.user.referralCriteria.subscriptions) {
+
+              result.push(params.row.user.referralCriteria.subscriptions);
+            }
+
+
+          }
+        } else {
+          result = ['Empty'];
+        }
+        return result.join(', ');
+      },
+    },
+    {
+      field: 'user.referralCriteria.downloads',
+      headerName: 'Downloads',
+      width: 150,
+      editable: true, flex: 1,
+      valueGetter: (params) => {
+        let result = [];
+        if (params.row.user) {
+          if (params.row.user.referralCriteria) {
+            if (params.row.user.referralCriteria.downloads) {
+              result.push(params.row.user.referralCriteria.downloads);
+            }
+          }
+        } else {
+          result = ['Empty'];
+        }
+        return result.join(', ');
+      },
+    },
+
 
     {
       field: 'edit',
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,  flex:1
+      renderCell: editButton, flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,  flex:1
+      renderCell: deleteButton, flex: 1
     },
   ];
 
@@ -84,6 +169,17 @@ export default function VipReferral() {
       edit: 'Edit',
     },
   ];
+
+
+
+
+  const query = useQuery({
+    queryKey: 'vip referral',
+    queryFn: () => getVipReferral(),
+  });
+  console.log(query)
+
+  if(query.isLoading) return <Loading/>
   //=======================================================
   return (
     <>
@@ -109,7 +205,7 @@ export default function VipReferral() {
           <Button
             onClick={() =>
               router.push("/userManagement/vipReferral/add-vipReferral")
-              }
+            }
             sx={theme.custom.addButton}
           >
             Add VIP Referral
@@ -118,9 +214,11 @@ export default function VipReferral() {
         </Grid>
       </Grid>{' '}
       <Table
-        rows={rows}
+        rows={query?.data?.docs}
+        // rows={rows}
+
         columns={columns}
-        
+
       />
     </>
   );

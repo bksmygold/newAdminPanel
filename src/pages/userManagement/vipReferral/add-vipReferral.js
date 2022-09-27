@@ -27,6 +27,7 @@ import { useTheme } from '@emotion/react';
 import { getReferralType } from 'src/apis/referraltype';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { postVipReferral } from 'src/apis/referralUser';
 //=======================================================
 export default function AddVipReferral() {
   //=======================
@@ -46,7 +47,7 @@ export default function AddVipReferral() {
       mobile: '',
       accountType: 'individual',
       isWhatsapp: false,
-      referralType: '',
+      referralType: "6332cf4acc4242e5b392ab32",
       referralCode: '',
       subscriptions: 0,
       downloads: 0,
@@ -75,7 +76,7 @@ export default function AddVipReferral() {
   });
 
   const referralUserMutation = useMutation({
-    mutationFn: postUnit,
+    mutationFn: postVipReferral,
     onSuccess: (res) => {
       swal('Unit Added !', "Continue with the user management panel", 'success'),
         router.push('/userManagement/vipReferral/view-vipReferral');
@@ -207,39 +208,7 @@ export default function AddVipReferral() {
                 label="mobile"
               />
 
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Referral Type
-              </Typography>
-              <CustomFormControl fullWidth>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="referralType"
-                  value={formik.values.referralType}
-                  onChange={formik.handleChange}
-                  name="referralType"
-                >
-                  {referralType.map(x => {
-                    if (x.userType  == 'vip') {
-                      return (
-
-                        <MenuItem key={x.id} value={x.id}>
-                          {x.userType}
-                        </MenuItem>
-                      )
-                    }
-                  })}
-
-                </Select>
-              </CustomFormControl>
+            
 
               <Typography
                 variant="body1"

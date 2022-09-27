@@ -27,6 +27,7 @@ import { useTheme } from '@emotion/react';
 import { getReferralType } from 'src/apis/referraltype';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { postVipReferral } from 'src/apis/referralUser';
 //=======================================================
 export default function AddSaleReferral() {
   //=======================
@@ -48,6 +49,7 @@ export default function AddSaleReferral() {
       isWhatsapp: false,
       referralType: '',
       referralCode: '',
+      
    
     },
     validationSchema: yup.object({
@@ -69,7 +71,7 @@ export default function AddSaleReferral() {
   });
 
   const referralUserMutation = useMutation({
-    mutationFn: postUnit,
+    mutationFn: postVipReferral,
     onSuccess: (res) => {
       swal('Sale Referral User Added !', "Continue with the user management panel", 'success'),
         router.push('/userManagement/saleReferral/view-saleReferral');
