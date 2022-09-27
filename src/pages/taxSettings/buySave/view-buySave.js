@@ -20,7 +20,7 @@ import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { getGst, deleteGst, postGst, updateGst } from 'src/apis/gst';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -33,6 +33,8 @@ import { useTheme } from '@mui/styles';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 import { BuySaveCard } from 'src/components/cards/buySaveCard';
+import { getCalculation, updateCalculation } from 'src/apis/calculation';
+
 //=======================================================
 export default function BuySave() {
   const router = useRouter();
@@ -41,40 +43,31 @@ export default function BuySave() {
   const [showAdd, setShowAdd] = React.useState(false);
   const [showEdit, setShowEdit] = React.useState(false);
   const [id, setId] = useState('');
-  //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      code: "",
-      value: 0,
 
-    },
-    validationSchema: yup.object({
-      name: yup.string("Enter HSN Code").required("HSN Code is required"),
-      value: yup.number("Enter GST value ").required("GST value is required"),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
+
+  const [calculation, setCalculation] = useState([])
+  useEffect(() => {
+    getCalculation().then(res => setCalculation(res.docs))
+  }, [])
+  //=======================
 
   const editFormik = useFormik({
     initialValues: {
-      code: "",
+   
       value: 0,
     },
     validationSchema: yup.object({
-      name: yup.string("Enter HSN Code").required("HSN Code is required"),
-      value: yup.number("Enter GST value ").required("GST value is required"),
+      value: yup.number("Enter calculation value ").required("calculation value is required"),
     }),
     onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
+      editMutation.mutate({ data: values, id: values.id })
     },
   });
 
   const query = useQuery({
-    queryKey: 'GST',
-    queryFn: () => getGst(),
+    queryKey: 'buySave',
+    queryFn: () => getCalculation(),
+    onSuccess:()=>query.refetch()
   });
 
   const addMutation = useMutation({
@@ -83,22 +76,23 @@ export default function BuySave() {
       query.refetch();
       setShowAdd(false);
       addFormik.resetForm();
-      swal('HSN/GST Added !', 'Continue with the tax panel', 'success');
+      swal('Calculation Added !', 'Continue with the tax panel', 'success');
     },
     onError: (err) => swal('Erro !', err.message, 'error'),
   });
 
   const editMutation = useMutation({
-    mutationFn: updateGst,
+    mutationFn: updateCalculation,
     onSuccess: (res) => {
       query.refetch();
       setShowEdit(false);
-      swal('HSN/GST Updated !', 'Continue with the tax panel', 'success');
+      swal('Calculation Updated !', 'Continue with the tax panel', 'success');
     },
     onError: (err) => swal('Erro !', err.message, 'error'),
   });
 
-  // if (query.isLoading) return <Loading />;
+  if (query.isLoading) return <Loading />;
+  // console.log("<<-----",query.data.docs)
   //===============
 
   const editButton = (params) => {
@@ -173,7 +167,7 @@ export default function BuySave() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard |HSN/GSt </title>
+        <title>Dashboard | HSN/GSt </title>
       </Head>
       {/* ================= EDIT ================================== */}
       <Modal
@@ -196,7 +190,7 @@ export default function BuySave() {
                 fontWeight: 'bolder',
               }}
             >
-              Edit HSN/GST
+              Edit Calculation
             </Typography>
             <Typography
               variant="caption"
@@ -206,7 +200,7 @@ export default function BuySave() {
                 fontWeight: 'bold',
               }}
             >
-              Edit HSN/GST for products used in E-commerce
+              Edit Calculation for plans in the Buys & Save Modules 
             </Typography>
 
             <form onSubmit={editFormik.handleSubmit}>
@@ -262,14 +256,14 @@ export default function BuySave() {
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Edit HSN/GST
+                Edit Calculation
               </LoadingButton>
             </form>
           </Grid>
         </Box>
       </Modal>
       {/* =============== ADD ================================================ */}
-      <Modal
+      {/* <Modal
         sx={{
           display: 'flex',
           justifyContent: 'center',
@@ -362,10 +356,10 @@ export default function BuySave() {
             </form>
           </Grid>
         </Box>
-      </Modal>
+      </Modal> */}
       {/* =============================================================== */}
 
-      <Typography sx={[theme.custom.typography.dashBoard.h1, { mt: 8, mb: 5, p: 2 }]}>
+      <Typography sx={[theme.custom.typography.dashBoard.h1, { mt: 8, mb: 1, p: 2 }]}>
         Buy & Save View
       </Typography>
 
@@ -374,17 +368,14 @@ export default function BuySave() {
         container
         sx={{ p: 5 }}
       >
-        <Grid item lg={4} sm={4} xs={12}>
-          <BuySaveCard name="Bonus Plan" value={12} />
-        </Grid>
+        {query.data.docs.map(x => (
 
-        <Grid item lg={4} sm={4} xs={12}>
-          <BuySaveCard name="Handling" value={12} />
-        </Grid>
+          <Grid item lg={4} sm={4} xs={12}>
+            <BuySaveCard name={x.name} value={x.value} data={x} formik={editFormik} setShowEdit={setShowEdit}/>
+          </Grid>
+        ))
+        }
 
-        <Grid item lg={4} sm={4} xs={12}>
-          <BuySaveCard name="Hold" value={12} />
-        </Grid>
 
       </Grid>
     </>

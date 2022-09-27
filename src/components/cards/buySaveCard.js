@@ -27,8 +27,15 @@ export const BuySaveCard = (props) => {
                 <Box 
                 sx={{ display: 'flex', justifyContent: "space-evenly" }}
                 >
-                    <Button sx={[theme.custom.Button]} >Add  <AddIcon sx={theme.custom.editButton.iconStyle}/></Button>
-                    <Button sx={[theme.custom.Button]} >Edit <EditIcon sx={theme.custom.editButton.iconStyle}/></Button>
+                    {/* <Button sx={[theme.custom.Button]} >Add  <AddIcon sx={theme.custom.editButton.iconStyle}/></Button> */}
+                    <Button onClick={()=>{
+                        props.setShowEdit(true),
+                        // console.log("=======-->",props.data);
+                        props.formik.setValues(props.data)
+
+
+                        
+                        }} sx={[theme.custom.Button]} >Edit <EditIcon sx={theme.custom.editButton.iconStyle}/></Button>
                 </Box>
             </Grid>
 
