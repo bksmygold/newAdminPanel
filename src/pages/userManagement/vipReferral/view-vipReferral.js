@@ -14,7 +14,7 @@ import { useTheme } from '@emotion/react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 
 //=======================================================
-export default function ReferralUsers() {
+export default function VipReferral() {
   const router = useRouter();
   const theme = useTheme()
   //=======================
@@ -26,7 +26,7 @@ export default function ReferralUsers() {
           sx={theme.custom.editButton}
           size="small"
           onClick={() => {
-            router.push(`/userManagement/referralUsers/edit-referralUsers/?${params.id}`);
+            router.push(`/userManagement/vipReferral/edit-vipReferral/?${params.id}`);
           }}
         >
           Edit <EditIcon sx={{ marginLeft: 1, width: 23, height: 23 }} />
@@ -102,17 +102,17 @@ export default function ReferralUsers() {
       >
         <Grid item>
           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-            Referral Users View
+            VIP Referral View
           </Typography>
         </Grid>
         <Grid item>
           <Button
             onClick={() =>
-              router.push("/userManagement/referralUsers/add-referralUsers")
+              router.push("/userManagement/vipReferral/add-vipReferral")
               }
             sx={theme.custom.addButton}
           >
-            Referral Users
+            Add VIP Referral
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>
         </Grid>
@@ -125,4 +125,4 @@ export default function ReferralUsers() {
     </>
   );
 }
-ReferralUsers.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+VipReferral.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

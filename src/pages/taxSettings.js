@@ -80,6 +80,14 @@ export default function taxSettings() {
 
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
+            title={infoCard.taxes.referalType.title}
+            desc={infoCard.taxes.referalType.desc}
+            url={infoCard.taxes.referalType.url}
+            />
+          </Grid>
+          
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
             title={infoCard.taxes.referEarn.title}
             desc={infoCard.taxes.referEarn.desc}
             url={infoCard.taxes.referEarn.url}

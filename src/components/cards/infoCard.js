@@ -18,6 +18,8 @@ export const InfoCard = (props) => {
         border: '1px solid #d2c6c657',
         // width: '100%',
         // height:"fit-content"
+        backgroundColor:"#FDFAF2",
+        height:"100%"
       }}
       {...props}
     >

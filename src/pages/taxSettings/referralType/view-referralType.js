@@ -447,7 +447,7 @@ export default function ReferralType() {
                 fontWeight: 'bold',
               }}
             >
-              Edit Referral Type for products used in E-commerce
+              Edit Referral Type for influencers
             </Typography>
 
             <form onSubmit={editFormik.handleSubmit}>
@@ -463,7 +463,6 @@ export default function ReferralType() {
                 User Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">userType</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -573,7 +572,6 @@ export default function ReferralType() {
                 Criteria
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">criteria</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -668,7 +666,6 @@ export default function ReferralType() {
                 User Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">userType</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -778,7 +775,6 @@ export default function ReferralType() {
                 Criteria
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">criteria</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"

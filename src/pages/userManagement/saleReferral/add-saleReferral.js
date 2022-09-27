@@ -22,22 +22,22 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import swal from 'sweetalert';
 import { postUnit } from 'src/apis/unit';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useTheme } from '@emotion/react';
 import { getReferralType } from 'src/apis/referraltype';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 //=======================================================
-export default function EditReferralUser() {
+export default function AddSaleReferral() {
   //=======================
   const router = useRouter();
   const theme = useTheme();
 
-  const [referralType, setReferralType] = useState([]);
+  const [referralType, setReferralType] = useState([])
 
   useEffect(() => {
     getReferralType().then((res) => setReferralType(res.docs));
-  }, []);
+  }, [])
   //=======================================================
   const formik = useFormik({
     initialValues: {
@@ -48,8 +48,7 @@ export default function EditReferralUser() {
       isWhatsapp: false,
       referralType: '',
       referralCode: '',
-      subscriptions: 0,
-      downloads: 0,
+   
     },
     validationSchema: yup.object({
       fullName: yup.string('Enter  Name').required('Name is required'),
@@ -62,31 +61,18 @@ export default function EditReferralUser() {
         .string('Enter  referral Code')
         .required('referral Code is required'),
 
-      subscriptions: yup
-        .number('Enter subscriptions')
-        .required('subscriptions is required'),
-      downloads: yup
-        .number('Enter downloads')
-        .required('downloads is required'),
+  
     }),
     onSubmit: (values) => {
       referralUserMutation.mutate(values);
     },
   });
 
-  const query = useQuery({
-    queryKey: ['referralUser', router.query.id],
-    queryFn: () => getPlanById(router.query.id),
-    onSuccess: (res) => formik.setValues(res),
-    enabled: !!router.query.id,
-  });
-
-
   const referralUserMutation = useMutation({
     mutationFn: postUnit,
     onSuccess: (res) => {
-      swal('Unit Updated !', res.message, 'success'),
-        router.push('/userManagement/referralUsers/view-referralUsers');
+      swal('Sale Referral User Added !', "Continue with the user management panel", 'success'),
+        router.push('/userManagement/saleReferral/view-saleReferral');
     },
     onError: (err) => swal('Error !', err.message, 'error'),
   });
@@ -95,7 +81,7 @@ export default function EditReferralUser() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Add-Referral Users </title>
+        <title>Dashboard | Add-Sale Referral </title>
       </Head>
       {/* ------------------------------ */}
       <Container
@@ -106,6 +92,7 @@ export default function EditReferralUser() {
           marginTop: 5,
           border: '1px solid #d2c6c657',
           backgroundColor: 'white',
+          minWidth: "100%"
         }}
       >
         <Typography
@@ -114,7 +101,7 @@ export default function EditReferralUser() {
             color: '#8B5704',
           }}
         >
-          Add Referral Users
+          Add Sale Referral 
         </Typography>
         <Typography
           variant="caption"
@@ -124,7 +111,7 @@ export default function EditReferralUser() {
             fontWeight: 'bold',
           }}
         >
-          Add Referral Users for products used in E-commerce
+          Add Sale Referral Users for schemes for propmotions
         </Typography>
         {/* ------------------------------ */}
 
@@ -234,11 +221,17 @@ export default function EditReferralUser() {
                   onChange={formik.handleChange}
                   name="referralType"
                 >
-                  {referralType.map((x) => (
-                    <MenuItem key="weight" value={x.id}>
-                      {x.userType}
-                    </MenuItem>
-                  ))}
+                  {referralType.map(x => {
+                    if (x.userType  !== 'vip' && x.userType  !== 'customer') {
+                      return (
+
+                        <MenuItem key={x.id} value={x.id}>
+                          {x.userType}
+                        </MenuItem>
+                      )
+                    }
+                  })}
+
                 </Select>
               </CustomFormControl>
 
@@ -299,70 +292,15 @@ export default function EditReferralUser() {
                 </Select>
               </CustomFormControl>
 
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Subscriptions
-              </Typography>
-              <CustomTextField
-                error={
-                  formik.touched.subscriptions &&
-                  Boolean(formik.errors.subscriptions)
-                }
-                helperText={
-                  formik.touched.subscriptions && formik.errors.subscriptions
-                }
-                id="subscriptions"
-                type="number"
-                name="subscriptions"
-                value={formik.values.subscriptions}
-                onChange={formik.handleChange}
-                fullWidth
-                variant="outlined"
-                label="subscriptions"
-                sx={{ mt: 1 }}
-              />
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Downloads
-              </Typography>
-              <CustomTextField
-                error={
-                  formik.touched.downloads && Boolean(formik.errors.downloads)
-                }
-                helperText={formik.touched.downloads && formik.errors.downloads}
-                id="downloads"
-                type="number"
-                name="downloads"
-                value={formik.values.downloads}
-                onChange={formik.handleChange}
-                fullWidth
-                variant="outlined"
-                label="downloads"
-                sx={{ mt: 1 }}
-              />
-
+        
               <LoadingButton
                 disabled={referralUserMutation.isLoading}
                 loading={referralUserMutation.isLoading}
                 type="submit"
                 sx={theme.custom.editButton}
+                fullWidth
               >
-                Add Unit
+                Add Sale Referral
               </LoadingButton>
             </form>
           </Grid>
@@ -372,4 +310,4 @@ export default function EditReferralUser() {
     </>
   );
 }
-EditReferralUser.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AddSaleReferral.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

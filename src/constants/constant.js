@@ -21,17 +21,19 @@ export const infoCard = {
             url: "/userManagement/user/view-organisationUser"
         },
         referUser: {
-            title: "Referrals User",
-            desc: "create, update, delete sales referrals",
-            url: "/userManagement/referralUsers/view-referralUsers"
+            title: "VIP Referrals",
+            desc: "create, update, delete VIP/influencer Referral   ",
+            url: "/userManagement/vipReferral/view-vipReferral"
         },
         gbpUser: {
-            title: "Sales Referrals",
-            desc: "create, update, delete sales referrals",
+            title: "GBP User",
+            desc: "create, update, delete GBP Users",
         },
         saleRefer: {
             title: "Sales Referrals",
             desc: "create, update, delete sales referrals",
+            url: "/userManagement/saleReferral/view-saleReferral"
+
         },
         merchant: {
             title: "Merchant",
@@ -82,10 +84,16 @@ export const infoCard = {
             url: '/taxSettings/mandi/view-mandi'
 
         },
+        referalType: {
+            title: "Referal Type",
+            desc: "Create , Update, delete types of Referral",
+            url: "/taxSettings/referralType/view-referralType"
+
+        },
         referEarn: {
             title: "Refer and Earn",
             desc: "Create , Update, delete referral and joining bonus",
-            url: "/taxSettings/referralType/view-referralType"
+            // url: "/taxSettings/referralType/view-referralType"
 
         },
         buySell: {

@@ -65,16 +65,16 @@ export default function userManagement() {
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title={infoCard.userManagement.gbpUser.title}
-              desc={infoCard.userManagement.gbpUser.desc}
-              url={infoCard.userManagement.gbpUser.url}
+              title={infoCard.userManagement.saleRefer.title}
+              desc={infoCard.userManagement.saleRefer.desc}
+              url={infoCard.userManagement.saleRefer.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-              title={infoCard.userManagement.saleRefer.title}
-              desc={infoCard.userManagement.saleRefer.desc}
-              url={infoCard.userManagement.saleRefer.url}
+              title={infoCard.userManagement.gbpUser.title}
+              desc={infoCard.userManagement.gbpUser.desc}
+              url={infoCard.userManagement.gbpUser.url}
             />
           </Grid>
         </Grid>
