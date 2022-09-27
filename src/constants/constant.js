@@ -57,12 +57,12 @@ export const infoCard = {
         gst: {
             title: "HSN & GST",
             desc: "create, update, delete HSN and GST related Information",
-            url: '/taxSettings/customDuty/view-customDuty'
+            url: '/taxSettings/gst/view-gst'
         },
         tds: {
             title: "TDS & TCS",
             desc: "create, update, delete TDS and TCS related Information",
-            url: '/taxSettings/customDuty/view-customDuty'
+            url: '/taxSettings/tds/view-tds'
         },
         buySave: {
             title: "Buy & Save",
