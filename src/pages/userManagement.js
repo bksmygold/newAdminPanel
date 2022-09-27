@@ -26,6 +26,13 @@ export default function userManagement() {
           Organization Related
         </Typography>
         <Grid container spacing={3}>
+        <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <InfoCard
+              title={infoCard.userManagement.department.title}
+              desc={infoCard.userManagement.department.desc}
+              url={infoCard.userManagement.department.url}
+            />
+          </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title={infoCard.userManagement.rolesPerma.title}

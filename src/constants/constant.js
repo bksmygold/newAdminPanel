@@ -10,6 +10,11 @@ export const infoCard = {
             desc: "create, update, delete user roles and manage thier permission",
             url: '/userManagement/role/view-rolesPermission'
         },
+        department: {
+            title: "Departments",
+            desc: "create, update, delete Departments",
+            url: '/userManagement/department/view-department'
+        },
         orgaUser: {
             title: "Organisation Users",
             desc: "create, update, delete user for MyGold Organiation",
