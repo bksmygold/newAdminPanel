@@ -30,7 +30,7 @@ export default function VipReferral() {
           sx={theme.custom.editButton}
           size="small"
           onClick={() => {
-            router.push(`/userManagement/vipReferral/edit-vipReferral/?id=${params.row.user.id}`);
+            router.push(`/userManagement/vipReferral/edit-vipReferral/?id=${params.row.id}`);
           }}
         >
           Edit <EditIcon sx={{ marginLeft: 1, width: 23, height: 23 }} />
@@ -59,78 +59,50 @@ export default function VipReferral() {
       width: 150,
       editable: true,
       flex: 1,
-      
+
       renderCell: (params) => (
         <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
       ),
     },
     {
-      field: 'user.mobile',
+      field: 'mobile',
       headerName: 'Mobile',
       width: 150,
       editable: true, flex: 1,
-      valueGetter: (params) => {
-        let result = [];
-        if (params.row.user) {
-          if (params.row.user.mobile) {
-
-            result.push(params.row.user.mobile);
-
-          }
-        } else {
-          result = ['Empty'];
-        }
-        return result.join(', ');
-      },
     },
 
     {
-      field: 'code',
+      field: 'referral.code',
       headerName: 'Code',
       width: 150,
       editable: true, flex: 1,
-
+      valueGetter: (params) => {
+        return (params.row.referral.code);
+      }
     },
     {
-      field: 'user.referralCriteria.subscriptions',
+      field: 'referral.subscriptions',
       headerName: 'Subscriptions',
       width: 150,
       editable: true, flex: 1,
       valueGetter: (params) => {
-        let result = [];
-        if (params.row.user) {
-          if (params.row.user.referralCriteria) {
-            if (params.row.user.referralCriteria.subscriptions) {
-
-              result.push(params.row.user.referralCriteria.subscriptions);
-            }
 
 
-          }
-        } else {
-          result = ['Empty'];
-        }
-        return result.join(', ');
-      },
+        return (params.row.referral.subscriptions);
+      }
+
+
+
+
     },
     {
-      field: 'user.referralCriteria.downloads',
+      field: 'referral.downloads',
       headerName: 'Downloads',
       width: 150,
       editable: true, flex: 1,
       valueGetter: (params) => {
-        let result = [];
-        if (params.row.user) {
-          if (params.row.user.referralCriteria) {
-            if (params.row.user.referralCriteria.downloads) {
-              result.push(params.row.user.referralCriteria.downloads);
-            }
-          }
-        } else {
-          result = ['Empty'];
-        }
-        return result.join(', ');
-      },
+        return (params.row.referral.downloads);
+      }
     },
 
 
@@ -161,8 +133,8 @@ export default function VipReferral() {
 
 
   const referralTypeQuery = useQuery({
-    queryKey:"Vip Referral Type",
-    queryFn:()=>getReferralType({filter:{userType:"vip"}})
+    queryKey: "Vip Referral Type",
+    queryFn: () => getReferralType({ filter: { userType: "vip" } })
   })
 
   let vipId = referralTypeQuery.data?.docs[0].id
@@ -171,11 +143,11 @@ export default function VipReferral() {
   const query = useQuery({
     queryKey: 'vip referral',
     queryFn: () => getVipReferral(vipId),
-    enabled:!! vipId
+    enabled: !!vipId
   });
   console.log(query.data?.docs)
 
-  if(query.isLoading) return <Loading/>
+  if (query.isLoading) return <Loading />
   //=======================================================
   return (
     <>

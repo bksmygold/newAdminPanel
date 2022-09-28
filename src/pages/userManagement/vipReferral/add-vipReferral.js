@@ -42,12 +42,12 @@ export default function AddVipReferral() {
   }, [])
   //=======================================================
   const referralTypeQuery = useQuery({
-    queryKey:"Vip Referral Type",
-    queryFn:()=>getReferralType({filter:{userType:"vip"}})
+    queryKey: "Vip Referral Type",
+    queryFn: () => getReferralType({ filter: { userType: "vip" } })
   })
-  
 
-  
+
+
 
   const referralUserMutation = useMutation({
     mutationFn: postVipReferral,
@@ -58,7 +58,7 @@ export default function AddVipReferral() {
     onError: (err) => swal('Error !', err.message, 'error'),
   });
 
-  
+
   let vipId = referralTypeQuery.data?.docs[0].id
 
   const formik = useFormik({
@@ -68,11 +68,13 @@ export default function AddVipReferral() {
       mobile: '',
       accountType: 'individual',
       isWhatsapp: false,
-      referral:{
-        type:"",
-        code:"",
-        downloads:0,
-        subscriptions:0
+      userType:1,
+      password :"0000000000",
+      referral: {
+        type: "",
+        code: "",
+        downloads: 0,
+        subscriptions: 0
       },
 
     },
@@ -80,31 +82,21 @@ export default function AddVipReferral() {
       fullName: yup.string('Enter  Name').required('Name is required'),
       email: yup.string('Enter  email').required('email is required'),
       mobile: yup.string('Enter  mobile').required('mobile is required'),
-      referralType: yup
-        .string('Enter  referral Type')
-        .required('referral Type is required'),
-      referralCode: yup
-        .string('Enter  referral Code')
-        .required('referral Code is required'),
-
-      subscriptions: yup
-        .number('Enter subscriptions')
-        .required('subscriptions is required'),
-      downloads: yup
-        .number('Enter downloads')
-        .required('downloads is required'),
-        referral:yup.object({
-          type:yup.string()
-        })
+      referral: yup.object({
+        type: yup.string('Enter  type').required('type is required'),
+        code: yup.string('Enter  code').required('code is required'),
+        downloads: yup.number('Enter  downloads').required('downloads is required'),
+        subscriptions: yup.number('Enter  subscriptions').required('subscriptions is required'),
+      })
     }),
     onSubmit: (values) => {
       referralUserMutation.mutate(values);
     },
   });
-  if(referralTypeQuery.isLoading) return <Loading/>
+  if (referralTypeQuery.isLoading) return <Loading />
 
-  console.log("Errors ---",formik.errors)
-//=======================================================
+  console.log("Errors ---", formik.errors)
+  //=======================================================
   return (
     <>
       {/* ------------------------------ */}
@@ -229,7 +221,7 @@ export default function AddVipReferral() {
                 label="mobile"
               />
 
-            
+
 
               <Typography
                 variant="body1"
@@ -243,16 +235,16 @@ export default function AddVipReferral() {
                 Referral Code
               </Typography>
               <CustomTextField
-                error={
-                  formik.touched.referralCode &&
-                  Boolean(formik.errors.referralCode)
-                }
-                helperText={
-                  formik.touched.referralCode && formik.errors.referralCode
-                }
-                id="referralCode"
-                name="referralCode"
-                value={formik.values.referralCode}
+                // error={
+                //   formik.touched.referral.code &&
+                //   Boolean(formik.errors.referral.code)
+                // }
+                // helperText={
+                //   formik.touched.referral.code && formik.errors.referral.code
+                // }
+                id="referral.code"
+                name="referral.code"
+                value={formik.values.referral.code}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
@@ -297,20 +289,50 @@ export default function AddVipReferral() {
                   fontWeight: 600,
                 }}
               >
+                Type
+              </Typography>
+              <CustomFormControl fullWidth>
+                <Select
+                  defaultValue=""
+                  labelId="demo-simple-select-label"
+                  id="referral.type"
+                  value={formik.values.referral.type}
+                  onChange={formik.handleChange}
+                  name="referral.type"
+                  >
+                  {referralTypeQuery.data.docs.map(x=>(
+
+                  <MenuItem key={x.id} value={x.id}>
+                    {x.userType}
+                  </MenuItem>
+                  ))}
+                  
+                </Select>
+              </CustomFormControl>
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
                 Subscriptions
               </Typography>
               <CustomTextField
                 // error={
-                //   formik.touched.subscriptions &&
-                //   Boolean(formik.errors.subscriptions)
+                //   formik.touched.referral.subscriptions &&
+                //   Boolean(formik.errors.referral.subscriptions)
                 // }
                 // helperText={
-                //   formik.touched.subscriptions && formik.errors.subscriptions
+                //   formik.touched.referral.subscriptions && formik.errors.referral.subscriptions
                 // }
-                id="referralCriteria.subscriptions"
+                id="referral.subscriptions"
                 type="number"
-                name="referralCriteria.subscriptions"
-                value={formik.values.referralCriteria.subscriptions}
+                name="referral.subscriptions"
+                value={formik.values.referral.subscriptions}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
@@ -331,13 +353,13 @@ export default function AddVipReferral() {
               </Typography>
               <CustomTextField
                 // error={
-                //   formik.touched.downloads && Boolean(formik.errors.downloads)
+                //   formik.touched.referral.downloads && Boolean(formik.errors.referral.downloads)
                 // }
-                // helperText={formik.touched.downloads && formik.errors.downloads}
-                id="referralCriteria.downloads"
+                // helperText={formik.touched.referral.downloads && formik.errors.referral.downloads}
+                id="referral.downloads"
                 type="number"
-                name="referralCriteria.downloads"
-                value={formik.values.referralCriteria.downloads}
+                name="referral.downloads"
+                value={formik.values.referral.downloads}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"

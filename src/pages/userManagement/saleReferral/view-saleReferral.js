@@ -13,7 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@emotion/react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getSaleReferral } from 'src/apis/referralUser';
+import { deleteSaleReferral, getSaleReferral } from 'src/apis/referralUser';
 import Loading from 'src/components/loading';
 import { getReferralType } from 'src/apis/referraltype';
 
@@ -30,7 +30,7 @@ export default function VipReferral() {
           sx={theme.custom.editButton}
           size="small"
           onClick={() => {
-            router.push(`/userManagement/saleReferral/edit-saleReferral/?${params.id}`);
+            router.push(`/userManagement/saleReferral/edit-saleReferral/?id=${params.row.id}`);
           }}
         >
           Edit <EditIcon sx={{ marginLeft: 1, width: 23, height: 23 }} />
@@ -43,64 +43,69 @@ export default function VipReferral() {
     return (
       <DeleteSpinner
         id={params.id}
-        deleting={""}
-        url="/unit/view-unit"
+        deleting={deleteSaleReferral}
       />
     );
   };
   //==========
   const columns = [
     {
-      field: 'user.fullName',
+      field: 'fullName',
       headerName: 'Name',
       width: 150,
       editable: true,
       flex: 1,
-      valueGetter: (params) => {
-        let result = [];
-        if (params.row.user) {
-          if (params.row.user.fullName) {
 
-            result.push(params.row.user.fullName);
-
-          }
-        } else {
-          result = ['Empty'];
-        }
-        return result.join(', ');
-      },
       renderCell: (params) => (
         <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
       ),
     },
     {
-      field: 'user.mobile',
+      field: 'mobile',
       headerName: 'Mobile',
       width: 150,
       editable: true, flex: 1,
-      valueGetter: (params) => {
-        let result = [];
-        if (params.row.user) {
-          if (params.row.user.mobile) {
-
-            result.push(params.row.user.mobile);
-
-          }
-        } else {
-          result = ['Empty'];
-        }
-        return result.join(', ');
-      },
     },
-
     {
-      field: 'code',
-      headerName: 'Code',
+      field: 'email',
+      headerName: 'Email',
       width: 150,
       editable: true, flex: 1,
-
     },
- 
+
+    // {
+    //   field: 'referral.code',
+    //   headerName: 'Code',
+    //   width: 150,
+    //   editable: true, flex: 1,
+    //   valueGetter: (params) => {
+    //     return (params.row.referral.code);
+    //   }
+    // },
+    // {
+    //   field: 'referral.subscriptions',
+    //   headerName: 'Subscriptions',
+    //   width: 150,
+    //   editable: true, flex: 1,
+    //   valueGetter: (params) => {
+
+
+    //     return (params.row.referral.subscriptions);
+    //   }
+
+
+
+
+    // },
+    // {
+    //   field: 'referral.downloads',
+    //   headerName: 'Downloads',
+    //   width: 150,
+    //   editable: true, flex: 1,
+    //   valueGetter: (params) => {
+    //     return (params.row.referral.downloads);
+    //   }
+    // },
 
 
     {
@@ -120,11 +125,11 @@ export default function VipReferral() {
   ];
 
   const referralTypeQuery = useQuery({
-    queryKey:"Vip Referral Type",
+    queryKey:"Sale Referral Type",
     queryFn:()=>getReferralType({filter:{userType:["sales_offer" ,"sales_associate"]}})
   })
   
-  let saleId = referralTypeQuery.data?.docs[1].id
+  let saleId = referralTypeQuery.data?.docs[0].id
   let saleAssociateId = referralTypeQuery.data?.docs[1].id
 
   
@@ -133,10 +138,12 @@ export default function VipReferral() {
     queryKey: 'Sale referral',
     queryFn: () => getSaleReferral(saleId,saleAssociateId),
   });
+  // if(referralTypeQuery.isLoading) return <Loading/>
+
   if(query.isLoading) return <Loading/>
 
-
-  console.log("----",query.data?.docs)
+  console.log("saleId--",saleId)
+  console.log("saleAssociateId--",saleAssociateId)
   //=======================================================
   return (
     <>

@@ -47,23 +47,24 @@ export default function AddSaleReferral() {
       mobile: '',
       accountType: 'individual',
       isWhatsapp: false,
-      referralType: '',
-      referralCode: '',
-      
+      userType:1,
+      password :"0000000000",
+      referral: {
+        type: "",
+        code: "",
+      },
+
    
     },
     validationSchema: yup.object({
       fullName: yup.string('Enter  Name').required('Name is required'),
       email: yup.string('Enter  email').required('email is required'),
       mobile: yup.string('Enter  mobile').required('mobile is required'),
-      referralType: yup
-        .string('Enter  referral Type')
-        .required('referral Type is required'),
-      referralCode: yup
-        .string('Enter  referral Code')
-        .required('referral Code is required'),
-
-  
+      referral: yup.object({
+        type: yup.string('Enter  type').required('type is required'),
+        code: yup.string('Enter  code').required('code is required'),
+       
+      })
     }),
     onSubmit: (values) => {
       referralUserMutation.mutate(values);
@@ -218,10 +219,10 @@ export default function AddSaleReferral() {
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
-                  id="referralType"
-                  value={formik.values.referralType}
+                  id="referral.type"
+                  value={formik.values.referral.type}
                   onChange={formik.handleChange}
-                  name="referralType"
+                  name="referral.type"
                 >
                   {referralType.map(x => {
                     if (x.userType  !== 'vip' && x.userType  !== 'customer') {
@@ -249,20 +250,20 @@ export default function AddSaleReferral() {
                 Referral Code
               </Typography>
               <CustomTextField
-                error={
-                  formik.touched.referralCode &&
-                  Boolean(formik.errors.referralCode)
-                }
-                helperText={
-                  formik.touched.referralCode && formik.errors.referralCode
-                }
-                id="referralCode"
-                name="referralCode"
-                value={formik.values.referralCode}
+                // error={
+                //   formik.touched.referral.code &&
+                //   Boolean(formik.errors.referral.code)
+                // }
+                // helperText={
+                //   formik.touched.referral.code && formik.errors.referral.code
+                // }
+                id="referral.code"
+                name="referral.code"
+                value={formik.values.referral.code}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="referral code"
+                label="code"
               />
 
               <Typography

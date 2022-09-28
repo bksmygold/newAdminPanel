@@ -28,6 +28,7 @@ import { getReferralType } from 'src/apis/referraltype';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 import { getVipReferralById, updateVipReferral } from 'src/apis/referralUser';
+import Loading from 'src/components/loading';
 //=======================================================
 export default function EditVipReferral() {
   //=======================
@@ -39,6 +40,15 @@ export default function EditVipReferral() {
   useEffect(() => {
     getReferralType().then((res) => setReferralType(res.docs));
   }, []);
+
+  const referralTypeQuery = useQuery({
+    queryKey: "Vip Referral Type",
+    queryFn: () => getReferralType({ filter: { userType: "vip" } })
+  })
+
+  if (referralTypeQuery.isLoading) return <Loading />
+  let id = referralTypeQuery.data.docs[0].id
+  console.log("===>", referralTypeQuery.data.docs[0].id)
   //=======================================================
   const formik = useFormik({
     initialValues: {
@@ -47,39 +57,33 @@ export default function EditVipReferral() {
       mobile: '',
       accountType: 'individual',
       isWhatsapp: false,
-      referralType: '6332cf4acc4242e5b392ab32',
-      referralCode: '',
-      referralCriteria:{
-        subscriptions: 0,
+      userType: 1,
+      password: "0000000000",
+      referral: {
+        type: "",
+        code: "",
         downloads: 0,
-
+        subscriptions: 0
       },
     },
     validationSchema: yup.object({
       fullName: yup.string('Enter  Name').required('Name is required'),
       email: yup.string('Enter  email').required('email is required'),
       mobile: yup.string('Enter  mobile').required('mobile is required'),
-      referralType: yup
-        .string('Enter  referral Type')
-        .required('referral Type is required'),
-      referralCode: yup
-        .string('Enter  referral Code')
-        .required('referral Code is required'),
-
-      subscriptions: yup
-        .number('Enter subscriptions')
-        .required('subscriptions is required'),
-      downloads: yup
-        .number('Enter downloads')
-        .required('downloads is required'),
+      referral: yup.object({
+        type: yup.string('Enter  type').required('type is required'),
+        code: yup.string('Enter  code').required('code is required'),
+        downloads: yup.number('Enter  downloads').required('downloads is required'),
+        subscriptions: yup.number('Enter  subscriptions').required('subscriptions is required'),
+      })
     }),
     onSubmit: (values) => {
-      referralUserMutation.mutate({data:values,id:router.query.id});
+      referralUserMutation.mutate({ data: values, id: router.query.id });
     },
   });
 
   const query = useQuery({
-    queryKey: ['referralUser', router.query.id],
+    queryKey: ['vipReferralUser', router.query.id],
     queryFn: () => getVipReferralById(router.query.id),
     onSuccess: (res) => formik.setValues(res),
     enabled: !!router.query.id,
@@ -89,11 +93,13 @@ export default function EditVipReferral() {
   const referralUserMutation = useMutation({
     mutationFn: updateVipReferral,
     onSuccess: (res) => {
-      swal('Vip Referral Updated !', "Continuw with the User Management Panel", 'success'),
+      swal('Vip Referral Updated !', "Continue with the User Management Panel", 'success'),
         router.push('/userManagement/vipReferral/view-vipReferral');
     },
     onError: (err) => swal('Error !', err.message, 'error'),
   });
+
+  console.log("errors --",formik.errors)
   //=======================================================
   return (
     <>
@@ -110,7 +116,7 @@ export default function EditVipReferral() {
           marginTop: 5,
           border: '1px solid #d2c6c657',
           backgroundColor: 'white',
-          minWidth:"100%"
+          minWidth: "100%"
         }}
       >
         <Typography
@@ -119,7 +125,7 @@ export default function EditVipReferral() {
             color: '#8B5704',
           }}
         >
-          Edit Vip Referral 
+          Edit Vip Referral
         </Typography>
         <Typography
           variant="caption"
@@ -219,38 +225,6 @@ export default function EditVipReferral() {
                 label="mobile"
               />
 
-              {/* <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Referral Type
-              </Typography>
-              <CustomFormControl fullWidth>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="referralType"
-                  value={formik.values.referralType}
-                  onChange={formik.handleChange}
-                  name="referralType"
-                >
-                   {referralType.map(x => {
-                    if (x.userType  == 'vip') {
-                      return (
-
-                        <MenuItem key={x.id} value={x.id}>
-                          {x.userType}
-                        </MenuItem>
-                      )
-                    }
-                  })}
-                </Select>
-              </CustomFormControl> */}
 
               <Typography
                 variant="body1"
@@ -264,16 +238,16 @@ export default function EditVipReferral() {
                 Referral Code
               </Typography>
               <CustomTextField
-                error={
-                  formik.touched.referralCode &&
-                  Boolean(formik.errors.referralCode)
-                }
-                helperText={
-                  formik.touched.referralCode && formik.errors.referralCode
-                }
-                id="referralCode"
-                name="referralCode"
-                value={formik.values.referralCode}
+                // error={
+                //   formik.touched.referral.code &&
+                //   Boolean(formik.errors.referral.code)
+                // }
+                // helperText={
+                //   formik.touched.referral.code && formik.errors.referral.code
+                // }
+                id="referral.code"
+                name="referral.code"
+                value={formik.values.referral.code}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
@@ -308,6 +282,34 @@ export default function EditVipReferral() {
                   </MenuItem>
                 </Select>
               </CustomFormControl>
+              
+              {/* <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Type
+              </Typography>
+              <CustomFormControl fullWidth>
+                <Select
+                  defaultValue=""
+                  labelId="demo-simple-select-label"
+                  id="referral.type"
+                  value={formik.values.referral.type}
+                  onChange={formik.handleChange}
+                  name="referral.type"
+                  >
+
+                  <MenuItem key={1} value={1}>
+                    {formik.values.referral.type}
+                  </MenuItem>
+                  
+                </Select>
+              </CustomFormControl> */}
 
               <Typography
                 variant="body1"
@@ -322,16 +324,16 @@ export default function EditVipReferral() {
               </Typography>
               <CustomTextField
                 // error={
-                //   formik.touched.subscriptions &&
-                //   Boolean(formik.errors.subscriptions)
+                //   formik.touched.referral.subscriptions &&
+                //   Boolean(formik.errors.referral.subscriptions)
                 // }
                 // helperText={
-                //   formik.touched.subscriptions && formik.errors.subscriptions
+                //   formik.touched.referral.subscriptions && formik.errors.referral.subscriptions
                 // }
-                id="referralCriteria.subscriptions"
+                id="referral.subscriptions"
                 type="number"
-                name="referralCriteria.subscriptions"
-                value={formik.values.referralCriteria.subscriptions}
+                name="referral.subscriptions"
+                value={formik.values.referral.subscriptions}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
@@ -352,25 +354,24 @@ export default function EditVipReferral() {
               </Typography>
               <CustomTextField
                 // error={
-                //   formik.touched.downloads && Boolean(formik.errors.downloads)
+                //   formik.touched.referral.downloads && Boolean(formik.errors.referral.downloads)
                 // }
-                // helperText={formik.touched.downloads && formik.errors.downloads}
-                id="referralCriteria.downloads"
+                // helperText={formik.touched.referral.downloads && formik.errors.referral.downloads}
+                id="referral.downloads"
                 type="number"
-                name="referralCriteria.downloads"
-                value={formik.values.referralCriteria.downloads}
+                name="referral.downloads"
+                value={formik.values.referral.downloads}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
                 label="downloads"
                 sx={{ mt: 1 }}
               />
-
               <LoadingButton
                 disabled={referralUserMutation.isLoading}
                 loading={referralUserMutation.isLoading}
                 type="submit"
-                sx={[theme.custom.editButton,{mt:2}]}
+                sx={[theme.custom.editButton, { mt: 2 }]}
                 fullWidth
               >
                 Edit VIP Referral
@@ -383,4 +384,4 @@ export default function EditVipReferral() {
     </>
   );
 }
-EditVipReferral .getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+EditVipReferral.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
