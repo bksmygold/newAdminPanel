@@ -1,7 +1,7 @@
 import axios from 'axios';
 //==============================
-export const getReferralType = () => {
-  return axios.post('/referralType/list');
+export const getReferralType = (filter) => {
+  return axios.post('/referralType/list',filter);
 };
 
 export const getReferralTypeById = (id) => {

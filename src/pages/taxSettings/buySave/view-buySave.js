@@ -53,7 +53,7 @@ export default function BuySave() {
 
   const editFormik = useFormik({
     initialValues: {
-   
+
       value: 0,
     },
     validationSchema: yup.object({
@@ -67,7 +67,7 @@ export default function BuySave() {
   const query = useQuery({
     queryKey: 'buySave',
     queryFn: () => getCalculation(),
-    onSuccess:()=>query.refetch()
+    onSuccess: () => query.refetch()
   });
 
   const addMutation = useMutation({
@@ -200,7 +200,7 @@ export default function BuySave() {
                 fontWeight: 'bold',
               }}
             >
-              Edit Calculation for plans in the Buys & Save Modules 
+              Edit Calculation for plans in the Buys & Save Modules
             </Typography>
 
             <form onSubmit={editFormik.handleSubmit}>
@@ -371,7 +371,13 @@ export default function BuySave() {
         {query.data.docs.map(x => (
 
           <Grid item lg={4} sm={4} xs={12}>
-            <BuySaveCard name={x.name} value={x.value} data={x} formik={editFormik} setShowEdit={setShowEdit}/>
+            <BuySaveCard
+              name={x.name}
+              value={x.value}
+              data={x}
+              formik={editFormik}
+              setShowEdit={setShowEdit}
+            />
           </Grid>
         ))
         }

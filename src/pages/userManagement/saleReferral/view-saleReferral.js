@@ -15,6 +15,7 @@ import DeleteSpinner from 'src/components/deleteSpinner';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { getSaleReferral } from 'src/apis/referralUser';
 import Loading from 'src/components/loading';
+import { getReferralType } from 'src/apis/referraltype';
 
 //=======================================================
 export default function VipReferral() {
@@ -118,16 +119,24 @@ export default function VipReferral() {
     },
   ];
 
+  const referralTypeQuery = useQuery({
+    queryKey:"Vip Referral Type",
+    queryFn:()=>getReferralType({filter:{userType:["sales_offer" ,"sales_associate"]}})
+  })
+  
+  let saleId = referralTypeQuery.data?.docs[1].id
+  let saleAssociateId = referralTypeQuery.data?.docs[1].id
 
+  
 
   const query = useQuery({
     queryKey: 'Sale referral',
-    queryFn: () => getSaleReferral(),
+    queryFn: () => getSaleReferral(saleId,saleAssociateId),
   });
   if(query.isLoading) return <Loading/>
 
 
-  console.log(query.data?.docs)
+  console.log("----",query.data?.docs)
   //=======================================================
   return (
     <>

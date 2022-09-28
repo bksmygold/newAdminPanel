@@ -86,14 +86,11 @@ export const PermissionCard = (props) => {
 
                         if (x.name === "all") {
 
-                          setChecked((prev) => !prev),
+                          // setChecked((prev) => !prev),
+                          setChecked(true)
                             props.setPermissions(x.value)
 
-                        }else(
-
-                          props.setPermissions(e.target.value)
-                        )
-                        // setChecked(true)
+                        }
 
 
 

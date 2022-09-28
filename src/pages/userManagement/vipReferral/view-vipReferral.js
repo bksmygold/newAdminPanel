@@ -13,8 +13,9 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@emotion/react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getVipReferral } from 'src/apis/referralUser';
+import { deleteVipReferral, getVipReferral } from 'src/apis/referralUser';
 import Loading from 'src/components/loading';
+import { getReferralType } from 'src/apis/referraltype';
 
 //=======================================================
 export default function VipReferral() {
@@ -29,7 +30,7 @@ export default function VipReferral() {
           sx={theme.custom.editButton}
           size="small"
           onClick={() => {
-            router.push(`/userManagement/vipReferral/edit-vipReferral/?${params.id}`);
+            router.push(`/userManagement/vipReferral/edit-vipReferral/?id=${params.row.user.id}`);
           }}
         >
           Edit <EditIcon sx={{ marginLeft: 1, width: 23, height: 23 }} />
@@ -42,7 +43,7 @@ export default function VipReferral() {
     return (
       <DeleteSpinner
         id={params.id}
-        deleting={""}
+        deleting={deleteVipReferral}
         url="/unit/view-unit"
       />
     );
@@ -171,13 +172,19 @@ export default function VipReferral() {
   ];
 
 
+  const referralTypeQuery = useQuery({
+    queryKey:"Vip Referral Type",
+    queryFn:()=>getReferralType({filter:{userType:"vip"}})
+  })
+
+  let vipId = referralTypeQuery.data?.docs[0].id
 
 
   const query = useQuery({
     queryKey: 'vip referral',
-    queryFn: () => getVipReferral(),
+    queryFn: () => getVipReferral(vipId),
   });
-  console.log(query)
+  console.log(query.data?.docs)
 
   if(query.isLoading) return <Loading/>
   //=======================================================
