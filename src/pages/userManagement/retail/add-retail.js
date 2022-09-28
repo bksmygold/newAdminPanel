@@ -27,8 +27,8 @@ import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import swal from 'sweetalert';
-import { getMerchantById, postMerchant, updateMerchant } from 'src/apis/merchant';
-import { useMutation ,useQuery} from '@tanstack/react-query';
+import { postMerchant } from 'src/apis/merchant';
+import { useMutation } from '@tanstack/react-query';
 import GoogleMapReact from 'google-map-react';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { RoleCard } from '../../../components/cards/roleCard';
@@ -42,27 +42,12 @@ import { useTheme } from '@mui/material/styles';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import MapPicker from 'react-google-map-picker';
 
+import { CustomTextField } from 'src/components/customMUI';
+import { CustomFormControl } from 'src/components/customMUI';
+import { postRetail } from 'src/apis/retail';
 //=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
-const CustomFormControl = styled(FormControl)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+
+
 
 const modules = [
   { name: 'custodian' },
@@ -71,7 +56,7 @@ const modules = [
   { name: 'refiner' },
 ];
 //=======================================================
-export default function EditMerchant() {
+export default function AddBusiness() {
   const DefaultLocation = { lat: 20.5937, lng: 78.9629 };
   const DefaultZoom = 10;
 
@@ -104,14 +89,6 @@ export default function EditMerchant() {
 
   const theme = useTheme();
   //=======================
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627,
-    },
-    zoom: 1,
-  };
-  //=======================
   const router = useRouter();
   //=======================================================
   const formik = useFormik({
@@ -122,63 +99,48 @@ export default function EditMerchant() {
       aadhaar: '',
       pan: '',
       gstNo: '',
-      retainershipType: '',
-      retainershipValue: 0, //--->
-      address: '',
-      location: [], //--->
-      commission: {
-        buy: 0,
-        sell: 0,
+      businessType: "",
+      image: [],
+      bank: {
+        bankName: "",
+        accountNo: "",
+        ifsc: "",
+        branch: "",
       },
-      modules: [], //--->
-      settlementInDays: 0,
-      limit: 0,
-      eInvoiceApplicable: true,
+      location: [],
     },
+
     validationSchema: yup.object({
       name: yup
-        .string('Enter Merchant Name')
-        .required('Merchant Name is required'),
+        .string('Enter Business Name')
+        .required('Business Name is required'),
       email: yup.string('Enter email').required('email is required'),
       mobile: yup.string('Enter mobile').required('mobile is required'),
       aadhaar: yup.string('Enter aadhaar').required('aadhaar is required'),
       pan: yup.string('Enter pan').required('pan is required'),
 
       gstNo: yup.string('Enter gst no.').required('gst no. is required'),
-      retainershipType: yup
-        .string('Enter retainership type')
-        .required('retainership type is required'),
 
-      address: yup.string('Enter address').required('address is required'),
-      settlementInDays: yup
-        .number('Enter settlement In Days')
-        .required('settlement is required'),
-      limit: yup.number('Enter limit').required('limit is required'),
+
+
     }),
     onSubmit: (values) => {
       console.log('payload ---', values);
-      try {
-        merchantMutation.mutate(values);
-      } catch (e) {
-        console.log('e--', e);
-      }
+      retailMutation.mutate(values);
+
+      // try {
+      //   retailMutation.mutate(values);
+      // } catch (e) {
+      //   console.log('e--', e);
+      // }
     },
   });
 
-
-  const query = useQuery({
-    queryKey: ['merchant', router.query.id],
-    queryFn: () => getMerchantById(router.query.id),
-    onSuccess: (res) => console.log("aaya ---",res),
-    enabled: !!router.query.id,
-  });
-
-
-  const merchantMutation = useMutation({
-    mutationFn: updateMerchant,
+  const retailMutation = useMutation({
+    mutationFn: postRetail,
     onSuccess: (res) => {
-      swal('Merchant Updated !', 'continue with the admin panel', 'success');
-      router.push('/userManagement/merchant/view-merchant');
+      swal('Business Added !', 'continue with the admin panel', 'success');
+      router.push('/userManagement/retail/view-retail');
     },
     onError: (err) => swal('Error !', err.message, 'error'),
   });
@@ -196,18 +158,18 @@ export default function EditMerchant() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Edit-Merchant</title>
+        <title>Dashboard | Add-Business</title>
       </Head>
       <form onSubmit={formik.handleSubmit}>
         <Container
-        
+
           sx={{
             padding: 5,
             borderRadius: 2,
             boxShadow: '0px 4px 1px 0px #d2c6c6',
             marginTop: 5,
             border: '1px solid #d2c6c657',
-            minWidth:"100%"
+            minWidth: "100%"
           }}
         >
           {/* ------------------------------ */}
@@ -217,7 +179,7 @@ export default function EditMerchant() {
               color: '#8B5704',
             }}
           >
-            Edit merchant
+            Add Business
           </Typography>
           <Typography
             variant="caption"
@@ -227,12 +189,12 @@ export default function EditMerchant() {
               fontWeight: 'bold',
             }}
           >
-            Edit merchant for products used in E-commerce
+            Add Business for products used in E-commerce
           </Typography>
           {/* -------------------------------- General Data ----------------------------------------- */}
 
           <Grid
-          fullWidth
+            fullWidth
             container
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -479,7 +441,7 @@ export default function EditMerchant() {
                   defaultCenter={defaultProps.center}
                   defaultZoom={defaultProps.zoom}
                 ></GoogleMapReact> */}
-              <button onClick={() => setShow(!show)}>Show</button>
+              {/* <button onClick={() => setShow(!show)}>Show</button> */}
               {/* 
               <button onClick={handleResetLocation}>Reset Location</button>
               <label>Latitute:</label>
@@ -503,33 +465,9 @@ export default function EditMerchant() {
               )}
               {/* </div> */}
             </Grid>
-            <Grid item xs={12}>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Address
-              </Typography>
-              <CustomTextField
-                fullWidth
-                multiline
-                error={formik.touched.address && Boolean(formik.errors.address)}
-                helperText={formik.touched.address && formik.errors.address}
-                id="address"
-                name="address"
-                value={formik.values.address}
-                onChange={formik.handleChange}
-                variant="outlined"
-                label=""
-              />{' '}
-            </Grid>
+
           </Grid>
-          {/* ---------------------------------- Retainer Type --------------------------------------- */}
+          {/* ---------------------------------- Bank Details --------------------------------------- */}
           <Grid
             container
             rowSpacing={1}
@@ -552,40 +490,10 @@ export default function EditMerchant() {
                   fontWeight: 600,
                 }}
               >
-                4.Retainer Details
+                4.Bank Details
               </Typography>
             </Grid>
-            <Grid item sm={6} xs={12}>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Retainer Type
-              </Typography>
 
-              <CustomFormControl fullWidth>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="retainershipType"
-                  value={formik.values.retainershipType}
-                  onChange={formik.handleChange}
-                  name="retainershipType"
-                >
-                  <MenuItem key="collection" value="commission_based">
-                    commission based
-                  </MenuItem>
-                  <MenuItem key="category" value="monthly_based">
-                    monthly based
-                  </MenuItem>
-                </Select>
-              </CustomFormControl>
-            </Grid>
             <Grid item sm={6} xs={12}>
               <Typography
                 variant="body1"
@@ -596,26 +504,18 @@ export default function EditMerchant() {
                   fontWeight: 600,
                 }}
               >
-                Retainer Value
+                Bank name
               </Typography>
 
               <CustomTextField
-                error={
-                  formik.touched.retainershipValue &&
-                  Boolean(formik.errors.retainershipValue)
-                }
-                helperText={
-                  formik.touched.retainershipValue &&
-                  formik.errors.retainershipValue
-                }
-                id="retainershipValue"
-                name="retainershipValue"
-                type="number"
-                value={formik.values?.retainershipValue}
+
+                id="bank.bankName"
+                name="bank.bankName"
+                value={formik.values?.bank.bankName}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="retainership value"
+                label="bank name"
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -628,26 +528,19 @@ export default function EditMerchant() {
                   fontWeight: 600,
                 }}
               >
-                Sell Commission
+                Account number
               </Typography>
 
               <CustomTextField
-                // error={
-                //   formik.touched.commission.sell &&
-                //   Boolean(formik.errors.commission.sell)
-                // }
-                // helperText={
-                //   formik.touched.commission.sell &&
-                //   formik.errors.commission.sell
-                // }
-                id="commission.sell"
-                type="number"
-                name="commission.sell"
-                value={formik.values?.commission?.sell}
+
+                id="bank.accountNo"
+
+                name="bank.accountNo"
+                value={formik.values?.bank?.accountNo}
                 onChange={formik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="sell commission"
+                label="account no."
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -660,7 +553,7 @@ export default function EditMerchant() {
                   fontWeight: 600,
                 }}
               >
-                Buy Commission
+                IFSC code
               </Typography>
 
               <CustomTextField
@@ -671,194 +564,152 @@ export default function EditMerchant() {
                 // helperText={
                 //   formik.touched.commission.buy && formik.errors.commission.buy
                 // }
-                id="commission.buy"
-                name="commission.buy"
-                value={formik.values?.commission?.buy}
+                id="bank.ifsc"
+                name="bank.ifsc"
+                value={formik.values?.bank?.ifsc}
                 onChange={formik.handleChange}
                 fullWidth
-                type="number"
+
                 variant="outlined"
-                label="buy commission"
+                label="ifsc"
                 sx={{ marginBottom: 4 }}
               />
             </Grid>
-            <Grid item xs={6}></Grid>
-            <Grid
-              container
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginRight: 2,
-                width: '100%',
-              }}
-            >
-              {modules.map((x) => (
-                <Grid sx={{ marginRight: 2 }} item sm={2} xs={12}>
-                  <Box
-                    sx={{
 
-                      p: 3,
-                      marginTop: 2,
-                      borderRadius: 1,
-                      border:`${isActive(x.name) ? "1px solid #976413" :"1px solid gray"}`,
-                      background : ` ${isActive(x.name) ?  'linear-gradient(43deg, #8b5704, #ddb070)' : null}`,
+            <Grid item sm={6} xs={12}>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Bank Branch
+              </Typography>
 
-                    }}
-                    onClick={() => {
-                      if (isActive(x.name)) {
-                        formik.setFieldValue(
-                          'modules',
-                          formik.values.modules.filter((e) => e !== x.name)
-                        );
-                        return;
-                      }
-                      formik.setFieldValue(
-                        'modules',
-                        [...formik.values.modules, x.name].filter(Boolean)
-                      );
-                    }}
+              <CustomTextField
+                // error={
+                //   formik.touched.commission.buy &&
+                //   Boolean(formik.errors.commission.buy)
+                // }
+                // helperText={
+                //   formik.touched.commission.buy && formik.errors.commission.buy
+                // }
+                id="bank.branch"
+                name="bank.branch"
+                value={formik.values?.bank?.branch}
+                onChange={formik.handleChange}
+                fullWidth
 
-                    //   formik.setValues({
-                    //     ...formik.values,
-                    //     modules: formik.values.modules
-                    //       ? [...formik.values.modules, x.name]
-                    //       : [x.name],
-                    //   });
-                    // }}
-                  >
-                    <Avatar sx={{ margin: 'auto', backgroundColor: 'white' }}>
-                      <VerifiedIcon
-                        sx={{ color: 'gray', height: 30, width: 30 }}
-                      />
-                    </Avatar>
-                    <Typography
-                      sx={{
-                        color : `${isActive(x.name) ?  'white' : "#a65704"}`,
-                        fontWeight: 'bolder',
-                        textAlign: 'center',
-                      }}
-                      gutterBottom
-                      variant="h6"
-                    >
-                      {x.name}
-                    </Typography>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-            <Grid container sx={{ marginTop: 5 }}>
-              <Grid item sm={4} xs={12}>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: '#8B5704',
-                    marginBottom: 2,
-                    marginTop: 2,
-                    fontWeight: 600,
-                  }}
-                >
-                  Settlement
-                </Typography>
-
-                <Box sx={{ '& > :not( color: #a88143;)': { m: 1 } }}>
-                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <CustomTextField
-                      error={
-                        formik.touched.settlementInDays &&
-                        Boolean(formik.errors.settlementInDays)
-                      }
-                      helperText={
-                        formik.touched.settlementInDays &&
-                        formik.errors.settlementInDays
-                      }
-                      id="settlementInDays"
-                      name="settlementInDays"
-                      value={formik.values.settlementInDays}
-                      onChange={formik.handleChange}
-                      variant="outlined"
-                      type="number"
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">DAYS</InputAdornment>
-                        ),
-                      }}
-                    />
-                  </Box>
-                </Box>
-              </Grid>
-
-              <Grid item sm={4} xs={12}>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: '#8B5704',
-                    marginBottom: 2,
-                    marginTop: 2,
-                    marginLeft: 5,
-
-                    fontWeight: 600,
-                  }}
-                >
-                  Limit
-                </Typography>
-
-                <Box sx={{ '& > :not( color: #a88143;)': { m: 1 } }}>
-                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <CustomTextField
-                      error={
-                        formik.touched.limit && Boolean(formik.errors.limit)
-                      }
-                      helperText={formik.touched.limit && formik.errors.limit}
-                      id="limit"
-                      name="limit"
-                      type="number"
-                      value={formik.values.limit}
-                      onChange={formik.handleChange}
-                      variant="outlined"
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">GRAMS</InputAdornment>
-                        ),
-                      }}
-                    />
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item sm={4} xs={12}>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: '#8B5704',
-                    marginBottom: 2,
-                    marginTop: 4,
-                    fontWeight: 600,
-                  }}
-                >
-                  E-invoice
-                </Typography>
-
-                <CustomFormControl fullWidth>
-                  <Select
-                    defaultValue=""
-                    labelId="demo-simple-select-label"
-                    id="eInvoiceApplicable"
-                    value={formik.values.eInvoiceApplicable}
-                    onChange={formik.handleChange}
-                    name="eInvoiceApplicable"
-                  >
-                    <MenuItem key="collection" value={true}>
-                      Yes
-                    </MenuItem>
-                    <MenuItem key="category" value={false}>
-                      No
-                    </MenuItem>
-                  </Select>
-                </CustomFormControl>
-              </Grid>
+                variant="outlined"
+                label="branch"
+                sx={{ marginBottom: 4 }}
+              />
             </Grid>
           </Grid>
 
+          {/* ---------------------------------- Business Details --------------------------------------- */}
+
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            sx={{
+              boxShadow: '0px 4px 1px 0px #d2c6c6',
+              marginTop: 5,
+              borderRadius: 2,
+              p: 5,
+              border: '1px solid #d2c6c657',
+            }}
+          >
+            <Grid item xs={12}>
+              <Typography
+                variant="h6"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                5.Business Details
+              </Typography>
+            </Grid>
+
+
+
+
+
+
+            <Grid item sm={6} xs={12}>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Business Type
+              </Typography>
+
+              <CustomFormControl fullWidth>
+                <Select
+                  defaultValue=""
+                  labelId="demo-simple-select-label"
+                  id="businessType"
+                  value={formik.values.businessType}
+                  onChange={formik.handleChange}
+                  name="businessType"
+                >
+                  <MenuItem key="jewellery" value="jewellery">
+                    jewellery
+                  </MenuItem>
+                  <MenuItem key="commodity" value="commodity">
+                    commodity
+                  </MenuItem>
+                </Select>
+              </CustomFormControl>
+            </Grid>
+
+            <Grid item sm={6} xs={12}>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Business Image
+              </Typography>
+
+              <CustomTextField
+                // error={
+                //   formik.touched.commission.buy &&
+                //   Boolean(formik.errors.commission.buy)
+                // }
+                // helperText={
+                //   formik.touched.commission.buy && formik.errors.commission.buy
+                // }
+                id="image"
+                name="image"
+                type='file'
+                // value={formik.values.image}
+
+                onChange={(e) => {
+                  formik.setFieldValue("image", e.target.files[0])
+                }}
+                fullWidth
+                variant="outlined"
+
+              />
+            </Grid>
+          </Grid>
           {/* ================================================ */}
           <Box
             sx={{
@@ -868,12 +719,12 @@ export default function EditMerchant() {
             }}
           >
             <LoadingButton
-              disabled={merchantMutation.isLoading}
-              loading={merchantMutation.isLoading}
+              disabled={retailMutation.isLoading}
+              loading={retailMutation.isLoading}
               type="submit"
-              sx={theme.custom.Button.margin}
+              sx={theme.custom.Button}
             >
-              Edit merchant
+              Add Business
             </LoadingButton>
           </Box>
         </Container>
@@ -881,4 +732,4 @@ export default function EditMerchant() {
     </>
   );
 }
-EditMerchant.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+AddBusiness.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

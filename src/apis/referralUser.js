@@ -1,24 +1,19 @@
 import axios from 'axios';
 //==============================
 export const getVipReferral = (vipId) => {
-  return axios.post('/referral/list',{
+  return axios.post('/user/list',{
     filter:{
-      type:vipId
-    },
-    options:{
-      populate:"user"
+      "referral.type":vipId,
     }
   });
 };
 
 export const getSaleReferral = (saleId,saleAssociateId) => {
-    return axios.post('/referral/list',{
+    return axios.post('/user/list',{
       filter:{
-        type:[saleId,saleAssociateId]
+        "referral.type":[saleId,saleAssociateId]
       },
-      options:{
-        populate:"user"
-      }
+
     });
   };
 
@@ -27,7 +22,7 @@ export const getVipReferralById = (id) => {
 };
 
 export const postVipReferral = (data) => {
-  return axios.post('/referralUser/create', data);
+  return axios.post('/user/create', data);
 };
 
 export const updateVipReferral = ({ data, id }) => {
@@ -35,5 +30,5 @@ export const updateVipReferral = ({ data, id }) => {
 };
 
 export const deleteVipReferral = (id) => {
-  return axios.delete(`/referral/${id}`);
+  return axios.delete(`/user/${id}`);
 };

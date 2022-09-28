@@ -54,24 +54,12 @@ export default function VipReferral() {
   //==========
   const columns = [
     {
-      field: 'user.fullName',
+      field: 'fullName',
       headerName: 'Name',
       width: 150,
       editable: true,
       flex: 1,
-      valueGetter: (params) => {
-        let result = [];
-        if (params.row.user) {
-          if (params.row.user.fullName) {
-
-            result.push(params.row.user.fullName);
-
-          }
-        } else {
-          result = ['Empty'];
-        }
-        return result.join(', ');
-      },
+      
       renderCell: (params) => (
         <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
       ),
@@ -183,6 +171,7 @@ export default function VipReferral() {
   const query = useQuery({
     queryKey: 'vip referral',
     queryFn: () => getVipReferral(vipId),
+    enabled:!! vipId
   });
   console.log(query.data?.docs)
 

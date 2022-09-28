@@ -166,13 +166,13 @@ export default function eCommerce() {
               url={infoCard.eComm.rejReturn.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          {/* <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.supplier.title}
               desc={infoCard.eComm.supplier.desc}
               url={infoCard.eComm.supplier.url}
             />
-          </Grid>
+          </Grid> */}
        
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard

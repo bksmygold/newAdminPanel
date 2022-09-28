@@ -34,41 +34,25 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { RoleCard } from '../../../components/cards/roleCard';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import { useTheme } from '@mui/material/styles';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import MapPicker from 'react-google-map-picker';
-
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import { CustomTextField } from 'src/components/customMUI';
+import { CustomFormControl } from 'src/components/customMUI';
 //=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
-const CustomFormControl = styled(FormControl)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+
 
 const modules = [
-  { name: 'custodian' },
-  { name: 'e-commerce' },
-  { name: 'verifier' },
-  { name: 'refiner' },
+  { name: 'custodian',icon:<VpnKeyIcon sx={{ color: 'gray', height: 30, width: 30 }}/> },
+  { name: 'e-commerce' ,icon:<ShoppingCartIcon sx={{ color: 'gray', height: 30, width: 30 }}/>},
+  { name: 'verifier' ,icon:<VerifiedIcon sx={{ color: 'gray', height: 30, width: 30 }}/>},
+  { name: 'refiner' ,icon:<FilterAltIcon sx={{ color: 'gray', height: 30, width: 30 }}/>},
 ];
 //=======================================================
 export default function AddMerchant() {
@@ -470,7 +454,7 @@ export default function AddMerchant() {
                   defaultCenter={defaultProps.center}
                   defaultZoom={defaultProps.zoom}
                 ></GoogleMapReact> */}
-              <button onClick={() => setShow(!show)}>Show</button>
+              {/* <button onClick={() => setShow(!show)}>Show</button> */}
               {/* 
               <button onClick={handleResetLocation}>Reset Location</button>
               <label>Latitute:</label>
@@ -719,9 +703,10 @@ export default function AddMerchant() {
                     // }}
                   >
                     <Avatar sx={{ margin: 'auto', backgroundColor: 'white' }}>
-                      <VerifiedIcon
+                      {/* <VpnKeyIcon
                         sx={{ color: 'gray', height: 30, width: 30 }}
-                      />
+                      /> */}
+                      {x.icon}
                     </Avatar>
                     <Typography
                       sx={{

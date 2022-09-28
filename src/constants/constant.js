@@ -43,10 +43,14 @@ export const infoCard = {
         retail: {
             title: "Retail",
             desc: "create, update, delete retail Merchant Accounts and manage them",
+            url: "/userManagement/retail/view-retail"
+
         },
         supplier: {
             title: "Supplier",
             desc: "create, update, delete VIP/influencer Referral",
+            url: "/userManagement/supplier/view-supplier"
+
         }
     },
     //------------------- TAXES --------------------------------
@@ -221,11 +225,7 @@ export const infoCard = {
             desc: "create, update, delete return reason",
             url: "/eCommerce/rejectReason/view-rejectReason"
         },
-        supplier: {
-            title: "Supplier",
-            desc: "create, update, delete Supplier",
-            url: "/eCommerce/supplier/view-supplier"
-        },
+      
 
         certi: {
             title: "Certificates",

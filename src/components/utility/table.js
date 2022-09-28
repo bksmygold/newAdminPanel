@@ -25,6 +25,7 @@ const CustomTextField = styled(TextField)`
 //=============================================
 export default function Table(props) {
   const router = useRouter();
+  const [pageSize, setPageSize] = React.useState(5);
 
   //====================================================
   const ODD_OPACITY = 0.2;
@@ -79,8 +80,9 @@ export default function Table(props) {
       <Grid item lg={12} xs={12}>
 
         <StripedDataGrid
+        // pageSize={20}
+        
           onRowClick={props.handleClick}
-
           sx={{
             ".MuiTablePagination-displayedRows": {
               color: "#3c2400",
@@ -100,6 +102,9 @@ export default function Table(props) {
             // justifyContent: "center",
             backgroundColor:"white"
           }}
+          pageSize={pageSize}
+
+          onPageSizeChange={(newPage) => setPageSize(newPage)}
 
           rows={props.rows}
           columns={props.columns}

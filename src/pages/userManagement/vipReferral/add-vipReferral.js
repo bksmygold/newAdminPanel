@@ -68,12 +68,13 @@ export default function AddVipReferral() {
       mobile: '',
       accountType: 'individual',
       isWhatsapp: false,
-      referralType: vipId,
-      referralCode: '',
-      referralCriteria:{
-        subscriptions: 0,
-        downloads: 0,
+      referral:{
+        type:"",
+        code:"",
+        downloads:0,
+        subscriptions:0
       },
+
     },
     validationSchema: yup.object({
       fullName: yup.string('Enter  Name').required('Name is required'),
@@ -92,6 +93,9 @@ export default function AddVipReferral() {
       downloads: yup
         .number('Enter downloads')
         .required('downloads is required'),
+        referral:yup.object({
+          type:yup.string()
+        })
     }),
     onSubmit: (values) => {
       referralUserMutation.mutate(values);

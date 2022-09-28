@@ -27,7 +27,7 @@ export default function Merchant() {
       <strong>
         <Button
           variant="contained"
-          sx={theme.custom.Button}
+          sx={theme.custom.editButton}
           size="small"
           onClick={() => {
             router.push(
