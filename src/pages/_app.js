@@ -13,7 +13,13 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 //=====================================================
 const clientSideEmotionCache = createEmotionCache();
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions:{
+    queries:{
+      refetchOnWindowFocus: false
+    }
+  }
+});
 // if (typeof window == 'undefined') { 
 //   window = {}
 // }

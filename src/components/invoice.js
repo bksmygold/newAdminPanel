@@ -49,29 +49,37 @@ const Invoice = (props) => {
                 }}>
 
                     <Grid
-                        sx={{ minWidth: "100%", p: 5, backgroundColor: "white", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                        sx={{
+                            padding:"2px 150px" ,
+ml:3,
+                            minWidth: "100%", p: 5,height:"100%", backgroundColor: "white", display: "flex", justifyContent: "space-between", alignItems: "center" }}
                         item lg={6} sm={6} xs={12}>
-                        <Image src="/logo.svg" alt="me" width="84" height="84" />
+                        <Image sx={{      ml:5 ,
+}}src="/logo.svg" alt="me" width="160" height="150" />
                         <Grid item
-                            sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}
+                            sx={{ 
+                                padding:"2px 150px" ,
+
+                                display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}
                         >
 
                             <Typography
 
-                                sx={theme.custom.typography.invoice.text_16}
+                                sx={theme.custom.typography.invoice.text_24}
                             >
                                 Original Customer
                             </Typography>
-                            <Image src="/qr.svg" alt="me" width="53" height="55" />
+                            <Image src="/qr.svg" alt="me" width="150" height="150" />
                         </Grid>
 
                     </Grid>
 
                     {/* <Divider sx={{backgroundColor:"red",height:100}} /> */}
-                    <hr style={{ width: "100%" }} />
+                    <hr style={{ width: "80%",margin:"auto" }} />
 
                     <Typography
-                        sx={theme.custom.typography.invoice.text_24}
+                        sx={[theme.custom.typography.invoice.text_24,{      padding:"2px 150px" ,
+                    }]}
 
                     >
                         Tax Invoice
@@ -104,7 +112,7 @@ const Invoice = (props) => {
                                 226006
                             </Typography>
                         </Box>
-                        <Box>
+                        <Box sx={{textAlign:"right"}}>
                             <Typography
                                 sx={theme.custom.typography.invoice.text_12.light}
                             >
@@ -123,7 +131,7 @@ const Invoice = (props) => {
                         </Box>
                     </Grid>
 
-                    <hr style={{ width: "100%" }} />
+                    <hr style={{ width: "80%",margin:"auto" }} />
 
 
                     <Grid
@@ -144,7 +152,7 @@ const Invoice = (props) => {
                                 26-09-2022
                             </Typography>
                         </Box>
-                        <Box>
+                        <Box sx={{textAlign:"right"}}>
 
                             <Typography
                                 sx={theme.custom.typography.invoice.text_12.bold}
@@ -162,7 +170,7 @@ const Invoice = (props) => {
                         </Box>
                     </Grid>
 
-                    <hr style={{ width: "100%" }} />
+                    <hr style={{ width: "80%",margin:"auto" }} />
 
 
 
@@ -270,20 +278,25 @@ const Invoice = (props) => {
                         </Box>
                     </Grid>
                     <Typography
-                        sx={theme.custom.typography.invoice.text_12.light}
+                        sx={[theme.custom.typography.invoice.text_12.light,{      padding:"2px 150px" ,
+                    }]}
 
                     >
 
                         HSN Code : 71081300
                     </Typography>
 
-                    <hr style={{ width: "100%" }} />
+                    <hr style={{ width: "80%",margin:"auto" }} />
 
 
                     <Grid
-                        sx={{ minWidth: "100%", p: 5, backgroundColor: "white", flexDirection: "column", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}
+                        sx={{ 
+                            padding:"2px 150px" ,
+
+                            minWidth: "100%", p: 5, backgroundColor: "white", flexDirection: "column", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}
                         item lg={6} sm={6} xs={12}>
-                        <Box sx={{ display: "flex" }}>
+                        <Box sx={{ display: "flex",      padding:"2px 150px" ,
+ }}>
 
                             <Typography
                                 sx={theme.custom.typography.invoice.text_12.bold}
@@ -298,7 +311,8 @@ const Invoice = (props) => {
                                 ₹ 11.45
                             </Typography>
                         </Box>
-                        <Box sx={{ display: "flex", margin: "20px 0px" }}>
+                        <Box sx={{ display: "flex", margin: "20px 0px" ,      padding:"2px 150px" ,
+}}>
 
                             <Typography
                                 sx={theme.custom.typography.invoice.text_12.bold}
@@ -315,10 +329,11 @@ const Invoice = (props) => {
                         </Box>
                     </Grid>
 
-                    <hr style={{ width: "100%" }} />
+                    <hr style={{ width: "80%",margin:"auto" }} />
 
                     <Typography
-                        sx={[theme.custom.typography.invoice.text_12.bold, { mt: 5 }]}
+                        sx={[theme.custom.typography.invoice.text_12.bold, { mt: 5 ,      padding:"2px 150px" ,
+                    }]}
 
                     >
 
@@ -326,7 +341,8 @@ const Invoice = (props) => {
 
                     </Typography>
                     <Typography
-                        sx={theme.custom.typography.invoice.text_12.light}
+                        sx={[theme.custom.typography.invoice.text_12.light,{      padding:"2px 150px" ,
+                        }]}
 
                     >
 
@@ -336,7 +352,8 @@ const Invoice = (props) => {
                     </Typography>
 
                     <Typography
-                        sx={[theme.custom.typography.invoice.text_12.bold, { mt: 5 }]}
+                        sx={[theme.custom.typography.invoice.text_12.bold, { mt: 5 ,      padding:"2px 150px" ,
+                    }]}
 
                     >
 
@@ -345,13 +362,15 @@ const Invoice = (props) => {
 
                     </Typography>
                     <Typography
-                        sx={theme.custom.typography.invoice.text_12.light}
+                        sx={[theme.custom.typography.invoice.text_12.light,{      padding:"2px 150px" ,
+                    }]}
 
                     >
 
                         {invoice.disclaimer}
                     </Typography>
-                    <Box>
+                    <Box sx={{      padding:"2px 150px" ,
+}}>
                         <Typography
                             sx={[theme.custom.typography.invoice.text_12.light, { mt: 5 }]}
                         >
@@ -364,7 +383,8 @@ const Invoice = (props) => {
                             (Subject to Realization)
                         </Typography>
 
-                    </Box><hr style={{ width: "100%" }} />
+                    </Box>
+                    <hr style={{ width: "80%",margin:"auto" }} />
 
 
                 </Grid>

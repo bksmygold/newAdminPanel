@@ -1,6 +1,6 @@
 import axios from "axios"
 //=======================================
-export const updateSetting = ({data,id}) => {
+export const updateSetting = (data) => {
     let form = new FormData();
     let { organizationName,
         organizationLogo,
@@ -21,7 +21,7 @@ export const updateSetting = ({data,id}) => {
     form.append("organizationGST", organizationGST);
     form.append("organizationCIN", organizationCIN);
     form.append("organizationAddress", organizationAddress);
-    if (organizationLogo instanceof File) {
+    if (organizationSignature instanceof File) {
         form.append("organizationSignature", organizationSignature);
     }
     form.append("appBackgroundColor", appBackgroundColor);
@@ -29,14 +29,14 @@ export const updateSetting = ({data,id}) => {
     form.append("appSecondaryColor", appSecondaryColor);
     form.append("appTextColor", appTextColor)
 
-    return axios.patch(`/setting/${id}`, data)
+    return axios.post(`/setting`, form)
 }
 
 export const getSettings = () => {
     return axios.post("/setting/list")
 }
 
-export const getSettingsById = (id) => {
-    return axios.get(`/setting/${id}`)
+export const getSettingsById = () => {
+    return axios.get(`/setting`)
 }
 

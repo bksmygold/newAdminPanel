@@ -34,49 +34,53 @@ const Settings = (props) => {
       organizationGST: "",
       organizationCIN: "",
       organizationAddress: "",
-      organizationSignature: "",
+      organizationSignature: [],
       appBackgroundColor: "",
       appPrimaryColor: "",
       appSecondaryColor: "",
       appTextColor: "",
     },
-    validationSchema: yup.object({
-      organizationName: yup.string("Enter organization Name").required("organization Name is required"),
-      // organizationLogo: yup.string("Enter organization Logo").required("organization Logo is required"),
-      organizationGST: yup.string("Enter  organization GST").required("organization GST is required"),
-      organizationCIN: yup.string("Enter organization CIN").required("organization CIN is required"),
-      organizationAddress: yup.string("Enter organization Address").required("organization Address is required"),
-      // organizationSignature: yup.string("Enter organization Signature").required("organization Signature is required"),
-      appBackgroundColor: yup.string("Enter appBackground Color").required("appBackground Color is required"),
-      appPrimaryColor: yup.string("Enter appPrimary Color").required("appPrimary Color is required"),
-      appSecondaryColor: yup.string("Enter appSecondary Color").required("appSecondary Color is required"),
-      appTextColor: yup.string("Enter app TextColor").required("app TextColor is required"),
+    // validationSchema: yup.object({
+    //   organizationName: yup.string("Enter organization Name").required("organization Name is required"),
+    //   // organizationLogo: yup.string("Enter organization Logo").required("organization Logo is required"),
+    //   organizationGST: yup.string("Enter  organization GST").required("organization GST is required"),
+    //   organizationCIN: yup.string("Enter organization CIN").required("organization CIN is required"),
+    //   organizationAddress: yup.string("Enter organization Address").required("organization Address is required"),
+    //   // organizationSignature: yup.string("Enter organization Signature").required("organization Signature is required"),
+    //   appBackgroundColor: yup.string("Enter appBackground Color").required("appBackground Color is required"),
+    //   appPrimaryColor: yup.string("Enter appPrimary Color").required("appPrimary Color is required"),
+    //   appSecondaryColor: yup.string("Enter appSecondary Color").required("appSecondary Color is required"),
+    //   appTextColor: yup.string("Enter app TextColor").required("app TextColor is required"),
 
-    }),
+    // }),
     onSubmit: (values) => {
       console.log("payload --->", values);
-      settingMutation.mutate({ data: values, id: "632d50e5182402051bb066ff" });
+      settingMutation.mutate(values)
     },
   });
 
   const query = useQuery({
-    querKey: ['settings', "632d50e5182402051bb066ff"],
-    queryFn: () => getSettingsById("632d50e5182402051bb066ff"),
-    onSuccess: (res) => formik.setValues(res),
-
+    querKey: 'settings',
+    queryFn: () => getSettingsById(),
+    onSuccess: (res) => {
+      formik.setValues(res)
+    }
+    
   })
-
+  
   const settingMutation = useMutation({
     mutationFn: updateSetting,
     onSuccess: (res) => {
-      swal("Settings updated !", "Settings updated", "success"), router.push("/");
+      query.refetch()
+      // alert("Added")
+      swal("Settings updated !", "Settings updated", "success")
     },
     onError: (err) => swal("Error !", err.message, "error"),
   });
 
   if (query.isLoading) return <Loading />
 
-  console.log("-->", query.data)
+  console.log("Error-->", query.data)
   //=======================================================================
   return (
     <>
@@ -161,40 +165,48 @@ const Settings = (props) => {
 
                       />
                     </Grid>
-                    <Grid item md={6} sm={6}xs={12}>
-                    <Typography sx={[theme.custom.typography.dashBoard.h1, { mb: 5 }]}>
-                      Organization Signature
-                    </Typography>
-                      <img src={query.data.organizationSignature} />
+                    <Grid item md={6} sm={6} xs={12}>
+                      <Typography sx={[theme.custom.typography.dashBoard.h1, { mb: 5 }]}>
+                        Organization Signature
+                      </Typography>
+                      <img src={query.data?.organizationSignature} style={{ width: "10px" }} />
                       <CustomTextField
                         fullWidth
-                        error={formik.touched.organizationSignature && Boolean(formik.errors.organizationSignature)}
-                        helperText={formik.touched.organizationSignature && formik.errors.organizationSignature}
+                        // error={formik.touched.organizationSignature && Boolean(formik.errors.organizationSignature)}
+                        // helperText={formik.touched.organizationSignature && formik.errors.organizationSignature}
                         id="organizationSignature"
                         name="organizationSignature"
                         type="file"
-                        onChange={formik.handleChange}
+
+                        onChange={(e) => {
+                          formik.setFieldValue("organizationSignature", e.target.files[0])
+                        }}
                       />
                     </Grid>
 
 
-                    <Grid item md={6} sm ={6}xs={12}>
+                    <Grid item md={6} sm={6} xs={12}>
 
                       <Typography sx={[theme.custom.typography.dashBoard.h1, { mb: 5 }]}>
                         App Logo
                       </Typography>
 
 
-                      <img src={query.data.organizationLogo} />
+                      <img src={query.data?.organizationLogo} width="100px" />
 
                       <CustomTextField
                         fullWidth
                         type="file"
-                        error={formik.touched.organizationLogo && Boolean(formik.errors.organizationLogo)}
-                        helperText={formik.touched.organizationLogo && formik.errors.organizationLogo}
+                        // error={formik.touched.organizationLogo && Boolean(formik.errors.organizationLogo)}
+                        // helperText={formik.touched.organizationLogo && formik.errors.organizationLogo}
                         id="organizationLogo"
                         name="organizationLogo"
-                        onChange={formik.handleChange}
+                        // value={formik.values?.organizationLogo}
+
+                        onChange={(e) => {
+                          console.log(e.target.files[0])
+                          formik.setFieldValue("organizationLogo", e.target.files[0])
+                        }}
 
                       // onChange={(e) =>
                       //   formik.setFieldValue('organizationLogo', e.target.files[0])
@@ -239,7 +251,7 @@ const Settings = (props) => {
                         sx={{ color: "#8B5704", fontWeight: "bolder" }}
                         variant="captions"
                       >
-                        {query.data.appBackgroundColor}
+                        {query.data?.appBackgroundColor}
                       </Typography>
                     </Grid>
                     <Grid
@@ -272,7 +284,7 @@ const Settings = (props) => {
                         sx={{ color: "#8B5704", fontWeight: "bolder" }}
                         variant="captions"
                       >
-                        {query.data.appPrimaryColor}
+                        {query.data?.appPrimaryColor}
                       </Typography>
                     </Grid>
                     <Grid
@@ -302,7 +314,7 @@ const Settings = (props) => {
                         sx={{ color: "#8B5704", fontWeight: "bolder" }}
                         variant="captions"
                       >
-                        {query.data.appSecondaryColor}
+                        {query.data?.appSecondaryColor}
                       </Typography>
                     </Grid>
                     <Grid
@@ -333,7 +345,7 @@ const Settings = (props) => {
                         sx={{ color: "#8B5704", fontWeight: "bolder" }}
                         variant="captions"
                       >
-                        {query.data.appTextColor}
+                        {query.data?.appTextColor}
                       </Typography>
                     </Grid>
                   </Grid>

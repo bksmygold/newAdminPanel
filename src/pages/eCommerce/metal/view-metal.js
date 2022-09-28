@@ -89,7 +89,7 @@ export default function Metal() {
       addFormik.resetForm();
       swal('Metal Added !', 'Continue with the e-comm panel', 'success');
     },
-    onError: (err) => swal('Erro !', err.message, 'error'),
+    onError: (err) => swal('Error !', err.message, 'error'),
   });
 
   const editMutation = useMutation({
@@ -99,7 +99,7 @@ export default function Metal() {
       setShowEdit(false);
       swal('Metal Updated !', 'Continue with the e-comm panel', 'success');
     },
-    onError: (err) => swal('Erro !', 'Continue with the e-comm panel', 'error'),
+    onError: (err) => swal('Error !', err.message, 'error'),
   });
 
   if (query.isLoading) return <Loading />;
@@ -142,7 +142,7 @@ export default function Metal() {
       headerName: 'Metal Name',
       width: 250,
       editable: true,
-      flex:1
+      flex: 1
 
     },
 
@@ -171,6 +171,8 @@ export default function Metal() {
       renderCell: deleteButton, flex: 1
     },
   ];
+
+  console.log("id hai ---",id)
   //=======================================================
   return (
     <>
@@ -258,9 +260,10 @@ export default function Metal() {
                 id="icon"
                 name="icon"
                 type="file"
-                value={editFormik.values.icon}
-                onChange={editFormik.handleChange}
-                fullWidth
+                onChange={(e) =>
+                  editFormik.setFieldValue('icon', e.target.files[0])
+                }
+                 fullWidth
                 variant="outlined"
               />
 

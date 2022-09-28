@@ -157,14 +157,17 @@ export default function Gst() {
 
   const row=[
     {
+      id:1,
       code:"BKS3690",
       value:20
     },
     {
+      id:2,
       code:"BKS3690",
       value:20
     },
     {
+      id:3,
       code:"BKS3690",
       value:20
     }

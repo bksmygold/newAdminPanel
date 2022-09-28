@@ -194,11 +194,14 @@ export const theme = createTheme({
       border: '1px solid #d2c6c657',
     },
     invoiceGridItem: {
+      padding:"2px 150px" ,
       minWidth: "100%",
       display: "flex",
       justifyContent: "space-between",
       alignItems: "space-between",
-      mb: 4
+      mb: 4,
+
+      
 
     },
     retailCard:{
