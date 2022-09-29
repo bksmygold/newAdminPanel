@@ -37,7 +37,7 @@ export default function Retail() {
           size="small"
           onClick={() => {
             router.push(
-              `/userManagement/merchant/edit-merchant/?id=${params.id}`
+              `/userManagement/retail/edit-retail/?id=${params.row.id}`
             );
           }}
         >

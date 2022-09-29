@@ -667,9 +667,10 @@ export default function AddMerchant() {
                 marginRight: 2,
                 width: '100%',
               }}
+              spacing={2}
             >
               {modules.map((x) => (
-                <Grid sx={{ marginRight: 2 }} item sm={2} xs={12}>
+              <Grid sx={{ marginRight: 0}} item sm={4} md={6} lg={2} xl={2} xs={12}>
                   <Box
                     sx={{
 
@@ -678,6 +679,7 @@ export default function AddMerchant() {
                       borderRadius: 1,
                       border:`${isActive(x.name) ? "1px solid #976413" :"1px solid gray"}`,
                       background : ` ${isActive(x.name) ?  'linear-gradient(43deg, #8b5704, #ddb070)' : null}`,
+                      overflowWrap:"anywhere"
 
                     }}
                     onClick={() => {

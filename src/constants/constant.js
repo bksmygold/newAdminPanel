@@ -1,5 +1,8 @@
 //:::::::::  API_Endpoint ::::::::::::::::::::::::::::::::::::::::::::::::::::::
-export const ADMIN_API = "http://api-dev.bksmygold.com/admin";
+// export const ADMIN_API = "http://api-dev.bksmygold.com/admin";
+export const ADMIN_API = "http://192.168.10.110:5001/admin";
+
+
 
 //::::::::::  Content :::::::::::::::::::::::::::::::::::::::::::::::::::::
 export const infoCard = {

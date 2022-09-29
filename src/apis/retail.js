@@ -21,22 +21,36 @@ export const postRetail = (data) => {
     businessType,
     image,
 
-    bank,
-  
+
+
     location,
   } = data
-  formData.append("name", name)
-  formData.append("email", email)
-  formData.append("mobile", mobile)
-  formData.append("aadhaar", aadhaar)
-  formData.append("pan", pan)
-  formData.append("gstNo", gstNo)
-  formData.append("businessType", businessType)
-  if(image instanceof File){
+  // formData.append("name", name)
+  // formData.append("email", email)
+  // formData.append("mobile", mobile)
+  // formData.append("aadhaar", aadhaar)
+  // formData.append("pan", pan)
+  // formData.append("gstNo", gstNo)
+  // formData.append("businessType", businessType)
+  if (image instanceof File) {
 
     formData.append("image", image)
   }
-  formData.append("bank", JSON.stringify(bank))
+  formData.append("payload_json", JSON.stringify({
+    name,
+    email,
+    mobile,
+    aadhaar,
+    pan,
+    gstNo,
+    businessType,
+    location: {
+      type: "Point",
+      coordinates: location.reverse()
+    }
+
+
+  }))
   // formData.append("bankName", bankName)
   // formData.append("accountNo", accountNo)
   // formData.append("ifsc", ifsc)

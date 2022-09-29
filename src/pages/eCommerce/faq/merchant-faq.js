@@ -33,9 +33,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 import { CustomTextField } from 'src/components/customMUI';
 import { FaqCard } from 'src/components/cards/faqCard';
-
 //=======================================================
-export default function FAQ() {
+export default function MerchantFaq() {
   const router = useRouter();
   const theme = useTheme();
 
@@ -43,62 +42,74 @@ export default function FAQ() {
   const [showEdit, setShowEdit] = React.useState(false);
   const [id, setId] = useState('');
   //=======================
-  const addFormik = useFormik({
+  const merchantFormik = useFormik({
     initialValues: {
       question: '',
       answer: '',
+      category: '',
+      app: "merchant"
     },
     validationSchema: yup.object({
       question: yup.string('Enter question').required('question is required'),
       answer: yup.string('Enter answer').required('answer is required'),
+      category: yup.string('Enter category').required('category is required'),
+
     }),
     onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
+        merchantMutation.mutate(values);
     },
   });
 
   const editFormik = useFormik({
     initialValues: {
-      question: '',
-      answer: '',
+        question: '',
+        answer: '',
+        category: '',
+        app: "merchant"
     },
     validationSchema: yup.object({
-      question: yup.string('Enter question').required('question is required'),
-      answer: yup.string('Enter answer').required('answer is required'),
+        question: yup.string('Enter question').required('question is required'),
+        answer: yup.string('Enter answer').required('answer is required'),
+        category: yup.string('Enter category').required('category is required'),
     }),
     onSubmit: (values) => {
       console.log('payload --', values);
       editMutation.mutate({ data: values, id: id });
     },
   });
-  const query = useQuery({
-    queryKey: 'FAQ',
-    queryFn: () => getFaq(),
-  });
 
-  const addMutation = useMutation({
+
+  const merchantQuery = useQuery({
+    queryKey: 'FAQ',
+    queryFn: () => getFaq("merchant"),
+  });
+ 
+
+  const merchantMutation = useMutation({
     mutationFn: postFaq,
     onSuccess: (res) => {
-      query.refetch();
+        merchantQuery.refetch();
       setShowAdd(false);
-      addFormik.resetForm();
+      merchantFormik.resetForm();
       swal('FAQ Added !', 'Continue with the e-comm panel', 'success');
     },
-    onError: (err) => swal('Erro !', err.message, 'error'),
+    onError: (err) => swal('Error !', err.message, 'error'),
   });
+
+
 
   const editMutation = useMutation({
     mutationFn: updateFaq,
     onSuccess: (res) => {
-      query.refetch();
+        merchantQuery.refetch();
       setShowEdit(false);
       swal('FAQ Updated !', 'Continue with the e-comm panel', 'success');
     },
     onError: (err) => swal('Erro !', err.message, 'error'),
   });
 
-  if (query.isLoading) return <Loading />;
+  if (merchantQuery.isLoading) return <Loading />;
+
   //===============
 
   const editButton = (params) => {
@@ -130,16 +141,23 @@ export default function FAQ() {
   const columns = [
     {
       field: "question",
-      headerName: "Faq question",
+      headerName: "question",
       width: 250,
       editable: true, flex: 1
     },
     {
       field: "answer",
-      headerName: "Faq answer",
+      headerName: "answer",
       width: 250,
       editable: true, flex: 1
     },
+    {
+      field: "app",
+      headerName: "type",
+      width: 250,
+      editable: true, flex: 1
+    },
+
 
     {
       field: "edit",
@@ -158,12 +176,13 @@ export default function FAQ() {
   ];
 
 
+//   console.log(router.query.name)
   //=======================================================
   return (
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | FAQ </title>
+        <title>Dashboard | Merchant-FAQ </title>
       </Head>
       {/* ================= EDIT ================================== */}
       <Modal
@@ -186,7 +205,7 @@ export default function FAQ() {
                 fontWeight: 'bolder',
               }}
             >
-              Edit FAQ
+              Edit Merchant FAQ
             </Typography>
             <Typography
               variant="caption"
@@ -196,7 +215,7 @@ export default function FAQ() {
                 fontWeight: 'bold',
               }}
             >
-              Edit FAQ for products used in E-commerce
+              Edit FAQ for Merchant App
             </Typography>
 
             <form onSubmit={editFormik.handleSubmit}>
@@ -267,105 +286,137 @@ export default function FAQ() {
         </Box>
       </Modal>
       {/* =============== ADD ================================================ */}
-      <Modal
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        open={showAdd}
-        onClose={() => setShowAdd(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={theme.custom.modal}>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <Typography
-              variant="h4"
-              sx={{
-                color: '#8B5704',
-                fontWeight: 'bolder',
-              }}
-            >
-              Add FAQ
-            </Typography>
-            <Typography
-              variant="caption"
-              sx={{
-                color: '#cba56a',
-                marginBottom: 15,
-                fontWeight: 'bold',
-              }}
-            >
-              Add FAQ for products used in E-commerce
-            </Typography>
-
-            <form onSubmit={addFormik.handleSubmit}>
+        <Modal
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          open={showAdd}
+          onClose={() => setShowAdd(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={theme.custom.modal}>
+            <Grid item xl={3} lg={3} sm={6} xs={12}>
               <Typography
-                variant="body1"
+                variant="h4"
                 sx={{
                   color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
+                  fontWeight: 'bolder',
                 }}
               >
-                FAQ Question
+                Add Merchant FAQ
               </Typography>
-              <CustomTextField
-                error={
-                  addFormik.touched.question &&
-                  Boolean(addFormik.errors.question)
-                }
-                helperText={
-                  addFormik.touched.question && addFormik.errors.question
-                }
-                id="question"
-                name="question"
-                value={addFormik.values.question}
-                onChange={addFormik.handleChange}
-                fullWidth
-                variant="outlined"
-                label="question"
-              />
-
               <Typography
-                variant="body1"
+                variant="caption"
                 sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
+                  color: '#cba56a',
+                  marginBottom: 15,
+                  fontWeight: 'bold',
                 }}
               >
-                FAQ Answer
+                Add FAQ for the Merchant App
               </Typography>
-              <CustomTextField
-                error={
-                  addFormik.touched.answer && Boolean(addFormik.errors.answer)
-                }
-                helperText={addFormik.touched.answer && addFormik.errors.answer}
-                id="answer"
-                name="answer"
-                value={addFormik.values.answer}
-                onChange={addFormik.handleChange}
-                fullWidth
-                variant="outlined"
-                label="answer"
-              />
 
-              <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
-                type="submit"
-                sx={theme.custom.addButton}
-              >
-                Add FAQ
-              </LoadingButton>
-            </form>
-          </Grid>
-        </Box>
-      </Modal>
+              <form onSubmit={merchantFormik.handleSubmit}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: '#8B5704',
+                    marginBottom: 2,
+                    marginTop: 2,
+                    fontWeight: 600,
+                  }}
+                >
+                  FAQ Question
+                </Typography>
+                <CustomTextField
+                  error={
+                    merchantFormik.touched.question &&
+                    Boolean(merchantFormik.errors.question)
+                  }
+                  helperText={
+                    merchantFormik.touched.question && merchantFormik.errors.question
+                  }
+                  id="question"
+                  name="question"
+                  value={merchantFormik.values.question}
+                  onChange={merchantFormik.handleChange}
+                  fullWidth
+                  variant="outlined"
+                  label="question"
+                />
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: '#8B5704',
+                    marginBottom: 2,
+                    marginTop: 2,
+                    fontWeight: 600,
+                  }}
+                >
+                  FAQ Answer
+                </Typography>
+                <CustomTextField
+                  error={
+                    merchantFormik.touched.answer && Boolean(merchantFormik.errors.answer)
+                  }
+                  helperText={merchantFormik.touched.answer && merchantFormik.errors.answer}
+                  id="answer"
+                  name="answer"
+                  value={merchantFormik.values.answer}
+                  onChange={merchantFormik.handleChange}
+                  fullWidth
+                  variant="outlined"
+                  label="answer"
+                />
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: '#8B5704',
+                    marginBottom: 2,
+                    marginTop: 2,
+                    fontWeight: 600,
+                  }}
+                >
+                  FAQ Category
+                </Typography>
+                <CustomTextField
+                  error={
+                    merchantFormik.touched.question &&
+                    Boolean(merchantFormik.errors.category)
+                  }
+                  helperText={
+                    merchantFormik.touched.category && merchantFormik.errors.category
+                  }
+                  id="category"
+                  name="category"
+                  value={merchantFormik.values.category}
+                  onChange={merchantFormik.handleChange}
+                  fullWidth
+                  variant="outlined"
+                  label="category"
+                />
+
+
+                <LoadingButton
+                  disabled={merchantMutation.isLoading}
+                  loading={merchantMutation.isLoading}
+                  type="submit"
+                  sx={theme.custom.addButton}
+                >
+                  Add FAQ
+                </LoadingButton>
+              </form>
+            </Grid>
+          </Box>
+        </Modal>
+  
+
+      
       {/* =========================== VIEW ==================================== */}
       <Grid
         sx={{
@@ -378,73 +429,22 @@ export default function FAQ() {
       >
         <Grid item>
           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-            FAQ View
+            Merchant FAQ View
           </Typography>
         </Grid>
         <Grid item>
           <Button onClick={() => setShowAdd(true)} sx={theme.custom.addButton}>
-            Create FAQ
+            Create Merchant FAQ
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>
         </Grid>
 
       </Grid>{' '}
 
-      <Grid
-        sx={{
-          marginTop: 1,
-          marginLeft: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
+        <Table rows={merchantQuery.data.docs} columns={columns} />
 
-        }}
-        container
-        spacing={5}
-      >
-        <Grid
-          onClick={() =>
-            router.push({
-              pathname: '/eCommerce/faq/customer-faq',
-              query: { name: 'Customer' }
-            }, '/eCommerce/faq/customer-faq')}
-          item sm={12} xs={12} lg={6} xl={6}
-        >
-          <FaqCard title="Customer" />
-        </Grid>
-        <Grid
-          onClick={() =>
-            router.push({
-              pathname: '/eCommerce/faq/merchant-faq',
-              query: { name: 'Merchant' }
-            }, '/eCommerce/faq/merchant-faq')}
-          item sm={12} xs={12} lg={6} xl={6}>
-          <FaqCard title="Merchant" />
-        </Grid>
-        <Grid
-         onClick={() =>
-          router.push({
-            pathname: '/eCommerce/faq/business-faq',
-            query: { name: 'Business' }
-          }, '/eCommerce/faq/business-faq')}
-          item sm={12} xs={12} lg={6} xl={6}>
-          <FaqCard title="Business" />
-        </Grid>
-        <Grid
-           onClick={() =>
-            router.push({
-              pathname: '/eCommerce/faq/captain-faq',
-              query: { name: 'Captain' }
-            }, '/eCommerce/faq/captain-faq')}
-          item sm={12} xs={12} lg={6} xl={6}>
-          <FaqCard title="Captain" />
-        </Grid>
-
-
-      </Grid>{' '}
-
-      {/* <Table rows={query.data.docs} columns={columns} /> */}
+    
     </>
   );
 }
-FAQ.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+MerchantFaq.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

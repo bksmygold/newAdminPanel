@@ -61,8 +61,10 @@ export default function MetalGroup() {
     {
       field: 'shortName',
       headerName: 'Metal Group Short Name',
-      width: 150,
-      editable: true,
+      width: 200,
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),
     },
     {
       field: 'purity',

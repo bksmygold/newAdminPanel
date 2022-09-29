@@ -142,7 +142,10 @@ export default function Metal() {
       headerName: 'Metal Name',
       width: 250,
       editable: true,
-      flex: 1
+      flex: 1,
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),
 
     },
 

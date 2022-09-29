@@ -100,11 +100,28 @@ export const theme = createTheme({
         },
       },
     },
+    MuiInputLabel: {
+      styleOverrides: {
+        outlined: {
+          color: "#9A6715"
+        },
+        focused: {
+          backgroundColor: 'red'
+        }
+      }
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         notchedOutline: {
-          borderColor: '#E6E8F0',
+          borderColor: '#9A6715',
+          borderWidth: 2,
+          // backgroundColor:"gray"
         },
+        focused: {
+          borderColor: "red",
+          backgroundColor: "red"
+
+        }
       },
     },
     MuiTableHead: {
@@ -137,8 +154,8 @@ export const theme = createTheme({
     Button: {
       background: 'linear-gradient(43deg, #8b5704, #ddb070)',
       color: 'white',
-      width:"40%",
-      mt:3
+      width: "40%",
+      mt: 3
     },
     editButton: {
       background: 'linear-gradient(43deg, #8b5704, #ddb070)',
@@ -187,46 +204,47 @@ export const theme = createTheme({
     invoiceCard: {
 
       p: 10,
-      
+
       borderRadius: 5,
       backgroundColor: "white",
       boxShadow: '-3px 3px 4px -2px #d2c6c6',
       border: '1px solid #d2c6c657',
     },
     invoiceGridItem: {
-      padding:"2px 150px" ,
+      padding: "2px 150px",
       minWidth: "100%",
       display: "flex",
       justifyContent: "space-between",
       alignItems: "space-between",
       mb: 4,
 
-      
+
 
     },
-    retailCard:{
+    retailCard: {
       bg: {
         backgroundColor: "#FDFAF2",
-        width: "fit-content",
+        width: "50%",
         borderRadius: 1,
         p: "10% 20%",
         // height: "100%",
         boxShadow: '-3px 3px 4px -2px #d2c6c6',
         border: '1px solid #d2c6c657',
-      }},
-      buySaveCard:{
-        bg: {
-          backgroundColor: "#FDFAF2",
-          // minWidth: "100%",
-          borderRadius: 1,
-          
-          p: "10% 15%",
-          height: "100%",
-          boxShadow: '-3px 3px 4px -2px #d2c6c6',
-          border: '1px solid #d2c6c657',
-        
-        },
-      
+      }
+    },
+    buySaveCard: {
+      bg: {
+        backgroundColor: "#FDFAF2",
+        // minWidth: "100%",
+        borderRadius: 1,
+
+        p: "10% 15%",
+        height: "100%",
+        boxShadow: '-3px 3px 4px -2px #d2c6c6',
+        border: '1px solid #d2c6c657',
+
+      },
+
     },
     //----------- Typography ----------------------------------
     typography: {
@@ -268,7 +286,7 @@ export const theme = createTheme({
           fontSize: 22,
           color: "black",
           fontWeight: "bold",
-          mt:1
+          mt: 1
         },
         h1: {
           fontFamily: "poppins",
@@ -331,7 +349,7 @@ export const theme = createTheme({
       invoice: {
         text_12: {
           fontSize: 12,
-          
+
           fontWeight: "regular",
           color: "black",
           bold: {
@@ -363,8 +381,8 @@ export const theme = createTheme({
           }
         }
       },
-      retailCard:{
-     
+      retailCard: {
+
         h1: {
           fontSize: "21px",
           color: "#8B5704"
@@ -373,13 +391,13 @@ export const theme = createTheme({
           fontSize: 27,
           fontWeight: "bold",
           color: "#001737",
-          mt:3
+          mt: 3
         },
         h3: {
           fontSize: 17,
           fontWeight: "regular",
           color: "#001737",
-          mt:1
+          mt: 1
         }
       }
     }

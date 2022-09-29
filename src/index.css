@@ -119,7 +119,7 @@ p {
 }
 input[type="color"] {
 	-webkit-appearance: none;
-	border: 2px solid #a881438d;
+	/* border: 2px solid #a881438d; */
 	width: 167px;
   border-radius: 10%;
 	height: 66px ;
