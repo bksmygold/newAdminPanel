@@ -20,14 +20,24 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useTheme } from "@mui/styles";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+import { useQuery } from "@tanstack/react-query";
+import { getGoldPrice } from "src/apis/goldPrice";
+import Loading from "src/components/loading";
 //====================================================================
 const Dashboard = () => {
   const theme = useTheme()
   const router = useRouter();
   //=====================================================
-  // useEffect(() => {
-  //   if (localStorage.getItem("token") === null) router.push("/login");
-  // }, []);
+  // const metalPriceQuery = useQuery({
+  //   queryKey:"Gold Price",
+  //   queryFn:getGoldPrice
+  // })
+
+// if(metalPriceQuery.isLoading) return <Loading/>
+
+  // console.log("Date -->", metalPriceQuery.data)
+
   //====================================================================
   return (
     <>
