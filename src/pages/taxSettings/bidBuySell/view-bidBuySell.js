@@ -33,8 +33,9 @@ import { useTheme } from '@mui/styles';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 import { BuySaveCard } from 'src/components/cards/buySaveCard';
+import { getCalculation, updateCalculation } from 'src/apis/calculation';
 //=======================================================
-export default function BuySave() {
+export default function BidBuySell() {
   const router = useRouter();
   const theme = useTheme();
 
@@ -42,21 +43,7 @@ export default function BuySave() {
   const [showEdit, setShowEdit] = React.useState(false);
   const [id, setId] = useState('');
   //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      code: "",
-      value: 0,
-
-    },
-    validationSchema: yup.object({
-      name: yup.string("Enter HSN Code").required("HSN Code is required"),
-      value: yup.number("Enter GST value ").required("GST value is required"),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
+  
 
   const editFormik = useFormik({
     initialValues: {
@@ -68,37 +55,28 @@ export default function BuySave() {
       value: yup.number("Enter GST value ").required("GST value is required"),
     }),
     onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
+      editMutation.mutate({ data: values, id: values.id });
     },
   });
 
   const query = useQuery({
-    queryKey: 'GST',
-    queryFn: () => getGst(),
+    queryKey: 'Bid Buy Sell',
+    queryFn: () => getCalculation(["Buy Percentage", "Sell Percentage"]),
   });
 
-  const addMutation = useMutation({
-    mutationFn: postGst,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('HSN/GST Added !', 'Continue with the tax panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
+
 
   const editMutation = useMutation({
-    mutationFn: updateGst,
+    mutationFn: updateCalculation,
     onSuccess: (res) => {
       query.refetch();
       setShowEdit(false);
-      swal('HSN/GST Updated !', 'Continue with the tax panel', 'success');
+      swal('Percentage Updated !', 'Continue with the tax panel', 'success');
     },
     onError: (err) => swal('Erro !', err.message, 'error'),
   });
 
-  // if (query.isLoading) return <Loading />;
+  if (query.isLoading) return <Loading />;
   //===============
 
   const editButton = (params) => {
@@ -196,7 +174,7 @@ export default function BuySave() {
                 fontWeight: 'bolder',
               }}
             >
-              Edit HSN/GST
+              Edit Bid Buys & Sell Percentage 
             </Typography>
             <Typography
               variant="caption"
@@ -206,7 +184,7 @@ export default function BuySave() {
                 fontWeight: 'bold',
               }}
             >
-              Edit HSN/GST for products used in E-commerce
+              Edit Bid Buys & Sell Percentage 
             </Typography>
 
             <form onSubmit={editFormik.handleSubmit}>
@@ -219,7 +197,7 @@ export default function BuySave() {
                   fontWeight: 600,
                 }}
               >
-                HSN Code
+                Name
               </Typography>
               <CustomTextField
                 error={editFormik.touched.name && Boolean(editFormik.errors.name)}
@@ -230,7 +208,7 @@ export default function BuySave() {
                 onChange={editFormik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="HSN Code"
+                label=" name"
               />
 
               <Typography
@@ -242,7 +220,7 @@ export default function BuySave() {
                   fontWeight: 600,
                 }}
               >
-                GST Value
+                 Value
               </Typography>
               <CustomTextField
                 error={editFormik.touched.value && Boolean(editFormik.errors.value)}
@@ -254,7 +232,7 @@ export default function BuySave() {
                 onChange={editFormik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="GST value"
+                label="value"
               />
               <LoadingButton
                 disabled={editMutation.isLoading}
@@ -262,14 +240,14 @@ export default function BuySave() {
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Edit HSN/GST
+                Edit Bid Percentage
               </LoadingButton>
             </form>
           </Grid>
         </Box>
       </Modal>
       {/* =============== ADD ================================================ */}
-      <Modal
+      {/* <Modal
         sx={{
           display: 'flex',
           justifyContent: 'center',
@@ -362,31 +340,37 @@ export default function BuySave() {
             </form>
           </Grid>
         </Box>
-      </Modal>
+      </Modal> */}
       {/* =============================================================== */}
 
       <Typography sx={[theme.custom.typography.dashBoard.h1, { mt: 8, mb: 5, p: 2 }]}>
         Bid Buy & Save View
       </Typography>
       <Grid
-spacing={5}
+        spacing={5}
         container
         sx={{ p: 5 }}
       >
 
-        <Grid item lg={4} sm={4} xs={12}>
-          <BuySaveCard name="Buy Percentage" value={10} />
-        </Grid>
+        {query.data.docs.map(x => (
 
-        <Grid item lg={4} sm={4} xs={12}>
-          <BuySaveCard name="Sell Percentage" value={12} />
-        </Grid>
+          <Grid item lg={4} sm={4} xs={12}>
+            <BuySaveCard
+              name={x.name}
+              value={x.value}
+              data={x}
+              formik={editFormik}
+              setShowEdit={setShowEdit}
+            />
+          </Grid>
+        ))
+        }
       </Grid>
-      {/* <Table rows={row} columns={columns} /> */}
+
     </>
   );
 }
-BuySave.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+BidBuySell.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 
 

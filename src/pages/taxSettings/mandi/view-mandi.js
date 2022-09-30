@@ -36,6 +36,9 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 import { CustomTextField } from 'src/components/customMUI';
 import { MandiCard } from 'src/components/cards/mandiCard';
+import { updateCalculation, getCalculation } from 'src/apis/calculation';
+import { BuySaveCard } from 'src/components/cards/buySaveCard';
+import { getLoanInterest, getLoanInterestById, updateLoanInterest } from 'src/apis/loanInterest';
 
 //=======================================================
 export default function Mandi() {
@@ -45,7 +48,45 @@ export default function Mandi() {
   const [viewTable, setViewTable] = React.useState(false);
   const [showEdit, setShowEdit] = React.useState(false);
   const [id, setId] = useState('');
+  const [editTable, setEditTable] = useState(false);
+
   //=======================
+  const formik = useFormik({
+    initialValues: {
+      minMonth: 0,
+      maxMonth: 0,
+      interest: 0,
+    },
+    validationSchema: yup.object({
+      minMonth: yup.number("Enter minimum month").required("minimum month is required"),
+      maxMonth: yup.number("Enter maximum month").required("maximum monthis required"),
+      interest: yup.number("Enter Interest").required("Interest is required"),
+    }),
+    onSubmit: (values) => {
+      loanInterestMutation.mutate({
+        data: values,
+        id:id
+      });
+    },
+  });
+
+  const loanQuery = useQuery({
+    querKey: ["loanInterest", id],
+    queryFn: () => getLoanInterestById(id),
+    onSuccess: (res) => formik.setValues(res.data),
+    enabled: !!router.query.id,
+  });
+  const loanInterestMutation = useMutation({
+    mutationFn: updateLoanInterest,
+    onSuccess: (res) => {
+      swal("Loan Interest Updated !", "Loan interest updated", "success")
+      // loanQuery.refetch();
+    },
+    onError: (err) => swal("Error !", err.message, "error"),
+  });
+
+  
+  //========================
   const addFormik = useFormik({
     initialValues: {
       name: '',
@@ -62,18 +103,29 @@ export default function Mandi() {
   const editFormik = useFormik({
     initialValues: {
       name: '',
+      value: 0
     },
     validationSchema: yup.object({
-      name: yup.string('Enter Collection Name').required('Collection is required'),
+      name: yup.string('Enter  Name').required('Name is required'),
+      value: yup.string('Enter Value').required('Value is required'),
     }),
     onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
+      editMutation.mutate({ data: values, id: values.id });
     },
   });
 
+
   const query = useQuery({
-    queryKey: 'Collection',
-    queryFn: () => getCollection(),
+    queryKey: 'mandi',
+    queryFn: () => getCalculation("Mandi Rate"),
+    // onSuccess: () => query.refetch(),
+  });
+
+
+  const tableQuery = useQuery({
+    queryKey: 'loadn interest',
+    queryFn: () => getLoanInterest(),
+    // onSuccess: () => query.refetch(),
   });
 
   const addMutation = useMutation({
@@ -88,11 +140,11 @@ export default function Mandi() {
   });
 
   const editMutation = useMutation({
-    mutationFn: updateCollection,
+    mutationFn: updateCalculation,
     onSuccess: (res) => {
       query.refetch();
       setShowEdit(false);
-      swal('Collection Updated !', 'Continue with the e-comm panel', 'success');
+      swal('Rates Updated !', 'Continue with the tax panel', 'success');
     },
     onError: (err) => swal('Erro !', err.message, 'error'),
   });
@@ -110,8 +162,9 @@ export default function Mandi() {
           onClick={() => {
             // console.log("params ---", params.row);
             setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
+            setEditTable(true)
+            formik.setValues(params.row);
+            setEditTable(params.row);
           }}
         >
           Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
@@ -132,14 +185,20 @@ export default function Mandi() {
   //==========
   const columns = [
     {
-      field: 'months',
-      headerName: 'Holding in months',
+      field: 'minMonth',
+      headerName: 'Min. Month',
       width: 250,
       editable: true, flex: 1
     },
     {
-      field: 'value',
-      headerName: '% bonus',
+      field: 'maxMonth',
+      headerName: 'Max. Month',
+      width: 250,
+      editable: true, flex: 1
+    },
+    {
+      field: 'interest',
+      headerName: 'Interest',
       width: 250,
       editable: true, flex: 1
     },
@@ -159,26 +218,26 @@ export default function Mandi() {
     },
   ];
 
-  const row= [
+  const row = [
     {
-      id:1,
-      months:"1 month",
-      value:"1%"
+      id: 1,
+      months: "1 month",
+      value: "1%"
     },
     {
-      id:14,
-      months:"3 month",
-      value:"2%"
+      id: 14,
+      months: "3 month",
+      value: "2%"
     },
     {
-      id:15,
-      months:"6 month",
-      value:"4%"
+      id: 15,
+      months: "6 month",
+      value: "4%"
     },
     {
-      id:14,
-      months:"12 month",
-      value:"5%"
+      id: 14,
+      months: "12 month",
+      value: "5%"
     },
   ]
   //=======================================================
@@ -186,7 +245,7 @@ export default function Mandi() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Collection </title>
+        <title>Dashboard | Mandi Rates </title>
       </Head>
       {/* =================================================== */}
       <Modal
@@ -200,7 +259,7 @@ export default function Mandi() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        
+
         <Box sx={theme.custom.modal}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <Typography
@@ -233,7 +292,7 @@ export default function Mandi() {
                   fontWeight: 600,
                 }}
               >
-                Mandi Interest Rate
+                Name
               </Typography>
               <CustomTextField
                 error={
@@ -246,7 +305,31 @@ export default function Mandi() {
                 onChange={editFormik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Mandi"
+                label="name"
+              />
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Interest Rate
+              </Typography>
+              <CustomTextField
+                error={
+                  editFormik.touched.value && Boolean(editFormik.errors.value)
+                }
+                helperText={editFormik.touched.value && editFormik.errors.value}
+                id="value"
+                name="value"
+                value={editFormik.values.value}
+                onChange={editFormik.handleChange}
+                fullWidth
+                variant="outlined"
+                label="value"
               />
 
               <LoadingButton
@@ -260,7 +343,7 @@ export default function Mandi() {
             </form>
           </Grid>
         </Box>
-              {/* <Table  rows={row} columns={columns} /> */}
+        {/* <Table  rows={row} columns={columns} /> */}
 
       </Modal>
       {/* =============== VIEW_TABLE ================================================ */}
@@ -331,10 +414,131 @@ export default function Mandi() {
             </form>
           </Grid>
         </Box> */}
-      <Table  rows={row} columns={columns} />
+        <Table rows={tableQuery.data?.docs} columns={columns} />
+      </Modal>
+      {/* ================== EDIT_TABLE  ================================= */}
+      <Modal
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        open={editTable}
+        onClose={() => setEditTable(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={theme.custom.modal}>
+          <Grid item xl={3} lg={3} sm={6} xs={12}>
+            <Typography
+              variant="h4"
+              sx={{
+                color: '#8B5704',
+                fontWeight: 'bolder',
+              }}
+            >
+              Edit Mandi interest rate
+            </Typography>
+            <Typography
+              variant="caption"
+              sx={{
+                color: '#cba56a',
+                fontWeight: 'bold',
+              }}
+            >
+              Edit Mandi interest rate for gold rates
+            </Typography>
+            <form onSubmit={formik.handleSubmit}>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#8B5704",
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Minimum Month
+              </Typography>
+
+              <CustomTextField
+                error={formik.touched.minMonth && Boolean(formik.errors.minMonth)}
+                helperText={formik.touched.minMonth && formik.errors.minMonth}
+                id="minMonth"
+                name="minMonth"
+                typ="number"
+                value={formik.values?.minMonth}
+                onChange={formik.handleChange}
+                fullWidth
+                variant="outlined"
+                label="Min.Month"
+              />
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#8B5704",
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Maximum Month
+              </Typography>
+
+              <CustomTextField
+                error={formik.touched.maxMonth && Boolean(formik.errors.maxMonth)}
+                helperText={formik.touched.maxMonth && formik.errors.maxMonth}
+                id="maxMonth"
+                name="maxMonth"
+                typ="number"
+                value={formik.values?.maxMonth}
+                onChange={formik.handleChange}
+                fullWidth
+                variant="outlined"
+                label="Max.Month"
+              />
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#8B5704",
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Loan Interest
+              </Typography>
+
+              <CustomTextField
+                error={formik.touched.interest && Boolean(formik.errors.interest)}
+                helperText={formik.touched.interest && formik.errors.interest}
+                id="interest"
+                name="interest"
+                typ="number"
+                value={formik.values?.interest}
+                onChange={formik.handleChange}
+                fullWidth
+                variant="outlined"
+                label="interest"
+              />
+
+              <LoadingButton
+                disabled={loanInterestMutation.isLoading}
+                loading={loanInterestMutation.isLoading}
+                type="submit"
+               sx={theme.custom.editButton}
+              >
+                Edit Loan Interest
+              </LoadingButton>
+            </form>
+          </Grid>
+        </Box>
+        {/* <Table rows={tableQuery.data?.docs} columns={columns} /> */}
       </Modal>
       {/* =============================================================== */}
-      <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
+      <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3, mt: 5, p: 5 }}>
         Treasury Gold Mandi View
       </Typography>
       <Grid
@@ -343,12 +547,22 @@ export default function Mandi() {
         sx={{ p: 5 }}
       >
 
-        <Grid item lg={6} sm={6} xs={12}>
-          <MandiCard name="Treasury Gold Mandi Rate" value={12} setShowEdit={setShowEdit}/>
-        </Grid>
+        {query.data?.docs.map(x => (
 
-        <Grid item lg={6} sm={6} xs={12}>
-          <MandiCard name="Interest Rate" view value={12} setViewTable={setViewTable}/>
+          <Grid item lg={4} sm={4} xs={12}>
+            <BuySaveCard
+              name={x.name}
+              value={x.value}
+              data={x}
+              formik={editFormik}
+              setShowEdit={setShowEdit}
+            />
+          </Grid>
+        ))
+        }
+
+        <Grid item lg={4} sm={4} xs={12}>
+          <MandiCard name="Interest Rate" view value={12} setViewTable={setViewTable} />
         </Grid>
 
       </Grid>{' '}

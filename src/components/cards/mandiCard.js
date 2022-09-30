@@ -15,7 +15,7 @@ export const MandiCard = (props) => {
     const theme = useTheme()
     //-------------------------------------------
     return (
-        <Grid container sx={[theme.custom.buySaveCard.bg, { marginRight: 5 }]} >
+        <Grid container sx={[theme.custom.buySaveCard.bg]} >
             <Grid
                 item
                 sx={{ minWidth: "100%" }}

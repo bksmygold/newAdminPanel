@@ -235,10 +235,10 @@ export const theme = createTheme({
     buySaveCard: {
       bg: {
         backgroundColor: "#FDFAF2",
-        // minWidth: "100%",
+        minWidth: "100%",
         borderRadius: 1,
 
-        p: "10% 15%",
+        p: "2% 2%",
         height: "100%",
         boxShadow: '-3px 3px 4px -2px #d2c6c6',
         border: '1px solid #d2c6c657',

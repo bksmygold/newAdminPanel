@@ -66,7 +66,7 @@ export default function BuySave() {
 
   const query = useQuery({
     queryKey: 'buySave',
-    queryFn: () => getCalculation(),
+    queryFn: () => getCalculation(['Hold','Plan Bonus','Handling Charge']),
     onSuccess: () => query.refetch()
   });
 
@@ -388,9 +388,3 @@ export default function BuySave() {
   );
 }
 BuySave.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
-
-
-
-
-
-

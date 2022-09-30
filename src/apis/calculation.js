@@ -1,10 +1,20 @@
 import axios from 'axios';
 //==============================
-export const getCalculation = () => {
+export const getCalculation = (calculation) => {
     return axios.post('/calculation/list', {
 
         filter: {
-            name: ['Hold','Plan Bonus','Handling Charge']
+            name: calculation
+        }
+
+    });
+};
+
+export const getMandiCalculation = (calculation) => {
+    return axios.post('/calculation/list', {
+
+        filter: {
+            id: calculation
         }
 
     });
