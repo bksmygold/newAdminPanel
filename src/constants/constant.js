@@ -11,22 +11,22 @@ export const infoCard = {
         rolesPerma: {
             title: "Roles & Permissions",
             desc: "create, update, delete user roles and manage thier permission",
-            url: '/userManagement/role/view-rolesPermission'
+            url: '/user-management/role/view-roles-permission'
         },
         department: {
             title: "Departments",
             desc: "create, update, delete Departments",
-            url: '/userManagement/department/view-department'
+            url: '/user-management/department/view-department'
         },
         orgaUser: {
             title: "Organisation Users",
             desc: "create, update, delete user for MyGold Organiation",
-            url: "/userManagement/user/view-organisationUser"
+            url: "/user-management/user/view-organisation-user"
         },
         referUser: {
             title: "VIP Referrals",
             desc: "create, update, delete VIP/influencer Referral   ",
-            url: "/userManagement/vipReferral/view-vipReferral"
+            url: "/user-management/vip-referral/view-vip-referral"
         },
         gbpUser: {
             title: "GBP User",
@@ -35,24 +35,24 @@ export const infoCard = {
         saleRefer: {
             title: "Sales Referrals",
             desc: "create, update, delete sales referrals",
-            url: "/userManagement/saleReferral/view-saleReferral"
+            url: "/user-management/sale-referral/view-sale-referral"
 
         },
         merchant: {
             title: "Merchant",
             desc: "create, update, delete merchants, commissions and manage their approvals",
-            url: "/userManagement/merchant/view-merchant"
+            url: "/user-management/merchant/view-merchant"
         },
         retail: {
             title: "Retail",
             desc: "create, update, delete retail Merchant Accounts and manage them",
-            url: "/userManagement/retail/view-retail"
+            url: "/user-management/retail/view-retail"
 
         },
         supplier: {
             title: "Supplier",
             desc: "create, update, delete VIP/influencer Referral",
-            url: "/userManagement/supplier/view-supplier"
+            url: "/user-management/supplier/view-supplier"
 
         }
     },
@@ -61,58 +61,58 @@ export const infoCard = {
         governmentTax: {
             title: "Government Taxes",
             desc: "create, update, delete GBP Users",
-            url: '/taxSettings/customDuty/view-customDuty'
+            url: '/tax-settings/custom-duty/view-custom-duty'
         },
         gst: {
             title: "HSN & GST",
             desc: "create, update, delete HSN and GST related Information",
-            url: '/taxSettings/gst/view-gst'
+            url: '/tax-settings/gst/view-gst'
         },
         tds: {
             title: "TDS & TCS",
             desc: "create, update, delete TDS and TCS related Information",
-            url: '/taxSettings/tds/view-tds'
+            url: '/tax-settings/tds/view-tds'
         },
         buySave: {
             title: "Buy & Save",
             desc: "Create , Update, delete bonus and calculation percentages applicable on buy and save plans",
-            url: '/taxSettings/buySave/view-buySave'
+            url: '/tax-settings/buy-save/view-buy-save'
 
         },
         interest: {
             title: "Interest Rates",
             desc: "create, update, delete HSN and GST related Information",
-            url: '/taxSettings/loanInterest/view-loanInterest'
+            url: '/tax-settings/loan-interest/view-loan-interest'
 
         },
         mandi: {
             title: "Treasury Gold Mandi ",
             desc: "Update Mandi Government Treasury Gold for the gold declared",
-            url: '/taxSettings/mandi/view-mandi'
+            url: '/tax-settings/mandi/view-mandi'
 
         },
         referalType: {
             title: "Referal Type",
             desc: "Create , Update, delete types of Referral",
-            url: "/taxSettings/referralType/view-referralType"
+            url: "/tax-settings/referralType/view-referralType"
 
         },
         referEarn: {
             title: "Refer and Earn",
             desc: "Create , Update, delete referral and joining bonus",
-            // url: "/taxSettings/referralType/view-referralType"
+            // url: "/tax-settings/referralType/view-referralType"
 
         },
         buySell: {
             title: "Bid - Buy and Sell",
             desc: "Create , Update, delete commissions and calculation percentages applicable on Bids",
-            url: "/taxSettings/bidBuySell/view-bidBuySell"
+            url: "/tax-settings/bid-buy-sell/view-bid-buy-sell"
 
         },
         makingCharge: {
             title: "Making Charges",
             desc: "create, update, delete making charges",
-            url: "/taxSettings/makingCharge/view-makingCharge"
+            url: "/tax-settings/making-charge/view-making-charge"
         },
         eComm: {
             title: "E-commerce",
@@ -139,116 +139,116 @@ export const infoCard = {
 
     eComm: {
         metal: {
-            url: "/eCommerce/metal/view-metal",
+            url: "/e-commerce/metal/view-metal",
             title: "Metal",
             desc: "create, update, delete Metals"
         },
         metalGroup: {
             title: "Metal Groups",
             desc: "create, update, delete Metal Groups relate them to Metal",
-            url: "/eCommerce/metalGroup/view-metalGroup",
+            url: "/e-commerce/metal-group/view-metal-group",
         },
         ornament: {
             title: "Ornaments",
             desc: "create, update, delete Ornaments",
-            url: "/eCommerce/ornament/view-ornament"
+            url: "/e-commerce/ornament/view-ornament"
         },
         unit: {
             title: "Units",
             desc: "create, update, delete Units",
-            url: "/eCommerce/unit/view-unit"
+            url: "/e-commerce/unit/view-unit"
         },
         cut: {
             title: "Cut",
             desc: "create, update, delete Cut",
-            url: "/eCommerce/cut/view-cut"
+            url: "/e-commerce/cut/view-cut"
         },
         color: {
             title: "Colors",
             desc: "create, update, delete Colors",
-            url: "/eCommerce/color/view-color",
+            url: "/e-commerce/color/view-color",
         },
         shape: {
             title: "Shape",
             desc: "create, update, delete Shape",
-            url: "/eCommerce/shape/view-shape",
+            url: "/e-commerce/shape/view-shape",
         },
         clarity: {
             title: "Clarity",
             desc: "create, update, delete Clarity",
-            url: "/eCommerce/clarity/view-clarity",
+            url: "/e-commerce/clarity/view-clarity",
         },
         style: {
             title: "Style",
             desc: "create, update, delete Style",
-            url: "/eCommerce/style/view-style"
+            url: "/e-commerce/style/view-style"
         },
         collection: {
             title: "Collections",
             desc: "create, update, delete Collections",
-            url: "/eCommerce/collection/view-collection"
+            url: "/e-commerce/collection/view-collection"
         },
         category: {
             title: "Categories",
             desc: "create, update, delete Categories",
-            url: "/eCommerce/category/view-category"
+            url: "/e-commerce/category/view-category"
         },
         variety: {
             title: "Varieties",
             desc: "create, update, delete Varieties",
-            url: "/eCommerce/variety/view-variety"
+            url: "/e-commerce/variety/view-variety"
         },
         item: {
             title: "Items",
             desc: "create, update, delete Items",
-            url: "/eCommerce/item/view-item"
+            url: "/e-commerce/item/view-item"
         },
         productType: {
             title: "Product Types",
             desc: "create, update, delete Product Types",
-            url: "/eCommerce/productType/view-productType"
+            url: "/e-commerce/product-type/view-product-type"
         },
         faq: {
             title: "FAQ",
             desc: "create, update, delete FAQs",
-            url: "/eCommerce/faq/view-faq"
+            url: "/e-commerce/faq/view-faq"
         },
         policy: {
             title: "Policy",
             desc: "create, update, delete Policies",
-            url: "/eCommerce/policy/view-policy"
+            url: "/e-commerce/policy/view-policy"
         },
         retReason: {
             title: "Return Reason",
             desc: "create, update, delete return reason",
-            url: "/eCommerce/returnReason/view-returnReason"
+            url: "/e-commerce/return-reason/view-return-reason"
         },
         rejReturn: {
             title: "Reject Reason",
             desc: "create, update, delete return reason",
-            url: "/eCommerce/rejectReason/view-rejectReason"
+            url: "/e-commerce/reject-reason/view-reject-reason"
         },
       
 
         certi: {
             title: "Certificates",
             desc: "create, update, delete Certificates",
-            url: "/eCommerce/certificate/view-certificate"
+            url: "/e-commerce/certificate/view-certificate"
         },
         label: {
             title: "Label",
             desc: "create, update, delete Certificates",
-            url: "/eCommerce/label/view-label"
+            url: "/e-commerce/label/view-label"
         },
         plan: {
             title: "Standard Plans",
             desc: "create, update, delete Plans",
-            url: "/eCommerce/plan/view-plan"
+            url: "/e-commerce/plan/view-plan"
         },
         cycle: {
             title: "Cycle Periods",
             desc: "create, update, delete Plans",
-            url: "/eCommerce/cyclePeriod/view-cyclePeriod",
+            url: "/e-commerce/cycle-period/view-cycle-period",
         },
 
     },
@@ -258,17 +258,17 @@ export const infoCard = {
         offer: {
             title: "Offer Sliders",
             desc: "create, update, delete Offer Sliders",
-            url: "/promotionalSetting/offer/view-offer"
+            url: "/promotional-setting/offer/view-offer"
         },
         appSlider: {
             title: "App slider",
             desc: "create, update, delete Offer Sliders",
-            url: "/promotionalSetting/slider/view-slider"
+            url: "/promotional-setting/slider/view-slider"
         },
         video: {
             title: "How-to Videos",
             desc: "create, update, delete how To Videos",
-            url: "how-to-video/view-how-to-video"
+            url: "/promotional-setting/how-to-video/view-how-to-video"
         },
         testi: {
             title: "Testimonials",
@@ -287,7 +287,7 @@ export const infoCard = {
         referratlType: {
             title: "Referral Type",
             desc: "create, update, delete referral type",
-            url: "/promotionalSetting/referralType/view-referralType"
+            url: "/promotional-setting/referral-type/view-referral-type"
         },
         merchNatBanner: {
             title: "Merchant Banners",

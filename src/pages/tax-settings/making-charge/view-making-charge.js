@@ -175,7 +175,7 @@ export default function MakingCharge() {
             // setId(params.row.id);
             // editFormik.setValues(params.row);
             // setShowEdit(params.row);
-            router.push(`/taxSettings/makingCharge/edit-makingCharge?id=${params.row.id}`);
+            router.push(`/tax-settings/making-charge/edit-making-charge?id=${params.row.id}`);
           }}
         >
           Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
@@ -189,7 +189,7 @@ export default function MakingCharge() {
       <DeleteSpinner
         id={params.id}
         deleting={deleteMakingCharge}
-        url="/makingCharge/view-makingCharge"
+        url="/making-charge/view-making-charge"
       />
     );
   };
@@ -807,7 +807,7 @@ export default function MakingCharge() {
           <Button
             onClick={() =>
               // setShowAdd(true)
-              router.push('/taxSettings/makingCharge/add-makingCharge')
+              router.push('/tax-settings/making-charge/add-making-charge')
             }
             sx={theme.custom.addButton}
           >

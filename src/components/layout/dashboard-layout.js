@@ -28,7 +28,7 @@ export const DashboardLayout = (props) => {
             flex: '1 1 auto',
             flexDirection: 'column',
             width: '100%',
-            // backgroundColor: '#fff',
+            // backgroundColor: 'pink',
           }}
         >
           {children}
@@ -39,6 +39,9 @@ export const DashboardLayout = (props) => {
         onClose={() => setSidebarOpen(false)}
         open={isSidebarOpen}
       />
+      {/* {children}
+        </Box>
+      </DashboardLayoutRoot> */}
     </>
   );
 };

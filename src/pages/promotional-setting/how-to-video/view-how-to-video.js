@@ -1,13 +1,13 @@
 import Head from 'next/head';
 import { DashboardSidebar } from 'src/components/sidebar.js/dashboard-sidebar';
 import { Box, Container, Typography, Grid, Button } from '@mui/material';
-import { DashboardLayout } from '../../components/layout/dashboard-layout';
-import { InfoCard } from '../../components/cards/infoCard';
+import { DashboardLayout } from '../../../components/layout/dashboard-layout';
+import { InfoCard } from '../../../components/cards/infoCard';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { alpha, styled } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Table from '../../components/utility/table';
+import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { getVideo, deleteVideo } from 'src/apis/howToVideo';
 import { useQuery } from '@tanstack/react-query';

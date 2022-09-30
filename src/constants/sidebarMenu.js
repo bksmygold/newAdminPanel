@@ -18,17 +18,17 @@ export const dashboardMenuList = [
         title: 'Dashboard',
         childrens: [
             {
-                href: '/financialDashobard/myGoldFinancials',
+                href: '/financial-dashobard/my-gold-financials',
                 icon: <ChartBarIcon fontSize="small" />,
                 title: 'Financials',
             },
             {
-                href: '/retailDashboard/retail',
+                href: '/retail-dashboard/retail',
                 icon: <ChartBarIcon fontSize="small" />,
                 title: 'Retail',
             },
             {
-                href: '/inventoryDashboard/inventory',
+                href: '/inventory-dashboard/inventory',
                 icon: <ChartBarIcon fontSize="small" />,
                 title: 'Inventory',
             },
@@ -40,22 +40,22 @@ export const dashboardMenuList = [
         ],
     },
     {
-        href: '/userManagement',
+        href: '/user-management',
         icon: <ManageAccountsIcon />,
         title: 'User Management',
     },
     {
-        href: '/taxSettings',
+        href: '/tax-settings',
         icon: <AccountBalanceWalletIcon />,
         title: 'Tax Setting',
     },
     {
-        href: '/eCommerce',
+        href: '/e-commerce',
         icon: <StoreIcon />,
         title: 'E-Commerce',
     },
     {
-        href: '/promotionalSetting',
+        href: '/promotional-setting',
         icon: <ConnectWithoutContactIcon />,
         title: 'Promotional Setting',
     },
@@ -79,7 +79,7 @@ export const dashboardMenuList = [
 
 export const inventoryMenuList = [
     {
-        href: "/inventoryDashboard/inventory",
+        href: "/inventory-dashboard/inventory",
         icon: <ManageAccountsIcon />,
         title: "Dashboard",
     },
@@ -89,7 +89,7 @@ export const inventoryMenuList = [
         title: "Custody Given",
         childrens: [
             {
-                href: "/inventoryDashboard/customer",
+                href: "/inventory-dashboard/customer",
                 icon: <ReceiptIcon fontSize="small" />,
                 title: "Customer",
             },
@@ -194,12 +194,12 @@ export const inventoryMenuList = [
         ],
     },
     {
-        href: "/inventoryDashboard/stockTransfer",
+        href: "/inventory-dashboard/stock-transfer",
         icon: <ManageAccountsIcon />,
         title: "Stock Transfer",
     },
     {
-        href: "/inventoryDashboard/stockAdjustment",
+        href: "/inventory-dashboard/stock-adjustment",
         icon: <ManageAccountsIcon />,
         title: "Stock Adjustment",
     }
@@ -207,22 +207,22 @@ export const inventoryMenuList = [
 
 export const retailMenuList = [
     {
-        href: "/inventoryDashboard/inventory",
+        href: "/inventory-dashboard/inventory",
         icon: <DashboardIcon />,
         title: "Dashboard",
     },
     {
-        href: "/inventoryDashboard/inventory",
+        href: "/inventory-dashboard/inventory",
         icon: <DashboardIcon />,
         title: "Orders",
     },
     {
-        href: "/inventoryDashboard/inventory",
+        href: "/inventory-dashboard/inventory",
         icon: <DashboardIcon />,
         title: "Settlement Requests",
     },
     {
-        href: "/inventoryDashboard/inventory",
+        href: "/inventory-dashboard/inventory",
         icon: <DashboardIcon />,
         title: "Retailers Data",
     },

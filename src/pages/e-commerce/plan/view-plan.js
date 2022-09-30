@@ -9,18 +9,33 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
-import { getCyclePeriod, deleteCyclePeriod } from 'src/apis/cyclePeriod';
 import { useQuery } from '@tanstack/react-query';
-import Loading from 'src/components/loading';
+import { getPlan, deletePlan } from 'src/apis/plan';
+import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
+import Loading from 'src/components/loading';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
+
 //=======================================================
-export default function CyclePeriod() {
+export default function ViewRole() {
   const router = useRouter();
-  const theme = useTheme();
+    const theme = useTheme();
 
   //=======================
+
+  const query = useQuery({
+    queryKey: 'Plan',
+    queryFn: () => getPlan(),
+    onSuccess: (res) => console.log('Success ---', res.message),
+    onError: (err) => console.log('Error --->', err),
+  });
+
+  if (query.isLoading) return <Loading />;
+
+  console.log("<---->",query.data.docs)
+  //===============
+
   const editButton = (params) => {
     return (
       <strong>
@@ -29,7 +44,7 @@ export default function CyclePeriod() {
           sx={theme.custom.editButton}
           size="small"
           onClick={() => {
-            router.push(`/eCommerce/cyclePeriod/edit-cyclePeriod/?id=${params.id}`);
+            router.push(`/e-commerce/plan/edit-plan/?id=${params.id}`);
           }}
         >
           Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
@@ -42,69 +57,58 @@ export default function CyclePeriod() {
     return (
       <DeleteSpinner
         id={params.id}
-        deleting={deleteCyclePeriod}
-        url={'/eCommerce/cyclePeriod/view-cyclePeriod'}
+        deleting={deletePlan}
+        url="/plan/view-plan"
       />
     );
   };
-  //=======================
-  const query = useQuery({
-    queryKey: 'cyclePeriod',
-    queryFn: getCyclePeriod,
-    onSuccess: (res) => console.log('Success ---', res.message),
-    onError: (err) => console.log('Error --->', err),
-  });
-  if (query.isLoading) return <Loading />;
-
-  //===============================
+  //==========
   const columns = [
     {
       field: 'name',
-      headerName: 'Cycle Period Name',
+      headerName: 'Plan Name',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
-      field: 'lockinPeriod',
-      headerName: 'Locking Period',
+      field: 'mode',
+      headerName: 'Mode',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
-      field: 'gracePeriod',
-      headerName: 'Grace Period',
+      field: 'type',
+      headerName: 'Plan Type',
       width: 150,
-      editable: true,
+      editable: true,      flex:1
     },
     {
-      field: 'cycle',
+      field: 'min',
+      headerName: 'Minimum',
+      width: 150,
+      editable: true,      flex:1
+    },
+    {
+      field: 'duration',
+      headerName: 'Duration',
+      width: 150,
+      editable: true,      flex:1
+    },
+    {
+      field: 'cyclePeriod.name',
       headerName: 'Cycle Period',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'maxSkip',
-      headerName: 'Maximum Skip',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'maxUnpaidInvestment',
-      headerName: 'Max. Unpaid Investment',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'maxUnpaidSkip',
-      headerName: 'Max. Unpaid skip',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'shortName',
-      headerName: 'Short Name',
-      width: 150,
-      editable: true,
+      width: 160,      flex:1,
+      valueGetter: (params) => {
+        let result = [];
+        if (params.row.cyclePeriod) {
+          if (params.row.cyclePeriod.name) {
+            result.push(params.row.cyclePeriod.name);
+          }
+        } else {
+          result = ['Empty'];
+        }
+        return result.join(', ');
+      },
     },
 
     {
@@ -112,14 +116,14 @@ export default function CyclePeriod() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: editButton,      flex:1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: deleteButton,      flex:1
     },
   ];
 
@@ -128,7 +132,7 @@ export default function CyclePeriod() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Cycle Period </title>
+        <title>Dashboard | Plan </title>
       </Head>
       <Grid
         sx={{
@@ -141,18 +145,18 @@ export default function CyclePeriod() {
       >
         <Grid item>
           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-            Cycle Period View
+            Plan View
           </Typography>
         </Grid>
         <Grid item>
           <Button
             onClick={() =>
               // setShowAdd(true)
-              router.push('/eCommerce/cyclePeriod/add-cyclePeriod')
+              router.push('/e-commerce/plan/add-plan')
             }
             sx={theme.custom.addButton}
           >
-            Create Cycle Period
+            Create Plan
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>
         </Grid>
@@ -160,11 +164,9 @@ export default function CyclePeriod() {
       <Table
         rows={query.data.docs}
         columns={columns}
-        create="Cycle Period"
-        url="/cyclePeriod/add-cyclePeriod"
-        title="Cycle PeriodView"
+   
       />
     </>
   );
 }
-CyclePeriod.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+ViewRole.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
