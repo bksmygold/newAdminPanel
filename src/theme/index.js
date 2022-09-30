@@ -114,7 +114,7 @@ export const theme = createTheme({
       styleOverrides: {
         notchedOutline: {
           borderColor: '#9A6715',
-          borderWidth: 2,
+          borderWidth: 1,
           // backgroundColor:"gray"
         },
         focused: {

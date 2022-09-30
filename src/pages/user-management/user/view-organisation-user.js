@@ -45,7 +45,7 @@ export default function ViewOrganisationUser() {
           }}
           size="small"
           onClick={() => {
-            router.push(`/userManagement/user/edit-organisationUser/?id=${params.id}`);
+            router.push(`/user-management/user/edit-organisation-user/?id=${params.id}`);
           }}
         >
           Edit <EditIcon sx={{ marginLeft: 1, width: 23, height: 23 }} />
@@ -59,7 +59,7 @@ export default function ViewOrganisationUser() {
       <DeleteSpinner
         id={params.id}
         deleting={deleteUser}
-        url="/userManagement/user/view-organisationUser"
+        url="/user-management/user/view-organisation-user"
       />
     );
   };
@@ -140,7 +140,7 @@ export default function ViewOrganisationUser() {
         <Grid item>
           <Button
             onClick={() =>
-              router.push('/userManagement/user/create-organisationUser')
+              router.push('/user-management/user/create-organisation-user')
             }
             sx={{
               background: 'linear-gradient(43deg, #8b5704, #ddb070)',

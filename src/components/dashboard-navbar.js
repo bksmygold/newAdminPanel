@@ -39,7 +39,7 @@ const CustomFormControl = styled(FormControl)`
 //=================================================================
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
-  boxShadow: theme.shadows[3],
+  boxShadow: theme.shadows[8],
 }));
 
 //=================================================================

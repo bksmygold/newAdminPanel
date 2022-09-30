@@ -28,6 +28,7 @@ import { getRole } from 'src/apis/role';
 import { postUser } from 'src/apis/user';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import Loading from 'src/components/loading';
 //=======================================================
 export default function AddOrganisationUser() {
   const router = useRouter();
@@ -69,7 +70,7 @@ export default function AddOrganisationUser() {
     onSuccess: (res) => {
       swal('User Added !', 'User has been added', 'success'),
         router.push({
-          pathname: '/userManagement/user/secret',
+          pathname: '/user-management/user/secret',
           query: res.mfa,
         });
     },
@@ -80,6 +81,10 @@ export default function AddOrganisationUser() {
     queryFn: () => getRole(),
     onSuccess: () => console.log('Success !'),
   });
+
+  if(roleQuery.isLoading) return <Loading/>
+
+  console.log("roles ===",roleQuery.data.docs)
   //===============
   //=======================================================
   return (
@@ -96,6 +101,7 @@ export default function AddOrganisationUser() {
           marginTop: 5,
           border: '1px solid #d2c6c657',
           backgroundColor: 'white',
+          minWidth:"100%"
         }}
       >
         <Typography

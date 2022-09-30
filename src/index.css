@@ -139,3 +139,24 @@ input[type="color"] {
     padding: 16px;
   } */
 }
+
+
+@media screen and (max-width: 780px) {
+  .setting {
+    background-color:red;
+    display: flex;
+    flex-direction: column;
+
+  }
+
+}
+
+@media screen and (min-width: 788px) {
+  .set {
+    background-color:red;
+    display: flex;
+    flex-direction: row;
+
+  }
+
+}

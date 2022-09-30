@@ -25,364 +25,457 @@ const CustomTextField = styled(TextField)`
 `;
 //=======================================================================
 const Settings = (props) => {
-  const theme = useTheme()
-  //=======================================================
-  const formik = useFormik({
-    initialValues: {
-      organizationName: "",
-      organizationLogo: "",
-      organizationGST: "",
-      organizationCIN: "",
-      organizationAddress: "",
-      organizationSignature: [],
-      appBackgroundColor: "",
-      appPrimaryColor: "",
-      appSecondaryColor: "",
-      appTextColor: "",
-    },
-    // validationSchema: yup.object({
-    //   organizationName: yup.string("Enter organization Name").required("organization Name is required"),
-    //   // organizationLogo: yup.string("Enter organization Logo").required("organization Logo is required"),
-    //   organizationGST: yup.string("Enter  organization GST").required("organization GST is required"),
-    //   organizationCIN: yup.string("Enter organization CIN").required("organization CIN is required"),
-    //   organizationAddress: yup.string("Enter organization Address").required("organization Address is required"),
-    //   // organizationSignature: yup.string("Enter organization Signature").required("organization Signature is required"),
-    //   appBackgroundColor: yup.string("Enter appBackground Color").required("appBackground Color is required"),
-    //   appPrimaryColor: yup.string("Enter appPrimary Color").required("appPrimary Color is required"),
-    //   appSecondaryColor: yup.string("Enter appSecondary Color").required("appSecondary Color is required"),
-    //   appTextColor: yup.string("Enter app TextColor").required("app TextColor is required"),
+    const theme = useTheme()
+    //=======================================================
+    const formik = useFormik({
+        initialValues: {
+            organizationName: "",
+            organizationLogo: "",
+            organizationGST: "",
+            organizationCIN: "",
+            organizationAddress: "",
+            organizationSignature: [],
+            appBackgroundColor: "",
+            appPrimaryColor: "",
+            appSecondaryColor: "",
+            appTextColor: "",
+        },
+        // validationSchema: yup.object({
+        //   organizationName: yup.string("Enter organization Name").required("organization Name is required"),
+        //   // organizationLogo: yup.string("Enter organization Logo").required("organization Logo is required"),
+        //   organizationGST: yup.string("Enter  organization GST").required("organization GST is required"),
+        //   organizationCIN: yup.string("Enter organization CIN").required("organization CIN is required"),
+        //   organizationAddress: yup.string("Enter organization Address").required("organization Address is required"),
+        //   // organizationSignature: yup.string("Enter organization Signature").required("organization Signature is required"),
+        //   appBackgroundColor: yup.string("Enter appBackground Color").required("appBackground Color is required"),
+        //   appPrimaryColor: yup.string("Enter appPrimary Color").required("appPrimary Color is required"),
+        //   appSecondaryColor: yup.string("Enter appSecondary Color").required("appSecondary Color is required"),
+        //   appTextColor: yup.string("Enter app TextColor").required("app TextColor is required"),
 
-    // }),
-    onSubmit: (values) => {
-      console.log("payload --->", values);
-      settingMutation.mutate(values)
-    },
-  });
+        // }),
+        onSubmit: (values) => {
+            console.log("payload --->", values);
+            settingMutation.mutate(values)
+        },
+    });
 
-  const query = useQuery({
-    querKey: 'settings',
-    queryFn: () => getSettingsById(),
-    onSuccess: (res) => {
-      formik.setValues(res)
-    }
-    
-  })
-  
-  const settingMutation = useMutation({
-    mutationFn: updateSetting,
-    onSuccess: (res) => {
-      query.refetch()
-      // alert("Added")
-      swal("Settings updated !", "Settings updated", "success")
-    },
-    onError: (err) => swal("Error !", err.message, "error"),
-  });
+    const query = useQuery({
+        querKey: 'settings',
+        queryFn: () => getSettingsById(),
+        onSuccess: (res) => {
+            formik.setValues(res)
+        }
 
-  if (query.isLoading) return <Loading />
+    })
 
-  console.log("Error-->", query.data)
-  //=======================================================================
-  return (
-    <>
-      <Head>
-        <title>Dashboard | Settings</title>
-      </Head>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          py: 2,
-        }}
-      >
-        <Container maxWidth="xl">
-          <Typography sx={[theme.custom.typography.dashBoard.h1, { mt: 5 }]}>
-            Settings
-          </Typography>
-          {/* <SettingsNotifications /> */}
-          <Box sx={{ pt: 3 }}>
-            <form onSubmit={formik.handleSubmit}>
-              <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }}>
-                <CardHeader
-                  subheader="Settings for the BKS MyGold Organization"
-                  title="Organization Profile"
-                />
-                <Divider />
-                <CardContent >
-                  <Grid container spacing={2}>
-                    <Grid item md={6} xs={12}>
-                      <CustomTextField
-                        error={formik.touched.organizationName && Boolean(formik.errors.organizationName)}
-                        helperText={formik.touched.organizationName && formik.errors.organizationName}
-                        id="organizationName"
-                        name="organizationName"
-                        value={formik.values?.organizationName}
-                        onChange={formik.handleChange}
-                        fullWidth
-                        label="Organization Name"
-                        variant="outlined"
-                      />
-                    </Grid>
-                    <Grid item md={6} xs={12}>
-                      <CustomTextField
+    const settingMutation = useMutation({
+        mutationFn: updateSetting,
+        onSuccess: (res) => {
+            query.refetch()
+            // alert("Added")
+            swal("Settings updated !", "Settings updated", "success")
+        },
+        onError: (err) => swal("Error !", err.message, "error"),
+    });
 
-                        label="Organization GST"
-                        error={formik.touched.organizationGST && Boolean(formik.errors.organizationGST)}
-                        helperText={formik.touched.organizationGST && formik.errors.organizationGST}
-                        id="organizationGST"
-                        name="organizationGST"
-                        value={formik.values?.organizationGST}
-                        onChange={formik.handleChange}
-                        fullWidth
-                      />
-                    </Grid>
+    if (query.isLoading) return <Loading />
 
-                    <Grid item md={6} xs={12}>
+    console.log("Error-->", query.data)
+    //=======================================================================
+    return (
+        <>
+            <Head>
+                <title>Dashboard | Settings</title>
+            </Head>
+            <Box
+                component="main"
+                sx={{
+                    flexGrow: 1,
+                    py: 2,
+                }}
+            >
+                <Container maxWidth="xl">
+                    <Typography sx={[theme.custom.typography.dashBoard.h1, { mt: 5 }]}>
+                        Settings
+                    </Typography>
+                    {/* <SettingsNotifications /> */}
+                    <Box sx={{ pt: 3 }}>
+                        <form onSubmit={formik.handleSubmit}>
+                            <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }}>
+                                <CardHeader
+                                    subheader="Settings for the BKS MyGold Organization"
+                                    title="Organization Profile"
+                                />
+                                <Divider />
+                                <CardContent >
+                                    {/* ========================================== CARD  ========================================= */}
+                                    {/* <Grid container spacing={2}>
+                                        <Grid item md={6} xs={12}>
+                                            <CustomTextField
+                                                error={formik.touched.organizationName && Boolean(formik.errors.organizationName)}
+                                                helperText={formik.touched.organizationName && formik.errors.organizationName}
+                                                id="organizationName"
+                                                name="organizationName"
+                                                value={formik.values?.organizationName}
+                                                onChange={formik.handleChange}
+                                                fullWidth
+                                                label="Organization Name"
+                                                variant="outlined"
+                                            />
+                                        </Grid>
+                                        <Grid item md={6} xs={12}>
 
-                      <CustomTextField
+                                            <CustomTextField
+                                                multiline
+                                                fullWidth
+                                                label="Organization Address"
+                                                error={formik.touched.organizationAddress && Boolean(formik.errors.organizationAddress)}
+                                                helperText={formik.touched.organizationAddress && formik.errors.organizationAddress}
+                                                id="organizationAddress"
+                                                name="organizationAddress"
+                                                value={formik.values?.organizationAddress}
+                                                onChange={formik.handleChange}
 
-                        label="Organization CIN"
-                        error={formik.touched.organizationCIN && Boolean(formik.errors.organizationCIN)}
-                        helperText={formik.touched.organizationCIN && formik.errors.organizationCIN}
-                        id="organizationCIN"
-                        name="organizationCIN"
-                        value={formik.values?.organizationCIN}
-                        onChange={formik.handleChange}
-                        fullWidth
-                      />
-                    </Grid>
+                                            />
+                                        </Grid>
+                                        <Grid item md={6} xs={12}>
+                                            <CustomTextField
 
-                    <Grid item md={6} xs={12}>
+                                                label="Organization GST"
+                                                error={formik.touched.organizationGST && Boolean(formik.errors.organizationGST)}
+                                                helperText={formik.touched.organizationGST && formik.errors.organizationGST}
+                                                id="organizationGST"
+                                                name="organizationGST"
+                                                value={formik.values?.organizationGST}
+                                                onChange={formik.handleChange}
+                                                fullWidth
+                                            />
+                                        </Grid>
 
-                      <CustomTextField
-                        fullWidth
-                        label="Organization Address"
-                        error={formik.touched.organizationAddress && Boolean(formik.errors.organizationAddress)}
-                        helperText={formik.touched.organizationAddress && formik.errors.organizationAddress}
-                        id="organizationAddress"
-                        name="organizationAddress"
-                        value={formik.values?.organizationAddress}
-                        onChange={formik.handleChange}
+                                        <Grid item md={6} xs={12}>
 
-                      />
-                    </Grid>
-                    <Grid item md={6} sm={6} xs={12}>
-                      <Typography sx={[theme.custom.typography.dashBoard.h1, { mb: 5 }]}>
-                        Organization Signature
-                      </Typography>
-                      <img src={query.data?.organizationSignature} style={{ width: "10px" }} />
-                      <CustomTextField
-                        fullWidth
-                        // error={formik.touched.organizationSignature && Boolean(formik.errors.organizationSignature)}
-                        // helperText={formik.touched.organizationSignature && formik.errors.organizationSignature}
-                        id="organizationSignature"
-                        name="organizationSignature"
-                        type="file"
+                                            <CustomTextField
 
-                        onChange={(e) => {
-                          formik.setFieldValue("organizationSignature", e.target.files[0])
-                        }}
-                      />
-                    </Grid>
+                                                label="Organization CIN"
+                                                error={formik.touched.organizationCIN && Boolean(formik.errors.organizationCIN)}
+                                                helperText={formik.touched.organizationCIN && formik.errors.organizationCIN}
+                                                id="organizationCIN"
+                                                name="organizationCIN"
+                                                value={formik.values?.organizationCIN}
+                                                onChange={formik.handleChange}
+                                                fullWidth
+                                            />
+                                        </Grid>
 
 
-                    <Grid item md={6} sm={6} xs={12}>
+                                        <Grid item md={6} sm={6} xs={12}>
+                                            <Typography sx={[theme.custom.typography.dashBoard.h1, { mb: 5 }]}>
+                                                Organization Signature
+                                            </Typography>
+                                            <img src={query.data?.organizationSignature} style={{ width: "250px", height: "100px" }} />
+                                            <CustomTextField
+                                                fullWidth
+                                              
+                                                id="organizationSignature"
+                                                name="organizationSignature"
+                                                type="file"
 
-                      <Typography sx={[theme.custom.typography.dashBoard.h1, { mb: 5 }]}>
-                        App Logo
-                      </Typography>
-
-
-                      <img src={query.data?.organizationLogo} width="100px" />
-
-                      <CustomTextField
-                        fullWidth
-                        type="file"
-                        // error={formik.touched.organizationLogo && Boolean(formik.errors.organizationLogo)}
-                        // helperText={formik.touched.organizationLogo && formik.errors.organizationLogo}
-                        id="organizationLogo"
-                        name="organizationLogo"
-                        // value={formik.values?.organizationLogo}
-
-                        onChange={(e) => {
-                          console.log(e.target.files[0])
-                          formik.setFieldValue("organizationLogo", e.target.files[0])
-                        }}
-
-                      // onChange={(e) =>
-                      //   formik.setFieldValue('organizationLogo', e.target.files[0])
-                      // } 
-                      />{" "}
-
-                    </Grid>
-                  </Grid>
-                  {/* <CardContent> */}
-
-                  <Typography sx={[theme.custom.typography.dashBoard.h1, { mb: 5 }]}>
-                    App Color
-                  </Typography>
-                  <Grid container>
-                    <Grid
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        // border:"1px solid red"
-                      }}
-                      item
-                      xl={3}
-                      lg={3}
-                      sm={6}
-                      md={3}
-                      xs={12}
-                    >
-                      <CustomTextField
-                        type="color"
-                        error={formik.touched.appBackgroundColor && Boolean(formik.errors.appBackgroundColor)}
-                        helperText={formik.touched.appBackgroundColor && formik.errors.appBackgroundColor}
-                        id="appBackgroundColor"
-                        name="appBackgroundColor"
-                        value={formik.values?.appBackgroundColor}
-                        onChange={formik.handleChange}
-                        label="Background Color"
-
-                      />
-                      <Typography
-                        sx={{ color: "#8B5704", fontWeight: "bolder" }}
-                        variant="captions"
-                      >
-                        {query.data?.appBackgroundColor}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                      item
-                      xl={3}
-                      lg={3}
-                      sm={6}
-                      xs={12}
-                    >
-
-                      <CustomTextField
-                        type="color"
-                        error={formik.touched.appPrimaryColor && Boolean(formik.errors.appPrimaryColor)}
-                        helperText={formik.touched.appPrimaryColor && formik.errors.appPrimaryColor}
-                        id="appPrimaryColor"
-                        name="appPrimaryColor"
-                        value={formik.values?.appPrimaryColor}
-                        onChange={formik.handleChange}
-                        label="Primary Color"
+                                                onChange={(e) => {
+                                                    formik.setFieldValue("organizationSignature", e.target.files[0])
+                                                }}
+                                            />
+                                        </Grid>
 
 
-                      />
-                      <Typography
-                        sx={{ color: "#8B5704", fontWeight: "bolder" }}
-                        variant="captions"
-                      >
-                        {query.data?.appPrimaryColor}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                      item
-                      xl={3}
-                      lg={3}
-                      sm={6}
-                      xs={12}
-                    >
-                      <CustomTextField
-                        type="color"
-                        error={formik.touched.appSecondaryColor && Boolean(formik.errors.appSecondaryColor)}
-                        helperText={formik.touched.appSecondaryColor && formik.errors.appSecondaryColor}
-                        id="appSecondaryColor"
-                        name="appSecondaryColor"
-                        value={formik.values?.appSecondaryColor}
-                        onChange={formik.handleChange}
-                        label="Secondary Color"
-                      />
-                      <Typography
-                        sx={{ color: "#8B5704", fontWeight: "bolder" }}
-                        variant="captions"
-                      >
-                        {query.data?.appSecondaryColor}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                      item
-                      xl={3}
-                      lg={3}
-                      sm={6}
-                      xs={12}
-                    >
-                      <CustomTextField
-                        type="color"
-                        error={formik.touched.appTextColor && Boolean(formik.errors.appTextColor)}
-                        helperText={formik.touched.appTextColor && formik.errors.appTextColor}
-                        id="appTextColor"
-                        name="appTextColor"
-                        value={formik.values?.appTextColor}
-                        onChange={formik.handleChange}
-                        label="Text Color"
+                                        <Grid item md={6} sm={6} xs={12}>
 
-                      />
-                      <Typography
-                        sx={{ color: "#8B5704", fontWeight: "bolder" }}
-                        variant="captions"
-                      >
-                        {query.data?.appTextColor}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </CardContent>
-                {/* </CardContent>   */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    p: 2,
-                  }}
-                >
-                  <LoadingButton
-                    disabled={settingMutation.isLoading}
-                    loading={settingMutation.isLoading}
-                    type="submit"
-                    sx={theme.custom.addButton}
-                  >
-                    Add Settings
-                  </LoadingButton>
-                </Box>
-              </Card>
+                                            <Typography sx={[theme.custom.typography.dashBoard.h1, { mb: 5 }]}>
+                                                App Logo
+                                            </Typography>
 
-            </form>
-          </Box>
-        </Container>
 
-        {/* ------------------------------------------------ */}
-      </Box>
-    </>
-  );
+                                            <img src={query.data?.organizationLogo} width="100px" />
+
+                                            <CustomTextField
+                                                fullWidth
+                                                type="file"
+                                              
+                                                id="organizationLogo"
+                                                name="organizationLogo"
+
+                                                onChange={(e) => {
+                                                    console.log(e.target.files[0])
+                                                    formik.setFieldValue("organizationLogo", e.target.files[0])
+                                                }}
+
+                                        
+                                           
+                                            />{" "}
+
+                                        </Grid>
+                                    </Grid> */}
+                                    <Grid container spacing={2} >
+
+                                        <Grid item md={6} lg={6} sm={6} xs={12} >
+
+                                            <CustomTextField
+                                                sx={{ mb: 5 }}
+                                                error={formik.touched.organizationName && Boolean(formik.errors.organizationName)}
+                                                helperText={formik.touched.organizationName && formik.errors.organizationName}
+                                                id="organizationName"
+                                                name="organizationName"
+                                                value={formik.values?.organizationName}
+                                                onChange={formik.handleChange}
+                                                fullWidth
+                                                label="Organization Name"
+                                                variant="outlined"
+                                            />
+                                            <CustomTextField
+                                                sx={{ mb: 5 }}
+                                                label="Organization GST"
+                                                error={formik.touched.organizationGST && Boolean(formik.errors.organizationGST)}
+                                                helperText={formik.touched.organizationGST && formik.errors.organizationGST}
+                                                id="organizationGST"
+                                                name="organizationGST"
+                                                value={formik.values?.organizationGST}
+                                                onChange={formik.handleChange}
+                                                fullWidth
+                                            />
+                                            <CustomTextField
+                                                sx={{ mb: 0 }}
+                                                label="Organization CIN"
+                                                error={formik.touched.organizationCIN && Boolean(formik.errors.organizationCIN)}
+                                                helperText={formik.touched.organizationCIN && formik.errors.organizationCIN}
+                                                id="organizationCIN"
+                                                name="organizationCIN"
+                                                value={formik.values?.organizationCIN}
+                                                onChange={formik.handleChange}
+                                                fullWidth
+                                            />
+
+
+                                        </Grid>
+
+                                        <Grid item md={6} xs={12} >
+
+
+                                            <CustomTextField
+                                                // sx={{ mb: 5 }}
+                                                multiline
+                                                fullWidth
+                                                label="Organization Address"
+                                                error={formik.touched.organizationAddress && Boolean(formik.errors.organizationAddress)}
+                                                helperText={formik.touched.organizationAddress && formik.errors.organizationAddress}
+                                                id="organizationAddress"
+                                                name="organizationAddress"
+                                                value={formik.values?.organizationAddress}
+                                                onChange={formik.handleChange}
+
+                                            />  
+                                            <Grid calss="setting" item lg={6} md={6} sm={6} xs={12} sx={{ minWidth: "100%", display: "flex"}}>
+                                                <Box       sx={{ display: "flex", flexDirection: "column", mr: 1 }}>
+                                                    <img src={query.data?.organizationSignature} style={{ width: "250px", height: "100px", margin: "auto", marginBottom: 10 }} />
+                                                    <CustomTextField
+
+                                                        fullWidth
+                                                        id="organizationSignature"
+                                                        name="organizationSignature"
+                                                        type="file"
+                                                        onChange={(e) => {
+                                                            formik.setFieldValue("organizationSignature", e.target.files[0])
+                                                        }}
+                                                    />
+                                                </Box>
+
+
+                                                <Box  sx={{ display: "flex", flexDirection: "column" }}>
+                                                    <img src={query.data?.organizationLogo} width="100px" style={{ margin: "auto", marginBottom: 10 }} />
+                                                    <CustomTextField
+                                                        fullWidth
+                                                        type="file"
+
+                                                        id="organizationLogo"
+                                                        name="organizationLogo"
+                                                        onChange={(e) => {
+                                                            console.log(e.target.files[0])
+                                                            formik.setFieldValue("organizationLogo", e.target.files[0])
+                                                        }}
+                                                    />{" "}
+                                                </Box>
+
+                                            </Grid>
+                                        </Grid>
+
+                                    </Grid>
+                                    {/* //========================================= COLOR ================== */}
+                                    <Typography sx={[theme.custom.typography.dashBoard.h1, { mb: 5 }]}>
+                                        App Color
+                                    </Typography>
+                                    <Grid container>
+                                        <Grid
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                // border:"1px solid red"
+                                            }}
+                                            item
+                                            xl={3}
+                                            lg={3}
+                                            sm={6}
+                                            md={3}
+                                            xs={12}
+                                        >
+                                            <CustomTextField
+                                                type="color"
+                                                error={formik.touched.appBackgroundColor && Boolean(formik.errors.appBackgroundColor)}
+                                                helperText={formik.touched.appBackgroundColor && formik.errors.appBackgroundColor}
+                                                id="appBackgroundColor"
+                                                name="appBackgroundColor"
+                                                value={formik.values?.appBackgroundColor}
+                                                onChange={formik.handleChange}
+                                                label="Background Color"
+
+                                            />
+                                            <Typography
+                                                sx={{ color: "#8B5704", fontWeight: "bolder" }}
+                                                variant="captions"
+                                            >
+                                                {query.data?.appBackgroundColor}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                            }}
+                                            item
+                                            xl={3}
+                                            lg={3}
+                                            sm={6}
+                                            xs={12}
+                                        >
+
+                                            <CustomTextField
+                                                type="color"
+                                                error={formik.touched.appPrimaryColor && Boolean(formik.errors.appPrimaryColor)}
+                                                helperText={formik.touched.appPrimaryColor && formik.errors.appPrimaryColor}
+                                                id="appPrimaryColor"
+                                                name="appPrimaryColor"
+                                                value={formik.values?.appPrimaryColor}
+                                                onChange={formik.handleChange}
+                                                label="Primary Color"
+
+
+                                            />
+                                            <Typography
+                                                sx={{ color: "#8B5704", fontWeight: "bolder" }}
+                                                variant="captions"
+                                            >
+                                                {query.data?.appPrimaryColor}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                            }}
+                                            item
+                                            xl={3}
+                                            lg={3}
+                                            sm={6}
+                                            xs={12}
+                                        >
+                                            <CustomTextField
+                                                type="color"
+                                                error={formik.touched.appSecondaryColor && Boolean(formik.errors.appSecondaryColor)}
+                                                helperText={formik.touched.appSecondaryColor && formik.errors.appSecondaryColor}
+                                                id="appSecondaryColor"
+                                                name="appSecondaryColor"
+                                                value={formik.values?.appSecondaryColor}
+                                                onChange={formik.handleChange}
+                                                label="Secondary Color"
+                                            />
+                                            <Typography
+                                                sx={{ color: "#8B5704", fontWeight: "bolder" }}
+                                                variant="captions"
+                                            >
+                                                {query.data?.appSecondaryColor}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                            }}
+                                            item
+                                            xl={3}
+                                            lg={3}
+                                            sm={6}
+                                            xs={12}
+                                        >
+                                            <CustomTextField
+                                                type="color"
+                                                error={formik.touched.appTextColor && Boolean(formik.errors.appTextColor)}
+                                                helperText={formik.touched.appTextColor && formik.errors.appTextColor}
+                                                id="appTextColor"
+                                                name="appTextColor"
+                                                value={formik.values?.appTextColor}
+                                                onChange={formik.handleChange}
+                                                label="Text Color"
+
+                                            />
+                                            <Typography
+                                                sx={{ color: "#8B5704", fontWeight: "bolder" }}
+                                                variant="captions"
+                                            >
+                                                {query.data?.appTextColor}
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
+                                </CardContent>
+                                {/* </CardContent>   */}
+                                {/* ======================================= BUTTON ============================================ */}
+
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "flex-end",
+                                        p: 2,
+                                    }}
+                                >
+                                    <LoadingButton
+                                        disabled={settingMutation.isLoading}
+                                        loading={settingMutation.isLoading}
+                                        type="submit"
+                                        sx={theme.custom.addButton}
+                                    >
+                                        Add Settings
+                                    </LoadingButton>
+                                </Box>
+                            </Card>
+
+                        </form>
+                    </Box>
+                </Container>
+
+                {/* ------------------------------------------------ */}
+            </Box>
+        </>
+    );
 };
 
 Settings.getLayout = (page) => (
-  <DashboardLayout>
-    {page}
-  </DashboardLayout>
+    <DashboardLayout>
+        {page}
+    </DashboardLayout>
 );
 
 export default Settings;

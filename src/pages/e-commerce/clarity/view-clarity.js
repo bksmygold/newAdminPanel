@@ -325,7 +325,7 @@ export default function Clarity() {
           </Button>
         </Grid>
       </Grid>{' '}
-      <Table rows={query.data.docs} columns={columns} />
+      <Table rows={query.data?.docs} columns={columns} />
     </>
   );
 }

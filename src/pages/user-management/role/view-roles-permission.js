@@ -86,7 +86,7 @@ export default function ViewRolePermission() {
       width: 150,
     },
     {
-      field: 'parentRole',
+      field: 'subUsers',
       headerName: 'Sub Users',
       width: 150,
      
@@ -134,7 +134,7 @@ export default function ViewRolePermission() {
         <Grid item>
           <Button
             onClick={() =>
-              router.push('/userManagement/role/create-rolesPermission')
+              router.push('/user-management/role/create-roles-permission')
             }
             sx={{
               background: 'linear-gradient(43deg, #8b5704, #ddb070)',
