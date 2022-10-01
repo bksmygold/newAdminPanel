@@ -29,29 +29,7 @@ import { getCategory } from "src/apis/category";
 import { getVariety } from "src/apis/variety";
 import { getItem } from "src/apis/item";
 import { useTheme } from '@mui/styles';
-
-//=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
-
-const CustomFormControl = styled(FormControl)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+import { CustomTextField,CustomFormControl } from "src/components/customMUI";
 //=======================================================
 export default function AddOffer() {
   const [loading, setLoading] = React.useState(false);
@@ -117,6 +95,7 @@ export default function AddOffer() {
           marginTop: 5,
           border: "1px solid #d2c6c657",
           backgroundColor: "white",
+          minWidth:"100%"
         }}
       >
         {/* ------------------------------ */}

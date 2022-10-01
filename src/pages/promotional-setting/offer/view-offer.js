@@ -43,7 +43,7 @@ export default function Offer() {
           sx={theme.custom.editButton}
           size="small"
           onClick={() => {
-            router.push(`/promotionalSetting/offer/edit-offer/?id=${params.id}`);
+            router.push(`/promotional-setting/offer/edit-offer/?id=${params.id}`);
           }}
         >
           Edit <EditIcon sx={theme.custom.editButton.iconStyle}/>
@@ -133,7 +133,7 @@ export default function Offer() {
           </Typography>
         </Grid>
         <Grid item>
-          <Button sx={theme.custom.addButton} onClick={() => router.push("/promotionalSetting/offer/add-offer")}>
+          <Button sx={theme.custom.addButton} onClick={() => router.push("/promotional-setting/offer/add-offer")}>
             Create Offer
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>

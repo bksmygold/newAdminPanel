@@ -204,10 +204,10 @@ import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 import { CustomTextField, CustomFormControl } from 'src/components/customMUI';
-import { deleteVideo, getVideo, postVideo, updateVideo } from 'src/apis/howToVideo';
+import { getVideo, postVideo, updateVideo } from 'src/apis/howToVideo';
 
 //=======================================================
-export default function HowToVideo() {
+export default function TestimonialVideo() {
   const router = useRouter();
   const theme = useTheme();
 
@@ -219,7 +219,7 @@ export default function HowToVideo() {
     initialValues: {
       title: "",
       language: "",
-      category: "how_to",
+      category: "testimonial",
       video: [],
     },
     validationSchema: yup.object({
@@ -236,7 +236,7 @@ export default function HowToVideo() {
     initialValues: {
       title: "",
       language: "",
-      category: "how_to",
+      category: "testimonial",
       video: [],
     },
     validationSchema: yup.object({
@@ -251,8 +251,8 @@ export default function HowToVideo() {
   });
 
   const query = useQuery({
-    queryKey: 'Video',
-    queryFn: () => getVideo("how_to"),
+    queryKey: 'VideoTestimonial',
+    queryFn: () => getVideo("testimonial"),
   });
 
   const addMutation = useMutation({
@@ -303,7 +303,7 @@ export default function HowToVideo() {
     return (
       <DeleteSpinner
         id={params.id}
-        deleting={deleteVideo}
+        deleting={deleteCollection}
         url="/collection/view-collection"
       />
     );
@@ -380,7 +380,7 @@ export default function HowToVideo() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | How-to-video </title>
+        <title>Dashboard | Testimonial </title>
       </Head>
       {/* ================= EDIT ================================== */}
       <Modal
@@ -403,7 +403,7 @@ export default function HowToVideo() {
                 fontWeight: 'bolder',
               }}
             >
-              Edit How-to-video
+              Edit Testimonial
             </Typography>
             <Typography
               variant="caption"
@@ -412,7 +412,7 @@ export default function HowToVideo() {
                 fontWeight: 'bold',
               }}
             >
-              Edit How-to-video for products used in E-commerce
+              Edit Testimonial for products used in E-commerce
             </Typography>
 
             <form onSubmit={editFormik.handleSubmit}>
@@ -517,7 +517,7 @@ export default function HowToVideo() {
                 fontWeight: 'bolder',
               }}
             >
-              Add How-to-video
+              Add Testimonial
             </Typography>
             <Typography
               variant="caption"
@@ -526,7 +526,7 @@ export default function HowToVideo() {
                 fontWeight: 'bold',
               }}
             >
-              Add How-to-video for products used in E-commerce
+              Add Testimonial for products used in E-commerce
             </Typography>
 
             <form onSubmit={addFormik.handleSubmit}>
@@ -623,12 +623,12 @@ export default function HowToVideo() {
       >
         <Grid item>
           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-            How-to-video View
+            Testimonial View
           </Typography>
         </Grid>
         <Grid item>
           <Button onClick={() => setShowAdd(true)} sx={theme.custom.addButton}>
-            Create How-to-video
+            Create Testimonial
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>
         </Grid>
@@ -637,4 +637,4 @@ export default function HowToVideo() {
     </>
   );
 }
-HowToVideo.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+TestimonialVideo.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

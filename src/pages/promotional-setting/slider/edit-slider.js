@@ -30,29 +30,8 @@ import { getVariety } from "src/apis/variety";
 import { getItem } from "src/apis/item";
 import Loading from "src/components/loading";
 import { useTheme } from '@mui/styles';
+import { CustomTextField,CustomFormControl } from "src/components/customMUI";
 
-//=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
-
-const CustomFormControl = styled(FormControl)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
 //=======================================================
 export default function AddSlider() {
   //=======================
@@ -130,6 +109,7 @@ export default function AddSlider() {
           marginTop: 5,
           border: "1px solid #d2c6c657",
           backgroundColor: "white",
+          minWidth:"100%"
         }}
       >
         {/* ------------------------------ */}

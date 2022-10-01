@@ -1,11 +1,15 @@
 import axios from 'axios';
 //=====================================================
-export const getVideo = () => {
-  return axios.post(`video/list`); // GET
+export const getVideo = (filter) => {
+  return axios.post(`/video/list`,{
+    filter:{
+      category:filter
+    }
+  }); // GET
 };
 
 export const getVideoById = (id) => {
-  return axios.get(`video/${id}`); // GET
+  return axios.get(`/video/${id}`); // GET
 };
 
 export const postVideo = (HowTo) => {
@@ -14,20 +18,23 @@ export const postVideo = (HowTo) => {
   formData.append('title', title);
   formData.append('language', language);
   formData.append('category', category);
-  formData.append('video', video);
+  if (video instanceof File) {
+    formData.append('video', video);
+  }
   return axios.post(`/video/create/`, formData);
 };
 
-export const updateVideo = (data, id) => {
+export const updateVideo = ({data, id}) => {
   let formData = new FormData();
   let { title, language, category, video } = data;
   formData.append('title', title);
   formData.append('language', language);
   formData.append('category', category);
-  formData.append('video', video);
-  return axios.patch(`/video/update/${id}`, formData); // PUT
+  if (video instanceof File) {
+    formData.append('video', video);
+  }  return axios.patch(`/video/${id}`, formData); // PUT
 };
 
 export const deleteVideo = (id) => {
-  return axios.delete(`video/delete/${id}`); // DELETE
+  return axios.delete(`/video/${id}`); // DELETE
 };

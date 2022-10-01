@@ -29,7 +29,7 @@ export default function Slider() {
           sx={theme.custom.editButton}
           size="small"
           onClick={() => {
-            router.push(`/promotionalSetting/slider/edit-slider/?id=${params.id}`);
+            router.push(`/promotional-setting/slider/edit-slider/?id=${params.id}`);
           }}
         >
           Edit <EditIcon sx={theme.custom.editButton.iconStyle}/>
@@ -133,7 +133,7 @@ export default function Slider() {
           </Typography>
         </Grid>
         <Grid item>
-          <Button sx={theme.custom.addButton} onClick={() => router.push("/promotionalSetting/slider/add-slider")}>
+          <Button sx={theme.custom.addButton} onClick={() => router.push("/promotional-setting/slider/add-slider")}>
             Create Slider
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>

@@ -31,7 +31,7 @@ import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 import { useTheme } from '@mui/styles';
 // import {userManagementPerma} from '../../../constants/userManagementPerma'
-import { userManagementPerma, ecommPerma } from 'src/constants/constant';
+import { userManagementPerma, ecommPerma, taxSettingPerma, promotionalSettingsPerma, reportsPerma } from 'src/constants/constant';
 //=======================================================
 export default function RolesPermission() {
   const router = useRouter()
@@ -182,12 +182,24 @@ export default function RolesPermission() {
         </>
       ) : null}
 
+   
       {tax ? (
         <>
           <Grid container spacing={3} sx={{ p: 2 }}>
-            {taxList.map((x) => (
-              <Grid key={x} item xl={3} lg={3} sm={6} xs={12}>
-                <PermissionCard key={x} title={x} />
+            {taxSettingPerma.map((x) => (
+              <Grid item xl={3} lg={3} sm={6} xs={12}>
+                <PermissionCard
+                  title={x.title}
+                  perm={x.perm}
+                  permissions={permissions}
+                  setPermissions={(e) =>
+                    setPermissions(
+                      permissions.includes(e)
+                        ? permissions.filter((z) => z !== e)
+                        : permissions.concat(e)
+                    )
+                  }
+                />
               </Grid>
             ))}
           </Grid>
@@ -223,13 +235,14 @@ export default function RolesPermission() {
                 <PermissionCard
                   title={x.title}
                   perm={x.perm}
-                  permissions={permissions}
-                  setPermissions={(e) =>{
+                  // permissions={permissions}
+                  setPermissions={(e) => {
                     setPermissions(
                       permissions.includes(e)
                         ? permissions.filter((z) => z !== e)
                         : permissions.concat(e)
-                    )}
+                    )
+                  }
                   }
                 />
               </Grid>
@@ -237,23 +250,51 @@ export default function RolesPermission() {
           </Grid>
         </>
       ) : null}
+
       {promotional ? (
         <>
           <Grid container spacing={3} sx={{ p: 2 }}>
-            {promotionalList.map((x) => (
+            {promotionalSettingsPerma.map((x) => (
               <Grid key={x} item xl={3} lg={3} sm={6} xs={12}>
-                <PermissionCard key={x} title={x} />
+                <PermissionCard
+                  title={x.title}
+                  perm={x.perm}
+                  // permissions={permissions}
+                  setPermissions={(e) => {
+                    setPermissions(
+                      permissions.includes(e)
+                        ? permissions.filter((z) => z !== e)
+                        : permissions.concat(e)
+                    )
+                  }
+                  }
+                />
               </Grid>
             ))}
           </Grid>
         </>
       ) : null}
+
+
+
       {reports ? (
         <>
           <Grid container spacing={3} sx={{ p: 2 }}>
-            {reportsList.map((x) => (
+            {reportsPerma.map((x) => (
               <Grid key={x} item xl={3} lg={3} sm={6} xs={12}>
-                <PermissionCard key={x} title={x} />
+                <PermissionCard
+                  title={x.title}
+                  perm={x.perm}
+                  // permissions={permissions}
+                  setPermissions={(e) => {
+                    setPermissions(
+                      permissions.includes(e)
+                        ? permissions.filter((z) => z !== e)
+                        : permissions.concat(e)
+                    )
+                  }
+                  }
+                />
               </Grid>
             ))}
           </Grid>

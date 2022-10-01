@@ -1,6 +1,6 @@
 //:::::::::  API_Endpoint ::::::::::::::::::::::::::::::::::::::::::::::::::::::
-// export const ADMIN_API = "http://api-dev.bksmygold.com/admin";
-export const ADMIN_API = "http://192.168.10.110:5001/admin";
+export const ADMIN_API = "http://api-dev.bksmygold.com/admin";
+// export const ADMIN_API = "http://192.168.10.110:5001/admin";
 
 
 
@@ -228,7 +228,7 @@ export const infoCard = {
             desc: "create, update, delete return reason",
             url: "/e-commerce/reject-reason/view-reject-reason"
         },
-      
+
 
         certi: {
             title: "Certificates",
@@ -268,11 +268,13 @@ export const infoCard = {
         video: {
             title: "How-to Videos",
             desc: "create, update, delete how To Videos",
-            url: "/promotional-setting/how-to-video/view-how-to-video"
+            url: "/promotional-setting/how-to-video/view-how-to-video",
+            
         },
         testi: {
             title: "Testimonials",
             desc: "create, update, delete Testimonials Videos",
+            url: "/promotional-setting/testimonial/view-testimonial-video"
 
         },
         governmentTax: {
@@ -389,23 +391,44 @@ export const reportList = {
 //-------------  PERMISSIONS  --------------------------------------
 export const userManagementPerma = [
     {
+        title: 'Department',
+        perm: [
+            {
+                name: 'create',
+                value: 'create_department',
+            },
+            {
+                name: 'read',
+                value: 'read_department',
+            },
+            {
+                name: 'update',
+                value: 'update_department',
+            },
+            {
+                name: 'delete',
+                value: 'delete_department',
+            },
+        ],
+    },
+    {
         title: 'Role & Permission',
         perm: [
             {
                 name: 'create',
-                value: 'createX',
+                value: 'create_role',
             },
             {
                 name: 'read',
-                value: 'readX',
+                value: 'read_role',
             },
             {
                 name: 'update',
-                value: 'updateX',
+                value: 'update_role',
             },
             {
                 name: 'delete',
-                value: 'deleteX',
+                value: 'delete_role',
             },
         ],
     },
@@ -414,22 +437,149 @@ export const userManagementPerma = [
         perm: [
             {
                 name: 'create',
-                value: 'createX',
+                value: 'create_user',
             },
             {
                 name: 'read',
-                value: 'readX',
+                value: 'read_user',
             },
             {
                 name: 'update',
-                value: 'updateX',
+                value: 'update_user',
             },
             {
                 name: 'delete',
-                value: 'deleteX',
+                value: 'delete_user',
             },
         ],
     },
+    {
+        title: 'Vip Referral',
+        perm: [
+            {
+                name: 'create',
+                value: 'create_referral',
+            },
+            {
+                name: 'read',
+                value: 'read_referral',
+            },
+            {
+                name: 'update',
+                value: 'update_referral',
+            },
+            {
+                name: 'delete',
+                value: 'delete_referral',
+            },
+        ],
+    },
+    {
+        title: 'Sale Referral',
+        perm: [
+            {
+                name: 'create',
+                value: 'create_referral',
+            },
+            {
+                name: 'read',
+                value: 'read_referral',
+            },
+            {
+                name: 'update',
+                value: 'update_referral',
+            },
+            {
+                name: 'delete',
+                value: 'delete_referral',
+            },
+        ],
+    },
+    {
+        title: 'GBP User',
+        perm: [
+            {
+                name: 'create',
+                value: 'create_referral',
+            },
+            {
+                name: 'read',
+                value: 'read_referral',
+            },
+            {
+                name: 'update',
+                value: 'update_referral',
+            },
+            {
+                name: 'delete',
+                value: 'delete_referral',
+            },
+        ],
+    },
+    {
+        title: 'Merchant',
+        perm: [
+            {
+                name: 'create',
+                value: 'create_merchant',
+            },
+            {
+                name: 'read',
+                value: 'read_merchant',
+            },
+            {
+                name: 'update',
+                value: 'update_merchant',
+            },
+            {
+                name: 'delete',
+                value: 'delete_merchant',
+            },
+        ],
+    },
+    {
+        title: 'Business',
+        perm: [
+            {
+                name: 'create',
+                value: 'create_business',
+            },
+            {
+                name: 'read',
+                value: 'read_business',
+            },
+            {
+                name: 'update',
+                value: 'update_business',
+            },
+            {
+                name: 'delete',
+                value: 'delete_business',
+            },
+        ],
+    },
+    {
+        title: 'Supplier',
+        perm: [
+            {
+                name: 'create',
+                value: 'create_supplier',
+            },
+            {
+                name: 'read',
+                value: 'read_supplier',
+            },
+            {
+                name: 'update',
+                value: 'update_supplier',
+            },
+            {
+                name: 'delete',
+                value: 'delete_supplier',
+            },
+        ],
+    },
+
 ]
 export const ecommPerma = [
     {
@@ -437,7 +587,8 @@ export const ecommPerma = [
         perm: [
             {
                 name: 'all',
-                value: ['create_metal', 'view_metal', 'update_metal', "delete_metal"],
+                value: "all"
+                // value: ['create_metal', 'view_metal', 'update_metal', "delete_metal"],
             },
             {
                 name: 'create',
@@ -462,7 +613,7 @@ export const ecommPerma = [
         perm: [
             {
                 name: 'all',
-                value: ['create_metalGroup', 'view_metalGroup', 'update_metalGroup', "delete_metalGroup"],
+                value: "all"
             },
             {
                 name: 'create',
@@ -482,8 +633,1092 @@ export const ecommPerma = [
             },
         ],
     },
+    {
+        title: 'Ornament',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_ornament',
+            },
+            {
+                name: 'read',
+                value: 'view_ornament',
+            },
+            {
+                name: 'update',
+                value: 'update_ornament',
+            },
+            {
+                name: 'delete',
+                value: 'delete_ornament',
+            },
+        ],
+    },
+    {
+        title: 'Units',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_unit',
+            },
+            {
+                name: 'read',
+                value: 'view_unit',
+            },
+            {
+                name: 'update',
+                value: 'update_unit',
+            },
+            {
+                name: 'delete',
+                value: 'delete_unit',
+            },
+        ],
+    },
+    {
+        title: 'Cut',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_cut',
+            },
+            {
+                name: 'read',
+                value: 'view_cut',
+            },
+            {
+                name: 'update',
+                value: 'update_cut',
+            },
+            {
+                name: 'delete',
+                value: 'delete_cut',
+            },
+        ],
+    },
+    {
+        title: 'Colors',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_colour',
+            },
+            {
+                name: 'read',
+                value: 'view_colour',
+            },
+            {
+                name: 'update',
+                value: 'update_colour',
+            },
+            {
+                name: 'delete',
+                value: 'delete_colour',
+            },
+        ],
+    },
+    {
+        title: 'Shape',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_shape',
+            },
+            {
+                name: 'read',
+                value: 'view_shape',
+            },
+            {
+                name: 'update',
+                value: 'update_shape',
+            },
+            {
+                name: 'delete',
+                value: 'delete_shape',
+            },
+        ],
+    },
+    {
+        title: 'Clarity',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_clarity',
+            },
+            {
+                name: 'read',
+                value: 'view_clarity',
+            },
+            {
+                name: 'update',
+                value: 'update_clarity',
+            },
+            {
+                name: 'delete',
+                value: 'delete_clarity',
+            },
+        ],
+    },
+    {
+        title: 'Style',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_style',
+            },
+            {
+                name: 'read',
+                value: 'view_style',
+            },
+            {
+                name: 'update',
+                value: 'update_style',
+            },
+            {
+                name: 'delete',
+                value: 'delete_style',
+            },
+        ],
+    },
+    {
+        title: 'Collection',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_collection',
+            },
+            {
+                name: 'read',
+                value: 'view_collection',
+            },
+            {
+                name: 'update',
+                value: 'update_collection',
+            },
+            {
+                name: 'delete',
+                value: 'delete_collection',
+            },
+        ],
+    },
+    {
+        title: 'category',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_category',
+            },
+            {
+                name: 'read',
+                value: 'view_category',
+            },
+            {
+                name: 'update',
+                value: 'update_category',
+            },
+            {
+                name: 'delete',
+                value: 'delete_category',
+            },
+        ],
+    },
+    {
+        title: 'variety',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_variety',
+            },
+            {
+                name: 'read',
+                value: 'view_variety',
+            },
+            {
+                name: 'update',
+                value: 'update_variety',
+            },
+            {
+                name: 'delete',
+                value: 'delete_variety',
+            },
+        ],
+    },
+    {
+        title: 'Item',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_item',
+            },
+            {
+                name: 'read',
+                value: 'view_item',
+            },
+            {
+                name: 'update',
+                value: 'update_item',
+            },
+            {
+                name: 'delete',
+                value: 'delete_item',
+            },
+        ],
+    },
+    {
+        title: 'Product Type',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_productType',
+            },
+            {
+                name: 'read',
+                value: 'view_productType',
+            },
+            {
+                name: 'update',
+                value: 'update_productType',
+            },
+            {
+                name: 'delete',
+                value: 'delete_productType',
+            },
+        ],
+    },
+    {
+        title: 'FAQ',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_faq',
+            },
+            {
+                name: 'read',
+                value: 'view_faq',
+            },
+            {
+                name: 'update',
+                value: 'update_faq',
+            },
+            {
+                name: 'delete',
+                value: 'delete_faq',
+            },
+        ],
+    },
+    {
+        title: 'policy',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_policy',
+            },
+            {
+                name: 'read',
+                value: 'view_policy',
+            },
+            {
+                name: 'update',
+                value: 'update_policy',
+            },
+            {
+                name: 'delete',
+                value: 'delete_policy',
+            },
+        ],
+    },
+    {
+        title: 'Return Reason',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_returnReason',
+            },
+            {
+                name: 'read',
+                value: 'view_returnReason',
+            },
+            {
+                name: 'update',
+                value: 'update_returnReason',
+            },
+            {
+                name: 'delete',
+                value: 'delete_returnReason',
+            },
+        ],
+    },
+    {
+        title: 'Reject Reason',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_rejectReason',
+            },
+            {
+                name: 'read',
+                value: 'view_rejectReason',
+            },
+            {
+                name: 'update',
+                value: 'update_rejectReason',
+            },
+            {
+                name: 'delete',
+                value: 'delete_rejectReason',
+            },
+        ],
+    },
+    {
+        title: 'Certificate',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_certificate',
+            },
+            {
+                name: 'read',
+                value: 'view_certificate',
+            },
+            {
+                name: 'update',
+                value: 'update_certificate',
+            },
+            {
+                name: 'delete',
+                value: 'delete_certificate',
+            },
+        ],
+    },
+    {
+        title: 'Label',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_label',
+            },
+            {
+                name: 'read',
+                value: 'view_label',
+            },
+            {
+                name: 'update',
+                value: 'update_label',
+            },
+            {
+                name: 'delete',
+                value: 'delete_label',
+            },
+        ],
+    },
+    {
+        title: 'Plan',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_plan',
+            },
+            {
+                name: 'read',
+                value: 'view_plan',
+            },
+            {
+                name: 'update',
+                value: 'update_plan',
+            },
+            {
+                name: 'delete',
+                value: 'delete_plan',
+            },
+        ],
+    },
+    {
+        title: 'Cycle Period',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'create_cyclePeriod',
+            },
+            {
+                name: 'read',
+                value: 'view_cyclePeriod',
+            },
+            {
+                name: 'update',
+                value: 'update_cyclePeriod',
+            },
+            {
+                name: 'delete',
+                value: 'delete_cyclePeriod',
+            },
+        ],
+    },
+]
 
 
+export const taxSettingPerma = [
+    {
+        title: 'Government Taxes',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_customDuty',
+            },
+            {
+                name: 'read',
+                value: 'read_customDuty',
+            },
+            {
+                name: 'update',
+                value: 'update_customDuty',
+            },
+            {
+                name: 'delete',
+                value: 'delete_customDuty',
+            },
+        ],
+    },
+    {
+        title: 'HSN & GST',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_hsn',
+            },
+            {
+                name: 'read',
+                value: 'read_hsn',
+            },
+            {
+                name: 'update',
+                value: 'update_hsn',
+            },
+            {
+                name: 'delete',
+                value: 'delete_hsn',
+            },
+        ],
+    },
+    {
+        title: 'TDS & TCS',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_tds',
+            },
+            {
+                name: 'read',
+                value: 'read_tds',
+            },
+            {
+                name: 'update',
+                value: 'update_tds',
+            },
+            {
+                name: 'delete',
+                value: 'delete_tds',
+            },
+        ],
+    },
+    {
+        title: 'Buy & Save',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_calculation',
+            },
+            {
+                name: 'read',
+                value: 'read_calculation',
+            },
+            {
+                name: 'update',
+                value: 'update_calculation',
+            },
+            {
+                name: 'delete',
+                value: 'delete_calculation',
+            },
+        ],
+    },
+    {
+        title: 'Interest Rates',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_loanInterest',
+            },
+            {
+                name: 'read',
+                value: 'read_loanInterest',
+            },
+            {
+                name: 'update',
+                value: 'update_loanInterest',
+            },
+            {
+                name: 'delete',
+                value: 'delete_loanInterest',
+            },
+        ],
+    },
+    {
+        title: 'Mandi',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_mandi',
+            },
+            {
+                name: 'read',
+                value: 'read_mandi',
+            },
+            {
+                name: 'update',
+                value: 'update_mandi',
+            },
+            {
+                name: 'delete',
+                value: 'delete_mandi',
+            },
+        ],
+    },
+    {
+        title: 'Referral Type',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_referralType',
+            },
+            {
+                name: 'read',
+                value: 'read_referralType',
+            },
+            {
+                name: 'update',
+                value: 'update_referralType',
+            },
+            {
+                name: 'delete',
+                value: 'delete_referralType',
+            },
+        ],
+    },
+    {
+        title: 'Refer & Earn',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_referralType',
+            },
+            {
+                name: 'read',
+                value: 'read_referralType',
+            },
+            {
+                name: 'update',
+                value: 'update_referralType',
+            },
+            {
+                name: 'delete',
+                value: 'delete_referralType',
+            },
+        ],
+    },
+    {
+        title: 'Bid Buy & Sell',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_referralType',
+            },
+            {
+                name: 'read',
+                value: 'read_referralType',
+            },
+            {
+                name: 'update',
+                value: 'update_referralType',
+            },
+            {
+                name: 'delete',
+                value: 'delete_referralType',
+            },
+        ],
+    },
+    {
+        title: 'Making Charges',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_makingCharge',
+            },
+            {
+                name: 'read',
+                value: 'read_makingCharge',
+            },
+            {
+                name: 'update',
+                value: 'update_makingCharge',
+            },
+            {
+                name: 'delete',
+                value: 'delete_makingCharge',
+            },
+        ],
+    },
+    {
+        title: 'Retailer Commission',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_makingCharge',
+            },
+            {
+                name: 'read',
+                value: 'read_makingCharge',
+            },
+            {
+                name: 'update',
+                value: 'update_makingCharge',
+            },
+            {
+                name: 'delete',
+                value: 'delete_makingCharge',
+            },
+        ],
+    },
+    {
+        title: 'Subscriptions for Bids',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_makingCharge',
+            },
+            {
+                name: 'read',
+                value: 'read_makingCharge',
+            },
+            {
+                name: 'update',
+                value: 'update_makingCharge',
+            },
+            {
+                name: 'delete',
+                value: 'delete_makingCharge',
+            },
+        ],
+    },
+    {
+        title: 'Subscriptions for Ads',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_makingCharge',
+            },
+            {
+                name: 'read',
+                value: 'read_makingCharge',
+            },
+            {
+                name: 'update',
+                value: 'update_makingCharge',
+            },
+            {
+                name: 'delete',
+                value: 'delete_makingCharge',
+            },
+        ],
+    },
+    {
+        title: 'GBP Levels',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_makingCharge',
+            },
+            {
+                name: 'read',
+                value: 'read_makingCharge',
+            },
+            {
+                name: 'update',
+                value: 'update_makingCharge',
+            },
+            {
+                name: 'delete',
+                value: 'delete_makingCharge',
+            },
+        ],
+    },
+]
+
+export const promotionalSettingsPerma = [
+    {
+        title: 'Offer Slider',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_offer',
+            },
+            {
+                name: 'read',
+                value: 'read_offer',
+            },
+            {
+                name: 'update',
+                value: 'update_offer',
+            },
+            {
+                name: 'delete',
+                value: 'delete_offer',
+            },
+        ],
+    },
+    {
+        title: 'App Slider',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_slider',
+            },
+            {
+                name: 'read',
+                value: 'read_slider',
+            },
+            {
+                name: 'update',
+                value: 'update_slider',
+            },
+            {
+                name: 'delete',
+                value: 'delete_slider',
+            },
+        ],
+    },
+    {
+        title: 'How to videos',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_video',
+            },
+            {
+                name: 'read',
+                value: 'read_video',
+            },
+            {
+                name: 'update',
+                value: 'update_video',
+            },
+            {
+                name: 'delete',
+                value: 'delete_video',
+            },
+        ],
+    },
+    {
+        title: 'Testimonials',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_video',
+            },
+            {
+                name: 'read',
+                value: 'read_video',
+            },
+            {
+                name: 'update',
+                value: 'update_video',
+            },
+            {
+                name: 'delete',
+                value: 'delete_video',
+            },
+        ],
+    },
+    {
+        title: 'Offer Popups',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_referralType',
+            },
+            {
+                name: 'read',
+                value: 'read_referralType',
+            },
+            {
+                name: 'update',
+                value: 'update_referralType',
+            },
+            {
+                name: 'delete',
+                value: 'delete_referralType',
+            },
+        ],
+    },
+    {
+        title: 'Merchant Banner',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_referralType',
+            },
+            {
+                name: 'read',
+                value: 'read_referralType',
+            },
+            {
+                name: 'update',
+                value: 'update_referralType',
+            },
+            {
+                name: 'delete',
+                value: 'delete_referralType',
+            },
+        ],
+    },
+]
+
+
+export const reportsPerma = [
+    {
+        title: 'Financials',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_referralType',
+            },
+            {
+                name: 'read',
+                value: 'read_referralType',
+            },
+            {
+                name: 'update',
+                value: 'update_referralType',
+            },
+            {
+                name: 'delete',
+                value: 'delete_referralType',
+            },
+        ],
+    },
+    {
+        title: 'Metal',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_referralType',
+            },
+            {
+                name: 'read',
+                value: 'read_referralType',
+            },
+            {
+                name: 'update',
+                value: 'update_referralType',
+            },
+            {
+                name: 'delete',
+                value: 'delete_referralType',
+            },
+        ],
+    },
+    {
+        title: 'Smart Reports',
+        perm: [
+            {
+                name: 'all',
+                value: "all"
+            },
+            {
+                name: 'create',
+                value: 'creat_referralType',
+            },
+            {
+                name: 'read',
+                value: 'read_referralType',
+            },
+            {
+                name: 'update',
+                value: 'update_referralType',
+            },
+            {
+                name: 'delete',
+                value: 'delete_referralType',
+            },
+        ],
+    },
 ]
 
 //---------------------------------------------------

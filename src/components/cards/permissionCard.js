@@ -68,33 +68,37 @@ export const PermissionCard = (props) => {
               fontWeight: 'bolder',
               color: 'gray',
               width: '100%',
+
             }}
           >
             {props.title}
           </Typography>
-          <Grid item>
+          <Grid item 
+           
+          >
             {props.perm.map((x) => (
               <FormGroup>
                 <FormControlLabel
                   control={
                     <Checkbox
-                    sx={{ color: 'green' }}
+                      sx={{
+                        color: '#8B5704',
+                        '&.Mui-checked': {
+                          color: "#8B5704",
+                        },
+                      }}
                       checked={checked}
                       // defaultChecked={checked}
                       onChange={(e) => {
                         console.log("e -->", e.target.value)
+                        if (e.target.value === "all") {
+                          setChecked((prev) => !prev),
 
-                        if (x.name === "all") {
-
-                          // setChecked((prev) => !prev),
-                          setChecked(true)
-                            props.setPermissions(x.value)
+                          props.setPermissions(x.value)
 
                         }
-
-
-
-
+                        setChecked((prev) => !prev)
+                        props.setPermissions(x.value)
                       }}
                       value={x.value}
                     />
