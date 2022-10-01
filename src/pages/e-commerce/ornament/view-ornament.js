@@ -23,7 +23,6 @@ import {
   deletetOrnament,
   postOrnament,
   updateOrnament
-  
 } from 'src/apis/ornament';
 import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
@@ -35,9 +34,8 @@ import swal from 'sweetalert';
 import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
-
 import { CustomTextField } from 'src/components/customMUI';
-//=======================================================
+import { EditButton } from 'src/components/customMUI';
 //=======================================================
 export default function Ornament() {
   const router = useRouter();
@@ -138,7 +136,10 @@ export default function Ornament() {
       field: 'name',
       headerName: 'Ornament Name',
       width: 150,
-      editable: true,      flex:1
+      editable: true,      flex:1,
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),
     },
   
 
@@ -147,7 +148,8 @@ export default function Ornament() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,      flex:1
+      renderCell: editButton,   
+         flex:1
     },
     {
       field: 'delete',
