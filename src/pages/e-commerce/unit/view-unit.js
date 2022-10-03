@@ -37,119 +37,44 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
+import { useController } from 'src/controller/unit';
 //=======================================================
 export default function Unit() {
-  const router = useRouter();
   const theme = useTheme();
 
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
-  const [id, setId] = useState('');
-  //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      name: '',
-      conversionFactor: '',
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter Unit Name').required('Unit is required'),
-      conversionFactor: yup
-        .number('Enter Conversion Factor')
-        .required('Conversion Factor is required'),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
-
-  const editFormik = useFormik({
-    initialValues: {
-      name: '',
-      conversionFactor: '',
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter Unit Name').required('Unit is required'),
-      conversionFactor: yup
-        .number('Enter Conversion Factor')
-        .required('Conversion Factor is required'),
-    }),
-    onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
-    },
-  });
-
-  const query = useQuery({
-    queryKey: 'Unit',
-    queryFn: () => getUnit(),
-  });
-
-  const addMutation = useMutation({
-    mutationFn: postUnit,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('Unit Added !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  const editMutation = useMutation({
-    mutationFn: updateUnit,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowEdit(false);
-      swal('Unit Updated !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
 
   if (query.isLoading) return <Loading />;
-  //===============
-
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            // console.log("params ---", params.row);
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteUnit}
-        url="/unit/view-unit"
-      />
-    );
-  };
+  console.log("____>",query.data.docs)
   //==========
   const columns = [
     {
       field: 'name',
       headerName: 'Unit Name',
       width: 150,
-      editable: true,      flex:1
+      editable: true,
+      flex: 1,
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),
     },
     {
       field: 'conversionFactor',
       headerName: 'Conversion Factor',
       width: 150,
-      editable: true,      flex:1
+      editable: true, flex: 1
     },
 
     {
@@ -157,14 +82,27 @@ export default function Unit() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,      flex:1
+      renderCell: (params) => (
+        <EditButton
+          onClick={() => {
+            editForm.setValues(params.row);
+            setShowEdit(params.row);
+          }}
+        />),
+      flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,      flex:1
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteUnit}
+        />
+      ),
+      flex: 1
     }
   ];
 
@@ -209,7 +147,7 @@ export default function Unit() {
               Edit Unit for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -223,13 +161,13 @@ export default function Unit() {
               </Typography>
               <CustomTextField
                 error={
-                  editFormik.touched.name && Boolean(editFormik.errors.name)
+                  editForm.touched.name && Boolean(editForm.errors.name)
                 }
-                helperText={editFormik.touched.name && editFormik.errors.name}
+                helperText={editForm.touched.name && editForm.errors.name}
                 id="name"
                 name="name"
-                value={editFormik.values.name}
-                onChange={editFormik.handleChange}
+                value={editForm.values.name}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Unit Type name"
@@ -247,17 +185,17 @@ export default function Unit() {
               </Typography>
               <CustomTextField
                 error={
-                  editFormik.touched.conversionFactor &&
-                  Boolean(editFormik.errors.conversionFactor)
+                  editForm.touched.conversionFactor &&
+                  Boolean(editForm.errors.conversionFactor)
                 }
                 helperText={
-                  editFormik.touched.conversionFactor &&
-                  editFormik.errors.conversionFactor
+                  editForm.touched.conversionFactor &&
+                  editForm.errors.conversionFactor
                 }
                 id="conversionFactor"
                 name="conversionFactor"
-                value={editFormik.values.conversionFactor}
-                onChange={editFormik.handleChange}
+                value={editForm.values.conversionFactor}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Conversion Factor "
@@ -265,8 +203,8 @@ export default function Unit() {
               />
 
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -309,7 +247,7 @@ export default function Unit() {
             >
               Add Unit for products used in E-commerce
             </Typography>
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -322,12 +260,12 @@ export default function Unit() {
                 Unit Type Name
               </Typography>
               <CustomTextField
-                error={addFormik.touched.name && Boolean(addFormik.errors.name)}
-                helperText={addFormik.touched.name && addFormik.errors.name}
+                error={addForm.touched.name && Boolean(addForm.errors.name)}
+                helperText={addForm.touched.name && addForm.errors.name}
                 id="name"
                 name="name"
-                value={addFormik.values.name}
-                onChange={addFormik.handleChange}
+                value={addForm.values.name}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Unit Type name"
@@ -345,17 +283,17 @@ export default function Unit() {
               </Typography>
               <CustomTextField
                 error={
-                  addFormik.touched.conversionFactor &&
-                  Boolean(addFormik.errors.conversionFactor)
+                  addForm.touched.conversionFactor &&
+                  Boolean(addForm.errors.conversionFactor)
                 }
                 helperText={
-                  addFormik.touched.conversionFactor &&
-                  addFormik.errors.conversionFactor
+                  addForm.touched.conversionFactor &&
+                  addForm.errors.conversionFactor
                 }
                 id="conversionFactor"
                 name="conversionFactor"
-                value={addFormik.values.conversionFactor}
-                onChange={addFormik.handleChange}
+                value={addForm.values.conversionFactor}
+                onChange={addForm.handleChange}
                 fullWidth
                 type="number"
                 variant="outlined"
@@ -364,8 +302,8 @@ export default function Unit() {
               />
 
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >

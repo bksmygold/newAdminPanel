@@ -21,7 +21,7 @@ export const postMetal = (data) => {
 //==============================
 export const updateMetal = ({data, id}) => {
   let formData = new FormData();
-  console.log("data hai ---",data)
+
   let { name, icon } = data;
   formData.append('name', name);
   if (icon instanceof File) { 

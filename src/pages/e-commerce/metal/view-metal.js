@@ -1,141 +1,40 @@
 import Head from 'next/head';
-import { DashboardSidebar } from 'src/components/sidebar.js/dashboard-sidebar';
 import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Container,
   Typography,
   Grid,
   Button,
-  TextField,
   Modal,
   Box,
 } from '@mui/material';
 import { DashboardLayout } from '../../../components/layout/dashboard-layout';
-import { InfoCard } from '../../../components/cards/infoCard';
-import { DataGrid, gridClasses } from '@mui/x-data-grid';
-import { alpha, styled } from '@mui/material/styles';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../../components/utility/table';
-import { useRouter } from 'next/router';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { deleteMetal, getMetal, updateMetal, postMetal } from 'src/apis/metal';
+import { deleteMetal } from 'src/apis/metal';
 import React from 'react';
-import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import swal from 'sweetalert';
-import { useState, useEffect } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { getMetalGroup } from 'src/apis/metalGroup';
 import { useTheme } from '@mui/styles';
-import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { useController } from 'src/controller/metal';
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
 //=======================================================
 export default function Metal() {
-  const router = useRouter();
-
   const theme = useTheme();
-  const [icon, setIcon] = useState([]);
-
-
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
-  const [id, setId] = useState('');
-  //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      name: '',
-      icon: '',
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter name').required('Name is required'),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', { name: values, icon: icon });
-      addMutation.mutate(values);
-    },
-  });
-
-  const editFormik = useFormik({
-    initialValues: {
-      name: '',
-      icon: '',
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter name').required('Name is required'),
-    }),
-    onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
-    },
-  });
-
-  const query = useQuery({
-    queryKey: 'Metal',
-    queryFn: () => getMetal(),
-  });
-
-  // console.log('query ---', query?.data?.docs);
-  const addMutation = useMutation({
-    mutationFn: postMetal,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('Metal Added !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Error !', err.message, 'error'),
-  });
-
-  const editMutation = useMutation({
-    mutationFn: updateMetal,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowEdit(false);
-      swal('Metal Updated !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Error !', err.message, 'error'),
-  });
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
 
   if (query.isLoading) return <Loading />;
-
-  //===============
-
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            // console.log("params ---", params.row);
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteMetal}
-        url="/eCommerce/metal/view-metal"
-      />
-    );
-  };
-  //==========
+  //=========================================
   const columns = [
     {
       field: 'name',
@@ -146,17 +45,14 @@ export default function Metal() {
       renderCell: (params) => (
         <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
       ),
-
     },
-
     {
       field: 'icon',
       headerName: 'Metal Icon', flex: 1,
       width: 250,
       renderCell: (params) => (
         <img width="50px" height="50px" src={params.value} />
-      ), // renderCell will render the component
-
+      ),
       editable: true,
     },
     {
@@ -164,22 +60,32 @@ export default function Metal() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton, flex: 1
+      renderCell: (params) => (
+        <EditButton
+          onClick={() => {
+            editForm.setValues(params.row);
+            setShowEdit(params.row);
+          }}
+        />),
+      flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton, flex: 1
-    },
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteMetal}
+        />
+      ),
+      flex: 1
+    }
   ];
-
-  console.log("id hai ---",id)
   //=======================================================
   return (
     <>
-      {/* ------------------------------ */}
       <Head>
         <title>Dashboard | Metal </title>
       </Head>
@@ -217,7 +123,7 @@ export default function Metal() {
               Edit Metal for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -232,18 +138,17 @@ export default function Metal() {
               <CustomTextField
                 multiline
                 error={
-                  editFormik.touched.name && Boolean(editFormik.errors.name)
+                  editForm.touched.name && Boolean(editForm.errors.name)
                 }
-                helperText={editFormik.touched.name && editFormik.errors.name}
+                helperText={editForm.touched.name && editForm.errors.name}
                 id="name"
                 name="name"
-                value={editFormik.values.name}
-                onChange={editFormik.handleChange}
+                value={editForm.values.name}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label=" name"
               />
-
               <Typography
                 variant="body1"
                 sx={{
@@ -257,22 +162,21 @@ export default function Metal() {
               </Typography>
               <CustomTextField
                 error={
-                  editFormik.touched.icon && Boolean(editFormik.errors.icon)
+                  editForm.touched.icon && Boolean(editForm.errors.icon)
                 }
-                helperText={editFormik.touched.icon && editFormik.errors.icon}
+                helperText={editForm.touched.icon && editForm.errors.icon}
                 id="icon"
                 name="icon"
                 type="file"
                 onChange={(e) =>
-                  editFormik.setFieldValue('icon', e.target.files[0])
+                  editForm.setFieldValue('icon', e.target.files[0])
                 }
-                 fullWidth
+                fullWidth
                 variant="outlined"
               />
-
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -316,7 +220,7 @@ export default function Metal() {
               Add Metal for products used in E-commerce
             </Typography>
 
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -330,12 +234,12 @@ export default function Metal() {
               </Typography>
               <CustomTextField
                 multiline
-                error={addFormik.touched.name && Boolean(addFormik.errors.name)}
-                helperText={addFormik.touched.name && addFormik.errors.name}
+                error={addForm.touched.name && Boolean(addForm.errors.name)}
+                helperText={addForm.touched.name && addForm.errors.name}
                 id="name"
                 name="name"
-                value={addFormik.values.name}
-                onChange={addFormik.handleChange}
+                value={addForm.values.name}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label=" name"
@@ -353,28 +257,20 @@ export default function Metal() {
                 Metal Icon
               </Typography>
               <CustomTextField
-                error={addFormik.touched.icon && Boolean(addFormik.errors.icon)}
-                helperText={addFormik.touched.icon && addFormik.errors.icon}
+                error={addForm.touched.icon && Boolean(addForm.errors.icon)}
+                helperText={addForm.touched.icon && addForm.errors.icon}
                 id="icon"
                 name="icon"
                 type="file"
-                // value={addFormik.values.icon}
                 onChange={(e) =>
-                  addFormik.setFieldValue('icon', e.target.files[0])
+                  addForm.setFieldValue('icon', e.target.files[0])
                 }
                 fullWidth
                 variant="outlined"
               />
-              {/* <input
-                type="file"
-                name="icon"
-                label="Choose icon"
-                onChange={(e) => setIcon(e.target.files[0])}
-              /> */}
-
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 fullWidth
                 sx={theme.custom.addButton}

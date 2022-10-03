@@ -28,7 +28,7 @@ export default function MetalGroup() {
           sx={theme.custom.editButton}
           size="small"
           onClick={() => {
-            router.push(`/eCommerce/metalGroup/edit-metalGroup/?id=${params.id}`);
+            router.push(`/e-commerce/metal-group/edit-metal-group/?id=${params.id}`);
           }}
         >
           Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
@@ -168,7 +168,7 @@ export default function MetalGroup() {
         </Grid>
         <Grid item >
           <Button
-            onClick={() => router.push('/eCommerce/metalGroup/add-metalGroup')}
+            onClick={() => router.push('/e-commerce/metal-group/add-metal-group')}
             sx={{
               background: 'linear-gradient(43deg, #8b5704, #ddb070)',
               color: 'white',
