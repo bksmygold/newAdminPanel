@@ -57,7 +57,6 @@ export default function Unit() {
   } = useController()
 
   if (query.isLoading) return <Loading />;
-  console.log("____>",query.data.docs)
   //==========
   const columns = [
     {

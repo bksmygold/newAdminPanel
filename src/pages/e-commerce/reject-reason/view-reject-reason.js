@@ -39,157 +39,71 @@ import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 
-//=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
-
-const CustomFormControl = styled(FormControl)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
+import { CustomFormControl } from 'src/components/customMUI';
+import { CustomTextField } from 'src/components/customMUI';
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
+import { useController } from 'src/controller/rejectReason';
 //=======================================================
 export default function RejectReason() {
-  const router = useRouter();
+
   const theme = useTheme();
-
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
-  const [id, setId] = useState('');
-  //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      title: '',
-     
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
+  //==========
+  const columns = [
+    {
+      field: 'title',
+      headerName: 'Title',
+      width: 150,
+      editable: true,
+      flex: 1,
+      renderCell: (params) => (
+        <p style={theme.custom.typography.table}>{params.value}</p>
+      ),
     },
-    validationSchema: yup.object({
-      title: yup.string('Enter Title').required('Title is required'),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
-
-  const editFormik = useFormik({
-    initialValues: {
-      title: '',
-    },
-    validationSchema: yup.object({
-      title: yup.string('Enter Title').required('Title is required'),
-    }),
-    onSubmit: (values) => {
-      editMutation.mutate({  values, id: id });
-    },
-  });
-
-  
-
-  const query = useQuery({
-    queryKey: 'Reject Reason',
-    queryFn: () => getRejectReason(),
-  });
-
-  const addMutation = useMutation({
-    mutationFn: postRejectReason,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal(
-        'Reject Reason Added !',
-        'Continue with the e-comm panel',
-        'success'
-      );
-    },
-    onError: (err) => swal('Error!', err.message, 'error'),
-  });
-
-  const editMutation = useMutation({
-    mutationFn: updateRejectReason,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowEdit(false);
-      swal(
-        'Reject Reason Updated !',
-        'Continue with the e-comm panel',
-        'success'
-      );
-    },
-    onError: (err) => swal('Error !', err.message, 'error'),
-  });
-
-  if (query.isLoading) return <Loading />;
-  //===============
-
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
+    {
+      field: 'edit',
+      headerName: 'Edit',
+      width: 150,
+      editable: true,
+      renderCell: (params) => (
+        <EditButton
           onClick={() => {
-            // console.log("params ---", params.row);
-            setId(params.row.id);
-            editFormik.setValues(params.row);
+            editForm.setValues(params.row);
             setShowEdit(params.row);
           }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteRejectReason}
-        url="/eCommerce/RejectReason/view-RejectReason"
-      />
-    );
-  };
-  //==========
- const columns = [
-   {
-     field: 'title',
-     headerName: 'reject reason title',
-     width: 350,
-     editable: true,      flex:1
-   },
+        />),
+      flex: 1
+    },
+    {
+      field: 'delete',
+      headerName: 'Delete',
+      width: 150,
+      editable: true,
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteRejectReason}
+        />
+      ),
+      flex: 1
+    }
+  ];
+  if (query.isLoading) return <Loading />
+console.log(query.data.docs)
+  //===============
 
-  
-   {
-     field: 'edit',
-     headerName: 'Edit',
-     width: 250,
-     editable: true,
-     renderCell: editButton,      flex:1
-   },
-   {
-     field: 'delete',
-     headerName: 'Delete',
-     width: 250,
-     editable: true,
-     renderCell: deleteButton,      flex:1
-   },
- ];
- console.log("----------",query.data.docs);
+
   //=======================================================
   return (
     <>
@@ -231,7 +145,7 @@ export default function RejectReason() {
               Edit Reject Reason for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -246,13 +160,13 @@ export default function RejectReason() {
               <CustomTextField
                 multiline
                 error={
-                  editFormik.touched.title && Boolean(editFormik.errors.title)
+                  editForm.touched.title && Boolean(editForm.errors.title)
                 }
-                helperText={editFormik.touched.title && editFormik.errors.title}
+                helperText={editForm.touched.title && editForm.errors.title}
                 id="title"
                 name="title"
-                value={editFormik.values.title}
-                onChange={editFormik.handleChange}
+                value={editForm.values.title}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label=" title"
@@ -260,8 +174,8 @@ export default function RejectReason() {
             
 
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -305,7 +219,7 @@ export default function RejectReason() {
               Add Reject Reason for products used in E-commerce
             </Typography>
 
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -320,21 +234,21 @@ export default function RejectReason() {
               <CustomTextField
                 multiline
                 error={
-                  addFormik.touched.title && Boolean(addFormik.errors.title)
+                  addForm.touched.title && Boolean(addForm.errors.title)
                 }
-                helperText={addFormik.touched.title && addFormik.errors.title}
+                helperText={addForm.touched.title && addForm.errors.title}
                 id="title"
                 name="title"
-                value={addFormik.values.title}
-                onChange={addFormik.handleChange}
+                value={addForm.values.title}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label=" title"
               />
            
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >

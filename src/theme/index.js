@@ -399,6 +399,10 @@ export const theme = createTheme({
           color: "#001737",
           mt: 1
         }
+      },
+      table: {
+        color: '#925F0F',
+        fontWeight: 600
       }
     }
   },

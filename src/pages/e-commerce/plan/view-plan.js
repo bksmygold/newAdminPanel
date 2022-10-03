@@ -68,7 +68,11 @@ export default function ViewRole() {
       field: 'name',
       headerName: 'Plan Name',
       width: 150,
-      editable: true,      flex:1
+      editable: true,  
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),
+      flex:1
     },
     {
       field: 'mode',

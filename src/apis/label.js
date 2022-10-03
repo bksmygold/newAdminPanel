@@ -3,7 +3,7 @@ import axios from 'axios';
 export const getLabel = () => {
   return axios.post('/label/list', {
     options: {
-      populate: ['style'],
+      populate: 'style',
     },
   });
 };

@@ -63,6 +63,9 @@ export default function CyclePeriod() {
       headerName: 'Cycle Period Name',
       width: 150,
       editable: true,
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),
     },
     {
       field: 'lockinPeriod',

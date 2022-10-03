@@ -8,7 +8,7 @@ import {
   Button,
   Modal,
   TextField,
-  TablePagination 
+  TablePagination
 } from '@mui/material';
 import { DashboardLayout } from '../../../components/layout/dashboard-layout';
 import { InfoCard } from '../../../components/cards/infoCard';
@@ -31,126 +31,68 @@ import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 import { CustomTextField } from 'src/components/customMUI';
-
-
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
+import { useController } from 'src/controller/cut';
 //=======================================================
 export default function Cut() {
-  const router = useRouter();
+
   const theme = useTheme();
-
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
-  const [id, setId] = useState('');
-  //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      name: '',
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter Cut Name').required('Cut is required'),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
-
-  const editFormik = useFormik({
-    initialValues: {
-      name: '',
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter Cut Name').required('Cut is required'),
-    }),
-    onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
-    },
-  });
-
-  const query = useQuery({
-    queryKey: 'Cut',
-    queryFn: () => getCut(),
-        enabled: !!router.query.id,
-
-  });
-
-  const addMutation = useMutation({
-    mutationFn: postCut,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('Cut Added !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  const editMutation = useMutation({
-    mutationFn: updateCut,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowEdit(false);
-      swal('Cut Updated !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  console.log("settings ---", query.data?.docs)
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
 
 
-  if (query.isLoading) return <Loading />;
-  //===============
-
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            // console.log("params ---", params.row);
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner id={params.id} deleting={deleteCut} url="/cut/view-cut" />
-    );
-  };
   //==========
   const columns = [
     {
       field: 'name',
       headerName: 'Cut Name',
       width: 150,
-      editable: true,      flex:1
+      editable: true,
+      flex: 1,
+      renderCell: (params) => (
+        <p style={theme.custom.typography.table}>{params.value}</p>
+      ),
     },
- 
 
     {
       field: 'edit',
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,      flex:1
+      renderCell: (params) => (
+        <EditButton
+          onClick={() => {
+            editForm.setValues(params.row);
+            setShowEdit(params.row);
+          }}
+        />),
+      flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,      flex:1
-    },
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteCut}
+        />
+      ),
+      flex: 1
+    }
   ];
+  if (query.isLoading) return <Loading />
 
   //=======================================================
   return (
@@ -193,7 +135,7 @@ export default function Cut() {
               Edit Cut for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -207,21 +149,21 @@ export default function Cut() {
               </Typography>
               <CustomTextField
                 error={
-                  editFormik.touched.name && Boolean(editFormik.errors.name)
+                  editForm.touched.name && Boolean(editForm.errors.name)
                 }
-                helperText={editFormik.touched.name && editFormik.errors.name}
+                helperText={editForm.touched.name && editForm.errors.name}
                 id="name"
                 name="name"
-                value={editFormik.values.name}
-                onChange={editFormik.handleChange}
+                value={editForm.values.name}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Cut Type name"
               />
 
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -265,7 +207,7 @@ export default function Cut() {
               Add Cut for products used in E-commerce
             </Typography>
 
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -278,20 +220,20 @@ export default function Cut() {
                 Cut Type Name
               </Typography>
               <CustomTextField
-                error={addFormik.touched.name && Boolean(addFormik.errors.name)}
-                helperText={addFormik.touched.name && addFormik.errors.name}
+                error={addForm.touched.name && Boolean(addForm.errors.name)}
+                helperText={addForm.touched.name && addForm.errors.name}
                 id="name"
                 name="name"
-                value={addFormik.values.name}
-                onChange={addFormik.handleChange}
+                value={addForm.values.name}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Cut Type name"
               />
 
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -323,7 +265,7 @@ export default function Cut() {
           </Button>
         </Grid>
       </Grid>{' '}
-      <Table rows={query.data.docs} columns={columns} />
+      <Table rows={query?.data?.docs} columns={columns} />
     </>
   );
 }

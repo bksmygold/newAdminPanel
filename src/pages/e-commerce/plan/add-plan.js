@@ -27,6 +27,7 @@ import { getCyclePeriod } from 'src/apis/cyclePeriod';
 import { useTheme } from '@mui/styles';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { useController } from 'src/controller/plan';
 //=======================================================
 export default function AddPlan() {
   const [cycle, setCycle] = useState([]);
@@ -36,45 +37,24 @@ export default function AddPlan() {
   //=======================
   const router = useRouter();
   const theme = useTheme();
-  //=======================================================
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      mode: '',
-      type: '',
-      duration: 0,
-      cyclePeriod: '',
-      min: 0,
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter Unit Name').required('Unit is required'),
-      mode: yup.string('Enter mode').required('modeis required'),
-      type: yup.string('Enter type').required('type is required'),
-      cyclePeriod: yup
-        .string('Enter cycle period')
-        .required('Cycle Period is required'),
-      duration: yup.number('Enter duration').required('duration is required'),
-      min: yup.number('Enter minimum').required('minimum is required'),
-    }),
-    onSubmit: (values) => {
-      planMutation.mutate(values);
-    },
-  });
 
-  const planMutation = useMutation({
-    mutationFn: postPlan,
-    onSuccess: (res) => {
-      swal('Plan Added !', res.message, 'success'),
-        router.push('/plan/view-plan');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-  //=======================================================
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
+  
   return (
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Add-Unit </title>
+        <title>Dashboard | Add-Plan </title>
       </Head>
       {/* ------------------------------ */}
       <Container
@@ -85,6 +65,7 @@ export default function AddPlan() {
           marginTop: 5,
           border: '1px solid #d2c6c657',
           backgroundColor: 'white',
+          minWidth: "100%"
         }}
       >
         <Typography
@@ -121,7 +102,7 @@ export default function AddPlan() {
           container
         >
           <Grid item xs={8}>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -134,15 +115,15 @@ export default function AddPlan() {
                 Plan Name
               </Typography>
               <CustomTextField
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
+                error={addForm.touched.name && Boolean(addForm.errors.name)}
+                helperText={addForm.touched.name && addForm.errors.name}
                 id="name"
                 name="name"
-                value={formik.values.name}
-                onChange={formik.handleChange}
+                value={addForm.values.name}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Unit Type name"
+                label="Plan name"
               />
 
               <Typography
@@ -157,13 +138,12 @@ export default function AddPlan() {
                 Plan Mode
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">mode</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="mode"
-                  value={formik.values.mode}
-                  onChange={formik.handleChange}
+                  value={addForm.values.mode}
+                  onChange={addForm.handleChange}
                   name="mode"
                 >
                   <MenuItem key="weight" value="weight">
@@ -187,12 +167,12 @@ export default function AddPlan() {
                 Plan Type
               </Typography>
               <CustomTextField
-                error={formik.touched.type && Boolean(formik.errors.type)}
-                helperText={formik.touched.type && formik.errors.type}
+                error={addForm.touched.type && Boolean(addForm.errors.type)}
+                helperText={addForm.touched.type && addForm.errors.type}
                 id="type"
                 name="type"
-                value={formik.values.type}
-                onChange={formik.handleChange}
+                value={addForm.values.type}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="type"
@@ -211,14 +191,14 @@ export default function AddPlan() {
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.duration && Boolean(formik.errors.duration)
+                  addForm.touched.duration && Boolean(addForm.errors.duration)
                 }
-                helperText={formik.touched.duration && formik.errors.duration}
+                helperText={addForm.touched.duration && addForm.errors.duration}
                 id="duration"
                 name="duration"
                 type="number"
-                value={formik.values.duration}
-                onChange={formik.handleChange}
+                value={addForm.values.duration}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="duration"
@@ -236,13 +216,13 @@ export default function AddPlan() {
                 Plan Min
               </Typography>
               <CustomTextField
-                error={formik.touched.min && Boolean(formik.errors.min)}
-                helperText={formik.touched.min && formik.errors.min}
+                error={addForm.touched.min && Boolean(addForm.errors.min)}
+                helperText={addForm.touched.min && addForm.errors.min}
                 id="min"
                 type="number"
                 name="min"
-                value={formik.values.min}
-                onChange={formik.handleChange}
+                value={addForm.values.min}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="min"
@@ -260,15 +240,13 @@ export default function AddPlan() {
                 Cycle Period
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  cycle period
-                </InputLabel>
+               
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="cyclePeriod"
-                  value={formik.values.cyclePeriod}
-                  onChange={formik.handleChange}
+                  value={addForm.values.cyclePeriod}
+                  onChange={addForm.handleChange}
                   name="cyclePeriod"
                 >
                   {cycle.map((x) => (
@@ -280,8 +258,8 @@ export default function AddPlan() {
               </CustomFormControl>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <LoadingButton
-                  disabled={planMutation.isLoading}
-                  loading={planMutation.isLoading}
+                  disabled={add.isLoading}
+                  loading={add.isLoading}
                   type="submit"
                   fullWidth
                   sx={theme.custom.addButton}

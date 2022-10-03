@@ -40,127 +40,66 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
+import { useController } from 'src/controller/certificate';
 //=======================================================
 export default function Certificate() {
-  const router = useRouter();
+
   const theme = useTheme();
-
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
-  const [id, setId] = useState('');
-  //=======================
-  const addFormik = useFormik({
-    initialValues: {
-     name:""
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter name').required('Name is required'),
-      
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
-
-  const editFormik = useFormik({
-    initialValues: {
-      name: '',
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter name').required('Name is required'),
-    }),
-    onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
-    },
-  });
-
-  const query = useQuery({
-    queryKey: 'Certificate',
-    queryFn: () => getCertificate(),
-  });
-
-  const addMutation = useMutation({
-    mutationFn: postCertificate,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('Certificate Added !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  const editMutation = useMutation({
-    mutationFn: updateCertificate,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowEdit(false);
-      swal(
-        'Certificate Updated !',
-        'Continue with the e-comm panel',
-        'success'
-      );
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  if (query.isLoading) return <Loading />;
-  //===============
-
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            // console.log("params ---", params.row);
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deletePolicy}
-        url="/certificate/view-certificate"
-      />
-    );
-  };
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
   //==========
   const columns = [
     {
       field: 'name',
-      headerName: 'certificate name',
+      headerName: 'Name',
       width: 150,
       editable: true,
+      flex: 1,
+      renderCell: (params) => (
+        <p style={theme.custom.typography.table}>{params.value}</p>
+      ),
     },
-    
     {
       field: 'edit',
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: (params) => (
+        <EditButton
+          onClick={() => {
+            editForm.setValues(params.row);
+            setShowEdit(params.row);
+          }}
+        />),
+      flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
-    },
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteCertificate}
+        />
+      ),
+      flex: 1
+    }
   ];
+  if (query.isLoading) return <Loading />
+  console.log(query.data.docs)
   //=======================================================
   return (
     <>
@@ -178,7 +117,7 @@ export default function Certificate() {
         open={!!showEdit}
         onClose={() => setShowEdit(false)}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-describedby="modal-modal-name"
       >
         <Box sx={theme.custom.modal}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
@@ -202,47 +141,7 @@ export default function Certificate() {
               Edit Certificate for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Certificate title
-              </Typography>
-              <CustomFormControl fullWidth>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="title"
-                  value={editFormik.values.title}
-                  onChange={editFormik.handleChange}
-                  name="title"
-                >
-                  <MenuItem key="collection" value="privacy">
-                    Privacy
-                  </MenuItem>
-                  <MenuItem key="category" value="terms">
-                    Terms
-                  </MenuItem>
-                  <MenuItem key="variety" value="shipping">
-                    Shipping
-                  </MenuItem>
-                  <MenuItem key="item" value="cancellation">
-                    Cancellation
-                  </MenuItem>
-                  <MenuItem key="variety" value="return">
-                    Return
-                  </MenuItem>
-                  <MenuItem key="item" value="refund">
-                    Refund
-                  </MenuItem>
-                </Select>
-              </CustomFormControl>
+            <form onSubmit={editForm.handleSubmit}>
 
               <Typography
                 variant="body1"
@@ -253,59 +152,30 @@ export default function Certificate() {
                   fontWeight: 600,
                 }}
               >
-                Certificate description
+                Certificate Title
               </Typography>
               <CustomTextField
                 multiline
                 error={
-                  editFormik.touched.description &&
-                  Boolean(editFormik.errors.description)
+                  editForm.touched.name &&
+                  Boolean(editForm.errors.name)
                 }
                 helperText={
-                  editFormik.touched.description &&
-                  editFormik.errors.description
+                  editForm.touched.name &&
+                  editForm.errors.name
                 }
-                id="description"
-                name="description"
-                value={editFormik.values.description}
-                onChange={editFormik.handleChange}
+                id="name"
+                name="name"
+                value={editForm.values.name}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label=" description"
+                label=" name"
               />
 
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Consignment
-              </Typography>
-              <CustomFormControl fullWidth>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="consignmentRequired"
-                  value={editFormik.values.consignmentRequired}
-                  onChange={editFormik.handleChange}
-                  name="consignmentRequired"
-                >
-                  <MenuItem key="weight" value={true}>
-                    yes
-                  </MenuItem>
-                  <MenuItem key="value" value={false}>
-                    no
-                  </MenuItem>
-                </Select>
-              </CustomFormControl>
-
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -325,7 +195,7 @@ export default function Certificate() {
         open={showAdd}
         onClose={() => setShowAdd(false)}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-describedby="modal-modal-name"
       >
         <Box sx={theme.custom.modal}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
@@ -349,7 +219,7 @@ export default function Certificate() {
               Add Certificate for products used in E-commerce
             </Typography>
 
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -359,98 +229,29 @@ export default function Certificate() {
                   fontWeight: 600,
                 }}
               >
-                Certificate title
-              </Typography>
-              <CustomFormControl fullWidth>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="title"
-                  value={addFormik.values.title}
-                  onChange={addFormik.handleChange}
-                  name="title"
-                >
-                  <MenuItem key="collection" value="privacy">
-                    Privacy
-                  </MenuItem>
-                  <MenuItem key="category" value="terms">
-                    Terms
-                  </MenuItem>
-                  <MenuItem key="variety" value="shipping">
-                    Shipping
-                  </MenuItem>
-                  <MenuItem key="item" value="cancellation">
-                    Cancellation
-                  </MenuItem>
-                  <MenuItem key="variety" value="return">
-                    Return
-                  </MenuItem>
-                  <MenuItem key="item" value="refund">
-                    Refund
-                  </MenuItem>
-                </Select>
-              </CustomFormControl>
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Certificate description
+                Certificate Title
               </Typography>
               <CustomTextField
                 multiline
                 error={
-                  addFormik.touched.description &&
-                  Boolean(addFormik.errors.description)
+                  addForm.touched.name &&
+                  Boolean(addForm.errors.name)
                 }
                 helperText={
-                  addFormik.touched.description && addFormik.errors.description
+                  addForm.touched.name &&
+                  addForm.errors.name
                 }
-                id="description"
-                name="description"
-                value={addFormik.values.description}
-                onChange={addFormik.handleChange}
+                id="name"
+                name="name"
+                value={addForm.values.name}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label=" description"
+                label=" name"
               />
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#8B5704',
-                  marginBottom: 2,
-                  marginTop: 2,
-                  fontWeight: 600,
-                }}
-              >
-                Consignment
-              </Typography>
-              <CustomFormControl fullWidth>
-                <Select
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="consignmentRequired"
-                  value={addFormik.values.consignmentRequired}
-                  onChange={addFormik.handleChange}
-                  name="consignmentRequired"
-                >
-                  <MenuItem key="weight" value={true}>
-                    yes
-                  </MenuItem>
-                  <MenuItem key="value" value={false}>
-                    no
-                  </MenuItem>
-                </Select>
-              </CustomFormControl>
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >

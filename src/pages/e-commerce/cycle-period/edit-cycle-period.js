@@ -90,6 +90,7 @@ export default function EditCyclePeriod() {
           marginTop: 5,
           border: '1px solid #d2c6c657',
           backgroundColor: 'white',
+          minWidth:"100% "
         }}
       >
         {/* ------------------------------ */}

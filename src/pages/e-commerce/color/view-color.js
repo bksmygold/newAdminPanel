@@ -31,125 +31,69 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 import { CustomTextField } from 'src/components/customMUI';
 
-
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
+import { useController } from 'src/controller/color';
 //=======================================================
 export default function Color() {
-  const router = useRouter();
+
   const theme = useTheme();
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
 
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
-  const [id, setId] = useState('');
-  //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      name: '',
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter Color Name').required('Color is required'),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
-
-  const editFormik = useFormik({
-    initialValues: {
-      name: '',
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter Color Name').required('Color is required'),
-    }),
-    onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
-    },
-  });
-
-  const query = useQuery({
-    queryKey: 'Color',
-    queryFn: () => getColor(),
-  });
-
-  const addMutation = useMutation({
-    mutationFn: postColor,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('Color Added !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  const editMutation = useMutation({
-    mutationFn: updateColor,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowEdit(false);
-      swal('Color Updated !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  if (query.isLoading) return <Loading />;
-  //===============
-
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            // console.log("params ---", params.row);
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteColor}
-        url="/color/view-color"
-      />
-    );
-  };
   //==========
   const columns = [
     {
       field: 'name',
       headerName: 'Color Name',
       width: 150,
-      editable: true,      flex:1
+      editable: true, 
+      flex: 1,
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),
     },
-   
+
 
     {
       field: 'edit',
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,      flex:1
+      renderCell: (params) => (
+        <EditButton
+          onClick={() => {
+            editForm.setValues(params.row);
+            setShowEdit(params.row);
+          }}
+        />),
+      flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,      flex:1
-    },
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteColor}
+        />
+      ),
+      flex: 1
+    }
   ];
 
+  if (query.isLoading) return <Loading />
   //=======================================================
   return (
     <>
@@ -191,7 +135,7 @@ export default function Color() {
               Edit Color for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -205,21 +149,21 @@ export default function Color() {
               </Typography>
               <CustomTextField
                 error={
-                  editFormik.touched.name && Boolean(editFormik.errors.name)
+                  editForm.touched.name && Boolean(editForm.errors.name)
                 }
-                helperText={editFormik.touched.name && editFormik.errors.name}
+                helperText={editForm.touched.name && editForm.errors.name}
                 id="name"
                 name="name"
-                value={editFormik.values.name}
-                onChange={editFormik.handleChange}
+                value={editForm.values.name}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Color Type name"
               />
 
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -263,7 +207,7 @@ export default function Color() {
               Add Color for products used in E-commerce
             </Typography>
 
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -276,20 +220,20 @@ export default function Color() {
                 Color Type Name
               </Typography>
               <CustomTextField
-                error={addFormik.touched.name && Boolean(addFormik.errors.name)}
-                helperText={addFormik.touched.name && addFormik.errors.name}
+                error={addForm.touched.name && Boolean(addForm.errors.name)}
+                helperText={addForm.touched.name && addForm.errors.name}
                 id="name"
                 name="name"
-                value={addFormik.values.name}
-                onChange={addFormik.handleChange}
+                value={addForm.values.name}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Color Type name"
               />
 
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >

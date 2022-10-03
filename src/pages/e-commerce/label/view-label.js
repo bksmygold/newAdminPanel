@@ -36,154 +36,67 @@ import { getStyle } from 'src/apis/style';
 import { useTheme } from '@mui/styles';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
+import { useController } from 'src/controller/label';
 //=======================================================
 export default function Label() {
-  const router = useRouter();
+
   const theme = useTheme();
-
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
-  const [id, setId] = useState('');
-  //=======================
-
-  const [style, setStyle] = useState([]);
-
-  useEffect(() => {
-    getStyle().then((res) => setStyle(res.docs));
-  }, []);
-
-  //=======================
-
-  const addFormik = useFormik({
-    initialValues: {
-      name: '',
-      style: '',
-      mode: '',
-      weight: 0,
-      piece: 0,
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter name').required('Name is required'),
-      style: yup.string('Enter style').required('style is required'),
-      mode: yup.string('Enter mode').required('mode is required'),
-      weight: yup.number('Enter weight').required('weight is required'),
-      piece: yup.number('Enter piece').required('piece is required'),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
-
-  const editFormik = useFormik({
-    initialValues: {
-      name: '',
-      style: '',
-      mode: '',
-      weight: 0,
-      piece: 0,
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter name').required('Name is required'),
-      style: yup.string('Enter style').required('style is required'),
-      mode: yup.string('Enter mode').required('mode is required'),
-      weight: yup.number('Enter weight').required('weight is required'),
-      piece: yup.number('Enter piece').required('piece is required'),
-    }),
-    onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
-    },
-  });
-
-  const query = useQuery({
-    queryKey: 'Label',
-    queryFn: () => getLabel(),
-  });
-
-  const addMutation = useMutation({
-    mutationFn: postLabel,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('Label Added !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  const editMutation = useMutation({
-    mutationFn: updateLabel,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowEdit(false);
-      swal('Label Updated !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    styleQuery,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
   if (query.isLoading) return <Loading />;
-  //===============
 
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            // console.log("params ---", params.row);
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteLabel}
-        url="/eCommerce/label/view-label"
-      />
-    );
-  };
+  console.log(query.data.docs)
   //==========
   const columns = [
     {
       field: 'name',
       headerName: 'label name',
       width: 150,
-      editable: true,      flex:1
+      editable: true,
+      renderCell: (params) => (
+        <p style={theme.custom.typography.table}>{params.value}</p>
+      ),
+      flex: 1
     },
     {
       field: 'mode',
       headerName: 'mode',
       width: 150,
-      editable: true,      flex:1
+      editable: true, flex: 1
     },
     {
       field: 'weight',
       headerName: 'weight',
       width: 150,
-      editable: true,      flex:1
+      editable: true, flex: 1
     },
     {
       field: 'piece',
       headerName: 'piece',
       width: 150,
-      editable: true,      flex:1
+      editable: true, flex: 1
     },
     {
       field: 'style.name',
       headerName: 'style name',
       width: 150,
-      editable: true,      flex:1
+      editable: true,
+      flex: 1,
+      valueGetter: (params) => {
+        return (params.row.style.name)
+      }
     },
 
     {
@@ -191,15 +104,28 @@ export default function Label() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,      flex:1
+      renderCell: (params) => (
+        <EditButton
+          onClick={() => {
+            editForm.setValues(params.row);
+            setShowEdit(params.row);
+          }}
+        />),
+      flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,      flex:1
-    },
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteLabel}
+        />
+      ),
+      flex: 1
+    }
   ];
   //=======================================================
   return (
@@ -242,7 +168,7 @@ export default function Label() {
               Edit Label for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -257,13 +183,13 @@ export default function Label() {
               <CustomTextField
                 multiline
                 error={
-                  editFormik.touched.name && Boolean(editFormik.errors.name)
+                  editForm.touched.name && Boolean(editForm.errors.name)
                 }
-                helperText={editFormik.touched.name && editFormik.errors.name}
+                helperText={editForm.touched.name && editForm.errors.name}
                 id="name"
                 name="name"
-                value={editFormik.values.name}
-                onChange={editFormik.handleChange}
+                value={editForm.values.name}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label=" name"
@@ -285,11 +211,11 @@ export default function Label() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="consignmentRequired"
-                  value={editFormik.values.style}
-                  onChange={editFormik.handleChange}
+                  value={editForm.values.style}
+                  onChange={editForm.handleChange}
                   name="style"
                 >
-                  {style.map((x) => (
+                  {styleQuery?.data?.docs.map((x) => (
                     <MenuItem key="weight" value={x.id}>
                       {x.name}
                     </MenuItem>
@@ -313,8 +239,8 @@ export default function Label() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="mode"
-                  value={editFormik.values.mode}
-                  onChange={editFormik.handleChange}
+                  value={editForm.values.mode}
+                  onChange={editForm.handleChange}
                   name="mode"
                 >
                   <MenuItem key="weight" value="weight">
@@ -338,15 +264,15 @@ export default function Label() {
               </Typography>
               <CustomTextField
                 error={
-                  editFormik.touched.weight && Boolean(editFormik.errors.weight)
+                  editForm.touched.weight && Boolean(editForm.errors.weight)
                 }
                 helperText={
-                  editFormik.touched.weight && editFormik.errors.weight
+                  editForm.touched.weight && editForm.errors.weight
                 }
                 id="weight"
                 name="weight"
-                value={editFormik.values.weight}
-                onChange={editFormik.handleChange}
+                value={editForm.values.weight}
+                onChange={editForm.handleChange}
                 fullWidth
                 type="number"
                 variant="outlined"
@@ -366,13 +292,13 @@ export default function Label() {
               </Typography>
               <CustomTextField
                 error={
-                  editFormik.touched.piece && Boolean(editFormik.errors.piece)
+                  editForm.touched.piece && Boolean(editForm.errors.piece)
                 }
-                helperText={editFormik.touched.piece && editFormik.errors.piece}
+                helperText={editForm.touched.piece && editForm.errors.piece}
                 id="piece"
                 name="piece"
-                value={editFormik.values.piece}
-                onChange={editFormik.handleChange}
+                value={editForm.values.piece}
+                onChange={editForm.handleChange}
                 fullWidth
                 type="number"
                 variant="outlined"
@@ -380,8 +306,8 @@ export default function Label() {
               />
 
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -425,7 +351,7 @@ export default function Label() {
               Add Label for products used in E-commerce
             </Typography>
 
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -439,12 +365,12 @@ export default function Label() {
               </Typography>
               <CustomTextField
                 multiline
-                error={addFormik.touched.name && Boolean(addFormik.errors.name)}
-                helperText={addFormik.touched.name && addFormik.errors.name}
+                error={addForm.touched.name && Boolean(addForm.errors.name)}
+                helperText={addForm.touched.name && addForm.errors.name}
                 id="name"
                 name="name"
-                value={addFormik.values.name}
-                onChange={addFormik.handleChange}
+                value={addForm.values.name}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label=" name"
@@ -466,11 +392,11 @@ export default function Label() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="consignmentRequired"
-                  value={addFormik.values.style}
-                  onChange={addFormik.handleChange}
+                  value={addForm.values.style}
+                  onChange={addForm.handleChange}
                   name="style"
                 >
-                  {style.map((x) => (
+                  {styleQuery?.data?.docs.map((x) => (
                     <MenuItem key="weight" value={x.id}>
                       {x.name}
                     </MenuItem>
@@ -494,8 +420,8 @@ export default function Label() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="consignmentRequired"
-                  value={addFormik.values.mode}
-                  onChange={addFormik.handleChange}
+                  value={addForm.values.mode}
+                  onChange={addForm.handleChange}
                   name="mode"
                 >
                   <MenuItem key="weight" value="weight">
@@ -519,13 +445,13 @@ export default function Label() {
               </Typography>
               <CustomTextField
                 error={
-                  addFormik.touched.weight && Boolean(addFormik.errors.weight)
+                  addForm.touched.weight && Boolean(addForm.errors.weight)
                 }
-                helperText={addFormik.touched.weight && addFormik.errors.weight}
+                helperText={addForm.touched.weight && addForm.errors.weight}
                 id="weight"
                 name="weight"
-                value={addFormik.values.weight}
-                onChange={addFormik.handleChange}
+                value={addForm.values.weight}
+                onChange={addForm.handleChange}
                 fullWidth
                 type="number"
                 variant="outlined"
@@ -545,13 +471,13 @@ export default function Label() {
               </Typography>
               <CustomTextField
                 error={
-                  addFormik.touched.piece && Boolean(addFormik.errors.piece)
+                  addForm.touched.piece && Boolean(addForm.errors.piece)
                 }
-                helperText={addFormik.touched.piece && addFormik.errors.piece}
+                helperText={addForm.touched.piece && addForm.errors.piece}
                 id="piece"
                 name="piece"
-                value={addFormik.values.piece}
-                onChange={addFormik.handleChange}
+                value={addForm.values.piece}
+                onChange={addForm.handleChange}
                 fullWidth
                 type="number"
                 variant="outlined"
@@ -559,8 +485,8 @@ export default function Label() {
               />
 
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >

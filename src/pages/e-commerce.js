@@ -138,13 +138,7 @@ export default function eCommerce() {
               url={infoCard.eComm.faq.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title={infoCard.eComm.faq.title}
-              desc={infoCard.eComm.faq.desc}
-              url={infoCard.eComm.faq.url}
-            />
-          </Grid>
+          
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.policy.title}

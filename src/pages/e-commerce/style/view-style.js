@@ -30,129 +30,46 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import swal from 'sweetalert';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { getMetalGroup } from 'src/apis/metalGroup';
 import { useTheme } from '@mui/styles';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
+import { useController } from 'src/controller/style';
 //=======================================================
 export default function Style() {
-  const router = useRouter();
 
-const theme = useTheme() 
-    const [metalGroup, setMetalGroup] = useState([]);
+  const theme = useTheme();
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    metalQuery,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
 
-    useEffect(() => {
-      getMetalGroup().then((res) => setMetalGroup(res.docs));
-    }, []);
-
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
-  const [id, setId] = useState('');
-  //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      name: '',
-      metalGroup: '',
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter name').required('Name is required'),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
-
-  const editFormik = useFormik({
-    initialValues: {
-      name: '',
-      metalGroup: '',
-    },
-    validationSchema: yup.object({
-      name: yup.string('Enter name').required('Name is required'),
-    }),
-    onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
-    },
-  });
-
-  const query = useQuery({
-    queryKey: 'Style',
-    queryFn: () => getStyle(),
-  });
-
-  console.log('query ---', query?.data?.docs);
-  const addMutation = useMutation({
-    mutationFn: postStyle,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('Style Added !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  const editMutation = useMutation({
-    mutationFn: updateStyle,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowEdit(false);
-      swal('Style Updated !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', 'Continue with the e-comm panel', 'error'),
-  });
-
-  if (query.isLoading) return <Loading />;
-
-
-
-
-
-
-  //===============
-
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={{
-            background: 'linear-gradient(43deg, #8b5704, #ddb070)',
-            color: 'white',
-          }}
-          size="small"
-          onClick={() => {
-            // console.log("params ---", params.row);
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteStyle}
-        url="/eCommerce/style/view-style"
-      />
-    );
-  };
+  if (query.isLoading) return <Loading />; 
+  // if (metalQuery.isLoading) return console.log("Loading ...");
   //==========
   const columns = [
     {
       field: 'name',
       headerName: 'style name',
       width: 150,
-      editable: true,      flex:1
+      editable: true,
+      flex: 1,
+      renderCell: (params) => (
+        <p style={theme.custom.typography.table}>{params.value}</p>
+      ),
+
     },
     {
       field: 'metalGroup.metal',
@@ -163,7 +80,7 @@ const theme = useTheme()
         let result = [];
         if (params.row.metalGroup) {
           if (params.row.metalGroup.metal) {
-            if (params.row.metalGroup.metal.name) { 
+            if (params.row.metalGroup.metal.name) {
 
               result.push(params.row.metalGroup.metal.name);
             }
@@ -172,7 +89,7 @@ const theme = useTheme()
           result = ['Empty'];
         }
         return result.join(', ');
-      },      flex:1
+      }, flex: 1
     },
 
     {
@@ -180,15 +97,28 @@ const theme = useTheme()
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,      flex:1
+      renderCell: (params) => (
+        <EditButton
+          onClick={() => {
+            editForm.setValues(params.row);
+            setShowEdit(params.row);
+          }}
+        />),
+      flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,      flex:1
-    },
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteStyle}
+        />
+      ),
+      flex: 1
+    }
   ];
   //=======================================================
   return (
@@ -241,7 +171,7 @@ const theme = useTheme()
               Edit Style for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -256,13 +186,13 @@ const theme = useTheme()
               <CustomTextField
                 multiline
                 error={
-                  editFormik.touched.name && Boolean(editFormik.errors.name)
+                  editForm.touched.name && Boolean(editForm.errors.name)
                 }
-                helperText={editFormik.touched.name && editFormik.errors.name}
+                helperText={editForm.touched.name && editForm.errors.name}
                 id="name"
                 name="name"
-                value={editFormik.values.name}
-                onChange={editFormik.handleChange}
+                value={editForm.values.name}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label=" name"
@@ -280,16 +210,16 @@ const theme = useTheme()
                 Metal Group
               </Typography>
               <CustomFormControl fullWidth>
-              
+
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="metalGroup"
-                  value={editFormik.values.metalGroup}
-                  onChange={editFormik.handleChange}
+                  value={editForm.values.metalGroup}
+                  onChange={editForm.handleChange}
                   name="metalGroup"
                 >
-                  {metalGroup?.map((x) => (
+                  {metalQuery?.data?.docs.map((x) => (
                     <MenuItem key={x.id} value={x.id}>
                       {x.shortName} {x.metal.name}
                     </MenuItem>
@@ -298,8 +228,8 @@ const theme = useTheme()
               </CustomFormControl>
 
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={{
                   marginTop: 2,
@@ -361,7 +291,7 @@ const theme = useTheme()
               Add Style for products used in E-commerce
             </Typography>
 
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -375,12 +305,12 @@ const theme = useTheme()
               </Typography>
               <CustomTextField
                 multiline
-                error={addFormik.touched.name && Boolean(addFormik.errors.name)}
-                helperText={addFormik.touched.name && addFormik.errors.name}
+                error={addForm.touched.name && Boolean(addForm.errors.name)}
+                helperText={addForm.touched.name && addForm.errors.name}
                 id="name"
                 name="name"
-                value={addFormik.values.name}
-                onChange={addFormik.handleChange}
+                value={addForm.values.name}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label=" name"
@@ -398,16 +328,16 @@ const theme = useTheme()
                 Metal Group
               </Typography>
               <CustomFormControl fullWidth>
-            
+
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="metalGroup"
-                  value={addFormik.values.metalGroup}
-                  onChange={addFormik.handleChange}
+                  value={addForm.values.metalGroup}
+                  onChange={addForm.handleChange}
                   name="metalGroup"
                 >
-                  {metalGroup?.map((x) => (
+                  {metalQuery?.data?.docs.map((x) => (
                     <MenuItem key={x.id} value={x.id}>
                       {x.shortName} {x.metal.name}
                     </MenuItem>
@@ -416,8 +346,8 @@ const theme = useTheme()
               </CustomFormControl>
 
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={{
                   marginTop: 2,

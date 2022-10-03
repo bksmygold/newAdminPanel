@@ -5,6 +5,8 @@ import React from "react";
 import swal from 'sweetalert';
 import { getOrnament, postOrnament, updateOrnament } from "src/apis/ornament";
 import { ornamentValidation } from "src/validation/ornament";
+import { getProductType, postProductType, updateProductType } from "src/apis/productType";
+import { productTypeValidation } from "src/validation/productType";
 //============================================================
 export const useController = () => {
 
@@ -13,15 +15,15 @@ export const useController = () => {
 
     //------------------ QUERY -------------------------------------
     const query = useQuery({
-        queryKey: "ornament",
-        queryFn: getOrnament
+        queryKey: "Product Type",
+        queryFn: getProductType
     })
     //------------------ ADD_FORM -------------------------------------
     const addForm = useFormik({
         initialValues: {
             name: '',
         },
-        validationSchema: ornamentValidation,
+        validationSchema: productTypeValidation,
         onSubmit: (values) => {
             add.mutate(values);
         }
@@ -31,7 +33,7 @@ export const useController = () => {
         initialValues: {
             name: '',
         },
-        validationSchema: ornamentValidation,
+        validationSchema: productTypeValidation,
         onSubmit: (values) => {
             console.log("edit ho raha hai---", values)
             edit.mutate({ data: values, id: values.id });
@@ -39,22 +41,22 @@ export const useController = () => {
     })
     //------------------- ADD -------------------------------------
     const add = useMutation({
-        mutationFn: postOrnament,
+        mutationFn: postProductType,
         onSuccess: (res) => {
             query.refetch();
             setShowAdd(false);
             addForm.resetForm();
-            swal('Ornament Added !', 'Continue with the e-comm panel', 'success');
+            swal('Product Type Added !', 'Continue with the e-comm panel', 'success');
         },
         onError: (err) => swal('Error !', err.message, 'error'),
     })
     //------------------- EDIT -------------------------------------
     const edit = useMutation({
-        mutationFn: updateOrnament,
+        mutationFn: updateProductType,
         onSuccess: (res) => {
             query.refetch();
             setShowEdit(false);
-            swal('Ornament Updated !', 'Continue with the e-comm panel', 'success');
+            swal('Product Type Updated !', 'Continue with the e-comm panel', 'success');
         },
         onError: (err) => swal('Error !', err.message, 'error'),
     });

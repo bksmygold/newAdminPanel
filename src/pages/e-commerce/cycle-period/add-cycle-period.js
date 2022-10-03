@@ -76,6 +76,7 @@ export default function AddCyclePeriod() {
           marginTop: 5,
           border: '1px solid #d2c6c657',
           backgroundColor: 'white',
+          minWidth:"100%"
         }}
       >
         {/* ------------------------------ */}
