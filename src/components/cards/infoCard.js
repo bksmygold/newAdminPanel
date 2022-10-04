@@ -16,12 +16,12 @@ export const InfoCard = (props) => {
       sx={{
         boxShadow: '-3px 3px 4px -2px #d2c6c6',
         border: '1px solid #d2c6c657',
-        // width: '100%',
-        // height:"fit-content"
         backgroundColor:"#FDFAF2",
-        height:"100%"
+        height:"100%",
+        width: '100%',
+
       }}
-      {...props}
+      // {...props}
     >
       <CardContent
             sx={theme.custom.infoCard.bg}

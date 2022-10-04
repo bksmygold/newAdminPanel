@@ -16,92 +16,56 @@ import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
-
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
+import { useController } from 'src/controller/plan';
 //=======================================================
 export default function ViewRole() {
   const router = useRouter();
-    const theme = useTheme();
-
-  //=======================
-
-  const query = useQuery({
-    queryKey: 'Plan',
-    queryFn: () => getPlan(),
-    onSuccess: (res) => console.log('Success ---', res.message),
-    onError: (err) => console.log('Error --->', err),
-  });
+  const theme = useTheme();
+  const { query } = useController()
 
   if (query.isLoading) return <Loading />;
-
-  console.log("<---->",query.data.docs)
   //===============
-
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            router.push(`/e-commerce/plan/edit-plan/?id=${params.id}`);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deletePlan}
-        url="/plan/view-plan"
-      />
-    );
-  };
-  //==========
   const columns = [
     {
       field: 'name',
       headerName: 'Plan Name',
       width: 150,
-      editable: true,  
+      editable: true,
       renderCell: (params) => (
         <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
       ),
-      flex:1
+      flex: 1
     },
     {
       field: 'mode',
       headerName: 'Mode',
       width: 150,
-      editable: true,      flex:1
+      editable: true, flex: 1
     },
     {
       field: 'type',
       headerName: 'Plan Type',
       width: 150,
-      editable: true,      flex:1
+      editable: true, flex: 1
     },
     {
       field: 'min',
       headerName: 'Minimum',
       width: 150,
-      editable: true,      flex:1
+      editable: true, flex: 1
     },
     {
       field: 'duration',
       headerName: 'Duration',
       width: 150,
-      editable: true,      flex:1
+      editable: true, flex: 1
     },
     {
       field: 'cyclePeriod.name',
       headerName: 'Cycle Period',
-      width: 160,      flex:1,
+      width: 160, flex: 1,
       valueGetter: (params) => {
         let result = [];
         if (params.row.cyclePeriod) {
@@ -120,14 +84,24 @@ export default function ViewRole() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,      flex:1
+      renderCell: (params) => (<EditButton
+        variant
+        url={`/e-commerce/plan/edit-plan/?id=${params.id}`}
+      />),
+      flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,      flex:1
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deletePlan}
+        />
+      ),
+      flex: 1
     },
   ];
 
@@ -168,7 +142,7 @@ export default function ViewRole() {
       <Table
         rows={query.data.docs}
         columns={columns}
-   
+
       />
     </>
   );

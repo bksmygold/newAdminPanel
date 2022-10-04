@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { DashboardSidebar } from 'src/components/sidebar.js/dashboard-sidebar';
-import { Box, Container, Typography, Grid, Button } from '@mui/material';
+import { Box, Container, Typography, Grid, Button, useControlled } from '@mui/material';
 import { DashboardLayout } from '../../../components/layout/dashboard-layout';
 import { InfoCard } from '../../../components/cards/infoCard';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
@@ -15,10 +15,16 @@ import Loading from 'src/components/loading';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles'
+import {useController} from "../../../controller/metalGroup"
+import {EditButton} from '../../../components/button/editButton'
+import {DeleteButton} from '../../../components/button/deleteButton'
+
 //=======================================================
 export default function MetalGroup() {
   const router = useRouter();
   const theme = useTheme()
+
+const {query} = useController()
   //=======================
   const editButton = (params) => {
     return (
@@ -47,12 +53,8 @@ export default function MetalGroup() {
     );
   };
   //=======================
-  const query = useQuery({
-    queryKey: 'Metal Group',
-    queryFn: getMetalGroup,
-    onSuccess: (res) => console.log('Success ---', res.message),
-    onError: (err) => console.log('Error --->', err),
-  });
+
+
   if (query.isLoading) return <Loading />;
 
   console.log("---", query.data.docs)
@@ -134,14 +136,24 @@ export default function MetalGroup() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: (params) => (<EditButton
+        variant
+        url={`/e-commerce/metal-group/edit-metal-group/?id=${params.id}`}
+      />),
+      flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteMetalGroup}
+        />
+      ),
+      flex: 1
     },
   ];
 

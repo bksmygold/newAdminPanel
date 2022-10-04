@@ -40,14 +40,7 @@ export default function AddPlan() {
 
   const {
     add,
-    edit,
     addForm,
-    editForm,
-    query,
-    setShowAdd,
-    showAdd,
-    setShowEdit,
-    showEdit
   } = useController()
   
   return (

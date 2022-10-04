@@ -68,7 +68,7 @@ export const NavItem = (props) => {
               backgroundColor: active && 'white',
               // boxShadow: '0px 4px 1px 0px #bbb5b5',
               // border: '1px solid #a39a9a6e',
-              mb:2,
+              mb: 2,
               borderRadius: 1,
               color: active ? '#935F0E' : 'gray',
               fontWeight: active && 'fontWeightBold',
@@ -86,16 +86,16 @@ export const NavItem = (props) => {
             }]}
           >
             {/* {items.map((x) => ( */}
-              <>
-                <NextLink href={href} passHref>
-                  <Box sx={{ flexGrow: 1 }}>{title}</Box>
-                </NextLink>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                ></AccordionSummary>
-              </>
+            <>
+              <NextLink href={href} passHref>
+                <Box sx={{ flexGrow: 1 }}>{title}</Box>
+              </NextLink>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              ></AccordionSummary>
+            </>
             {/* ))} */}
           </Button>
           <div
@@ -107,7 +107,7 @@ export const NavItem = (props) => {
             }}
           >
             {items?.map((x) => (
-              <Button onClick={()=>router.push(x.href)} key={x.title}>
+              <Button onClick={() => router.push(x.href)} key={x.title}>
                 <Typography
                   sx={{
                     color: 'gray',
@@ -151,7 +151,7 @@ export const NavItem = (props) => {
                 // },
               }]}
             >
-              {title === 'Logout' ? (
+              {/* {title === 'Logout' ? (
                 <Box
                   onClick={() =>
                     Swal.fire(
@@ -161,7 +161,7 @@ export const NavItem = (props) => {
                     )
                   }
                   sx={{
-                    zoom: '90%',
+                    // zoom: '90%',
                     background: 'linear-gradient(45deg, #ff4b4b, #ffb5b5)',
                     color: 'white',
                     p: 1,
@@ -169,15 +169,13 @@ export const NavItem = (props) => {
                     marginRight: 1,
                     borderRadius: 1,
                     textAlign: 'center',
-
-                    // padding: "0px 12px 0px 0px",
                   }}
                 >
                   {title}
                 </Box>
-              ) : (
+              ) : ( */}
                 <Box sx={{ flexGrow: 1 }}>{title}</Box>
-              )}
+              {/* )} */}
             </Button>
           </NextLink>
         </>

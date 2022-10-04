@@ -6,6 +6,10 @@ import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from "@mui/ma
 import { NavItem } from "../nav-item";
 import Image from "next/image";
 import { dashboardMenuList } from "src/constants/sidebarMenu";
+import LogoutIcon from '@mui/icons-material/Logout';
+import Swal from "sweetalert2";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+
 //========================================================================
 export const DashboardSidebar = (props) => {
   //========================================================================
@@ -61,9 +65,9 @@ export const DashboardSidebar = (props) => {
             >
               <div>
 
-                <Image onClick={() => router.push('/')} src="/logo.png" alt="me" width="64" height="64" />
+                <Image onClick={() => router.push('/')} src="/logo.jpg" alt="me" width="150" height="150" />
                 <Typography color="inherit" variant="subtitle1">
-                  Bks MyGold
+                  BKS My Gold Pvt Ltd
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
                   Admin Panel v2.0
@@ -85,7 +89,7 @@ export const DashboardSidebar = (props) => {
             my: 3,
           }}
         />
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ height: "100%" }}>
           {dashboardMenuList.map((item) => (
             <>
               {" "}
@@ -96,18 +100,22 @@ export const DashboardSidebar = (props) => {
                 icon={item.icon}
                 href={item.href}
                 title={item.title}
+
               />
             </>
           ))}
         </Box>
-        <Divider sx={{ borderColor: "green" }} />
-        {/* <Box
+        <Divider />
+
+
+
+        <Box
           sx={{
             px: 2,
             py: 3,
           }}
         >
-          <Typography color="neutral.100" variant="subtitle2">
+          {/* <Typography color="neutral.100" variant="subtitle2">
             Need more features?
           </Typography>
           <Typography color="neutral.500" variant="body2">
@@ -137,8 +145,59 @@ export const DashboardSidebar = (props) => {
             >
               Pro Live Preview
             </Button>
-          </NextLink>
-        </Box> */}
+          </NextLink> */}
+          <Box
+            disableRipple
+            onClick={() =>
+              router.push("/")
+            }
+            sx={{
+              // zoom: '90%',
+              // background: 'linear-gradient(45deg, #ff4b4b, #ffb5b5)',
+              display: "flex",
+              // justifyContent:"space-around",
+              cursor: "pointer",
+              color: 'gray',
+              fontWeight: "bolder",
+              p: 1,
+              width: '100%',
+              marginRight: 1,
+              borderRadius: 1,
+              mb: 2,
+              textAlign: 'center',
+            }}
+          >
+            <DashboardIcon sx={{ mr: 2 }} />
+            Back To Dashboard
+          </Box>
+          <Box
+            onClick={() =>
+              Swal.fire(
+                'You have been logged out!',
+                'Log in to continue',
+                'success'
+              )
+            }
+
+            sx={{
+              // zoom: '90%',
+              // background: 'linear-gradient(45deg, #ff4b4b, #ffb5b5)',
+              display: "flex",
+              // justifyContent:"space-around",
+              color: 'gray',
+              cursor: "pointer",
+              fontWeight: "bolder",
+              p: 1,
+              width: '100%',
+              marginRight: 1,
+              borderRadius: 1,
+              textAlign: 'center',
+            }}
+          >
+            <LogoutIcon sx={{ mr: 2 }} />
+            Logout
+          </Box>
+        </Box>
       </Box>
     </>
   );

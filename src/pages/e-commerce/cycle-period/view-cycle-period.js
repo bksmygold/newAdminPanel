@@ -15,45 +15,15 @@ import Loading from 'src/components/loading';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
+import { useController } from 'src/controller/cyclePeriod';
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
 //=======================================================
 export default function CyclePeriod() {
   const router = useRouter();
   const theme = useTheme();
-
-  //=======================
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            router.push(`/e-commerce/cycle-period/edit-cycle-period/?id=${params.id}`);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteCyclePeriod}
-        url={'/e-commerce/cyclePeriod/view-cyclePeriod'}
-      />
-    );
-  };
-  //=======================
-  const query = useQuery({
-    queryKey: 'cyclePeriod',
-    queryFn: getCyclePeriod,
-    onSuccess: (res) => console.log('Success ---', res.message),
-    onError: (err) => console.log('Error --->', err),
-  });
+  const { query } = useController()
+  
   if (query.isLoading) return <Loading />;
 
   //===============================
@@ -109,20 +79,30 @@ export default function CyclePeriod() {
       width: 150,
       editable: true,
     },
-
     {
       field: 'edit',
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: (params) => (<EditButton
+        variant
+        url={`/e-commerce/cycle-period/edit-cycle-period/?id=${params.id}`}
+      />),
+      flex: 1
     },
+
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteCyclePeriod}
+        />
+      ),
+      flex: 1
     },
   ];
 

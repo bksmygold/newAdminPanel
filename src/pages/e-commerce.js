@@ -25,15 +25,18 @@ export default function eCommerce() {
         >
           E-commerce Master
         </Typography>
-        <Grid container spacing={3}>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title={infoCard.eComm.metal.title}
-              desc={infoCard.eComm.metal.desc}
-              url={infoCard.eComm.metal.url}
-            />
-          </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+        <Grid container spacing={5} >
+          {infoCard.eComm.map(x => (
+
+            <Grid item md={3} xl={3} lg={3} sm={6} xs={12} >
+              <InfoCard
+                title={x.title}
+                desc={x.desc}
+                url={x.url}
+              />
+            </Grid>
+          ))}
+          {/* <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.metalGroup.title}
               desc={infoCard.eComm.metalGroup.desc}
@@ -41,14 +44,14 @@ export default function eCommerce() {
             />
           </Grid>
 
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.ornament.title}
               desc={infoCard.eComm.ornament.desc}
               url={infoCard.eComm.ornament.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.unit.title}
               desc={infoCard.eComm.unit.desc}
@@ -56,14 +59,14 @@ export default function eCommerce() {
             />
           </Grid>
 
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.cut.title}
               desc={infoCard.eComm.cut.desc}
               url={infoCard.eComm.cut.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.color.title}
               desc={infoCard.eComm.color.desc}
@@ -71,14 +74,14 @@ export default function eCommerce() {
             />
           </Grid>
 
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.shape.title}
               desc={infoCard.eComm.shape.desc}
               url={infoCard.eComm.shape.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.clarity.title}
               desc={infoCard.eComm.clarity.desc}
@@ -87,14 +90,14 @@ export default function eCommerce() {
             />
           </Grid>
 
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.style.title}
               desc={infoCard.eComm.style.desc}
               url={infoCard.eComm.style.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.collection.title}
               desc={infoCard.eComm.collection.desc}
@@ -102,14 +105,14 @@ export default function eCommerce() {
             />
           </Grid>
 
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.category.title}
               desc={infoCard.eComm.category.desc}
               url={infoCard.eComm.category.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.variety.title}
               desc={infoCard.eComm.variety.desc}
@@ -117,21 +120,21 @@ export default function eCommerce() {
             />
           </Grid>
 
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.item.title}
               desc={infoCard.eComm.item.desc}
               url={infoCard.eComm.item.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.productType.title}
               desc={infoCard.eComm.productType.desc}
               url={infoCard.eComm.productType.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.faq.title}
               desc={infoCard.eComm.faq.desc}
@@ -139,43 +142,35 @@ export default function eCommerce() {
             />
           </Grid>
           
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.policy.title}
               desc={infoCard.eComm.policy.desc}
               url={infoCard.eComm.policy.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.retReason.title}
               desc={infoCard.eComm.retReason.desc}
               url={infoCard.eComm.retReason.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.rejReturn.title}
               desc={infoCard.eComm.rejReturn.desc}
               url={infoCard.eComm.rejReturn.url}
             />
           </Grid>
-          {/* <Grid item xl={3} lg={3} sm={6} xs={12}>
-            <InfoCard
-              title={infoCard.eComm.supplier.title}
-              desc={infoCard.eComm.supplier.desc}
-              url={infoCard.eComm.supplier.url}
-            />
-          </Grid> */}
-       
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+       <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.certi.title}
               desc={infoCard.eComm.certi.desc}
               url={infoCard.eComm.certi.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.label.title}
               desc={infoCard.eComm.label.desc}
@@ -191,20 +186,20 @@ export default function eCommerce() {
           Plans
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+        <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.plan.title}
               desc={infoCard.eComm.plan.desc}
               url={infoCard.eComm.plan.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          <Grid item md={4} xl={4} lg={4} sm={6} xs={12}>
             <InfoCard
               title={infoCard.eComm.cycle.title}
               desc={infoCard.eComm.cycle.desc}
               url={infoCard.eComm.cycle.url}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
         {/* ------------------------------ */}
       </Container>

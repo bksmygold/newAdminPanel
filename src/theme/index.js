@@ -184,11 +184,15 @@ export const theme = createTheme({
       color: 'white',
     },
     //----------- Cards/Grid ----------------------------------
-
     infoCard: {
       bg: {
         backgroundColor: "#FDFAF2",
+        
       },
+      
+    },
+    margin:{
+      marginRight:5
     },
     inventoryCard: {
       bg: {

@@ -1,27 +1,35 @@
 import { useFormik } from "formik";
-import { metalValidation } from "src/validation/metal";
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { postMetal, getMetal, updateMetal } from "src/apis/metal";
 import React from "react";
 import swal from 'sweetalert';
+import { getMetalGroup, postMetalGroup, updateMetalGroup } from "src/apis/metalGroup";
+import { metalGroupValidation } from "src/validation/metalGroup";
 //============================================================
 export const useController = () => {
-
     const [showEdit, setShowEdit] = React.useState(false);
     const [showAdd, setShowAdd] = React.useState(false);
 
     //------------------ QUERY -------------------------------------
     const query = useQuery({
-        queryKey: "metal",
-        queryFn: getMetal
+        queryKey: "metalGroup",
+        queryFn: getMetalGroup
     })
+
+
+
     //------------------ ADD_FORM -------------------------------------
     const addForm = useFormik({
         initialValues: {
-            name: '',
-            icon: '',
+            shortName: "",
+            metal: "",
+            purity: 0,
+            roundingDigits: 0,
+            unit: "",
+            ornament: "",
+            gst: 3
+
         },
-        validationSchema: metalValidation,
+        validationSchema: metalGroupValidation,
         onSubmit: (values) => {
             add.mutate(values);
         }
@@ -29,33 +37,49 @@ export const useController = () => {
     //------------------- EDIT_FORM -------------------------------------
     const editForm = useFormik({
         initialValues: {
-            name: '',
-            icon: '',
+            shortName: "",
+            metal: "",
+            purity: 0,
+            roundingDigits: 0,
+            unit: "",
+            ornament: "",
+            gst: 3
         },
-        validationSchema: metalValidation,
+        validationSchema: metalGroupValidation,
         onSubmit: (values) => {
-            console.log("edit ho raha hai---", values)
             edit.mutate({ data: values, id: values.id });
         }
     })
+
+    const getByIdQuery = (id) => {
+        return (
+            useQuery({
+                queryKey: 'plan',
+                queryFn: () => getPlanById(id),
+                onSuccess: (res) => editForm.setValues(res),
+            })
+        )
+
+    }
+
     //------------------- ADD -------------------------------------
     const add = useMutation({
-        mutationFn: postMetal,
+        mutationFn: postMetalGroup,
         onSuccess: (res) => {
             query.refetch();
-            setShowAdd(false);
+            // setShowAdd(false);
             addForm.resetForm();
-            swal('Metal Added !', 'Continue with the e-comm panel', 'success');
+            swal('Metal Group Added !', 'Continue with the e-comm panel', 'success');
         },
         onError: (err) => swal('Error !', err.message, 'error'),
     })
     //------------------- EDIT -------------------------------------
     const edit = useMutation({
-        mutationFn: updateMetal,
+        mutationFn: updateMetalGroup,
         onSuccess: (res) => {
             query.refetch();
-            setShowEdit(false);
-            swal('Metal Updated !', 'Continue with the e-comm panel', 'success');
+            // setShowEdit(false);
+            swal('Metal Group Updated !', 'Continue with the e-comm panel', 'success');
         },
         onError: (err) => swal('Error !', err.message, 'error'),
     });
@@ -69,7 +93,8 @@ export const useController = () => {
         setShowAdd,
         showAdd,
         setShowEdit,
-        showEdit
+        showEdit,
+        getByIdQuery
     }
 }
 //--------------------------------------------------------

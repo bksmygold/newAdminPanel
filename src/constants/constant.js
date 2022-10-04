@@ -137,121 +137,121 @@ export const infoCard = {
     },
     //------------------- E_COMMERCE --------------------------------
 
-    eComm: {
-        metal: {
+    eComm: [
+        {
             url: "/e-commerce/metal/view-metal",
             title: "Metal",
             desc: "create, update, delete Metals"
         },
-        metalGroup: {
+       {
             title: "Metal Groups",
             desc: "create, update, delete Metal Groups relate them to Metal",
             url: "/e-commerce/metal-group/view-metal-group",
         },
-        ornament: {
+         {
             title: "Ornaments",
             desc: "create, update, delete Ornaments",
             url: "/e-commerce/ornament/view-ornament"
         },
-        unit: {
+       {
             title: "Units",
             desc: "create, update, delete Units",
             url: "/e-commerce/unit/view-unit"
         },
-        cut: {
+       {
             title: "Cut",
             desc: "create, update, delete Cut",
             url: "/e-commerce/cut/view-cut"
         },
-        color: {
+         {
             title: "Colors",
             desc: "create, update, delete Colors",
             url: "/e-commerce/color/view-color",
         },
-        shape: {
+         {
             title: "Shape",
             desc: "create, update, delete Shape",
             url: "/e-commerce/shape/view-shape",
         },
-        clarity: {
+        {
             title: "Clarity",
             desc: "create, update, delete Clarity",
             url: "/e-commerce/clarity/view-clarity",
         },
-        style: {
+       {
             title: "Style",
             desc: "create, update, delete Style",
             url: "/e-commerce/style/view-style"
         },
-        collection: {
+         {
             title: "Collections",
             desc: "create, update, delete Collections",
             url: "/e-commerce/collection/view-collection"
         },
-        category: {
+        {
             title: "Categories",
             desc: "create, update, delete Categories",
             url: "/e-commerce/category/view-category"
         },
-        variety: {
+         {
             title: "Varieties",
             desc: "create, update, delete Varieties",
             url: "/e-commerce/variety/view-variety"
         },
-        item: {
+        {
             title: "Items",
             desc: "create, update, delete Items",
             url: "/e-commerce/item/view-item"
         },
-        productType: {
+         {
             title: "Product Types",
             desc: "create, update, delete Product Types",
             url: "/e-commerce/product-type/view-product-type"
         },
-        faq: {
+         {
             title: "FAQ",
             desc: "create, update, delete FAQs",
             url: "/e-commerce/faq/view-faq"
         },
-        policy: {
+        {
             title: "Policy",
             desc: "create, update, delete Policies",
             url: "/e-commerce/policy/view-policy"
         },
-        retReason: {
+        {
             title: "Return Reason",
             desc: "create, update, delete return reason",
             url: "/e-commerce/return-reason/view-return-reason"
         },
-        rejReturn: {
+        {
             title: "Reject Reason",
             desc: "create, update, delete return reason",
             url: "/e-commerce/reject-reason/view-reject-reason"
         },
 
 
-        certi: {
+        {
             title: "Certificates",
             desc: "create, update, delete Certificates",
             url: "/e-commerce/certificate/view-certificate"
         },
-        label: {
+       {
             title: "Label",
             desc: "create, update, delete Certificates",
             url: "/e-commerce/label/view-label"
         },
-        plan: {
+       {
             title: "Standard Plans",
             desc: "create, update, delete Plans",
             url: "/e-commerce/plan/view-plan"
         },
-        cycle: {
+        {
             title: "Cycle Periods",
             desc: "create, update, delete Plans",
             url: "/e-commerce/cycle-period/view-cycle-period",
         },
-
-    },
+        
+    ],
     //------------------- PROMOTIONAL_SETTINGS--------------------------------
 
     promo: {

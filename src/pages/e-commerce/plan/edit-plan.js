@@ -37,16 +37,9 @@ export default function EditPlan() {
 
   const router = useRouter();
   const {
-    add,
     edit,
-    addForm,
     editForm,
-    getByIdQuery,
 
-    setShowAdd,
-    showAdd,
-    setShowEdit,
-    showEdit
   } = useController()
   //=======================
 
@@ -54,13 +47,12 @@ export default function EditPlan() {
 
   //=======================================================
 
-  // const query = useQuery({
-  //   queryKey: ['plan', router.query.id],
-  //   queryFn: () => getPlanById(router.query.id),
-  //   onSuccess: (res) => editForm.setValues(res),
-  //   enabled: !!router.query.id,
-  // });
-  getByIdQuery(router.query.id)
+  const query = useQuery({
+    queryKey: ['plan', router.query.id],
+    queryFn: () => getPlanById(router.query.id),
+    onSuccess: (res) => editForm.setValues(res),
+    enabled: !!router.query.id,
+  });
   //=======================================================
   return (
     <>

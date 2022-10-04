@@ -1,65 +1,21 @@
 import Head from "next/head";
-import { Container, Typography, Grid, Button, styled, TextField,Box } from "@mui/material";
+import { Container, Typography, Grid, Button, styled, TextField, Box } from "@mui/material";
 import { DashboardLayout } from "../../../components/layout/dashboard-layout";
-import FormInput from "../../../components/utility/formInput";
-import Form from "../../../components/utility/form";
 import LoadingButton from "@mui/lab/LoadingButton";
 import React from "react";
 import { useRouter } from "next/router";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import swal from "sweetalert";
-import { useMutation } from "@tanstack/react-query";
-import { postCyclePeriod } from "src/apis/cyclePeriod";
 import { useTheme } from '@mui/styles';
 import { CustomTextField } from 'src/components/customMUI';
-
-
+import { useController } from "src/controller/cyclePeriod";
 //=======================================================
 export default function AddCyclePeriod() {
   //=======================
   const router = useRouter();
-    const theme = useTheme();
-
-  //=======================================================
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      shortName: "",
-      gracePeriod: 0,
-      cycle: 0,
-      lockinPeriod: 0,
-      maxSkip: 0,
-      maxUnpaidSkip: 0,
-      maxUnpaidInvestment: 0,
-    },
-    validationSchema: yup.object({
-      name: yup.string("Enter cycle period name").required("Name is required"),
-      shortName: yup.string("Enter cycle period short name").required("Short Name is required"),
-      gracePeriod: yup.number("Enter grace period").required("grace period is required"),
-      cycle: yup.number("Enter cycle ").required("cycle is required"),
-      lockinPeriod: yup.number("Enter locking period").required("locking period is required"),
-      maxSkip: yup.number("Enter Max Skip Count").required("Max Skip Count is required"),
-      maxUnpaidSkip: yup
-        .number("Enter Max Unpaid Skip Count")
-        .required("Max Unpaid Skip Count is required"),
-      maxUnpaidInvestment: yup
-        .number("Enter Max Unpaid Investment")
-        .required("Max Unpaid Investment is required"),
-    }),
-    onSubmit: (values) => {
-      cyclePeriodMutation.mutate(values);
-    },
-  });
-
-  const cyclePeriodMutation = useMutation({
-    mutationFn: postCyclePeriod,
-    onSuccess: (res) => {
-      swal("Cycle Period Added !", res.message, "success"),
-        router.push("/cyclePeriod/view-cyclePeriod");
-    },
-    onError: (err) => swal("Error !", err.message, "error"),
-  });
+  const theme = useTheme();
+  const {
+    add,
+    addForm,
+  } = useController()
 
   //=======================================================
   return (
@@ -76,7 +32,7 @@ export default function AddCyclePeriod() {
           marginTop: 5,
           border: '1px solid #d2c6c657',
           backgroundColor: 'white',
-          minWidth:"100%"
+          minWidth: "100%"
         }}
       >
         {/* ------------------------------ */}
@@ -114,7 +70,7 @@ export default function AddCyclePeriod() {
           container
         >
           <Grid item xs={8}>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -127,12 +83,12 @@ export default function AddCyclePeriod() {
                 Cycle Period Name
               </Typography>
               <CustomTextField
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
+                error={addForm.touched.name && Boolean(addForm.errors.name)}
+                helperText={addForm.touched.name && addForm.errors.name}
                 id="name"
                 name="name"
-                value={formik.values.name}
-                onChange={formik.handleChange}
+                value={addForm.values.name}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Cycle Period Name"
@@ -151,13 +107,13 @@ export default function AddCyclePeriod() {
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.shortName && Boolean(formik.errors.shortName)
+                  addForm.touched.shortName && Boolean(addForm.errors.shortName)
                 }
-                helperText={formik.touched.shortName && formik.errors.shortName}
+                helperText={addForm.touched.shortName && addForm.errors.shortName}
                 id="shortName"
                 name="shortName"
-                value={formik.values.shortName}
-                onChange={formik.handleChange}
+                value={addForm.values.shortName}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="short name"
@@ -176,17 +132,17 @@ export default function AddCyclePeriod() {
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.gracePeriod &&
-                  Boolean(formik.errors.gracePeriod)
+                  addForm.touched.gracePeriod &&
+                  Boolean(addForm.errors.gracePeriod)
                 }
                 helperText={
-                  formik.touched.gracePeriod && formik.errors.gracePeriod
+                  addForm.touched.gracePeriod && addForm.errors.gracePeriod
                 }
                 id="gracePeriod"
                 name="gracePeriod"
                 type="number"
-                value={formik.values.gracePeriod}
-                onChange={formik.handleChange}
+                value={addForm.values.gracePeriod}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="grace period"
@@ -204,13 +160,13 @@ export default function AddCyclePeriod() {
                 Cycle Period
               </Typography>
               <CustomTextField
-                error={formik.touched.cycle && Boolean(formik.errors.cycle)}
-                helperText={formik.touched.cycle && formik.errors.cycle}
+                error={addForm.touched.cycle && Boolean(addForm.errors.cycle)}
+                helperText={addForm.touched.cycle && addForm.errors.cycle}
                 id="cycle"
                 name="cycle"
                 type="number"
-                value={formik.values.cycle}
-                onChange={formik.handleChange}
+                value={addForm.values.cycle}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="cycle"
@@ -229,17 +185,17 @@ export default function AddCyclePeriod() {
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.lockinPeriod &&
-                  Boolean(formik.errors.lockinPeriod)
+                  addForm.touched.lockinPeriod &&
+                  Boolean(addForm.errors.lockinPeriod)
                 }
                 helperText={
-                  formik.touched.lockinPeriod && formik.errors.lockinPeriod
+                  addForm.touched.lockinPeriod && addForm.errors.lockinPeriod
                 }
                 id="lockinPeriod"
                 name="lockinPeriod"
                 type="number"
-                value={formik.values.lockinPeriod}
-                onChange={formik.handleChange}
+                value={addForm.values.lockinPeriod}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="locking period"
@@ -257,13 +213,13 @@ export default function AddCyclePeriod() {
                 Maximum Skip Count
               </Typography>
               <CustomTextField
-                error={formik.touched.maxSkip && Boolean(formik.errors.maxSkip)}
-                helperText={formik.touched.maxSkip && formik.errors.maxSkip}
+                error={addForm.touched.maxSkip && Boolean(addForm.errors.maxSkip)}
+                helperText={addForm.touched.maxSkip && addForm.errors.maxSkip}
                 id="maxSkip"
                 name="maxSkip"
                 type="number"
-                value={formik.values.maxSkip}
-                onChange={formik.handleChange}
+                value={addForm.values.maxSkip}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Max. Skip Count"
@@ -282,17 +238,17 @@ export default function AddCyclePeriod() {
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.maxUnpaidSkip &&
-                  Boolean(formik.errors.maxUnpaidSkip)
+                  addForm.touched.maxUnpaidSkip &&
+                  Boolean(addForm.errors.maxUnpaidSkip)
                 }
                 helperText={
-                  formik.touched.maxUnpaidSkip && formik.errors.maxUnpaidSkip
+                  addForm.touched.maxUnpaidSkip && addForm.errors.maxUnpaidSkip
                 }
                 id="maxUnpaidSkip"
                 name="maxUnpaidSkip"
                 type="number"
-                value={formik.values.maxUnpaidSkip}
-                onChange={formik.handleChange}
+                value={addForm.values.maxUnpaidSkip}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Max. Unpaid Skip Count"
@@ -311,18 +267,18 @@ export default function AddCyclePeriod() {
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.maxUnpaidInvestment &&
-                  Boolean(formik.errors.maxUnpaidInvestment)
+                  addForm.touched.maxUnpaidInvestment &&
+                  Boolean(addForm.errors.maxUnpaidInvestment)
                 }
                 helperText={
-                  formik.touched.maxUnpaidInvestment &&
-                  formik.errors.maxUnpaidInvestment
+                  addForm.touched.maxUnpaidInvestment &&
+                  addForm.errors.maxUnpaidInvestment
                 }
                 id="maxUnpaidInvestment"
                 name="maxUnpaidInvestment"
                 type="number"
-                value={formik.values.maxUnpaidInvestment}
-                onChange={formik.handleChange}
+                value={addForm.values.maxUnpaidInvestment}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Max. Unpaid Investment"
@@ -330,8 +286,8 @@ export default function AddCyclePeriod() {
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <LoadingButton
                   fullWidth
-                  disabled={cyclePeriodMutation.isLoading}
-                  loading={cyclePeriodMutation.isLoading}
+                  disabled={add.isLoading}
+                  loading={add.isLoading}
                   type="submit"
                   sx={theme.custom.addButton}
                 >

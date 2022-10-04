@@ -70,11 +70,11 @@ export const dashboardMenuList = [
         icon: <CogIcon />,
         title: 'Settings',
     },
-    {
-        href: '',
-        // icon: <CogIcon />,
-        title: 'Logout',
-    },
+    // {
+    //     href: '',
+    //     // icon: <CogIcon />,
+    //     title: 'Logout',
+    // },
 ];
 
 export const inventoryMenuList = [
