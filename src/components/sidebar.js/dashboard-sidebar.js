@@ -9,9 +9,11 @@ import { dashboardMenuList } from "src/constants/sidebarMenu";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Swal from "sweetalert2";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-
+import { useTheme } from '@mui/styles'
 //========================================================================
 export const DashboardSidebar = (props) => {
+
+  const theme = useTheme()
   //========================================================================
   const { open, onClose } = props;
   const router = useRouter();
@@ -85,7 +87,7 @@ export const DashboardSidebar = (props) => {
         </div>
         <Divider
           sx={{
-            borderColor: "green",
+            borderColor: "gray",
             my: 3,
           }}
         />

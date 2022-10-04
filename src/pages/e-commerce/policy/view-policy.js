@@ -12,6 +12,11 @@ import {
   TextField,
   Modal,
   Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
 } from '@mui/material';
 import { DashboardLayout } from '../../../components/layout/dashboard-layout';
 import { InfoCard } from '../../../components/cards/infoCard';
@@ -37,35 +42,49 @@ import * as yup from 'yup';
 import swal from 'sweetalert';
 import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { useTheme} from '@mui/styles'
+import { useTheme } from '@mui/styles'
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { useController} from '../../../controller/policy'
 //=======================================================
 export default function Policy() {
   const router = useRouter();
   const theme = useTheme();
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
 
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
+
   const [id, setId] = useState('');
-  //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      title: '',
-      description: '',
-      consignmentRequired: false,
-    },
-    validationSchema: yup.object({
-      title: yup.string('Enter Title').required('Title is required'),
-      description: yup
-        .string('Enter description')
-        .required('description is required'),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
+  const [open, setOpen] = React.useState(false);
+  const [scroll, setScroll] = React.useState('paper');
+
+  // //=======================
+  // const addFormik = useFormik({
+  //   initialValues: {
+  //     title: '',
+  //     description: '',
+  //     consignmentRequired: false,
+  //   },
+  //   validationSchema: yup.object({
+  //     title: yup.string('Enter Title').required('Title is required'),
+  //     description: yup
+  //       .string('Enter description')
+  //       .required('description is required'),
+  //   }),
+  //   onSubmit: (values) => {
+  //     console.log('payload --', values);
+  //     addMutation.mutate(values);
+  //   },
+  // });
 
   const editFormik = useFormik({
     initialValues: {
@@ -84,10 +103,10 @@ export default function Policy() {
     },
   });
 
-  const query = useQuery({
-    queryKey: 'Policy',
-    queryFn: () => getPolicy(),
-  });
+  // const query = useQuery({
+  //   queryKey: 'Policy',
+  //   queryFn: () => getPolicy(),
+  // });
 
   const addMutation = useMutation({
     mutationFn: postPolicy,
@@ -122,8 +141,8 @@ export default function Policy() {
           size="small"
           onClick={() => {
             // console.log("params ---", params.row);
-            setId(params.row.id);
-            editFormik.setValues(params.row);
+            // setId(params.row.id);
+            editForm.setValues(params.row);
             setShowEdit(params.row);
           }}
         >
@@ -148,35 +167,49 @@ export default function Policy() {
       field: 'title',
       headerName: 'policy title',
       width: 150,
-      editable: true,      flex:1
+      editable: true,
+      flex: 1,
+      renderCell: (params) => (
+        <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
+      ),
     },
     {
       field: 'description',
       headerName: 'description',
       width: 450,
-      editable: true,      flex:1
+      editable: true, flex: 1
     },
     {
       field: 'consignmentRequired',
       headerName: 'Consignment',
       width: 100,
-      editable: true,      flex:1
+      editable: true, flex: 1
     },
     {
       field: 'edit',
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,      flex:1
+      renderCell: editButton, flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,      flex:1
+      renderCell: deleteButton, flex: 1
     },
   ];
+
+  const handleClickOpen = (scrollType) => () => {
+    setOpen(true);
+    setScroll(scrollType);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   //=======================================================
   return (
     <>
@@ -218,7 +251,7 @@ export default function Policy() {
               Edit Policy for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -235,8 +268,8 @@ export default function Policy() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="title"
-                  value={editFormik.values.title}
-                  onChange={editFormik.handleChange}
+                  value={editForm.values.title}
+                  onChange={editForm.handleChange}
                   name="title"
                 >
                   <MenuItem key="collection" value="privacy">
@@ -274,17 +307,17 @@ export default function Policy() {
               <CustomTextField
                 multiline
                 error={
-                  editFormik.touched.description &&
-                  Boolean(editFormik.errors.description)
+                  editForm.touched.description &&
+                  Boolean(editForm.errors.description)
                 }
                 helperText={
-                  editFormik.touched.description &&
-                  editFormik.errors.description
+                  editForm.touched.description &&
+                  editForm.errors.description
                 }
                 id="description"
                 name="description"
-                value={editFormik.values.description}
-                onChange={editFormik.handleChange}
+                value={editForm.values.description}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label=" description"
@@ -306,8 +339,8 @@ export default function Policy() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="consignmentRequired"
-                  value={editFormik.values.consignmentRequired}
-                  onChange={editFormik.handleChange}
+                  value={editForm.values.consignmentRequired}
+                  onChange={editForm.handleChange}
                   name="consignmentRequired"
                 >
                   <MenuItem key="weight" value={true}>
@@ -320,8 +353,8 @@ export default function Policy() {
               </CustomFormControl>
 
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -365,7 +398,7 @@ export default function Policy() {
               Add Policy for products used in E-commerce
             </Typography>
 
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -382,8 +415,8 @@ export default function Policy() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="title"
-                  value={addFormik.values.title}
-                  onChange={addFormik.handleChange}
+                  value={addForm.values.title}
+                  onChange={addForm.handleChange}
                   name="title"
                 >
                   <MenuItem key="collection" value="privacy">
@@ -421,16 +454,16 @@ export default function Policy() {
               <CustomTextField
                 multiline
                 error={
-                  addFormik.touched.description &&
-                  Boolean(addFormik.errors.description)
+                  addForm.touched.description &&
+                  Boolean(addForm.errors.description)
                 }
                 helperText={
-                  addFormik.touched.description && addFormik.errors.description
+                  addForm.touched.description && addForm.errors.description
                 }
                 id="description"
                 name="description"
-                value={addFormik.values.description}
-                onChange={addFormik.handleChange}
+                value={addForm.values.description}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label=" description"
@@ -452,8 +485,8 @@ export default function Policy() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="consignmentRequired"
-                  value={addFormik.values.consignmentRequired}
-                  onChange={addFormik.handleChange}
+                  value={addForm.values.consignmentRequired}
+                  onChange={addForm.handleChange}
                   name="consignmentRequired"
                 >
                   <MenuItem key="weight" value={true}>
@@ -465,8 +498,8 @@ export default function Policy() {
                 </Select>
               </CustomFormControl>
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -476,6 +509,31 @@ export default function Policy() {
           </Grid>
         </Box>
       </Modal>
+
+      {/* =============== DIALOGUE ================================= */}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        scroll={scroll}
+        aria-labelledby="scroll-dialog-title"
+        aria-describedby="scroll-dialog-description"
+      >
+        <DialogTitle id="scroll-dialog-title">Policy</DialogTitle>
+        <DialogContent dividers={scroll === 'paper'}>
+          <DialogContentText
+            id="scroll-dialog-description"
+            tabIndex={-1}
+          >
+            {query.data.docs.map((x) =>{
+              if(x.id === id){
+                return(
+                  x.description
+                )
+              }
+            })}
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
       {/* =============================================================== */}
       <Grid
         sx={{
@@ -498,7 +556,16 @@ export default function Policy() {
           </Button>
         </Grid>
       </Grid>{' '}
-      <Table rows={query.data.docs} columns={columns} />
+      <Table
+        rows={query.data.docs}
+        columns={columns}
+        handleClick={(params) => {
+          setId(params.id);
+          // console.log("params", params.id)
+          setOpen(true);
+        }
+        }
+      />
     </>
   );
 }

@@ -20,7 +20,7 @@ import { EditButton } from 'src/components/button/editButton';
 import { DeleteButton } from 'src/components/button/deleteButton';
 import { useController } from 'src/controller/plan';
 //=======================================================
-export default function ViewRole() {
+export default function ViewPlan() {
   const router = useRouter();
   const theme = useTheme();
   const { query } = useController()
@@ -147,4 +147,4 @@ export default function ViewRole() {
     </>
   );
 }
-ViewRole.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+ViewPlan.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

@@ -27,69 +27,35 @@ import { getMetal } from "src/apis/metal";
 import { getUnit } from "src/apis/unit";
 import { getOrnament } from "src/apis/ornament";
 import Loading from "src/components/loading";
-import { useTheme} from "@mui/styles"
+import { useTheme } from "@mui/styles"
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
-//=======================================================
+import { useController } from "src/controller/metalGroup";
+import { useFormControlUnstyledContext } from "@mui/base";
 //=======================================================
 export default function EditMetalGroup() {
   //=======================
   const router = useRouter();
   const theme = useTheme()
+  const {
+    edit,
+    editForm,
+    metalQuery,
+    unit,
+    ornament
+  } = useController()
   //=======================================================
-  const formik = useFormik({
-    initialValues: {
-      shortName: "",
-      metal: "",
-      purity: 0,
-      roundingDigits: 0,
-      unit: "",
-      ornament: "",
-      gst: 3,
-    },
-    validationSchema: yup.object({
-      shortName: yup.string("Enter Metal Group Name").required("Metal Group is required"),
-      metal: yup.string("Choose Metal ").required("Metal is required"),
-      purity: yup.number("Enter Purity").required("Purity is required"),
-      roundingDigits: yup.number("Enter Rounding digits").required("Rounding digits is required"),
-      unit: yup.string("Enter  Unit").required("Unit is required"),
-      ornament: yup.string("Enter Ornament").required("Ornament is required"),
-    }),
-    onSubmit: (values) => {
-      metalGroupMutation.mutate({ data: values, id: router.query.id });
-    },
-  });
 
-  const [metal, setMetal] = React.useState([]);
-  const [unit, setUnit] = React.useState([]);
-  const [ornament, setOrnament] = React.useState([]);
-
-  React.useEffect(() => {
-    getMetal().then((res) => setMetal(res.docs));
-    getUnit().then((res) => setUnit(res.docs));
-    getOrnament().then((res) => setOrnament(res.docs));
-  }, []);
-
-  //----------
 
   const query = useQuery({
     querKey: ["metalGroup", router.query.id],
     queryFn: () => getMetalGroupById(router.query.id),
-    onSuccess: (res) => formik.setValues(res),
+    onSuccess: (res) => editForm.setValues(res),
     enabled: !!router.query.id,
   });
 
-  
-  
-  const metalGroupMutation = useMutation({
-    mutationFn: updateMetalGroup,
-    onSuccess: (res) => {
-      swal("Metal Group Updated !", "Continue with eComm panel", "success"),
-      router.push("/eCommerce/metalGroup/view-metalGroup");
-    },
-    onError: (err) => swal("Error !", err.message, "error"),
-  });
-  
+
+
   if (query.isLoading) return <Loading />;
   //=======================================================
   return (
@@ -106,7 +72,7 @@ export default function EditMetalGroup() {
           marginTop: 5,
           border: '1px solid #d2c6c657',
           backgroundColor: 'white',
-          minWidth:"100%"
+          minWidth: "100%"
         }}
       >
         {/* ------------------------------ */}
@@ -156,16 +122,16 @@ export default function EditMetalGroup() {
               Metal Group Name
             </Typography>
 
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <CustomTextField
                 error={
-                  formik.touched.shortName && Boolean(formik.errors.shortName)
+                  editForm.touched.shortName && Boolean(editForm.errors.shortName)
                 }
-                helperText={formik.touched.shortName && formik.errors.shortName}
+                helperText={editForm.touched.shortName && editForm.errors.shortName}
                 id="shortName"
                 name="shortName"
-                value={formik.values.shortName}
-                onChange={formik.handleChange}
+                value={editForm.values.shortName}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Metal Group name"
@@ -187,11 +153,11 @@ export default function EditMetalGroup() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={formik.values.metal}
-                  onChange={formik.handleChange}
+                  value={editForm.values.metal}
+                  onChange={editForm.handleChange}
                   name="metal"
                 >
-                  {metal.map((x) => (
+                  {metalQuery?.data?.docs?.map((x) => (
                     <MenuItem key={x.id} value={x.id}>
                       {x.name}
                     </MenuItem>
@@ -215,11 +181,11 @@ export default function EditMetalGroup() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={formik.values.unit}
-                  onChange={formik.handleChange}
+                  value={editForm.values.unit}
+                  onChange={editForm.handleChange}
                   name="unit"
                 >
-                  {unit.map((x) => (
+                  {unit?.data?.docs?.map((x) => (
                     <MenuItem key={x.id} value={x.id}>
                       {x.name}
                     </MenuItem>
@@ -242,11 +208,11 @@ export default function EditMetalGroup() {
                 <Select
                   defaultValue=""
                   // value={age}
-                  value={formik.values.ornament}
-                  onChange={formik.handleChange}
+                  value={editForm.values.ornament}
+                  onChange={editForm.handleChange}
                   name="ornament"
                 >
-                  {ornament.map((x) => (
+                  {ornament?.data?.docs?.map((x) => (
                     <MenuItem key={x.id} value={x.name}>
                       {x.name}
                     </MenuItem>
@@ -266,13 +232,13 @@ export default function EditMetalGroup() {
                 Purity
               </Typography>
               <CustomTextField
-                error={formik.touched.purity && Boolean(formik.errors.purity)}
-                helperText={formik.touched.purity && formik.errors.purity}
+                error={editForm.touched.purity && Boolean(editForm.errors.purity)}
+                helperText={editForm.touched.purity && editForm.errors.purity}
                 id="purity"
                 name="purity"
                 type="number"
-                value={formik.values.purity}
-                onChange={formik.handleChange}
+                value={editForm.values.purity}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Purity"
@@ -295,8 +261,8 @@ export default function EditMetalGroup() {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   // value={age}
-                  value={formik.values.roundingDigits}
-                  onChange={formik.handleChange}
+                  value={editForm.values.roundingDigits}
+                  onChange={editForm.handleChange}
                   name="roundingDigits"
                 >
                   <MenuItem value="1">One</MenuItem>
@@ -306,8 +272,8 @@ export default function EditMetalGroup() {
               </CustomFormControl>
 
               <LoadingButton
-                disabled={metalGroupMutation.isLoading}
-                loading={metalGroupMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 fullWidth
                 sx={theme.custom.addButton}

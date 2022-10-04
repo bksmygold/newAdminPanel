@@ -1,50 +1,31 @@
 import { useFormik } from "formik";
+
 import { useQuery, useMutation } from '@tanstack/react-query';
 import React from "react";
 import swal from 'sweetalert';
-import { getMetalGroup, postMetalGroup, updateMetalGroup } from "src/apis/metalGroup";
-import { metalGroupValidation } from "src/validation/metalGroup";
-import { getUnit } from "src/apis/unit";
-import { getOrnament } from "src/apis/ornament";
-import { getMetal } from "src/apis/metal";
+import { getOrnament, postOrnament, updateOrnament } from "src/apis/ornament";
+import { ornamentValidation } from "src/validation/ornament";
+import { getPolicy, postPolicy, updatePolicy } from "src/apis/policy";
+import { policyValidation } from "src/validation/policy";
 //============================================================
 export const useController = () => {
+
     const [showEdit, setShowEdit] = React.useState(false);
     const [showAdd, setShowAdd] = React.useState(false);
 
     //------------------ QUERY -------------------------------------
     const query = useQuery({
-        queryKey: "metalGroup",
-        queryFn: getMetalGroup
+        queryKey: "policy",
+        queryFn: getPolicy
     })
-
-    const metalQuery = useQuery({
-        queryKey: "metal",
-        queryFn: getMetal
-    })
-
-    const unit = useQuery({
-        queryKey: "unit",
-        queryFn: getUnit
-    })
-    const ornament = useQuery({
-        queryKey: "ornament",
-        queryFn: getOrnament
-    })
-
     //------------------ ADD_FORM -------------------------------------
     const addForm = useFormik({
         initialValues: {
-            shortName: "",
-            metal: "",
-            purity: 0,
-            roundingDigits: 0,
-            unit: "",
-            ornament: "",
-            gst: 3
-
+            title: '',
+            description: '',
+            consignmentRequired: false,
         },
-        validationSchema: metalGroupValidation,
+        validationSchema: policyValidation,
         onSubmit: (values) => {
             add.mutate(values);
         }
@@ -52,49 +33,33 @@ export const useController = () => {
     //------------------- EDIT_FORM -------------------------------------
     const editForm = useFormik({
         initialValues: {
-            shortName: "",
-            metal: "",
-            purity: 0,
-            roundingDigits: 0,
-            unit: "",
-            ornament: "",
-            gst: 3
+            title: '',
+            description: '',
+            consignmentRequired: false,
         },
-        validationSchema: metalGroupValidation,
+        validationSchema: policyValidation,
         onSubmit: (values) => {
             edit.mutate({ data: values, id: values.id });
         }
     })
-
-    const getByIdQuery = (id) => {
-        return (
-            useQuery({
-                queryKey: 'plan',
-                queryFn: () => getPlanById(id),
-                onSuccess: (res) => editForm.setValues(res),
-            })
-        )
-
-    }
-
     //------------------- ADD -------------------------------------
     const add = useMutation({
-        mutationFn: postMetalGroup,
+        mutationFn: postPolicy,
         onSuccess: (res) => {
             query.refetch();
-            // setShowAdd(false);
+            setShowAdd(false);
             addForm.resetForm();
-            swal('Metal Group Added !', 'Continue with the e-comm panel', 'success');
+            swal('Policy Added !', 'Continue with the e-comm panel', 'success');
         },
         onError: (err) => swal('Error !', err.message, 'error'),
     })
     //------------------- EDIT -------------------------------------
     const edit = useMutation({
-        mutationFn: updateMetalGroup,
+        mutationFn: updatePolicy,
         onSuccess: (res) => {
             query.refetch();
-            // setShowEdit(false);
-            swal('Metal Group Updated !', 'Continue with the e-comm panel', 'success');
+            setShowEdit(false);
+            swal('Policy Updated !', 'Continue with the e-comm panel', 'success');
         },
         onError: (err) => swal('Error !', err.message, 'error'),
     });
@@ -108,11 +73,7 @@ export const useController = () => {
         setShowAdd,
         showAdd,
         setShowEdit,
-        showEdit,
-        getByIdQuery,
-        metalQuery,
-        unit,
-        ornament
+        showEdit
     }
 }
 //--------------------------------------------------------

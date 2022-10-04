@@ -25,34 +25,6 @@ export default function MetalGroup() {
   const theme = useTheme()
 
 const {query} = useController()
-  //=======================
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            router.push(`/e-commerce/metal-group/edit-metal-group/?id=${params.id}`);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteMetalGroup}
-        url={'/metalGroup/view-metalGroup'}
-      />
-    );
-  };
-  //=======================
 
 
   if (query.isLoading) return <Loading />;
