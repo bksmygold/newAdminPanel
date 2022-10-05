@@ -27,6 +27,10 @@ import { alpha, styled } from "@mui/material/styles";
 import Table from "src/components/utility/table";
 import { InventoryDashboardLayout } from "src/components/layout/inventoryDashboard-layout";
 import { useTheme } from "@mui/styles";
+import FilterResults from 'react-filter-search';
+import {
+    CustomTextField, CustomFormControl
+} from "src/components/customMUI";
 //=============================================
 const customer = () => {
     //===============
@@ -36,7 +40,7 @@ const customer = () => {
         return (
             <strong>
                 <Button
-                    sx={[theme.custom.editButton,{width:"100%"}]}
+                    sx={[theme.custom.editButton, { width: "100%" }]}
                 >
                     Check Custodians
                 </Button>
@@ -49,7 +53,7 @@ const customer = () => {
     const checkInvoice = (params) => {
         return (
             <Button
-            sx={theme.custom.editButton}
+                sx={theme.custom.editButton}
 
             >
                 Check Sale Invoices
@@ -58,7 +62,7 @@ const customer = () => {
     };
     const columns = [
         {
-            field: "firstName",
+            field: "id",
             headerName: "Sale Invoice ID",
             width: 150,
             editable: true,
@@ -68,45 +72,46 @@ const customer = () => {
             ),
         },
         {
-            field: "d",
+            field: "customer",
             headerName: "Customer ",
             width: 150,
             flex: 1
         },
         {
-            field: "ss",
+            field: "phone",
             headerName: "Phone Number  ",
             width: 150,
             flex: 1
         },
         {
-            field: "s",
+            field: "email",
             headerName: "Email Address  ",
-            width: 150,
-            flex: 1
-        },      
+            minWidth: 240,
+            flex: 1,
+
+        },
         {
-            field: "sa",
+            field: "weight",
             headerName: "Weight ",
             width: 150,
             flex: 1
         },
         {
-            field: "x",
+            field: "noCustodian",
             headerName: "Number of Custodian ",
             width: 150,
             flex: 1
         },
         {
             field: 'delete',
-            headerName: 'Delete',
+            headerName: 'Invoice',
             width: 50,
             editable: true,
             renderCell: checkInvoice, flex: 1
         },
         {
             field: 'qqqq',
-            headerName: 'Delete',
+            headerName: 'Custodian',
             width: 550,
             editable: true,
             renderCell: checkCustodian, flex: 1
@@ -115,11 +120,51 @@ const customer = () => {
     ];
 
     const rows = [
-        { id: 1, lastName: "Snow", flex: 1, minWidth: 100, firstName: "Jon", age: 35 },
-        { id: 2, lastName: "Lannister", flex: 1, minWidth: 100, firstName: "Cersei", age: 42 },
+        {
+            id: "SaleID-0001",
+            customer: "Nischal Saraffa",
+            phone: "7392988369",
+            email: "gupta.nischal014@gmail.com",
+            weight: "1 GRAM",
+            noCustodian: "5",
+            flex: 1,
+            minWidth: 100,
+        },
+        {
+            id: "SaleID-0002",
+            customer: "Ankit Tea Stall",
+            phone: "9876543211",
+            email: "anki.nischal014@gmail.com",
+            weight: "1 GRAM",
+            noCustodian: "2",
+            flex: 1,
+            minWidth: 100,
+        },
+        {
+            id: "SaleID-0003",
+            customer: "Sachin Mobile shop",
+            phone: "9876543211",
+            email: "anki.nischal014@gmail.com",
+            weight: "6 GRAM",
+            noCustodian: "7",
+            flex: 1,
+            minWidth: 100,
+        },
+        {
+            id: "SaleID-0004",
+            customer: "Lobo Tailor",
+            phone: "9876543211",
+            email: "anki.nischal014@gmail.com",
+            weight: "7 GRAM",
+            noCustodian: "9",
+            flex: 1,
+            minWidth: 100,
+        },
+
 
     ];
 
+    const [filterRow, setFilterRow] = React.useState(rows)
 
     //=============================================
     return (
@@ -145,7 +190,7 @@ const customer = () => {
                         boxShadow: "0px 4px 1px 0px #d2c6c6",
                     }}
                 >
-                    <FormControl fullWidth>
+                    {/* <FormControl fullWidth>
                         {" "}
                         <InputLabel id="demo-simple-select-label">Search data</InputLabel>
                         <Select label="Search data">
@@ -157,7 +202,16 @@ const customer = () => {
                             <MenuItem value={10}>Kuch aur</MenuItem>
                             <MenuItem value={10}>Aur bhi kuch</MenuItem>
                         </Select>
-                    </FormControl>
+                    </FormControl> */}
+                    <CustomTextField
+                        onChange={(e) => {
+                            let keyword = e.target.value
+                            let newRow = rows.filter(x => x.customer?.toLowerCase().startsWith(keyword.toLowerCase()))
+                            setFilterRow(newRow)
+                        }}
+                        sx={{ minWidth: "100%" }}
+                        label="Search customer"
+                    />
                 </Box>
                 {/* //------------------------------------------------------- */}
                 <Box
@@ -184,19 +238,38 @@ const customer = () => {
                             </LocalizationProvider>
                         </Grid>
                         <Grid item lg={3} sm={6} xl={3} xs={12}>
-                            <FormControl fullWidth>
+                            <CustomFormControl
+                                fullWidth>
                                 {" "}
                                 <InputLabel id="demo-simple-select-label">Search Customers</InputLabel>
-                                <Select label="Search data">
+                                <Select
+                                    label="Search data"
+                                    onChange={(e) => {
+                                        if (e.target.value > 5) {
+
+                                            let newRow = rows.filter(x => x.noCustodian > "5")
+                                            setFilterRow(newRow)
+                                        }
+                                        if (e.target.value <= 5) {
+
+                                            let newRow = rows.filter(x => x.noCustodian <= "5")
+                                            setFilterRow(newRow)
+                                        } if (e.target.value === "all") {
+
+                                            // let newRow = rows.filter(x => x.noCustodian <= "5")
+                                            setFilterRow(rows)
+                                        }
+                                    }}
+                                >
                                     <MenuItem value="">
                                         <em>None</em>
                                     </MenuItem>
-                                    <MenuItem value={10}>All Customer</MenuItem>
-                                    <MenuItem value={10}>Kuch aur options</MenuItem>
-                                    <MenuItem value={10}>Kuch aur</MenuItem>
-                                    <MenuItem value={10}>Aur bhi kuch</MenuItem>
+                                    <MenuItem value={"all"}>All Customer</MenuItem>
+                                    <MenuItem value={4}>Custodian less than 5</MenuItem>
+                                    <MenuItem value={6}>Custodian more than 5</MenuItem>
                                 </Select>
-                            </FormControl>
+                            </CustomFormControl
+                            >
                         </Grid>
                         <Grid item lg={3} sm={6} xl={3} xs={12}>
                             <FormGroup>
@@ -217,18 +290,7 @@ const customer = () => {
                             </Accordion>
                         </Grid>
                     </Grid>
-                    {/* <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <Accordion>
-                <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
-                  <Typography sx={{ color: "black", width: "100%" }}>Download as</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography color="primary">PDF</Typography>
-                  <Typography color="primary">Excel</Typography>
-                  <Typography color="primary">CSV</Typography>
-                </AccordionDetails>
-              </Accordion>
-            </Grid> */}
+
                 </Box>
 
 
@@ -242,7 +304,7 @@ const customer = () => {
                         //   backgroundColor: "#e8d8c0",
                     }}
 
-                    rows={rows}
+                    rows={filterRow}
                     columns={columns}
                     getRowClassName={(params) =>
                         params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"

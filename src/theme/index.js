@@ -147,6 +147,10 @@ export const theme = createTheme({
         },
       },
     },
+    
+    MuiDataGridToolbarContainer: {
+      styleOverrides: { backgroundColor: "red" }
+    },
   },
   //======================= Custom Styling =========================
   //----------- Button ----------------------------------
@@ -187,12 +191,12 @@ export const theme = createTheme({
     infoCard: {
       bg: {
         backgroundColor: "#FDFAF2",
-        
+
       },
-      
+
     },
-    margin:{
-      marginRight:5
+    margin: {
+      marginRight: 5
     },
     inventoryCard: {
       bg: {

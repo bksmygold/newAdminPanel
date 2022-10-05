@@ -45,7 +45,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles'
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
-import { useController} from '../../../controller/policy'
+import { useController } from '../../../controller/policy'
 //=======================================================
 export default function Policy() {
   const router = useRouter();
@@ -142,6 +142,7 @@ export default function Policy() {
           onClick={() => {
             // console.log("params ---", params.row);
             // setId(params.row.id);
+            setOpen(false)
             editForm.setValues(params.row);
             setShowEdit(params.row);
           }}
@@ -153,8 +154,10 @@ export default function Policy() {
   };
   //==========
   const deleteButton = (params) => {
+
     return (
       <DeleteSpinner
+        onClick={handleClose}
         id={params.id}
         deleting={deletePolicy}
         url="/policy/view-policy"
@@ -524,9 +527,9 @@ export default function Policy() {
             id="scroll-dialog-description"
             tabIndex={-1}
           >
-            {query.data.docs.map((x) =>{
-              if(x.id === id){
-                return(
+            {query.data.docs.map((x) => {
+              if (x.id === id) {
+                return (
                   x.description
                 )
               }
