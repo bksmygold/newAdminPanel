@@ -36,127 +36,58 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { useController } from 'src/controller/loanInterest';
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
 //=======================================================
 export default function LoanInterest() {
-  const router = useRouter();
   const theme = useTheme();
-
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
-  const [id, setId] = useState('');
-  //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      minMonth: 0,
-      maxMonth: 0,
-      interest: 0,
-    },
-    validationSchema: yup.object({
-      minMonth: yup.number("Enter minimum month").required("minimum month is required"),
-      maxMonth: yup.number("Enter maximum month").required("maximum monthis required"),
-      interest: yup.number("Enter Interest").required("Interest is required"),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
-
-  const editFormik = useFormik({
-    initialValues: {
-      minMonth: 0,
-      maxMonth: 0,
-      interest: 0,
-    },
-    validationSchema: yup.object({
-      minMonth: yup.number("Enter minimum month").required("minimum month is required"),
-      maxMonth: yup.number("Enter maximum month").required("maximum monthis required"),
-      interest: yup.number("Enter Interest").required("Interest is required"),
-    }),
-    onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
-    },
-  });
-
-  const query = useQuery({
-    queryKey: 'Loan Interest',
-    queryFn: () => getLoanInterest(),
-  });
-
-  const addMutation = useMutation({
-    mutationFn: postLoanInterest,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('Loan Interest Added !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  const editMutation = useMutation({
-    mutationFn: updateLoanInterest,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowEdit(false);
-      swal('Loan Interest Updated !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
 
   if (query.isLoading) return <Loading />;
   //===============
-
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            // console.log("params ---", params.row);
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteLoanInterest}
-      />
-    );
-  };
-  //==========
    const columns = [
+     {
+       field: 'interest',
+       headerName: 'Interest',
+       width: 150,
+       editable: true,
+       flex:1,
+       renderCell: (params) => (
+        <p style={theme.custom.typography.table}>{params.value} %</p>
+      ),
+     },
     {
       field: 'minMonth',
       headerName: 'Minimum Month',
       width: 150,
       editable: true,
-      flex:1
+      flex:1,
+      renderCell: (params) => (
+        <p style={{color:"black",textAlign:"center"}}>{params.row.minMonth} month</p>
+      ),
+      
     },
     {
       field: 'maxMonth',
       headerName: 'Maximum Month',
       width: 150,
       editable: true,
-      flex:1
-    },
-    {
-      field: 'interest',
-      headerName: 'Interest',
-      width: 150,
-      editable: true,
-      flex:1
+      flex:1,
+      renderCell: (params) => (
+        console.log("--->",params.row),
+        <p style={{color:"black",textAlign:"center"}}>{params.row.maxMonth} month</p>
+      ),
     },
 
     {
@@ -164,17 +95,28 @@ export default function LoanInterest() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
-      flex:1
+      renderCell: (params) => (
+        <EditButton
+          onClick={() => {
+            editForm.setValues(params.row);
+            setShowEdit(params.row);
+          }}
+        />),
+      flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
-      flex:1
-    },
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteLoanInterest}
+        />
+      ),
+      flex: 1
+    }
   ];
 
   //=======================================================
@@ -218,7 +160,7 @@ export default function LoanInterest() {
               Edit Loan Interest for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
             <Typography
                 variant="body1"
                 sx={{
@@ -232,13 +174,13 @@ export default function LoanInterest() {
               </Typography>
 
               <CustomTextField
-                error={editFormik.touched.minMonth && Boolean(editFormik.errors.minMonth)}
-                helperText={editFormik.touched.minMonth && editFormik.errors.minMonth}
+                error={editForm.touched.minMonth && Boolean(editForm.errors.minMonth)}
+                helperText={editForm.touched.minMonth && editForm.errors.minMonth}
                 id="minMonth"
                 name="minMonth"
                 type="number"
-                value={editFormik.values.minMonth}
-                onChange={editFormik.handleChange}
+                value={editForm.values.minMonth}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Min.Month"
@@ -257,13 +199,13 @@ export default function LoanInterest() {
               </Typography>
 
               <CustomTextField
-                error={editFormik.touched.maxMonth && Boolean(editFormik.errors.maxMonth)}
-                helperText={editFormik.touched.maxMonth && editFormik.errors.maxMonth}
+                error={editForm.touched.maxMonth && Boolean(editForm.errors.maxMonth)}
+                helperText={editForm.touched.maxMonth && editForm.errors.maxMonth}
                 id="maxMonth"
                 name="maxMonth"
                 type="number"
-                value={editFormik.values.maxMonth}
-                onChange={editFormik.handleChange}
+                value={editForm.values.maxMonth}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Max.Month"
@@ -282,20 +224,20 @@ export default function LoanInterest() {
               </Typography>
 
               <CustomTextField
-                error={editFormik.touched.interest && Boolean(editFormik.errors.interest)}
-                helperText={editFormik.touched.interest && editFormik.errors.interest}
+                error={editForm.touched.interest && Boolean(editForm.errors.interest)}
+                helperText={editForm.touched.interest && editForm.errors.interest}
                 id="interest"
                 name="interest"
                 type="number"
-                value={editFormik.values.interest}
-                onChange={editFormik.handleChange}
+                value={editForm.values.interest}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="interest"
               />
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -339,7 +281,7 @@ export default function LoanInterest() {
               Add Loan Interest for products used in E-commerce
             </Typography>
 
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
             <Typography
                 variant="body1"
                 sx={{
@@ -353,13 +295,13 @@ export default function LoanInterest() {
               </Typography>
 
               <CustomTextField
-                error={addFormik.touched.minMonth && Boolean(addFormik.errors.minMonth)}
-                helperText={addFormik.touched.minMonth && addFormik.errors.minMonth}
+                error={addForm.touched.minMonth && Boolean(addForm.errors.minMonth)}
+                helperText={addForm.touched.minMonth && addForm.errors.minMonth}
                 id="minMonth"
                 name="minMonth"
                 type="number"
-                value={addFormik.values.minMonth}
-                onChange={addFormik.handleChange}
+                value={addForm.values.minMonth}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Min.Month"
@@ -378,13 +320,13 @@ export default function LoanInterest() {
               </Typography>
 
               <CustomTextField
-                error={addFormik.touched.maxMonth && Boolean(addFormik.errors.maxMonth)}
-                helperText={addFormik.touched.maxMonth && addFormik.errors.maxMonth}
+                error={addForm.touched.maxMonth && Boolean(addForm.errors.maxMonth)}
+                helperText={addForm.touched.maxMonth && addForm.errors.maxMonth}
                 id="maxMonth"
                 name="maxMonth"
                 type="number"
-                value={addFormik.values.maxMonth}
-                onChange={addFormik.handleChange}
+                value={addForm.values.maxMonth}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Max.Month"
@@ -403,21 +345,21 @@ export default function LoanInterest() {
               </Typography>
 
               <CustomTextField
-                error={addFormik.touched.interest && Boolean(addFormik.errors.interest)}
-                helperText={addFormik.touched.interest && addFormik.errors.interest}
+                error={addForm.touched.interest && Boolean(addForm.errors.interest)}
+                helperText={addForm.touched.interest && addForm.errors.interest}
                 id="interest"
                 name="interest"
                 type="number"
-                value={addFormik.values.interest}
-                onChange={addFormik.handleChange}
+                value={addForm.values.interest}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="interest"
               />
 
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
