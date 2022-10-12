@@ -65,51 +65,51 @@ export default function taxSettings() {
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-            title={infoCard.taxes.interest.title}
-            desc={infoCard.taxes.interest.desc}
-            url={infoCard.taxes.interest.url}
+              title={infoCard.taxes.interest.title}
+              desc={infoCard.taxes.interest.desc}
+              url={infoCard.taxes.interest.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-               title={infoCard.taxes.mandi.title}
-               desc={infoCard.taxes.mandi.desc}
-               url={infoCard.taxes.mandi.url}
+              title={infoCard.taxes.mandi.title}
+              desc={infoCard.taxes.mandi.desc}
+              url={infoCard.taxes.mandi.url}
             />
           </Grid>
 
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-            title={infoCard.taxes.referalType.title}
-            desc={infoCard.taxes.referalType.desc}
-            url={infoCard.taxes.referalType.url}
+              title={infoCard.taxes.referalType.title}
+              desc={infoCard.taxes.referalType.desc}
+              url={infoCard.taxes.referalType.url}
             />
           </Grid>
-          
+
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-            title={infoCard.taxes.referEarn.title}
-            desc={infoCard.taxes.referEarn.desc}
-            url={infoCard.taxes.referEarn.url}
+              title={infoCard.taxes.referEarn.title}
+              desc={infoCard.taxes.referEarn.desc}
+              url={infoCard.taxes.referEarn.url}
             />
           </Grid>
-        
+
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-           title={infoCard.taxes.buySell.title}
-           desc={infoCard.taxes.buySell.desc}
-           url={infoCard.taxes.buySell.url}
+              title={infoCard.taxes.buySell.title}
+              desc={infoCard.taxes.buySell.desc}
+              url={infoCard.taxes.buySell.url}
             />
           </Grid>
-       
+
           <Grid item xl={3} lg={3} sm={6} xs={12}>
-          <InfoCard
+            <InfoCard
               title={infoCard.taxes.makingCharge.title}
               desc={infoCard.taxes.makingCharge.desc}
               url={infoCard.taxes.makingCharge.url}
             />
           </Grid>
-         
+
 
         </Grid>
         {/* ------------------------------ */}
@@ -123,32 +123,32 @@ export default function taxSettings() {
         <Grid container spacing={3}>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-             title={infoCard.taxes.retailComm.title}
-                   desc={infoCard.taxes.retailComm.desc}
-                   url={infoCard.taxes.retailComm.url}
+              title={infoCard.taxes.retailComm.title}
+              desc={infoCard.taxes.retailComm.desc}
+              url={infoCard.taxes.retailComm.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-            title={infoCard.taxes.subBid.title}
-            desc={infoCard.taxes.subBid.desc}
-            url={infoCard.taxes.subBid.url}
+              title={infoCard.taxes.subBid.title}
+              desc={infoCard.taxes.subBid.desc}
+              url={infoCard.taxes.subBid.url}
             />
           </Grid>
           <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-                title={infoCard.taxes.subAds.title}
-                desc={infoCard.taxes.subAds.desc}
-                url={infoCard.taxes.subAds.url}
+              title={infoCard.taxes.subAds.title}
+              desc={infoCard.taxes.subAds.desc}
+              url={infoCard.taxes.subAds.url}
             />
           </Grid>
-          <Grid item xl={3} lg={3} sm={6} xs={12}>
+          {/* <Grid item xl={3} lg={3} sm={6} xs={12}>
             <InfoCard
-               title={infoCard.taxes.gbpLevel.title}
-               desc={infoCard.taxes.gbpLevel.desc}
-               url={infoCard.taxes.gbpLevel.url}
+              title={infoCard.taxes.gbpLevel.title}
+              desc={infoCard.taxes.gbpLevel.desc}
+              url={infoCard.taxes.gbpLevel.url}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
         {/* ------------------------------ */}
       </Container>

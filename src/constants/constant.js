@@ -114,21 +114,23 @@ export const infoCard = {
             desc: "create, update, delete making charges",
             url: "/tax-settings/making-charge/view-making-charge"
         },
-        eComm: {
-            title: "E-commerce",
-            desc: "Create , Update, delete commissions and calculation percentages applicable on Bids"
-        },
+
         retailComm: {
             title: "Retailer Commissions",
-            desc: "Create , Update, delete commission percentages "
+            desc: "Create , Update, delete commission percentages",
+            url: "/tax-settings/retailer-commission/view-retailer-commission"
         },
         subBid: {
             title: "Subscriptions(Bids)",
-            desc: "Create , Update, delete subscription plans for Bid-Buy and Sell Users"
+            desc: "Create , Update, delete subscription plans for Bid-Buy and Sell Users",
+            url: "/tax-settings/subscription-bids/view-subscription-bids"
+
         },
         subAds: {
             title: "Subscriptions(Ads)",
-            desc: "Create , Update, delete subscription plans for Ads for Retailers"
+            desc: "Create , Update, delete subscription plans for Ads for Retailers",
+            url: "/tax-settings/subscription-ads/view-subscription-ads"
+
         },
         gbpLevel: {
             title: "GBP Levels",

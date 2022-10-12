@@ -197,7 +197,7 @@ export default function MakingCharge() {
     const columns = [
       {
         field: 'supplier.name',
-        headerName: 'MakingCharge Name',
+        headerName: 'Supplier',
         width: 150,
         editable: true,
         valueGetter: (params) => {
@@ -210,7 +210,11 @@ export default function MakingCharge() {
             result = ['Empty'];
           }
           return result.join(', ');
-        },      flex:1
+        },     
+         flex:1,
+         renderCell: (params) => (
+          <p style={theme.custom.typography.table}>{params.value}</p>
+        ),
       },
       {
         field: 'variety',

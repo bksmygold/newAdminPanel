@@ -86,7 +86,7 @@ export default function EditMakingCharge() {
     mutationFn: updateMakingCharge,
     onSuccess: (res) => {
       swal("Making Charge Updated !", "Continue with the Taxes Panel", "success"),
-        router.push("/taxSettings/makingCharge/view-makingCharge");
+        router.push("/tax-settings/making-charge/view-making-charge");
     },
     onError: (err) => swal("Erro !", err.message, "error"),
   });
