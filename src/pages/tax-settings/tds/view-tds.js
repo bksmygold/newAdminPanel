@@ -32,6 +32,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { getCalculation, updateCalculation } from 'src/apis/calculation';
+import { BuySaveCard } from 'src/components/cards/buySaveCard';
 //=======================================================
 export default function Tds() {
   const router = useRouter();
@@ -41,21 +43,7 @@ export default function Tds() {
   const [showEdit, setShowEdit] = React.useState(false);
   const [id, setId] = useState('');
   //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      name: "",
-      value: 0,
-
-    },
-    validationSchema: yup.object({
-      name: yup.string("Enter TDS name").required("TDS name is required"),
-      value: yup.number("Enter TDS value ").required("TDS value is required"),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
+ 
 
   const editFormik = useFormik({
     initialValues: {
@@ -67,28 +55,19 @@ export default function Tds() {
       value: yup.number("Enter TDS value ").required("TDS value is required"),
     }),
     onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
+      editMutation.mutate({ data: values, id: values.id });
     },
   });
 
   const query = useQuery({
-    queryKey: 'TDS',
-    queryFn: () => getTds(),
+    queryKey: 'TDS/TCS',
+    queryFn: () => getCalculation("TDS/TCS"),
   });
 
-  const addMutation = useMutation({
-    mutationFn: postTds,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('TDS/TCS Added !', 'Continue with the tax panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
+
 
   const editMutation = useMutation({
-    mutationFn: updateTds,
+    mutationFn: updateCalculation,
     onSuccess: (res) => {
       query.refetch();
       setShowEdit(false);
@@ -98,82 +77,12 @@ export default function Tds() {
   });
 
   if (query.isLoading) return <Loading />;
-  //===============
-
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteTds}
-      />
-    );
-  };
-  //==========
-  const columns = [
-    {
-      field: 'name', headerName: 'TDS/TCS Name', width: 150, flex: 1
-    },
-    {
-      field: 'value', headerName: 'value', width: 150, flex: 1
-    },
-
-    {
-      field: 'edit',
-      headerName: 'Edit',
-      width: 150,
-      editable: true,
-      renderCell: editButton,
-      flex: 1
-    },
-    {
-      field: 'delete',
-      headerName: 'Delete',
-      width: 150,
-      editable: true,
-      renderCell: deleteButton,
-      flex: 1
-
-    },
-  ];
-
-  const row = [
-    {
-      id: 1,
-      name: "TDS",
-      value: 20
-    },
-    {
-      id:12,
-      name: "TCS",
-      value: 20
-    },
-
-  ]
   //=======================================================
   return (
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard |HSN/GSt </title>
+        <title>Dashboard | HSN/GSt </title>
       </Head>
       {/* ================= EDIT ================================== */}
       <Modal
@@ -196,7 +105,7 @@ export default function Tds() {
                 fontWeight: 'bolder',
               }}
             >
-              Edit TDS/TCS
+              Edit Calculation
             </Typography>
             <Typography
               variant="caption"
@@ -206,7 +115,7 @@ export default function Tds() {
                 fontWeight: 'bold',
               }}
             >
-              Edit TDS/TCS for products used in E-commerce
+              Edit Calculation for plans in the Buys & Save Modules
             </Typography>
 
             <form onSubmit={editFormik.handleSubmit}>
@@ -219,7 +128,7 @@ export default function Tds() {
                   fontWeight: 600,
                 }}
               >
-                TDS/TCS Name
+                calculation name
               </Typography>
               <CustomTextField
                 error={editFormik.touched.name && Boolean(editFormik.errors.name)}
@@ -230,7 +139,7 @@ export default function Tds() {
                 onChange={editFormik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Name"
+                label="HSN Code"
               />
 
               <Typography
@@ -242,7 +151,7 @@ export default function Tds() {
                   fontWeight: 600,
                 }}
               >
-                TDS/TCS  Value
+                calculation value
               </Typography>
               <CustomTextField
                 error={editFormik.touched.value && Boolean(editFormik.errors.value)}
@@ -254,7 +163,7 @@ export default function Tds() {
                 onChange={editFormik.handleChange}
                 fullWidth
                 variant="outlined"
-                label=" value"
+                label="GST value"
               />
               <LoadingButton
                 disabled={editMutation.isLoading}
@@ -262,14 +171,14 @@ export default function Tds() {
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Edit TDS/TCS
+                Edit Calculation
               </LoadingButton>
             </form>
           </Grid>
         </Box>
       </Modal>
       {/* =============== ADD ================================================ */}
-      <Modal
+      {/* <Modal
         sx={{
           display: 'flex',
           justifyContent: 'center',
@@ -289,7 +198,7 @@ export default function Tds() {
                 fontWeight: 'bolder',
               }}
             >
-              Add TDS/TCS
+              Add HSN/GST
             </Typography>
             <Typography
               variant="caption"
@@ -299,7 +208,7 @@ export default function Tds() {
                 fontWeight: 'bold',
               }}
             >
-              Add TDS/TCS for products used in E-commerce
+              Add HSN/GST for products used in E-commerce
             </Typography>
 
             <form onSubmit={addFormik.handleSubmit}>
@@ -312,7 +221,7 @@ export default function Tds() {
                   fontWeight: 600,
                 }}
               >
-                TDS/TCS Name
+                HSN Code
               </Typography>
               <CustomTextField
                 error={addFormik.touched.name && Boolean(addFormik.errors.name)}
@@ -323,7 +232,7 @@ export default function Tds() {
                 onChange={addFormik.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Name"
+                label="HSN code"
               />
 
               <Typography
@@ -335,7 +244,7 @@ export default function Tds() {
                   fontWeight: 600,
                 }}
               >
-                TDS/TCS Value
+                GST Value
               </Typography>
               <CustomTextField
                 error={addFormik.touched.value && Boolean(addFormik.errors.value)}
@@ -347,7 +256,7 @@ export default function Tds() {
                 onChange={addFormik.handleChange}
                 fullWidth
                 variant="outlined"
-                label=" value"
+                label="GST value"
               />
 
 
@@ -357,35 +266,39 @@ export default function Tds() {
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Add TDS/TCS
+                Add HSN/GST
               </LoadingButton>
             </form>
           </Grid>
         </Box>
-      </Modal>
+      </Modal> */}
       {/* =============================================================== */}
+
+      <Typography sx={[theme.custom.typography.dashBoard.h1, { mt: 8, mb: 1, p: 2 }]}>
+        Buy & Save View
+      </Typography>
+
       <Grid
-        sx={{
-          marginLeft: 5,
-          marginTop: 5,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
+        spacing={5}
         container
+        sx={{ p: 5 }}
       >
-        <Grid item>
-          <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-            TDS/TCS View
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Button onClick={() => setShowAdd(true)} sx={theme.custom.addButton}>
-            Create TDS/TCS
-            <AddIcon sx={{ marginLeft: 1 }} />
-          </Button>
-        </Grid>
-      </Grid>{' '}
-      <Table rows={row} columns={columns} />
+        {query.data.docs.map(x => (
+
+          <Grid item lg={4} sm={4} xs={12}>
+            <BuySaveCard
+              name={x.name}
+              value={x.value}
+              data={x}
+              formik={editFormik}
+              setShowEdit={setShowEdit}
+            />
+          </Grid>
+        ))
+        }
+
+
+      </Grid>
     </>
   );
 }

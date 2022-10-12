@@ -67,7 +67,7 @@ export default function BuySave() {
   const query = useQuery({
     queryKey: 'buySave',
     queryFn: () => getCalculation(['Hold','Plan Bonus','Handling Charge']),
-    onSuccess: () => query.refetch()
+    // onSuccess: () => query.refetch()
   });
 
   const addMutation = useMutation({
@@ -95,74 +95,6 @@ export default function BuySave() {
   // console.log("<<-----",query.data.docs)
   //===============
 
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteGst}
-      />
-    );
-  };
-  //==========
-  const columns = [
-    {
-      field: 'code', headerName: 'HSN Code', width: 150, flex: 1
-    },
-    {
-      field: 'value', headerName: 'GST value', width: 150, flex: 1
-    },
-
-    {
-      field: 'edit',
-      headerName: 'Edit',
-      width: 150,
-      editable: true,
-      renderCell: editButton,
-      flex: 1
-    },
-    {
-      field: 'delete',
-      headerName: 'Delete',
-      width: 150,
-      editable: true,
-      renderCell: deleteButton,
-      flex: 1
-
-    },
-  ];
-
-  const row = [
-    {
-      id: 1,
-      code: "BKS3690",
-      value: 20
-    },
-    {
-      id: 121,
-      code: "BKS3690",
-      value: 20
-    }
-  ]
-  //=======================================================
   return (
     <>
       {/* ------------------------------ */}
