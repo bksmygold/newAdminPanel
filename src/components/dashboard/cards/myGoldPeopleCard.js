@@ -70,7 +70,7 @@ export const PeopleCard = (props) => {
             </Grid>
             {/* <Grid item> */}
             <Grid item  xs={12}md={12}>
-              <Box sx={{ zoom: "70%" }}>
+              <Box sx={{ zoom: "57%" }}>
 
                 <Line
 

@@ -12,10 +12,10 @@ export const GraphCard = (props) => {
   const theme = useTheme()
   //======================================
   return (
-    <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }}>
+    <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657",height:"100%" }}>
       <CardContent sx={{ backgroundColor: "#FDFAF2" }}>
         <Grid container spacing={1} >
-          <Box sx={{display:"flex",justifyContent:"space-between"}}>
+          <Box sx={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"space-between"}}>
 
             <Grid item >
               <Typography sx={theme.custom.typography.dashBoard.h1}>
@@ -27,7 +27,7 @@ export const GraphCard = (props) => {
             </Grid>
             {/* <Grid item> */}
             <Grid item  xs={12}  sm={12} md={12}>
-              <Box sx={{ zoom: "75%" }}>
+              <Box sx={{zoom: "53%"}}>
 
                 <Line
 

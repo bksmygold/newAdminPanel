@@ -1,20 +1,9 @@
 import { useFormik } from "formik";
-
 import { useQuery, useMutation } from '@tanstack/react-query';
 import React from "react";
 import swal from 'sweetalert';
-import { getOrnament, postOrnament, updateOrnament } from "src/apis/ornament";
-import { ornamentValidation } from "src/validation/ornament";
-import { unitValidation } from "src/validation/unit";
-import { postUnit, updateUnit, getUnit } from "src/apis/unit";
-import { getCut, getShape, postCut, postShape, updateCut, updateShape } from "src/apis/shape";
-import { cutValidation } from "src/validation/shape";
-import { getClarity, postClarity, updateClarity } from "src/apis/clarity";
-import { clarityValidation } from "src/validation/clarity";
-import { getCollection, postCollection, updateCollection } from "src/apis/collection";
-import { collectionValidation } from "src/validation/collection";
-import { getCategory, postCategory, updateCategory } from "src/apis/category";
-import { categoryValidation } from "src/validation/category";
+import { getHsn, postHsn, updateHsn } from "src/apis/hsn";
+import { hsnValidation } from "src/validation/hsn";
 //============================================================
 export const useController = () => {
 
@@ -23,15 +12,17 @@ export const useController = () => {
 
     //------------------ QUERY -------------------------------------
     const query = useQuery({
-        queryKey: "category",
-        queryFn: getCategory
+        queryKey: "hsn",
+        queryFn: getHsn
     })
     //------------------ ADD_FORM -------------------------------------
     const addForm = useFormik({
         initialValues: {
-            name: '',
+            code: '',
+            description:"",
+            gst:0
         },
-        validationSchema: categoryValidation,
+        validationSchema: hsnValidation,
         onSubmit: (values) => {
             add.mutate(values);
         }
@@ -39,31 +30,33 @@ export const useController = () => {
     //------------------- EDIT_FORM -------------------------------------
     const editForm = useFormik({
         initialValues: {
-            name: '',
+            code: '',
+            description:"",
+            gst:0
         },
-        validationSchema: categoryValidation,
+        validationSchema: hsnValidation,
         onSubmit: (values) => {
             edit.mutate({ data: values, id: values.id });
         }
     })
     //------------------- ADD -------------------------------------
     const add = useMutation({
-        mutationFn: postCategory,
+        mutationFn: postHsn,
         onSuccess: (res) => {
             query.refetch();
             setShowAdd(false);
             addForm.resetForm();
-            swal('Category Added !', 'Continue with the e-comm panel', 'success');
+            swal('Hsn Added !', 'Continue with the tax panel', 'success');
         },
         onError: (err) => swal('Error !', err.message, 'error'),
     })
     //------------------- EDIT -------------------------------------
     const edit = useMutation({
-        mutationFn: updateCategory,
+        mutationFn: updateHsn,
         onSuccess: (res) => {
             query.refetch();
             setShowEdit(false);
-            swal('Category Updated !', 'Continue with the e-comm panel', 'success');
+            swal('Hsn Updated !', 'Continue with the tax panel', 'success');
         },
         onError: (err) => swal('Error !', err.message, 'error'),
     });

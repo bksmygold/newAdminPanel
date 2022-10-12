@@ -18,7 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getGst, deleteGst, postGst, updateGst } from 'src/apis/gst';
+import { getGst, deleteGst, postGst, updateGst, deleteHsn } from 'src/apis/hsn';
 
 import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
@@ -32,116 +32,68 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { useController } from 'src/controller/hsn';
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
 //=======================================================
-export default function Gst() {
+export default function Hsn() {
   const router = useRouter();
   const theme = useTheme();
 
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
-  const [id, setId] = useState('');
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
+
   //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      code: "",
-      value: 0,
-
-    },
-    validationSchema: yup.object({
-      name: yup.string("Enter HSN Code").required("HSN Code is required"),
-      value: yup.number("Enter GST value ").required("GST value is required"),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
-
-  const editFormik = useFormik({
-    initialValues: {
-      code: "",
-      value: 0,
-    },
-    validationSchema: yup.object({
-      name: yup.string("Enter HSN Code").required("HSN Code is required"),
-      value: yup.number("Enter GST value ").required("GST value is required"),
-    }),
-    onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
-    },
-  });
-
-  const query = useQuery({
-    queryKey: 'GST',
-    queryFn: () => getGst(),
-  });
-
-  const addMutation = useMutation({
-    mutationFn: postGst,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('HSN/GST Added !', 'Continue with the tax panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  const editMutation = useMutation({
-    mutationFn: updateGst,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowEdit(false);
-      swal('HSN/GST Updated !', 'Continue with the tax panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
 
   if (query.isLoading) return <Loading />;
-  //===============
 
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteGst}
-      />
-    );
-  };
-  //==========
+
   const columns = [
     {
-      field: 'code', headerName: 'HSN Code', width: 150, flex: 1
+      field: 'description',
+      headerName: 'Descriptions',
+      width: 150,
+      flex: 1,
+      renderCell: (params) => (
+        <p style={theme.custom.typography.table}>{params.value}</p>
+      ),
     },
     {
-      field: 'value', headerName: 'GST value', width: 150, flex: 1
+      field: 'code',
+      headerName: 'HSN Code',
+      width: 150,
+      flex: 1,
     },
-   
+    {
+      field: 'gst', 
+      headerName: 'GST', 
+      width: 150,
+       flex: 1,
+       renderCell: (params) => (
+        <p style={{color:"black"}}>{params.row.gst} %</p>
+      ),
+    },
     {
       field: 'edit',
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: (params) => (
+        <EditButton
+          onClick={() => {
+            editForm.setValues(params.row);
+            setShowEdit(params.row);
+          }}
+        />),
       flex: 1
     },
     {
@@ -149,27 +101,31 @@ export default function Gst() {
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteHsn}
+        />
+      ),
       flex: 1
-
-    },
+    }
   ];
 
-  const row=[
+  const row = [
     {
-      id:1,
-      code:"BKS3690",
-      value:20
+      id: 1,
+      code: "BKS3690",
+      value: 20
     },
     {
-      id:2,
-      code:"BKS3690",
-      value:20
+      id: 2,
+      code: "BKS3690",
+      value: 20
     },
     {
-      id:3,
-      code:"BKS3690",
-      value:20
+      id: 3,
+      code: "BKS3690",
+      value: 20
     }
   ]
   //=======================================================
@@ -213,7 +169,7 @@ export default function Gst() {
               Edit HSN/GST for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -223,15 +179,15 @@ export default function Gst() {
                   fontWeight: 600,
                 }}
               >
-             HSN Code
+                HSN Code
               </Typography>
               <CustomTextField
-                error={editFormik.touched.name && Boolean(editFormik.errors.name)}
-                helperText={editFormik.touched.name && editFormik.errors.name}
-                id="name"
-                name="name"
-                value={editFormik.values.name}
-                onChange={editFormik.handleChange}
+                error={editForm.touched.code && Boolean(editForm.errors.code)}
+                helperText={editForm.touched.code && editForm.errors.code}
+                id="code"
+                name="code"
+                value={editForm.values.code}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="HSN Code"
@@ -246,23 +202,46 @@ export default function Gst() {
                   fontWeight: 600,
                 }}
               >
-             GST Value
+                Description
               </Typography>
               <CustomTextField
-                error={editFormik.touched.value && Boolean(editFormik.errors.value)}
-                helperText={editFormik.touched.value && editFormik.errors.value}
-                id="value"
-                name="value"
-                type="number"
-                value={editFormik.values.value}
-                onChange={editFormik.handleChange}
+                error={editForm.touched.description && Boolean(editForm.errors.description)}
+                helperText={editForm.touched.description && editForm.errors.description}
+                id="description"
+                name="description"
+                type="text"
+                value={editForm.values.description}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="GST value"
+                label="Description"
+              />
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#8B5704",
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Gst
+              </Typography>
+              <CustomTextField
+                error={editForm.touched.gst && Boolean(editForm.errors.gst)}
+                helperText={editForm.touched.gst && editForm.errors.gst}
+                id="gst"
+                name="gst"
+                type="number"
+                value={editForm.values.gst}
+                onChange={editForm.handleChange}
+                fullWidth
+                variant="outlined"
+                label="GST"
               />
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -306,7 +285,7 @@ export default function Gst() {
               Add HSN/GST for products used in E-commerce
             </Typography>
 
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -316,18 +295,18 @@ export default function Gst() {
                   fontWeight: 600,
                 }}
               >
-             HSN Code
+                HSN Code
               </Typography>
               <CustomTextField
-                error={addFormik.touched.name && Boolean(addFormik.errors.name)}
-                helperText={addFormik.touched.name && addFormik.errors.name}
-                id="name"
-                name="name"
-                value={addFormik.values.name}
-                onChange={addFormik.handleChange}
+                error={addForm.touched.code && Boolean(addForm.errors.code)}
+                helperText={addForm.touched.code && addForm.errors.code}
+                id="code"
+                name="code"
+                value={addForm.values.code}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="HSN code"
+                label="HSN Code"
               />
 
               <Typography
@@ -339,25 +318,46 @@ export default function Gst() {
                   fontWeight: 600,
                 }}
               >
-             GST Value
+                Description
               </Typography>
               <CustomTextField
-                error={addFormik.touched.value && Boolean(addFormik.errors.value)}
-                helperText={addFormik.touched.value && addFormik.errors.value}
-                id="value"
-                name="value"
+                error={addForm.touched.description && Boolean(addForm.errors.description)}
+                helperText={addForm.touched.description && addForm.errors.description}
+                id="description"
+                name="description"
+                type="text"
+                value={addForm.values.description}
+                onChange={addForm.handleChange}
+                fullWidth
+                variant="outlined"
+                label="Description"
+              />
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#8B5704",
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Gst
+              </Typography>
+              <CustomTextField
+                error={addForm.touched.gst && Boolean(addForm.errors.gst)}
+                helperText={addForm.touched.gst && addForm.errors.gst}
+                id="gst"
+                name="gst"
                 type="number"
-                value={addFormik.values.value}
-                onChange={addFormik.handleChange}
+                value={addForm.values.gst}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="GST value"
+                label="GST"
               />
-
-             
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -379,7 +379,7 @@ export default function Gst() {
       >
         <Grid item>
           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-         HSN/GST View
+            HSN/GST View
           </Typography>
         </Grid>
         <Grid item>
@@ -389,11 +389,11 @@ export default function Gst() {
           </Button>
         </Grid>
       </Grid>{' '}
-      <Table rows={row} columns={columns} />
+      <Table rows={query.data.docs} columns={columns} />
     </>
   );
 }
-Gst.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Hsn.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 //==============================
 export const getGoldPrice = () => {
-  return axios.get('https://metals-api.com/api/latest?access_key=v94uzsrz615gftylzqxh4ail9664qn3gqk8q02i04xn0oxa78je8py869t9g&base=INR&symbols=XAU');
+  return axios.get('https://api.metalpriceapi.com/v1/latest?api_key=0195516a53f013dc41f49c4927b5719&base=XAU&currencies=INR')
 };
 

@@ -30,7 +30,7 @@ export default function VipReferral() {
           sx={theme.custom.editButton}
           size="small"
           onClick={() => {
-            router.push(`/userManagement/vipReferral/edit-vipReferral/?id=${params.row.id}`);
+            router.push(`/user-management/vip-referral/edit-vip-referral/?id=${params.row.id}`);
           }}
         >
           Edit <EditIcon sx={{ marginLeft: 1, width: 23, height: 23 }} />
@@ -172,7 +172,7 @@ export default function VipReferral() {
         <Grid item>
           <Button
             onClick={() =>
-              router.push("/userManagement/vipReferral/add-vipReferral")
+              router.push("/user-management/vip-referral/add-vip-referral")
             }
             sx={theme.custom.addButton}
           >

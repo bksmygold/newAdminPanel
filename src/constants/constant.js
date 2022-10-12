@@ -66,7 +66,7 @@ export const infoCard = {
         gst: {
             title: "HSN & GST",
             desc: "create, update, delete HSN and GST related Information",
-            url: '/tax-settings/gst/view-gst'
+            url: '/tax-settings/hsn/view-hsn'
         },
         tds: {
             title: "TDS & TCS",
@@ -143,32 +143,32 @@ export const infoCard = {
             title: "Metal",
             desc: "create, update, delete Metals"
         },
-       {
+        {
             title: "Metal Groups",
             desc: "create, update, delete Metal Groups relate them to Metal",
             url: "/e-commerce/metal-group/view-metal-group",
         },
-         {
+        {
             title: "Ornaments",
             desc: "create, update, delete Ornaments",
             url: "/e-commerce/ornament/view-ornament"
         },
-       {
+        {
             title: "Units",
             desc: "create, update, delete Units",
             url: "/e-commerce/unit/view-unit"
         },
-       {
+        {
             title: "Cut",
             desc: "create, update, delete Cut",
             url: "/e-commerce/cut/view-cut"
         },
-         {
+        {
             title: "Colors",
             desc: "create, update, delete Colors",
             url: "/e-commerce/color/view-color",
         },
-         {
+        {
             title: "Shape",
             desc: "create, update, delete Shape",
             url: "/e-commerce/shape/view-shape",
@@ -178,12 +178,12 @@ export const infoCard = {
             desc: "create, update, delete Clarity",
             url: "/e-commerce/clarity/view-clarity",
         },
-       {
+        {
             title: "Style",
             desc: "create, update, delete Style",
             url: "/e-commerce/style/view-style"
         },
-         {
+        {
             title: "Collections",
             desc: "create, update, delete Collections",
             url: "/e-commerce/collection/view-collection"
@@ -193,7 +193,7 @@ export const infoCard = {
             desc: "create, update, delete Categories",
             url: "/e-commerce/category/view-category"
         },
-         {
+        {
             title: "Varieties",
             desc: "create, update, delete Varieties",
             url: "/e-commerce/variety/view-variety"
@@ -203,12 +203,12 @@ export const infoCard = {
             desc: "create, update, delete Items",
             url: "/e-commerce/item/view-item"
         },
-         {
+        {
             title: "Product Types",
             desc: "create, update, delete Product Types",
             url: "/e-commerce/product-type/view-product-type"
         },
-         {
+        {
             title: "FAQ",
             desc: "create, update, delete FAQs",
             url: "/e-commerce/faq/view-faq"
@@ -235,12 +235,12 @@ export const infoCard = {
             desc: "create, update, delete Certificates",
             url: "/e-commerce/certificate/view-certificate"
         },
-       {
+        {
             title: "Label",
             desc: "create, update, delete Certificates",
             url: "/e-commerce/label/view-label"
         },
-       {
+        {
             title: "Standard Plans",
             desc: "create, update, delete Plans",
             url: "/e-commerce/plan/view-plan"
@@ -250,7 +250,7 @@ export const infoCard = {
             desc: "create, update, delete Plans",
             url: "/e-commerce/cycle-period/view-cycle-period",
         },
-        
+
     ],
     //------------------- PROMOTIONAL_SETTINGS--------------------------------
 
@@ -269,7 +269,7 @@ export const infoCard = {
             title: "How-to Videos",
             desc: "create, update, delete how To Videos",
             url: "/promotional-setting/how-to-video/view-how-to-video",
-            
+
         },
         testi: {
             title: "Testimonials",
@@ -1727,3 +1727,10 @@ export const invoice = {
     disclaimer: "   The gold grams you own are calculated by dividing the amount paid net of GST by the gold rate and rounded down to 4 decimal places. For example, .00054 grams will be rounded down to .0005 grams."
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+export const order = [
+    {
+        "date": "2022-10-06",
+        "order": 256
+    }
+]

@@ -24,19 +24,20 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useQuery } from "@tanstack/react-query";
 import { getGoldPrice } from "src/apis/goldPrice";
 import Loading from "src/components/loading";
+import { order } from "src/constants/constant";
 //====================================================================
 const Dashboard = () => {
   const theme = useTheme()
   const router = useRouter();
   //=====================================================
-  // const metalPriceQuery = useQuery({
-  //   queryKey:"Gold Price",
-  //   queryFn:getGoldPrice
-  // })
+  const metalPriceQuery = useQuery({
+    queryKey:"Gold Price",
+    queryFn:getGoldPrice
+  })
 
-// if(metalPriceQuery.isLoading) return <Loading/>
+if(metalPriceQuery.isLoading) return <Loading/>
 
-  // console.log("Date -->", metalPriceQuery.data)
+  console.log("Orders -->", order)
 
   //====================================================================
   return (
@@ -68,18 +69,20 @@ const Dashboard = () => {
           >
             General Information
           </Typography>
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             <Grid item lg={3} sm={6} xs={12}>
-              <GraphCard title="Visits" stats={32451} statsPer={14} />
+              <GraphCard 
+              margin
+              title="Visits" stats={3241} statsPer={14} />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
-              <GraphCard title="Apps Downloads" stats={15451} statsPer={4} />
+              <GraphCard title="Downloads" stats={15451} statsPer={4} />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
               <GraphCard title="Conversions" stats={421} statsPer={21} />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
-              <GraphCard title="Orders" stats={30451} statsPer={8} />
+              <GraphCard title="Orders" stats={351} statsPer={8} />
             </Grid>
             {/* </Grid>
 
@@ -88,7 +91,7 @@ const Dashboard = () => {
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <RateCard
                 title="Current Buy Rate"
-                rate={5840}
+                rate={metalPriceQuery?metalPriceQuery:123}
                 percentage={10}
                 updatedAt={"2:04"}
               />
@@ -96,7 +99,7 @@ const Dashboard = () => {
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <RateCard
                 title="Current Sell Rate"
-                rate={5440}
+                rate={metalPriceQuery?metalPriceQuery:123}
                 percentage={8}
                 updatedAt={"2:04"}
               />
@@ -104,7 +107,7 @@ const Dashboard = () => {
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <RateCard
                 title="Average Buy Rate"
-                rate={5650}
+                rate={metalPriceQuery?metalPriceQuery:123}
                 percentage={10}
                 updatedAt={"2:04"}
               />
@@ -112,9 +115,9 @@ const Dashboard = () => {
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <RateCard
                 title="Average Sell Rate"
-                rate={5320}
-                percentage={4}
-                updatedAt={"2:04"}
+                rate={metalPriceQuery?metalPriceQuery:123}
+                percentage={14}
+                updatedAt={"21:04"}
               />
             </Grid>
           </Grid >

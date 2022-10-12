@@ -12,30 +12,10 @@ import { useRouter } from 'next/router'
 import Swal from "sweetalert2";
 import { useState, createContext, useEffect } from "react";
 import { getLoggedInUser } from "src/apis/login";
+import React from "react";
+import { CustomTextField, CustomFormControl } from "./customMUI";
+import { DateRangePicker } from 'react-date-range';
 
-
-//=======================================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
-
-const CustomFormControl = styled(FormControl)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
 //=================================================================
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -46,13 +26,19 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 export const DashboardNavbar = (props) => {
   const { showFilter, onSidebarOpen, ...other } = props;
 
-
+  const [from, setFrom] = React.useState("");
+  const [to, setTo] = React.useState("");
+  
   const router = useRouter()
 
   const [user, setUser] = useState({})
   useEffect(() => {
     getLoggedInUser().then(res => setUser(res))
   }, [])
+
+
+  console.log("From ---", from)
+  console.log("To ---", to)
   //=================================================================
   return (
     <>
@@ -94,8 +80,17 @@ export const DashboardNavbar = (props) => {
           {showFilter && (
 
             <Grid container className="zoom" sx={{ display: "flex", justifyContent: "flex-end", marrginRight: 50 }}>
-              <Grid item xs={12} lg={2}  sx={{ flex: 1 }}>
-                <CustomTextField type="date" sx={{ mr: 5, flex: 1 }} />
+              <Grid item xs={12} lg={3} sx={{ flex: 1 }}>
+                <CustomTextField 
+                onChange={(e)=>setFrom(e.target.value)}
+                type="date" 
+                sx={{ mr: 5, flex: 1 }} />
+              </Grid>
+              <Grid item xs={12} lg={3} sx={{ flex: 1 }}>
+                <CustomTextField 
+                onChange={(e)=>setTo(e.target.value)}
+                type="date" 
+                sx={{ mr: 5, flex: 1 }} />
               </Grid>
               <Grid item lg={2} xs={12}>
                 <CustomFormControl fullWidth>
@@ -113,7 +108,8 @@ export const DashboardNavbar = (props) => {
                   </Select>
                 </CustomFormControl>
               </Grid>
-              {/* <Grid item lg={1} xs={12} sx={{
+              <Grid item lg={1} xs={12} sx={{
+                
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center"
@@ -124,18 +120,19 @@ export const DashboardNavbar = (props) => {
                     router.push("/badla/view-badla");
                   }}
                   sx={{
-                    // zoom: "90%",
+                    width:"100%",
                     height: "50%",
                     background: "linear-gradient(43deg, #8b5704, #ddb070)",
                     color: "white",
-                    p: 0,
+                    p: 10,
+                    ml:1,
                     padding: "0px 12px 0px 0px",
                   }}
                 >
-                  <AddIcon sx={{ marginRight: 1 }} />
+                  <AddIcon sx={{ ml:1 }} />
                   Badla
                 </Button>
-              </Grid> */}
+              </Grid>
             </Grid>
           )}
 
@@ -145,7 +142,7 @@ export const DashboardNavbar = (props) => {
           <Box sx={{ flexShrink: 10, width: "100%", display: "flex", justifyContent: "flex-end" }}>
 
             <Tooltip title="Notifications">
-              <IconButton sx={{ ml: 10 }}>
+              <IconButton sx={{ ml: 5 }}>
                 <BellIcon sx={{ width: "100%", height: 36, color: "#905e0f" }} fontSize="small" />
               </IconButton>
             </Tooltip>

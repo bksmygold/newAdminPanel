@@ -6,6 +6,7 @@ import {useTheme} from "@mui/styles"
 //============================================================
 export const RateCard = (props) => {
 const theme = useTheme()
+let metalRate = ((props.rate?.data?.rates?.INR)/28.3495).toFixed(2)
   //===========================
   return(
   <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }} {...props}>
@@ -21,7 +22,7 @@ const theme = useTheme()
             {props.title}
           </Typography>
           <Typography sx={theme.custom.typography.dashBoard.h2}>
-            ₹ {props.rate} /gm
+            ₹ {metalRate ? metalRate :123} /gm
           </Typography>
         </Grid>
         {/* <Grid item>
