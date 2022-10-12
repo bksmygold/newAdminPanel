@@ -28,11 +28,13 @@ import { getReferralType } from 'src/apis/referraltype';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 import { postVipReferral } from 'src/apis/referralUser';
+import { useController } from 'src/controller/saleReferral';
 //=======================================================
 export default function AddSaleReferral() {
   //=======================
   const router = useRouter();
   const theme = useTheme();
+  const {add,addForm} = useController()
 
   const [referralType, setReferralType] = useState([])
 
@@ -40,45 +42,7 @@ export default function AddSaleReferral() {
     getReferralType().then((res) => setReferralType(res.docs));
   }, [])
   //=======================================================
-  const formik = useFormik({
-    initialValues: {
-      fullName: '',
-      email: '',
-      mobile: '',
-      accountType: 'individual',
-      isWhatsapp: false,
-      userType:1,
-      password :"0000000000",
-      referral: {
-        type: "",
-        code: "",
-      },
 
-   
-    },
-    validationSchema: yup.object({
-      fullName: yup.string('Enter  Name').required('Name is required'),
-      email: yup.string('Enter  email').required('email is required'),
-      mobile: yup.string('Enter  mobile').required('mobile is required'),
-      referral: yup.object({
-        type: yup.string('Enter  type').required('type is required'),
-        code: yup.string('Enter  code').required('code is required'),
-       
-      })
-    }),
-    onSubmit: (values) => {
-      referralUserMutation.mutate(values);
-    },
-  });
-
-  const referralUserMutation = useMutation({
-    mutationFn: postVipReferral,
-    onSuccess: (res) => {
-      swal('Sale Referral User Added !', "Continue with the user management panel", 'success'),
-        router.push('/userManagement/saleReferral/view-saleReferral');
-    },
-    onError: (err) => swal('Error !', err.message, 'error'),
-  });
   //=======================================================
   return (
     <>
@@ -104,7 +68,7 @@ export default function AddSaleReferral() {
             color: '#8B5704',
           }}
         >
-          Add Sale Referral 
+          Add Sale Referral
         </Typography>
         <Typography
           variant="caption"
@@ -132,7 +96,7 @@ export default function AddSaleReferral() {
           container
         >
           <Grid item sm={8} xs={12}>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -146,13 +110,13 @@ export default function AddSaleReferral() {
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.fullName && Boolean(formik.errors.fullName)
+                  addForm.touched.fullName && Boolean(addForm.errors.fullName)
                 }
-                helperText={formik.touched.fullName && formik.errors.fullName}
+                helperText={addForm.touched.fullName && addForm.errors.fullName}
                 id="fullName"
                 name="fullName"
-                value={formik.values.fullName}
-                onChange={formik.handleChange}
+                value={addForm.values.fullName}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="full name"
@@ -170,12 +134,12 @@ export default function AddSaleReferral() {
                 Email
               </Typography>
               <CustomTextField
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
+                error={addForm.touched.email && Boolean(addForm.errors.email)}
+                helperText={addForm.touched.email && addForm.errors.email}
                 id="email"
                 name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
+                value={addForm.values.email}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="email"
@@ -193,12 +157,12 @@ export default function AddSaleReferral() {
                 Mobile
               </Typography>
               <CustomTextField
-                error={formik.touched.mobile && Boolean(formik.errors.mobile)}
-                helperText={formik.touched.mobile && formik.errors.mobile}
+                error={addForm.touched.mobile && Boolean(addForm.errors.mobile)}
+                helperText={addForm.touched.mobile && addForm.errors.mobile}
                 id="mobile"
                 name="mobile"
-                value={formik.values.mobile}
-                onChange={formik.handleChange}
+                value={addForm.values.mobile}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="mobile"
@@ -220,12 +184,12 @@ export default function AddSaleReferral() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="referral.type"
-                  value={formik.values.referral.type}
-                  onChange={formik.handleChange}
+                  value={addForm.values.referral.type}
+                  onChange={addForm.handleChange}
                   name="referral.type"
                 >
                   {referralType.map(x => {
-                    if (x.userType  !== 'vip' && x.userType  !== 'customer') {
+                    if (x.userType !== 'vip' && x.userType !== 'customer') {
                       return (
 
                         <MenuItem key={x.id} value={x.id}>
@@ -251,16 +215,16 @@ export default function AddSaleReferral() {
               </Typography>
               <CustomTextField
                 // error={
-                //   formik.touched.referral.code &&
-                //   Boolean(formik.errors.referral.code)
+                //   addForm.touched.referral.code &&
+                //   Boolean(addForm.errors.referral.code)
                 // }
                 // helperText={
-                //   formik.touched.referral.code && formik.errors.referral.code
+                //   addForm.touched.referral.code && addForm.errors.referral.code
                 // }
                 id="referral.code"
                 name="referral.code"
-                value={formik.values.referral.code}
-                onChange={formik.handleChange}
+                value={addForm.values.referral.code}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="code"
@@ -282,8 +246,8 @@ export default function AddSaleReferral() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="isWhatsapp"
-                  value={formik.values.isWhatsapp}
-                  onChange={formik.handleChange}
+                  value={addForm.values.isWhatsapp}
+                  onChange={addForm.handleChange}
                   name="isWhatsapp"
                 >
                   <MenuItem key="weight" value={true}>
@@ -295,10 +259,10 @@ export default function AddSaleReferral() {
                 </Select>
               </CustomFormControl>
 
-        
+
               <LoadingButton
-                disabled={referralUserMutation.isLoading}
-                loading={referralUserMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.editButton}
                 fullWidth

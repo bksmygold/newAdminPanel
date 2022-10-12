@@ -17,19 +17,15 @@ import Loading from 'src/components/loading';
 import AddIcon from '@mui/icons-material/Add';
 import { getRole } from 'src/apis/role';
 import { deleteUser, getOrganisationUser } from 'src/apis/user';
+import { useController } from 'src/controller/orgUser';
 
 //=======================================================
 export default function ViewOrganisationUser() {
   const router = useRouter();
-
+const {query} = useController()
   //=======================
 
-  const query = useQuery({
-    queryKey: 'OrgaUser',
-    queryFn: () => getOrganisationUser(),
-    onSuccess: (res) => console.log('Success ---', res.message),
-    onError: (err) => console.log('Error --->', err),
-  });
+  
 
   if (query.isLoading) return <Loading />;
   //===============

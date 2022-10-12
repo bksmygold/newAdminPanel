@@ -30,64 +30,25 @@ import Loading from 'src/components/loading';
 
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { useController } from 'src/controller/orgUser';
 //=======================================================
 export default function EditOrganisationUser() {
   const router = useRouter();
 
-  //=======================
+  const {
+    edit,
+    editForm,
+    query,
+    roleQuery,
+  } = useController()
 
-  const formik = useFormik({
-    initialValues: {
-      fullName: '',
-      email: '',
-      mobile: '',
-      userType: 2,
-      accountType: 'individual',
-      dob: '',
-      password: '',
-      eInvoiceApplicable: false,
-      isWhatsapp: true,
-      mfaEnabled: true,
-      isPrivacyAccepted: true,
-      role: '',
-    },
-    validationSchema: yup.object({
-      fullName: yup.string('Enter  Name').required('Name is required'),
-      email: yup.string('Enter  email').required('email is required'),
-      mobile: yup.string('Enter  mobile').required('mobile is required'),
-     
-      dob: yup.string('Enter  dob').required('dob is required'),
-
-      password: yup.string('Enter password').required('password is required'),
-      role: yup.string('Choose role').required('role is required'),
-    }),
-    onSubmit: (values) => {
-      userMutation.mutate({data:values,id:router.query.id});
-    },
+  const user = useQuery({
+    queryKey: ['OrgaUser', router.query.id],
+    queryFn: () => getUserById(router.query.id),
+    onSuccess: (res) => editForm.setValues(res),
+    enabled: !!router.query.id,
   });
-
-const query = useQuery({
-  queryKey: ['OrgaUser', router.query.id],
-  queryFn: () => getUserById(router.query.id),
-  onSuccess: (res) => formik.setValues(res),
-  enabled: !!router.query.id,
-});
-
-  const userMutation = useMutation({
-    mutationFn: updateUser,
-    onSuccess: (res) => {
-      swal('User Updated !', "User details has been updated", 'success'),
-        router.push('/userManagement/user/view-organisationUser');
-    },
-    onError: (err) => swal('Error !', err.message, 'error'),
-  });
-
-  const roleQuery = useQuery({
-    queryFn: () => getRole(),
-    onSuccess: () => console.log('Success !'),
-  });
-  //===============
-  console.log("error --", formik.errors)
+  
   if(query.isLoading){
     return(
       <Loading/>
@@ -145,7 +106,7 @@ const query = useQuery({
           container
         >
           <Grid item sm={8} xs={12}>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -159,13 +120,13 @@ const query = useQuery({
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.fullName && Boolean(formik.errors.fullName)
+                  editForm.touched.fullName && Boolean(editForm.errors.fullName)
                 }
-                helperText={formik.touched.fullName && formik.errors.fullName}
+                helperText={editForm.touched.fullName && editForm.errors.fullName}
                 id="fullName"
                 name="fullName"
-                value={formik.values.fullName}
-                onChange={formik.handleChange}
+                value={editForm.values.fullName}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="full name"
@@ -183,12 +144,12 @@ const query = useQuery({
                 Email
               </Typography>
               <CustomTextField
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
+                error={editForm.touched.email && Boolean(editForm.errors.email)}
+                helperText={editForm.touched.email && editForm.errors.email}
                 id="email"
                 name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
+                value={editForm.values.email}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="email"
@@ -206,12 +167,12 @@ const query = useQuery({
                 Mobile
               </Typography>
               <CustomTextField
-                error={formik.touched.mobile && Boolean(formik.errors.mobile)}
-                helperText={formik.touched.mobile && formik.errors.mobile}
+                error={editForm.touched.mobile && Boolean(editForm.errors.mobile)}
+                helperText={editForm.touched.mobile && editForm.errors.mobile}
                 id="mobile"
                 name="mobile"
-                value={formik.values.mobile}
-                onChange={formik.handleChange}
+                value={editForm.values.mobile}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="mobile"
@@ -229,12 +190,12 @@ const query = useQuery({
                 DOB
               </Typography>
               <CustomTextField
-                error={formik.touched.dob && Boolean(formik.errors.dob)}
-                helperText={formik.touched.dob && formik.errors.dob}
+                error={editForm.touched.dob && Boolean(editForm.errors.dob)}
+                helperText={editForm.touched.dob && editForm.errors.dob}
                 id="dob"
                 name="dob"
-                value={formik.values.dob}
-                onChange={formik.handleChange}
+                value={editForm.values.dob}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="dob"
@@ -253,13 +214,13 @@ const query = useQuery({
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.password && Boolean(formik.errors.password)
+                  editForm.touched.password && Boolean(editForm.errors.password)
                 }
-                helperText={formik.touched.password && formik.errors.password}
+                helperText={editForm.touched.password && editForm.errors.password}
                 id="password"
                 name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
+                value={editForm.values.password}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="password"
@@ -281,8 +242,8 @@ const query = useQuery({
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="role"
-                  value={formik.values.role}
-                  onChange={formik.handleChange}
+                  value={editForm.values.role}
+                  onChange={editForm.handleChange}
                   name="role"
                 >
                   {roleQuery.data?.docs?.map((x) => (
@@ -295,8 +256,8 @@ const query = useQuery({
 
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <LoadingButton
-                  disabled={userMutation.isLoading}
-                  loading={userMutation.isLoading}
+                  disabled={edit.isLoading}
+                  loading={edit.isLoading}
                   type="submit"
                   sx={{
                     width: '50%',

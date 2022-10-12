@@ -5,7 +5,10 @@ import TimelineIcon from "@mui/icons-material/Timeline";
 import { useTheme } from '@mui/styles';
 import { Line } from 'react-chartjs-2';
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { prototype } from 'google-map-react';
 
+
+let arr= Array(100).fill("Jan")
 //============================================================
 export const GraphCard = (props) => {
 

@@ -122,14 +122,6 @@ export default function VipReferral() {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      metal: 'Gold',
-      icon: 'Icon hai',
-      edit: 'Edit',
-    },
-  ];
 
 
   const referralTypeQuery = useQuery({
@@ -139,7 +131,7 @@ export default function VipReferral() {
 
   let vipId = referralTypeQuery.data?.docs[0].id
 
-
+console.log("vip--->",vipId)
   const query = useQuery({
     queryKey: 'vip referral',
     queryFn: () => getVipReferral(vipId),
@@ -153,7 +145,7 @@ export default function VipReferral() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | view-Referral Type </title>
+        <title>Dashboard | VIP Referral </title>
       </Head>
       <Grid
         sx={{

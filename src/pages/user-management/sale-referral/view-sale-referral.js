@@ -168,7 +168,7 @@ export default function VipReferral() {
         <Grid item>
           <Button
             onClick={() =>
-              router.push("/userManagement/saleReferral/add-saleReferral")
+              router.push("/user-management/sale-referral/add-sale-referral")
               }
             sx={theme.custom.addButton}
           >

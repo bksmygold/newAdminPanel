@@ -29,73 +29,13 @@ import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 import { postVipReferral } from 'src/apis/referralUser';
 import Loading from 'src/components/loading';
+import { useController } from 'src/controller/vipReferral';
 //=======================================================
 export default function AddVipReferral() {
   //=======================
   const router = useRouter();
   const theme = useTheme();
-
-  const [referralType, setReferralType] = useState([])
-
-  useEffect(() => {
-    getReferralType().then((res) => setReferralType(res.docs));
-  }, [])
-  //=======================================================
-  const referralTypeQuery = useQuery({
-    queryKey: "Vip Referral Type",
-    queryFn: () => getReferralType({ filter: { userType: "vip" } })
-  })
-
-
-
-
-  const referralUserMutation = useMutation({
-    mutationFn: postVipReferral,
-    onSuccess: (res) => {
-      swal('Vip Referral Added !', "Continue with the user management panel", 'success'),
-        router.push('/userManagement/vipReferral/view-vipReferral');
-    },
-    onError: (err) => swal('Error !', err.message, 'error'),
-  });
-
-
-  let vipId = referralTypeQuery.data?.docs[0].id
-
-  const formik = useFormik({
-    initialValues: {
-      fullName: '',
-      email: '',
-      mobile: '',
-      accountType: 'individual',
-      isWhatsapp: false,
-      userType:1,
-      password :"0000000000",
-      referral: {
-        type: "",
-        code: "",
-        downloads: 0,
-        subscriptions: 0
-      },
-
-    },
-    validationSchema: yup.object({
-      fullName: yup.string('Enter  Name').required('Name is required'),
-      email: yup.string('Enter  email').required('email is required'),
-      mobile: yup.string('Enter  mobile').required('mobile is required'),
-      referral: yup.object({
-        type: yup.string('Enter  type').required('type is required'),
-        code: yup.string('Enter  code').required('code is required'),
-        downloads: yup.number('Enter  downloads').required('downloads is required'),
-        subscriptions: yup.number('Enter  subscriptions').required('subscriptions is required'),
-      })
-    }),
-    onSubmit: (values) => {
-      referralUserMutation.mutate(values);
-    },
-  });
-  if (referralTypeQuery.isLoading) return <Loading />
-
-  console.log("Errors ---", formik.errors)
+  const {add,addForm} = useController()
   //=======================================================
   return (
     <>
@@ -149,7 +89,7 @@ export default function AddVipReferral() {
           container
         >
           <Grid item sm={8} xs={12}>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -163,13 +103,13 @@ export default function AddVipReferral() {
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.fullName && Boolean(formik.errors.fullName)
+                  addForm.touched.fullName && Boolean(addForm.errors.fullName)
                 }
-                helperText={formik.touched.fullName && formik.errors.fullName}
+                helperText={addForm.touched.fullName && addForm.errors.fullName}
                 id="fullName"
                 name="fullName"
-                value={formik.values.fullName}
-                onChange={formik.handleChange}
+                value={addForm.values.fullName}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="full name"
@@ -187,12 +127,12 @@ export default function AddVipReferral() {
                 Email
               </Typography>
               <CustomTextField
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
+                error={addForm.touched.email && Boolean(addForm.errors.email)}
+                helperText={addForm.touched.email && addForm.errors.email}
                 id="email"
                 name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
+                value={addForm.values.email}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="email"
@@ -210,12 +150,12 @@ export default function AddVipReferral() {
                 Mobile
               </Typography>
               <CustomTextField
-                error={formik.touched.mobile && Boolean(formik.errors.mobile)}
-                helperText={formik.touched.mobile && formik.errors.mobile}
+                error={addForm.touched.mobile && Boolean(addForm.errors.mobile)}
+                helperText={addForm.touched.mobile && addForm.errors.mobile}
                 id="mobile"
                 name="mobile"
-                value={formik.values.mobile}
-                onChange={formik.handleChange}
+                value={addForm.values.mobile}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="mobile"
@@ -236,16 +176,16 @@ export default function AddVipReferral() {
               </Typography>
               <CustomTextField
                 // error={
-                //   formik.touched.referral.code &&
-                //   Boolean(formik.errors.referral.code)
+                //   addForm.touched.referral.code &&
+                //   Boolean(addForm.errors.referral.code)
                 // }
                 // helperText={
-                //   formik.touched.referral.code && formik.errors.referral.code
+                //   addForm.touched.referral.code && addForm.errors.referral.code
                 // }
                 id="referral.code"
                 name="referral.code"
-                value={formik.values.referral.code}
-                onChange={formik.handleChange}
+                value={addForm.values.referral.code}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="referral code"
@@ -267,8 +207,8 @@ export default function AddVipReferral() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="isWhatsapp"
-                  value={formik.values.isWhatsapp}
-                  onChange={formik.handleChange}
+                  value={addForm.values.isWhatsapp}
+                  onChange={addForm.handleChange}
                   name="isWhatsapp"
                 >
                   <MenuItem key="weight" value={true}>
@@ -280,7 +220,7 @@ export default function AddVipReferral() {
                 </Select>
               </CustomFormControl>
 
-              <Typography
+              {/* <Typography
                 variant="body1"
                 sx={{
                   color: '#8B5704',
@@ -296,8 +236,8 @@ export default function AddVipReferral() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="referral.type"
-                  value={formik.values.referral.type}
-                  onChange={formik.handleChange}
+                  value={addForm.values.referral.type}
+                  onChange={addForm.handleChange}
                   name="referral.type"
                   >
                   {referralTypeQuery.data.docs.map(x=>(
@@ -308,7 +248,7 @@ export default function AddVipReferral() {
                   ))}
                   
                 </Select>
-              </CustomFormControl>
+              </CustomFormControl> */}
 
               <Typography
                 variant="body1"
@@ -323,17 +263,17 @@ export default function AddVipReferral() {
               </Typography>
               <CustomTextField
                 // error={
-                //   formik.touched.referral.subscriptions &&
-                //   Boolean(formik.errors.referral.subscriptions)
+                //   addForm.touched.referral.subscriptions &&
+                //   Boolean(addForm.errors.referral.subscriptions)
                 // }
                 // helperText={
-                //   formik.touched.referral.subscriptions && formik.errors.referral.subscriptions
+                //   addForm.touched.referral.subscriptions && addForm.errors.referral.subscriptions
                 // }
                 id="referral.subscriptions"
                 type="number"
                 name="referral.subscriptions"
-                value={formik.values.referral.subscriptions}
-                onChange={formik.handleChange}
+                value={addForm.values.referral.subscriptions}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="subscriptions"
@@ -353,14 +293,14 @@ export default function AddVipReferral() {
               </Typography>
               <CustomTextField
                 // error={
-                //   formik.touched.referral.downloads && Boolean(formik.errors.referral.downloads)
+                //   addForm.touched.referral.downloads && Boolean(addForm.errors.referral.downloads)
                 // }
-                // helperText={formik.touched.referral.downloads && formik.errors.referral.downloads}
+                // helperText={addForm.touched.referral.downloads && addForm.errors.referral.downloads}
                 id="referral.downloads"
                 type="number"
                 name="referral.downloads"
-                value={formik.values.referral.downloads}
-                onChange={formik.handleChange}
+                value={addForm.values.referral.downloads}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="downloads"
@@ -368,10 +308,10 @@ export default function AddVipReferral() {
               />
 
               <LoadingButton
-                disabled={referralUserMutation.isLoading}
-                loading={referralUserMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
-                sx={theme.custom.editButton}
+                sx={[theme.custom.editButton,{mt:2}]}
                 fullWidth
               >
                 Add VIP Referral

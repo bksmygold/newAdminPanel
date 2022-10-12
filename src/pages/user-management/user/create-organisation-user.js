@@ -29,62 +29,29 @@ import { postUser } from 'src/apis/user';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 import Loading from 'src/components/loading';
+import { useController } from 'src/controller/orgUser';
 //=======================================================
 export default function AddOrganisationUser() {
   const router = useRouter();
 
-  //=======================
+  // const theme = useTheme();
+  const {
+    add,
+    addForm,
+    roleQuery,
+    showEdit
+  } = useController()
 
-  const formik = useFormik({
-    initialValues: {
-      fullName: '',
-      email: '',
-      mobile: '',
-      userType: 2,
-      accountType: 'individual',
-      dob: '',
-      password: '',
-      eInvoiceApplicable: false,
-      isWhatsapp: true,
-      mfaEnabled: true,
-      isPrivacyAccepted: true,
-      role: '',
-    },
-    validationSchema: yup.object({
-      fullName: yup.string('Enter  Name').required('Name is required'),
-      email: yup.string('Enter  email').required('email is required'),
-      mobile: yup.string('Enter  mobile').required('mobile is required'),
 
-      dob: yup.string('Enter  dob').required('dob is required'),
 
-      password: yup.string('Enter password').required('password is required'),
-      role: yup.string('Choose role').required('role is required'),
-    }),
-    onSubmit: (values) => {
-      userMutation.mutate(values);
-    },
-  });
+  // const roleQuery = useQuery({
+  //   queryFn: () => getRole(),
+  //   onSuccess: () => console.log('Success !'),
+  // });
 
-  const userMutation = useMutation({
-    mutationFn: postUser,
-    onSuccess: (res) => {
-      swal('User Added !', 'User has been added', 'success'),
-        router.push({
-          pathname: '/user-management/user/secret',
-          query: res.mfa,
-        });
-    },
-    onError: (err) => swal('Error !', err.message, 'error'),
-  });
+  if (roleQuery.isLoading) return <Loading />
 
-  const roleQuery = useQuery({
-    queryFn: () => getRole(),
-    onSuccess: () => console.log('Success !'),
-  });
-
-  if(roleQuery.isLoading) return <Loading/>
-
-  console.log("roles ===",roleQuery.data.docs)
+  console.log("roles ===", roleQuery.data.docs)
   //===============
   //=======================================================
   return (
@@ -101,7 +68,7 @@ export default function AddOrganisationUser() {
           marginTop: 5,
           border: '1px solid #d2c6c657',
           backgroundColor: 'white',
-          minWidth:"100%"
+          minWidth: "100%"
         }}
       >
         <Typography
@@ -138,7 +105,7 @@ export default function AddOrganisationUser() {
           container
         >
           <Grid item sm={8} xs={12}>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -152,13 +119,13 @@ export default function AddOrganisationUser() {
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.fullName && Boolean(formik.errors.fullName)
+                  addForm.touched.fullName && Boolean(addForm.errors.fullName)
                 }
-                helperText={formik.touched.fullName && formik.errors.fullName}
+                helperText={addForm.touched.fullName && addForm.errors.fullName}
                 id="fullName"
                 name="fullName"
-                value={formik.values.fullName}
-                onChange={formik.handleChange}
+                value={addForm.values.fullName}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="full name"
@@ -176,12 +143,12 @@ export default function AddOrganisationUser() {
                 Email
               </Typography>
               <CustomTextField
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
+                error={addForm.touched.email && Boolean(addForm.errors.email)}
+                helperText={addForm.touched.email && addForm.errors.email}
                 id="email"
                 name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
+                value={addForm.values.email}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="email"
@@ -199,12 +166,12 @@ export default function AddOrganisationUser() {
                 Mobile
               </Typography>
               <CustomTextField
-                error={formik.touched.mobile && Boolean(formik.errors.mobile)}
-                helperText={formik.touched.mobile && formik.errors.mobile}
+                error={addForm.touched.mobile && Boolean(addForm.errors.mobile)}
+                helperText={addForm.touched.mobile && addForm.errors.mobile}
                 id="mobile"
                 name="mobile"
-                value={formik.values.mobile}
-                onChange={formik.handleChange}
+                value={addForm.values.mobile}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="mobile"
@@ -222,13 +189,13 @@ export default function AddOrganisationUser() {
                 DOB
               </Typography>
               <CustomTextField
-                error={formik.touched.dob && Boolean(formik.errors.dob)}
-                helperText={formik.touched.dob && formik.errors.dob}
+                error={addForm.touched.dob && Boolean(addForm.errors.dob)}
+                helperText={addForm.touched.dob && addForm.errors.dob}
                 id="dob"
                 type='date'
                 name="dob"
-                value={formik.values.dob}
-                onChange={formik.handleChange}
+                value={addForm.values.dob}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
               />
@@ -246,13 +213,13 @@ export default function AddOrganisationUser() {
               </Typography>
               <CustomTextField
                 error={
-                  formik.touched.password && Boolean(formik.errors.password)
+                  addForm.touched.password && Boolean(addForm.errors.password)
                 }
-                helperText={formik.touched.password && formik.errors.password}
+                helperText={addForm.touched.password && addForm.errors.password}
                 id="password"
                 name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
+                value={addForm.values.password}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="password"
@@ -274,8 +241,8 @@ export default function AddOrganisationUser() {
                   defaultValue=""
                   labelId="demo-simple-select-label"
                   id="role"
-                  value={formik.values.role}
-                  onChange={formik.handleChange}
+                  value={addForm.values.role}
+                  onChange={addForm.handleChange}
                   name="role"
                 >
                   {roleQuery.data?.docs?.map((x) => (
@@ -286,10 +253,37 @@ export default function AddOrganisationUser() {
                 </Select>
               </CustomFormControl>
 
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Department
+              </Typography>
+              <CustomTextField
+                error={
+                  addForm.touched.department && Boolean(addForm.errors.department)
+                }
+                helperText={addForm.touched.department && addForm.errors.department}
+                id="department"
+                name="department"
+                value={addForm.values.department}
+                onChange={addForm.handleChange}
+                fullWidth
+                variant="outlined"
+                label="department"
+              />
+
+
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <LoadingButton
-                  disabled={userMutation.isLoading}
-                  loading={userMutation.isLoading}
+                  disabled={add.isLoading}
+                  loading={add.isLoading}
                   type="submit"
                   sx={{
                     width: '50%',
