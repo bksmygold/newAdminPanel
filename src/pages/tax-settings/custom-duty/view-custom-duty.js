@@ -32,113 +32,38 @@ import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
+import { useController } from 'src/controller/customDuty';
+import { EditButton } from 'src/components/button/editButton';
+import { DeleteButton } from 'src/components/button/deleteButton';
 //=======================================================
 export default function CustomDuty() {
-  const router = useRouter();
+  
   const theme = useTheme();
 
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [showEdit, setShowEdit] = React.useState(false);
-  const [id, setId] = useState('');
-  //=======================
-  const addFormik = useFormik({
-    initialValues: {
-      name: "",
-      value: 0,
-      surcharge: 0,
-    },
-    validationSchema: yup.object({
-      name: yup.string("Enter Custom Duty Name").required("Custom Duty Name is required"),
-      value: yup.number("Enter Custom Duty value ").required("Custom Duty value is required"),
-      surcharge: yup
-        .number("Enter Custom Duty surcharge ")
-        .required("Custom Duty surcharge is required"),
-    }),
-    onSubmit: (values) => {
-      console.log('payload --', values);
-      addMutation.mutate(values);
-    },
-  });
-
-  const editFormik = useFormik({
-    initialValues: {
-      name: "",
-      value: 0,
-      surcharge: 0,
-    },
-    validationSchema: yup.object({
-      name: yup.string("Enter Custom Duty Name").required("Custom Duty Name is required"),
-      value: yup.number("Enter Custom Duty value ").required("Custom Duty value is required"),
-      surcharge: yup
-        .number("Enter Custom Duty surcharge ")
-        .required("Custom Duty surcharge is required"),
-    }),
-    onSubmit: (values) => {
-      editMutation.mutate({ data: values, id: id });
-    },
-  });
-
-  const query = useQuery({
-    queryKey: 'Custom Duty',
-    queryFn: () => getCustomDuty(),
-  });
-
-  const addMutation = useMutation({
-    mutationFn: postCustomDuty,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowAdd(false);
-      addFormik.resetForm();
-      swal('Custom Duty Added !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
-
-  const editMutation = useMutation({
-    mutationFn: updateCustomDuty,
-    onSuccess: (res) => {
-      query.refetch();
-      setShowEdit(false);
-      swal('Custom Duty Updated !', 'Continue with the e-comm panel', 'success');
-    },
-    onError: (err) => swal('Erro !', err.message, 'error'),
-  });
+  const {
+    add,
+    edit,
+    addForm,
+    editForm,
+    query,
+    setShowAdd,
+    showAdd,
+    setShowEdit,
+    showEdit
+  } = useController()
 
   if (query.isLoading) return <Loading />;
+  console.log("---",query)
   //===============
-
-  const editButton = (params) => {
-    return (
-      <strong>
-        <Button
-          variant="contained"
-          sx={theme.custom.editButton}
-          size="small"
-          onClick={() => {
-            // console.log("params ---", params.row);
-            setId(params.row.id);
-            editFormik.setValues(params.row);
-            setShowEdit(params.row);
-          }}
-        >
-          Edit <EditIcon sx={theme.custom.editButton.iconStyle} />
-        </Button>
-      </strong>
-    );
-  };
-  //==========
-  const deleteButton = (params) => {
-    return (
-      <DeleteSpinner
-        id={params.id}
-        deleting={deleteCustomDuty}
-      />
-    );
-  };
-  //==========
   const columns = [
     {
-      field: 'name', headerName: 'Custom Duty Name', width: 150, flex: 1
+      field: 'name', 
+      headerName: 'Custom Duty Name',
+       width: 150,
+        flex: 1,
+        renderCell: (params) => (
+          <p style={theme.custom.typography.table}>{params.value}</p>
+        ),
     },
     {
       field: 'value', headerName: 'Custom Duty value', width: 150, flex: 1
@@ -152,7 +77,13 @@ export default function CustomDuty() {
       headerName: 'Edit',
       width: 150,
       editable: true,
-      renderCell: editButton,
+      renderCell: (params) => (
+        <EditButton
+          onClick={() => {
+            editForm.setValues(params.row);
+            setShowEdit(params.row);
+          }}
+        />),
       flex: 1
     },
     {
@@ -160,10 +91,14 @@ export default function CustomDuty() {
       headerName: 'Delete',
       width: 150,
       editable: true,
-      renderCell: deleteButton,
+      renderCell: (params) => (
+        <DeleteButton
+          id={params.id}
+          deleting={deleteCustomDuty}
+        />
+      ),
       flex: 1
-
-    },
+    }
   ];
   //=======================================================
   return (
@@ -206,7 +141,7 @@ export default function CustomDuty() {
               Edit Custom Duty for products used in E-commerce
             </Typography>
 
-            <form onSubmit={editFormik.handleSubmit}>
+            <form onSubmit={editForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -219,12 +154,12 @@ export default function CustomDuty() {
                 Custom Duty Name
               </Typography>
               <CustomTextField
-                error={editFormik.touched.name && Boolean(editFormik.errors.name)}
-                helperText={editFormik.touched.name && editFormik.errors.name}
+                error={editForm.touched.name && Boolean(editForm.errors.name)}
+                helperText={editForm.touched.name && editForm.errors.name}
                 id="name"
                 name="name"
-                value={editFormik.values.name}
-                onChange={editFormik.handleChange}
+                value={editForm.values.name}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Custom Duty name"
@@ -242,13 +177,13 @@ export default function CustomDuty() {
                 Custom Duty Value
               </Typography>
               <CustomTextField
-                error={editFormik.touched.value && Boolean(editFormik.errors.value)}
-                helperText={editFormik.touched.value && editFormik.errors.value}
+                error={editForm.touched.value && Boolean(editForm.errors.value)}
+                helperText={editForm.touched.value && editForm.errors.value}
                 id="value"
                 name="value"
                 type="number"
-                value={editFormik.values.value}
-                onChange={editFormik.handleChange}
+                value={editForm.values.value}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Custom Duty value"
@@ -266,20 +201,20 @@ export default function CustomDuty() {
                 Custom Duty surcharge
               </Typography>
               <CustomTextField
-                error={editFormik.touched.surcharge && Boolean(editFormik.errors.surcharge)}
-                helperText={editFormik.touched.surcharge && editFormik.errors.surcharge}
+                error={editForm.touched.surcharge && Boolean(editForm.errors.surcharge)}
+                helperText={editForm.touched.surcharge && editForm.errors.surcharge}
                 id="surcharge"
                 name="surcharge"
                 type="number"
-                value={editFormik.values.surcharge}
-                onChange={editFormik.handleChange}
+                value={editForm.values.surcharge}
+                onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Custom Duty surcharge"
               />
               <LoadingButton
-                disabled={editMutation.isLoading}
-                loading={editMutation.isLoading}
+                disabled={edit.isLoading}
+                loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -323,7 +258,7 @@ export default function CustomDuty() {
               Add Custom Duty for products used in E-commerce
             </Typography>
 
-            <form onSubmit={addFormik.handleSubmit}>
+            <form onSubmit={addForm.handleSubmit}>
               <Typography
                 variant="body1"
                 sx={{
@@ -336,12 +271,12 @@ export default function CustomDuty() {
                 Custom Duty Name
               </Typography>
               <CustomTextField
-                error={addFormik.touched.name && Boolean(addFormik.errors.name)}
-                helperText={addFormik.touched.name && addFormik.errors.name}
+                error={addForm.touched.name && Boolean(addForm.errors.name)}
+                helperText={addForm.touched.name && addForm.errors.name}
                 id="name"
                 name="name"
-                value={addFormik.values.name}
-                onChange={addFormik.handleChange}
+                value={addForm.values.name}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Custom Duty name"
@@ -359,13 +294,13 @@ export default function CustomDuty() {
                 Custom Duty Value
               </Typography>
               <CustomTextField
-                error={addFormik.touched.value && Boolean(addFormik.errors.value)}
-                helperText={addFormik.touched.value && addFormik.errors.value}
+                error={addForm.touched.value && Boolean(addForm.errors.value)}
+                helperText={addForm.touched.value && addForm.errors.value}
                 id="value"
                 name="value"
                 type="number"
-                value={addFormik.values.value}
-                onChange={addFormik.handleChange}
+                value={addForm.values.value}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Custom Duty value"
@@ -383,20 +318,20 @@ export default function CustomDuty() {
                 Custom Duty surcharge
               </Typography>
               <CustomTextField
-                error={addFormik.touched.surcharge && Boolean(addFormik.errors.surcharge)}
-                helperText={addFormik.touched.surcharge && addFormik.errors.surcharge}
+                error={addForm.touched.surcharge && Boolean(addForm.errors.surcharge)}
+                helperText={addForm.touched.surcharge && addForm.errors.surcharge}
                 id="surcharge"
                 name="surcharge"
                 type="number"
-                value={addFormik.values.surcharge}
-                onChange={addFormik.handleChange}
+                value={addForm.values.surcharge}
+                onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Custom Duty surcharge"
               />
               <LoadingButton
-                disabled={addMutation.isLoading}
-                loading={addMutation.isLoading}
+                disabled={add.isLoading}
+                loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
@@ -428,7 +363,7 @@ export default function CustomDuty() {
           </Button>
         </Grid>
       </Grid>{' '}
-      <Table rows={query.data.docs} columns={columns} />
+      <Table rows={query?.data?.docs} columns={columns} />
     </>
   );
 }

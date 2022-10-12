@@ -30,7 +30,7 @@ export const BuySaveCard = (props) => {
                     <Button
                         onClick={() => {
                             props.setShowEdit(true),
-                            props.formik.setValues(props.data)
+                                props.formik.setValues(props.data)
                         }}
                         sx={[theme.custom.Button]} >Edit <EditIcon sx={theme.custom.editButton.iconStyle} /></Button>
                 </Box>
