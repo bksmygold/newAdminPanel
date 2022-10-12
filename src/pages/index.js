@@ -25,6 +25,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getGoldPrice } from "src/apis/goldPrice";
 import Loading from "src/components/loading";
 import { order } from "src/constants/constant";
+import { Chart as ChartJS, TimeScale, N } from "chart.js";
+
 //====================================================================
 const Dashboard = () => {
   const theme = useTheme()
