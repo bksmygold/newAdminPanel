@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { DashboardNavbar } from '../dashboard-navbar';
 import { DashboardSidebar } from '../sidebar.js/dashboard-sidebar';
+import DashboardFilterProvider from 'src/context/dashboardFilter';
 //===============================================================
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
   // display: 'flex',
@@ -22,7 +23,9 @@ export const DashboardLayout = (props) => {
   //===============================================================
   return (
     <>
+      {/* <DashboardFilterProvider> */}
       <DashboardLayoutRoot>
+
         <Box
           sx={{
             display: 'flex',
@@ -35,7 +38,10 @@ export const DashboardLayout = (props) => {
           {children}
         </Box>
       </DashboardLayoutRoot>
-      <DashboardNavbar showFilter={props.showFilter} onSidebarOpen={() => setSidebarOpen(true)} />
+      <DashboardNavbar
+        showFilter={props.showFilter}
+        onSidebarOpen={() => setSidebarOpen(true)}
+      />
       <DashboardSidebar
         onClose={() => setSidebarOpen(false)}
         open={isSidebarOpen}
@@ -43,6 +49,7 @@ export const DashboardLayout = (props) => {
       {/* {children}
         </Box>
       </DashboardLayoutRoot> */}
+      {/* </DashboardFilterProvider> */}
     </>
   );
 };

@@ -299,7 +299,7 @@ export const theme = createTheme({
         h1: {
           fontFamily: "poppins",
           color: "#905E0F",
-          fontSize: "125%",
+          fontSize: "18px",
           fontWeight: "medium",
           // overflowWrap:"wrap"
           black: {

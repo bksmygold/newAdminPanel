@@ -28,6 +28,7 @@ import ReportCard from "src/components/cards/reportCard";
 //=======================================================
 export default function reports() {
   const router = useRouter()
+  console.log("reports ---",reportList.financial)
   //=======================================================
 
   return (
@@ -37,22 +38,20 @@ export default function reports() {
         <title>Reports</title>
       </Head>
       <Grid container fullWidth>
-        <Grid item sm={4}xs={12}>
-          <ReportCard Title="Financials" list={reportList.financial}/>
 
+        <Grid item sm={4} xs={12}>
+          <ReportCard Title="Financials" list={reportList.financial} />
         </Grid>
-        <Grid item sm={4}xs={12}>
-        <ReportCard Title="Metal" list={reportList.metal}/>
 
+        <Grid item sm={4} xs={12}>
+          <ReportCard Title="Metal" list={reportList.metal} />
         </Grid>
-        <Grid item sm={4}xs={12}>
-          <ReportCard Title="Smart Reports" list={reportList.smartReport}/>
 
+        <Grid item sm={4} xs={12}>
+          <ReportCard Title="Smart Reports" list={reportList.smartReport} />
         </Grid>
+
       </Grid>
-
-
-
     </>
   );
 }

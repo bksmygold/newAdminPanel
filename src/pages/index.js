@@ -20,26 +20,25 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useTheme } from "@mui/styles";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-
+import React, { useContext } from "react"
 import { useQuery } from "@tanstack/react-query";
 import { getGoldPrice } from "src/apis/goldPrice";
 import Loading from "src/components/loading";
 import { order } from "src/constants/constant";
 import { Chart as ChartJS, TimeScale, N } from "chart.js";
-
+import { useDashboardFilter } from "src/context/dashboardFilter";
+import { useController } from "src/controller/dashboard";
 //====================================================================
 const Dashboard = () => {
   const theme = useTheme()
   const router = useRouter();
-  //=====================================================
-  const metalPriceQuery = useQuery({
-    queryKey:"Gold Price",
-    queryFn:getGoldPrice
-  })
+  const { query } = useController()
+  const filter = useDashboardFilter()
 
-if(metalPriceQuery.isLoading) return <Loading/>
 
-  console.log("Orders -->", order)
+  if (query.isLoading) return <Loading />
+  
+  console.log("==================================>", filter)
 
   //====================================================================
   return (
@@ -73,18 +72,40 @@ if(metalPriceQuery.isLoading) return <Loading/>
           </Typography>
           <Grid container spacing={1}>
             <Grid item lg={3} sm={6} xs={12}>
-              <GraphCard 
-              margin
-              title="Visits" stats={3241} statsPer={14} />
+              <GraphCard
+
+                title="Visits"
+                stats={query.data.visits.value}
+                statsPer={query.data.visits.change}
+                graph={query.data.visits.data}
+
+              />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
-              <GraphCard title="Downloads" stats={15451} statsPer={4} />
+              <GraphCard
+                title="Downloads"
+                stats={query.data.downloads.value}
+                statsPer={query.data.downloads.change}
+                graph={query.data.downloads.data}
+
+              />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
-              <GraphCard title="Conversions" stats={421} statsPer={21} />
+              <GraphCard
+                title="Conversions"
+                stats={query.data.conversions.value}
+                statsPer={query.data.conversions.change}
+                graph={query.data.conversions.data}
+              />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
-              <GraphCard title="Orders" stats={351} statsPer={8} />
+              <GraphCard
+                title="Orders"
+                stats={query.data.orders.value}
+                statsPer={query.data.orders.value}
+                graph={query.data.orders.data}
+
+              />
             </Grid>
             {/* </Grid>
 
@@ -93,33 +114,30 @@ if(metalPriceQuery.isLoading) return <Loading/>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <RateCard
                 title="Current Buy Rate"
-                rate={metalPriceQuery?metalPriceQuery:123}
-                percentage={10}
-                updatedAt={"2:04"}
+                rate={query.data.currentBuyRate.value}
+                percentage={query.data.currentBuyRate.change}
+                updatedAt={query.data.currentBuyRate.updatedAt.substring(0, 10)}
               />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <RateCard
                 title="Current Sell Rate"
-                rate={metalPriceQuery?metalPriceQuery:123}
-                percentage={8}
-                updatedAt={"2:04"}
+                rate={query.data.currentSellRate.value}
+                percentage={query.data.currentSellRate.change}
+                updatedAt={query.data.currentSellRate.updatedAt.substring(0, 10)}
               />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <RateCard
                 title="Average Buy Rate"
-                rate={metalPriceQuery?metalPriceQuery:123}
-                percentage={10}
-                updatedAt={"2:04"}
+                rate={query.data.averageBuyRate}
+
               />
             </Grid>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <RateCard
                 title="Average Sell Rate"
-                rate={metalPriceQuery?metalPriceQuery:123}
-                percentage={14}
-                updatedAt={"21:04"}
+                rate={query.data.averageSellRate}
               />
             </Grid>
           </Grid >
@@ -131,7 +149,7 @@ if(metalPriceQuery.isLoading) return <Loading/>
 
           {/* -----------   My Gold Financials------------------- */}
           <Typography
-            sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 ,cursor:"pointer"}]}
+            sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2, cursor: "pointer" }]}
 
             onClick={() => {
               router.push("/financialDashobard/myGoldFinancials");
@@ -199,17 +217,17 @@ if(metalPriceQuery.isLoading) return <Loading/>
 
 
 
-          </Grid>   
+          </Grid>
           {/* -----------   My Gold People------------------- */}
           <Typography
             sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 }]}
-          
+
 
           >
             MyGold People
           </Typography>
           <Grid container spacing={3}>
-          <Grid item lg={3} sm={6} xs={12}>
+            <Grid item lg={3} sm={6} xs={12}>
               <PeopleCard totalOrder title="Total Customers" stats={369} percentage={10} />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
@@ -241,7 +259,7 @@ if(metalPriceQuery.isLoading) return <Loading/>
               router.push("/inventoryDashboard/inventory");
             }}
           >
-            MyGold Inventory  <ArrowForwardIosIcon/>
+            MyGold Inventory  <ArrowForwardIosIcon />
           </Typography>
           <Graph />
         </Container>

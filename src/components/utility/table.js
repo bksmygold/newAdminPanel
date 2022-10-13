@@ -55,6 +55,7 @@ export default function Table(props) {
       {/* ------------------------------ */}
       <Grid item lg={12} xs={12}>
         <StripedDataGrid
+          scrollable
           onRowClick={props.handleClick}
           sx={{
             ".MuiTablePagination-displayedRows": {
@@ -75,7 +76,7 @@ export default function Table(props) {
             },
             '@media print': {
               '.MuiDataGrid-main': {
-                zoom:"45%",
+                zoom: "45%",
                 // width:"fit-content"
 
               },
@@ -84,18 +85,18 @@ export default function Table(props) {
             margin: 5,
             padding: 1,
             borderRadius: 2,
-
-
             boxShadow: '0px 4px 1px 0px #d2c6c6',
             marginTop: 5,
             height: "600px",
-            width: "100%",
+            // width: "100%",
             border: '1px solid #d2c6c657',
             // justifyContent: "center",
-            backgroundColor: "white"
+            backgroundColor: "white",
+             overflowX: 'scroll' 
+
           }}
           components={{ Toolbar: GridToolbar }}
-          GridPrintExportOptions={{color:"red"}}
+          GridPrintExportOptions={{ color: "red" }}
           data={props.rows}
           pageSize={pageSize}
           onPageSizeChange={(newPage) => setPageSize(newPage)}

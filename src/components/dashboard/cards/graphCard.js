@@ -13,13 +13,14 @@ import { Chart as ChartJS, TimeScale, N } from "chart.js";
 
 ChartJS.register([TimeScale]);
 
-let arr = [];
+// for (let i = 0; i < 100; i++) {
 
-for (let i = 0; i < 100; i++) {
-  arr.push({ x: new Date(2022, 1, i + 1), y: i * 50 })
-}
+//   arr.push({ x: new Date(2022, 1, i + 1), y: i * 50 })
+// }
+// console.log(arr)
 //============================================================
 export const GraphCard = (props) => {
+
   const options = {
     //animation: true,
     pointStyle: "line",
@@ -27,7 +28,7 @@ export const GraphCard = (props) => {
     responsive: true,
     scales: {
       y: {
-        display: false,
+      display: false,
         title: {
           display: false,
           text: "",
@@ -41,7 +42,7 @@ export const GraphCard = (props) => {
         weight: 50,
       },
       x: {
-        display: false,
+      display: false,
         adapters: {
           date: {
             locale: enGB,
@@ -67,10 +68,18 @@ export const GraphCard = (props) => {
       },
     },
   };
+
   const theme = useTheme()
+
+ const arr = [];
+  for (let i = 0; i < props.graph.length; i++) {
+    arr.push({ x: new Date(2022, 1, i+1),  y: props.graph[i] })
+  }
+  //   var newTest = Array.from(props.graph, val => {'x: '+ val});
+  console.log("<<<<<<<<------------", arr)
   //======================================
   return (
-    <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657", height: "100%" }}>
+    <Card sx={{ backgroundColor: "#FDFAF2", boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657", height: "100%" }}>
       <CardContent sx={{ backgroundColor: "#FDFAF2" }}>
         <Grid container spacing={1} >
           <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "space-between" }}>
@@ -85,27 +94,34 @@ export const GraphCard = (props) => {
             </Grid>
             {/* <Grid item> */}
             <Grid item xs={12} sm={12} md={12}>
-              <Box sx={{ zoom: "53%" }}>
+              <Box sx={{float:"right",width:"90%"}}>
 
                 <Line
-
+                  style={{
+                    width:"70%",
+                    float:"right"
+                  }}
                   datasetIdKey='id'
                   options={options}
                   data={{
-                    // labels: ['Jun', 'Jul', 'Aug', 'Jun', 'Jul', 'Aug'],
                     datasets: [
                       {
                         backgroundColor: (context) => {
                           const ctx = context.chart.ctx;
                           const gradient = ctx.createLinearGradient(0, 0, 0, 200);
                           gradient.addColorStop(0, "#9D702B");
-                          gradient.addColorStop(1, "#FEF1DE");
+                          gradient.addColorStop(1, "white");
                           return gradient;
                         },
-                        borderColor:"#905E0F",
-                        borderWidth:3 ,
+                        borderColor: "#905E0F",
+                        // borderWidth: 3,
+
                         fill: true,
                         id: 1,
+                        // data: props.graph.map(e => ({
+                        //   x: e,
+                        //   y: e
+                        // })),
                         data: arr
                       },
 
@@ -127,19 +143,17 @@ export const GraphCard = (props) => {
               alignItems: "center",
             }}
           >
-            {props.statsPer >= 10 ? (
+            {Math.sign(props.statsPer) === 1 ? (
               <ArrowUpwardIcon color="success" />
             ) : (
               <ArrowDownwardIcon color="error" />
             )}
             <Typography
-              sx={props.statsPer >= 10 ? theme.custom.typography.dashBoard.h3.success : theme.custom.typography.dashBoard.h3.error}
+              sx={Math.sign(props.statsPer) === 1 ?theme.custom.typography.dashBoard.h3.success : theme.custom.typography.dashBoard.h3.error}
             >
-              {props.statsPer}%
+              {props.statsPer}%  
             </Typography>
-            <Typography sx={theme.custom.typography.dashBoard.h3}>
-              Since last x
-            </Typography>
+
           </Box>
         </Grid  >
 

@@ -15,7 +15,8 @@ import { getLoggedInUser } from "src/apis/login";
 import React from "react";
 import { CustomTextField, CustomFormControl } from "./customMUI";
 import { DateRangePicker } from 'react-date-range';
-
+import { useDashboardFilter } from "src/context/dashboardFilter";
+import dayjs from "dayjs";
 //=================================================================
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -24,11 +25,10 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 
 //=================================================================
 export const DashboardNavbar = (props) => {
+  const filter = useDashboardFilter()
+
   const { showFilter, onSidebarOpen, ...other } = props;
 
-  const [from, setFrom] = React.useState("");
-  const [to, setTo] = React.useState("");
-  
   const router = useRouter()
 
   const [user, setUser] = useState({})
@@ -36,8 +36,7 @@ export const DashboardNavbar = (props) => {
     getLoggedInUser().then(res => setUser(res))
   }, [])
 
-
-
+  // console.log("==================================>",filter)
   //=================================================================
   return (
     <>
@@ -55,7 +54,7 @@ export const DashboardNavbar = (props) => {
         <Toolbar
           disableGutters
           sx={{
-            height: 100,
+            height: "100%",
             left: 0,
             p: 3,
 
@@ -78,20 +77,23 @@ export const DashboardNavbar = (props) => {
           {/* --------------------------------------------------------------- */}
           {showFilter && (
 
-            <Grid container className="zoom" sx={{ display: "flex", justifyContent: "flex-end", marrginRight: 50 }}>
+            <Grid container className="zoom" sx={{ display: "flex", justifyContent: "flex-end", marginRight: 5 }}>
               <Grid item xs={12} lg={3} sx={{ flex: 1 }}>
-                <CustomTextField 
-                onChange={(e)=>setFrom(e.target.value)}
-                type="date" 
-                sx={{ mr: 5, flex: 1 }} />
+                <CustomTextField
+                  fullWidth
+                  onChange={(e) => filter.setFromDate(e.target.value)}
+                  type="date"
+                  sx={{ mr: 5, flex: 1 }} />
               </Grid>
               <Grid item xs={12} lg={3} sx={{ flex: 1 }}>
-                <CustomTextField 
-                onChange={(e)=>setTo(e.target.value)}
-                type="date" 
-                sx={{ mr: 5, flex: 1 }} />
+                <CustomTextField
+                  fullWidth
+                  onChange={(e) => console.log(dayjs(e.target.value).format("DD/MM/YYYY"))}
+                  type="date"
+                  
+                  sx={{ mr: 5, flex: 1, minHeight: "20%" }} />
               </Grid>
-              <Grid item lg={2} xs={12}>
+              {/* <Grid item lg={2} xs={12}>
                 <CustomFormControl fullWidth>
                   <Select
                     defaultValue=""
@@ -106,8 +108,8 @@ export const DashboardNavbar = (props) => {
 
                   </Select>
                 </CustomFormControl>
-              </Grid>
-              <Grid item lg={1} xs={12} sx={{
+              </Grid> */}
+              {/* <Grid item lg={1} xs={12} sx={{
                 
                 display: "flex",
                 justifyContent: "center",
@@ -131,7 +133,7 @@ export const DashboardNavbar = (props) => {
                   <AddIcon sx={{ ml:1 }} />
                   Badla
                 </Button>
-              </Grid>
+              </Grid> */}
             </Grid>
           )}
 

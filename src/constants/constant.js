@@ -335,57 +335,123 @@ export const reportList = {
     metal: [
         {
             head: "Customer",
-            title1: "Custody Given",
-            title2: "Custody Released"
+            data1: {
+                title1: "Custody Given",
+                url: "/reports/customer/custody-given"
+            },
+            data2: {
+                title2: "Custody Released",
+                url: "/reports/customer/financial-purchase-invoice"
+            },
         },
         {
             head: "VIP/Sale Referral",
-            title1: "Custody Given",
-            title2: "Custody Released"
+            data1: {
+                title1: "Custody Given",
+                url: "/reports/customer/financial-sale-invoice"
+            },
+            data2: {
+                title2: "Custody Released",
+                url: "/reports/customer/financial-purchase-invoice"
+            },
         },
         {
             head: "Merchant",
-            title1: "Custody Given",
-            title2: "Custody Released"
+            data1: {
+                title1: "Custody Given",
+                url: "/reports/customer/financial-sale-invoice"
+            },
+            data2: {
+                title2: "Custody Released",
+                url: "/reports/customer/financial-purchase-invoice"
+            },
         },
         {
             head: "Retailer",
-            title1: "Custody Given",
-            title2: "Custody Released"
+            data1: {
+                title1: "Custody Given",
+                url: "/reports/customer/financial-sale-invoice"
+            },
+            data2: {
+                title2: "Custody Released",
+                url: "/reports/customer/financial-purchase-invoice"
+            },
         },
+       
 
     ],
     financial: [
         {
             head: "Customer",
-            title1: "Customer Sale Invoices",
-            title2: "Customer Purchase Invoices",
-            title3: "Customer Settlements"
+            data1: {
+                title1: "Customer Sale Invoices",
+                url: "/reports/customer/financial-sale-invoice"
+            },
+            data2: {
+                title2: "Customer Purchase Invoices",
+                url: "/reports/customer/financial-purchase-invoice"
+            },
+            data3: {
+                title3: "Customer Settlements",
+                url: "/tax-settings",
+                url: "/reports/customer/financial-settlement"
+
+            },
         },
         {
             head: "VIP / Sales Referral",
-            title1: "Referral  Sale Invoices",
-            title2: "Referral  Purchase Invoices",
-            title3: "Referral  Settlements"
+            data1: {
+                title1: "Referral  Sale Invoices",
+                url: "/reports/referral/financial-sale-invoice"
+            },
+            data2: {
+                title2: "Referral  Purchase Invoices",
+                url: "/reports/referral/financial-purchase-invoice"
+            },
+            data3: {
+                title3: "Referral  Settlements",
+                url: "/reports/referral/financial-settlement"
+            },
         },
         {
             head: "Merchant",
-            title1: "Merchant Sale Invoices",
-            title2: "Merchant Purchase Invoices",
-            title3: "Merchant Settlements"
+            data1: {
+                title1: "Merchant Sale Invoices",
+                url: "/reports/merchant/financial-sale-invoice"
+            },
+            data2: {
+                title2: "Merchant Purchase Invoices",
+                url: "/reports/merchant/financial-purchase-invoice"
+            },
+            data3: {
+                title3: "Merchant Settlements",
+                url: "/reports/merchant/financial-settlement"
+            },
         },
         {
             head: "Retailer",
-            title1: "Retailer Sale Invoices",
-            title2: "Retailer Purchase Invoices",
-            title3: "Retailer Settlements"
-        },
-        {
-            head: "Bank",
-            title1: "Bank Receipts",
-            title2: "Bank Payment",
+            data1: {
+                title1: "Retailer Sale Invoices",
+                url: "/reports/retailer/financial-sale-invoice"
 
+            },
+            data2: {
+                title2: "Retailer Purchase Invoices",
+                url: "/reports/retailer/financial-purchase-invoice"
+            },
+            data3: {
+                title3: "Retailer  Settlements",
+                url: "/reports/retailer/financial-settlement"
+            },
         },
+
+
+        // {
+        //     head: "Bank",
+        //     title1: "Bank Receipts",
+        //     title2: "Bank Payment",
+
+        // },
 
 
     ]

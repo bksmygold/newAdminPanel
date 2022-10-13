@@ -11,11 +11,13 @@ import "../apis/axios.js";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import ArticleProvider from "../context/dashboardFilter"
+import DashboardFilterProvider from "../context/dashboardFilter";
 //=====================================================
 const clientSideEmotionCache = createEmotionCache();
 const queryClient = new QueryClient({
-  defaultOptions:{
-    queries:{
+  defaultOptions: {
+    queries: {
       refetchOnWindowFocus: false
     }
   }
@@ -35,6 +37,7 @@ const App = (props) => {
   const getLayout = Component.getLayout ?? ((page) => page);
   //=====================================================
   return (
+
     <QueryClientProvider client={queryClient}>
       <CacheProvider value={emotionCache}>
         <Head>
@@ -44,7 +47,9 @@ const App = (props) => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            {getLayout(<Component {...pageProps} />)}
+            <DashboardFilterProvider>
+              {getLayout(<Component {...pageProps} />)}
+            </DashboardFilterProvider>
           </ThemeProvider>
         </LocalizationProvider>
       </CacheProvider>
