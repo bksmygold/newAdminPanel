@@ -61,7 +61,7 @@ const custodyGiven = () => {
             <Button
                 sx={theme.custom.editButton}
             >
-                Check Sale Invoices
+                More Details
             </Button>
         );
     };
@@ -70,6 +70,8 @@ const custodyGiven = () => {
             field: "sale_invoice_number",
             headerName: "Invoice Number",
             flex: 1,
+            minWidth: 120,
+
             renderCell: (params) => (
                 <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
             ),
@@ -77,26 +79,43 @@ const custodyGiven = () => {
         {
             field: "merchant",
             headerName: "Merchant",
+            minWidth: 100,
+
             flex: 1
         },
         {
             field: "name",
             headerName: "name",
+            minWidth: 100,
+
             flex: 1
         },
         {
             field: "total_custody_given",
             headerName: "total_custody_given",
+            minWidth: 150,
+
             flex: 1
         },
         {
             field: "weight",
             headerName: "weight",
+            minWidth: 100,
+
             flex: 1
         },
         {
             field: "purchased_on",
             headerName: "purchased_on",
+            minWidth: 100,
+
+            flex: 1
+        },
+        {
+            field: "custody_given",
+            headerName: "Custody view Btn",
+            minWidth: 150,
+
             flex: 1
         },
         {
@@ -106,7 +125,7 @@ const custodyGiven = () => {
             editable: true,
             renderCell: checkInvoice,
             flex: 2,
-            minWidth: "10%"
+            minWidth: 150,
         },
 
 
@@ -122,6 +141,7 @@ const custodyGiven = () => {
             merchant:"Merchant",
             purchased_on:"15/07/2013",
             rate:4.5,
+            custody_given:"see",
             flex: 1,
             minWidth: 100,
         },
@@ -207,15 +227,7 @@ const custodyGiven = () => {
 
 
                 <Table
-                    sx={{
-                        padding: 5,
-                        borderRadius: 2,
-                        boxShadow: "0px 4px 1px 0px #d2c6c6",
-                        marginTop: "500px",
-
-                        //   backgroundColor: "#e8d8c0",
-                    }}
-
+                    
                     rows={rows}
                     columns={columns}
                     getRowClassName={(params) =>

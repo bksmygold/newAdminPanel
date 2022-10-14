@@ -9,7 +9,9 @@ import {
     FormControlLabel,
     FormGroup,
     Checkbox,
-    Button
+    Button,
+
+
 } from "@mui/material";
 import * as React from "react";
 import InputLabel from "@mui/material/InputLabel";
@@ -31,30 +33,26 @@ import { DashboardLayout } from "../../../components/layout/dashboard-layout";
 import { useQuery } from "@tanstack/react-query";
 import { getBuySaveReport } from "src/apis/reports";
 import { CustomTextField } from "src/components/customMUI";
+import GraphModal from "src/components/graphModal";
 //=============================================
-const customer = () => {
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const saleInvoice = () => {
 
     const theme = useTheme()
-
     const reportsQuery = useQuery({
         queryKey: "BuySave-Reports",
         queryFn: () => getBuySaveReport()
     })
-
-
-    console.log("reports ---", reportsQuery)
-    //=====================================
-    const checkCustodian = (params) => {
-        return (
-            <strong>
-                <Button
-                    sx={theme.custom.editButton}
-                >
-                    Check Custodians
-                </Button>
-            </strong>
-        );
-    };
     //==========
     const checkInvoice = (params) => {
         return (
@@ -151,17 +149,17 @@ const customer = () => {
         {
             id: 1,
             merchant: "Nischal",
-            customer:"Ankit",
-            itemId:"11-874",
-            desc:"some kind of ramdom descriptions",
-            gram:"14 gm",
-            rate:4.5,
-            amount:5478,
-            hsnCode:"HSN-2568-774",
-            cgst:18,
-            sgst:18,
-            igst:17,
-            total:7899,
+            customer: "Ankit",
+            itemId: "11-874",
+            desc: "some kind of ramdom descriptions",
+            gram: "14 gm",
+            rate: 4.5,
+            amount: 5478,
+            hsnCode: "HSN-2568-774",
+            cgst: 18,
+            sgst: 18,
+            igst: 17,
+            total: 7899,
             flex: 1,
             minWidth: 100,
         },
@@ -173,6 +171,7 @@ const customer = () => {
     return (
         <>
             {/* //------------------------------------------------------- */}
+
             <Container
                 fullWidth
                 sx={{
@@ -278,10 +277,11 @@ const customer = () => {
                             </LocalizationProvider>
                         </Grid>
                         <Grid item lg={3} sm={6} xl={3} xs={12}>
-                            <FormGroup>
-                                <FormControlLabel control={<Checkbox />} label="Show Summary" />
-                                <FormControlLabel control={<Checkbox />} label="Show graph" />
-                            </FormGroup>
+
+                            <GraphModal
+                                // data={data}
+                            />
+
                         </Grid>
                         <Grid item lg={3} sm={6} xl={3} xs={12} sx={{ width: 50 }}>
                             <Accordion>
@@ -334,8 +334,8 @@ const customer = () => {
 };
 //=============================================
 
-customer.getLayout = (page) => (
+saleInvoice.getLayout = (page) => (
     <DashboardLayout>{page}</DashboardLayout>
 );
 
-export default customer;
+export default saleInvoice;

@@ -78,7 +78,7 @@ export default function ReportCard(props) {
                 {props.list?.map(x => {
                     if (x.head) {
                         return (
-                            <Box sx={{ cursor: "pointer" }}>
+                            <Box >
                                 <Typography
                                     sx={[theme.custom.typography.reports, { marginLeft: 2, color: "black", mt: 5, fontWeight: "bold" }]}>
                                     {x.head}
@@ -107,7 +107,11 @@ export default function ReportCard(props) {
                         )
                     } else {
                         return (
-                            <Typography sx={[theme.custom.typography.reports, { marginLeft: 2 }]}>{x.title}</Typography>
+                            <Typography sx={[theme.custom.typography.reports, { marginLeft: 2, mt: 2 }]}>
+                                <a href={x.url}>
+                                    {x.title}
+                                </a>
+                            </Typography>
                         )
                     }
                 })}

@@ -305,8 +305,10 @@ export const infoCard = {
 export const reportList = {
     smartReport: [
         {
-            title: "Buy and Save Module"
+            title: "Buy addnd Save Module",
+            url: "/reports/retailer/custody-given"
         },
+       
         {
             title: "Instant Gold Module"
         },
@@ -341,43 +343,43 @@ export const reportList = {
             },
             data2: {
                 title2: "Custody Released",
-                url: "/reports/customer/financial-purchase-invoice"
+                url: "/reports/customer/custody-released"
             },
         },
         {
             head: "VIP/Sale Referral",
             data1: {
                 title1: "Custody Given",
-                url: "/reports/customer/financial-sale-invoice"
+                url: "/reports/referral/custody-given"
             },
             data2: {
                 title2: "Custody Released",
-                url: "/reports/customer/financial-purchase-invoice"
+                url: "/reports/referral/custody-released"
             },
         },
         {
             head: "Merchant",
             data1: {
                 title1: "Custody Given",
-                url: "/reports/customer/financial-sale-invoice"
+                url: "/reports/merchant/custody-given"
             },
             data2: {
                 title2: "Custody Released",
-                url: "/reports/customer/financial-purchase-invoice"
+                url: "/reports/merchant/custody-released"
             },
         },
         {
             head: "Retailer",
             data1: {
                 title1: "Custody Given",
-                url: "/reports/customer/financial-sale-invoice"
+                url: "/reports/retailer/custody-given"
             },
             data2: {
                 title2: "Custody Released",
-                url: "/reports/customer/financial-purchase-invoice"
+                url: "/reports/retailer/custody-released"
             },
         },
-       
+
 
     ],
     financial: [

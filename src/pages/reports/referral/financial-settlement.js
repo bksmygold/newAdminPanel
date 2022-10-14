@@ -31,6 +31,7 @@ import { DashboardLayout } from "../../../components/layout/dashboard-layout";
 import { useQuery } from "@tanstack/react-query";
 import { getBuySaveReport } from "src/apis/reports";
 import { CustomTextField } from "src/components/customMUI";
+import GraphModal from "src/components/graphModal";
 //=============================================
 const settlement = () => {
 
@@ -85,7 +86,11 @@ const settlement = () => {
         {
             field: "id",
             headerName: "Invoice Number",
+            onclick: (params) => {
+                console.log("===========================---", params)
+            },
             flex: 1,
+            minWidth: 150,
             renderCell: (params) => (
                 <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
             ),
@@ -180,7 +185,7 @@ const settlement = () => {
             name: "Nischal",
             email: "nischal.gupta014@gmail.com",
             phone: "7392988369",
-            referralType:"vip",
+            referralType: "vip",
             Gold_Sold: "15gm",
             Sell_Price: "6444",
             Sold_On: "20/5/2022",
@@ -198,6 +203,7 @@ const settlement = () => {
     //=============================================
     return (
         <>
+
             {/* //------------------------------------------------------- */}
             <Container
                 fullWidth
@@ -304,10 +310,7 @@ const settlement = () => {
                             </LocalizationProvider>
                         </Grid>
                         <Grid item lg={3} sm={6} xl={3} xs={12}>
-                            <FormGroup>
-                                <FormControlLabel control={<Checkbox />} label="Show Summary" />
-                                <FormControlLabel control={<Checkbox />} label="Show graph" />
-                            </FormGroup>
+                            <GraphModal />
                         </Grid>
                         <Grid item lg={3} sm={6} xl={3} xs={12} sx={{ width: 50 }}>
                             <Accordion>

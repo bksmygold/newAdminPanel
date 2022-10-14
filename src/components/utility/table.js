@@ -92,7 +92,8 @@ export default function Table(props) {
             border: '1px solid #d2c6c657',
             // justifyContent: "center",
             backgroundColor: "white",
-             overflowX: 'scroll' 
+            //  overflowX: 'scroll' 
+            minWidth:"100%"
 
           }}
           components={{ Toolbar: GridToolbar }}

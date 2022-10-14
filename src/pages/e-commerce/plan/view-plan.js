@@ -41,7 +41,7 @@ export default function ViewPlan() {
     {
       field: 'mode',
       headerName: 'Mode',
-      width: 150,
+      minWidth: 15,
       editable: true, flex: 1
     },
     {

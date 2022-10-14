@@ -32,6 +32,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getBuySaveReport } from "src/apis/reports";
 import { CustomTextField } from "src/components/customMUI";
 import NestedTabTable from '../../../components/utility/nestedTabTable'
+import GraphModal from "src/components/graphModal";
 
 //=============================================
 const customer = () => {
@@ -484,10 +485,7 @@ const customer = () => {
                             </LocalizationProvider>
                         </Grid>
                         <Grid item lg={3} sm={6} xl={3} xs={12}>
-                            <FormGroup>
-                                <FormControlLabel control={<Checkbox />} label="Show Summary" />
-                                <FormControlLabel control={<Checkbox />} label="Show graph" />
-                            </FormGroup>
+                           <GraphModal/>
                         </Grid>
                         <Grid item lg={3} sm={6} xl={3} xs={12} sx={{ width: 50 }}>
                             <Accordion>

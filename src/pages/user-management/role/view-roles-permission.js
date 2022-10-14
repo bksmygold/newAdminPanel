@@ -43,6 +43,7 @@ export default function ViewRolePermission() {
           sx={{
             background: 'linear-gradient(43deg, #8b5704, #ddb070)',
             color: 'white',
+            minWidth: "100%"
           }}
           size="small"
           onClick={() => {
@@ -69,16 +70,16 @@ export default function ViewRolePermission() {
     {
       field: 'name',
       headerName: 'Name',
-      width: 150,      
+      width: 150,
       renderCell: (params) => (
         <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
       ),
     },
-   
+
     {
       field: 'description',
       headerName: 'Description',
-      width: 150,      flex:1
+      width: 150, flex: 1
     },
     {
       field: 'parentRole',
@@ -89,24 +90,22 @@ export default function ViewRolePermission() {
       field: 'subUsers',
       headerName: 'Sub Users',
       width: 150,
-     
     },
-    
-    
-
     {
       field: 'edit',
       headerName: 'Edit',
-      width: 150,
+      minWidth: "100%",
       editable: true,
-      renderCell: editButton,      flex:1
+      renderCell: editButton,
+      flex: 1
     },
     {
       field: 'delete',
       headerName: 'Delete',
-      width: 150,
+      minWidth: "100%",
       editable: true,
-      renderCell: deleteButton,      flex:1
+      renderCell: deleteButton,
+      flex: 1
     },
   ];
 
