@@ -162,7 +162,7 @@ export const theme = createTheme({
       mt: 3
     },
     editButton: {
-      background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+      background: 'linear-gradient(43deg, #8b5704, #8b5704)',
       color: 'white',
       iconStyle: {
         marginLeft: 1,

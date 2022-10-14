@@ -103,7 +103,7 @@ export default function GraphModal(props) {
 
                 >
                     <DialogContentText id="alert-dialog-slide-description">
-                        <Line options={options} data={data} />;
+                        <Line options={options} data={data} />
                     </DialogContentText>
                 </DialogContent>
                 {/* <DialogActions>

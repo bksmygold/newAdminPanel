@@ -305,18 +305,24 @@ export const infoCard = {
 export const reportList = {
     smartReport: [
         {
-            title: "Buy addnd Save Module",
-            url: "/reports/retailer/custody-given"
+            title: "Buy and Save Module",
+            url: "/reports/buy-save/view"
         },
        
         {
-            title: "Instant Gold Module"
+            title: "Instant Gold Module",
+            url: "/reports/instant-gold/view"
+
         },
         {
-            title: "Sell and Reserve Module"
+            title: "Sell and Reserve Module",
+            url: "/reports/sell-reserve/view"
+
         },
         {
-            title: "E-commerce Module"
+            title: "E-commerce Module",
+            url: "/reports/e-comm/view"
+
         },
         {
             title: "Sell old gold Module"

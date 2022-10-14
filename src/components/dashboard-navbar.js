@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import { FormControl, Grid, MenuItem, Select, AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip, Button, TextField } from "@mui/material";
+import {  FormControl, Grid, MenuItem, Select, AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip, Button, TextField } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Bell as BellIcon } from "../icons/bell";
@@ -90,7 +90,7 @@ export const DashboardNavbar = (props) => {
                   fullWidth
                   onChange={(e) => console.log(dayjs(e.target.value).format("DD/MM/YYYY"))}
                   type="date"
-                  
+
                   sx={{ mr: 5, flex: 1, minHeight: "20%" }} />
               </Grid>
               {/* <Grid item lg={2} xs={12}>
@@ -144,7 +144,9 @@ export const DashboardNavbar = (props) => {
 
             <Tooltip title="Notifications">
               <IconButton sx={{ ml: 5 }}>
-                <BellIcon sx={{ width: "100%", height: 36, color: "#905e0f" }} fontSize="small" />
+                <Badge color="error" badgeContent={14}>
+                  <BellIcon  sx={{ width: "100%", height: 36, color: "#905e0f" }} fontSize="small" />
+                </Badge>
               </IconButton>
             </Tooltip>
           </Box>

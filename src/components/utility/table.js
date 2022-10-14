@@ -82,7 +82,7 @@ export default function Table(props) {
               },
             },
 
-            margin: 5,
+            // margin: 5,
             padding: 1,
             borderRadius: 2,
             boxShadow: '0px 4px 1px 0px #d2c6c6',
@@ -96,6 +96,7 @@ export default function Table(props) {
             minWidth:"100%"
 
           }}
+          rowHeight={75}
           components={{ Toolbar: GridToolbar }}
           GridPrintExportOptions={{ color: "red" }}
           data={props.rows}
