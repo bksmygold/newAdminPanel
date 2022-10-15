@@ -32,7 +32,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getBuySaveReport } from "src/apis/reports";
 import { CustomTextField } from "src/components/customMUI";
 import NestedTabTable from '../../../components/utility/nestedTabTable'
-import GraphModal from "src/components/graphModal";
+import GraphModal from "src/components/modal/graphModal";
 
 //=============================================
 const customer = () => {

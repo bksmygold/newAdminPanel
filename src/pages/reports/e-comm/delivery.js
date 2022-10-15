@@ -34,10 +34,10 @@ import { DashboardLayout } from "../../../components/layout/dashboard-layout";
 import { useQuery } from "@tanstack/react-query";
 import { getBuySaveReport } from "src/apis/reports";
 import { CustomTextField } from "src/components/customMUI";
-import GraphModal from 'src/components/graphModal';
+import GraphModal from 'src/components/modal/graphModal';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useRouter } from 'next/router';
-import ReportModal from 'src/components/reportModal';
+import ReportModal from 'src/components/modal/reportModal';
 import FilterSection from 'src/components/filterSection';
 //=============================================
 const EcommDeliveryReport = () => {

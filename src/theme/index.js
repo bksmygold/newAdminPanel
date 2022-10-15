@@ -191,7 +191,6 @@ export const theme = createTheme({
     infoCard: {
       bg: {
         backgroundColor: "#FDFAF2",
-
       },
 
     },
@@ -243,9 +242,6 @@ export const theme = createTheme({
       justifyContent: "space-between",
       alignItems: "space-between",
       mb: 4,
-
-
-
     },
     retailCard: {
       bg: {
@@ -268,9 +264,19 @@ export const theme = createTheme({
         height: "100%",
         boxShadow: '-3px 3px 4px -2px #d2c6c6',
         border: '1px solid #d2c6c657',
-
       },
-
+    },
+    cardModal: {
+      box: {
+        p: 2,
+        display: "flex",
+        justifyContent: "space-between",
+        width: 380,
+        background: 'linear-gradient(11deg, rgb(252 252 253), #f5f5f5)',
+        borderRadius: 1,
+        boxShadow: '0px 4px 1px 0px #d2c6c6',
+        border: '1px solid #d2c6c657',
+      }
     },
 
     //----------- Typography ----------------------------------
@@ -451,6 +457,10 @@ export const theme = createTheme({
       table: {
         color: '#925F0F',
         fontWeight: 600
+      },
+      cardModal: {
+        color: "black",
+        fontWeight: 500
       }
     }
   },

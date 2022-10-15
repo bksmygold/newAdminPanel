@@ -31,7 +31,7 @@ import { DashboardLayout } from "../../../components/layout/dashboard-layout";
 import { useQuery } from "@tanstack/react-query";
 import { getBuySaveReport } from "src/apis/reports";
 import { CustomTextField } from "src/components/customMUI";
-import GraphModal from "src/components/graphModal";
+import GraphModal from "src/components/modal/graphModal";
 //=============================================
 const settlement = () => {
 

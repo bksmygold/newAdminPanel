@@ -34,11 +34,11 @@ import { DashboardLayout } from "../../../components/layout/dashboard-layout";
 import { useQuery } from "@tanstack/react-query";
 import { getBuySaveReport } from "src/apis/reports";
 import { CustomTextField } from "src/components/customMUI";
-import GraphModal from 'src/components/graphModal';
+import GraphModal from 'src/components/modal/graphModal';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useRouter } from 'next/router';
-import ReportModal from 'src/components/reportModal';
-import CardModal from 'src/components/modalCard';
+import ReportModal from 'src/components/modal/reportModal';
+import CardModal from 'src/components/modal/cardModal';
 import FilterSection from 'src/components/filterSection';
 //=============================================
 const sellOldGoldReport = () => {
@@ -55,26 +55,10 @@ const sellOldGoldReport = () => {
 
     const mediaModal = (params) => {
         return (
-            <ReportModal item={mediaRows}/>
+            <CardModal data={mediaRows}/>
         );
     };
     //=============================
-    const mediaColumns = [
-        {
-            field: "purity",
-            headerName: "purity",
-            flex: 1,
-            minWidth: 100,
-        },
-
-        {
-            field: "weight",
-            headerName: "weight",
-            flex: 1,
-            minWidth: 50,
-        },
-
-    ];
 
     const mediaRows = [
         {
@@ -85,7 +69,6 @@ const sellOldGoldReport = () => {
             minWidth: 100,
         },
     ];
-
 
     //=============================
     const itemColumns = [

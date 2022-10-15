@@ -69,15 +69,22 @@ export default function FilterSection() {
                 <CustomTextField size="small" label="Settlement Status" />
             </Grid>
             <Grid
-                sx={{ width: 100, height: "100%", display: "flex", justifyContent: "center", alignItems: "end" }}
+                sx={{
+                    width: 100,
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "end",
+                    // backgroundColor: "pink",
+                }}
                 item
-                lg={2} sm={12} xl={2} xs={12}>
+                lg={2} sm={6} xl={2} xs={12}>
                 <Button
                     sx={{
                         color: "black",
                         backgroundColor: "white",
                         width: "100px",
-                        border:"1px solid gray"
+                        border: "1px solid gray"
                     }}>
                     Clear
                 </Button>
@@ -86,7 +93,7 @@ export default function FilterSection() {
                 sx={{ height: "100%", display: "flex", alignItems: "end" }}
 
                 item
-                lg={2} sm={12} xl={2} xs={12}>
+                lg={2} sm={6} xl={2} xs={12}>
                 <Button
                     sx={{
                         color: "white",
