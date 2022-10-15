@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -15,7 +14,8 @@ import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 import Table from './utility/table';
 import { useTheme } from "@mui/styles";
-import { Slide } from '@mui/material';
+import { Box, Container, Grid } from '@mui/system';
+import { Collapse, Fade, Grow, Slide } from '@mui/material';
 
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
@@ -32,23 +32,41 @@ function SimpleDialog(props) {
     };
 
     return (
-        <Dialog transitionDuration={350}   TransitionComponent={Slide} onClose={handleClose} open={open}>
-            <DialogTitle>Media Details </DialogTitle>
+        <Dialog onClose={handleClose} transitionDuration={350}   TransitionComponent={Slide}
+        open={open}>
+            <DialogTitle>Items Details </DialogTitle>
             {props.item ? props.item.map(x => (
                 <>
                     <Box sx={{ p: 3, display: "flex", justifyContent: "space-between", width: 380 }}>
-                        <Typography sx={{ color: "black", fontWeight: 500 }} >Purity :</Typography>
-                        <Typography sx={{ color: "black", fontWeight: 500 }}>{x.purity}</Typography>
+                        <Typography sx={{ color: "black", fontWeight: 500 }} >Name :</Typography>
+                        <Typography sx={{ color: "black", fontWeight: 500 }}>{x.name}</Typography>
                     </Box>
-
+                    <hr style={{ width: "80%", margin: "auto"}} />
+                    
+                    <Box sx={{ p: 3, display: "flex", justifyContent: "space-between", width: 380 }}>
+                        <Typography sx={{ color: "black", fontWeight: 500 }} >Details :</Typography>
+                        <ul style={{listStyle:"none"}}>
+                            {x.details.map(z => (
+                        <Typography sx={{ color: "black", fontWeight: 500 }} >{z}</Typography>
+                        ))}
+                        </ul>
+                    </Box>
                     <hr style={{ width: "80%", margin: "auto" }} />
 
                     <Box sx={{ p: 3, display: "flex", justifyContent: "space-between", width: 380 }}>
-                        <Typography sx={{ color: "black", fontWeight: 500 }} >Weight :</Typography>
-                        <Typography sx={{ color: "black", fontWeight: 500 }}>{x.weight}</Typography>
+                        <Typography sx={{ color: "black", fontWeight: 500 }} >Photo :</Typography>
+                        <img width={70} src={x.photo} />
+                    </Box>
+                    <hr style={{ width: "80%", margin: "auto" }} />
+
+                    <Box sx={{ p: 3, display: "flex", justifyContent: "space-between", width: 380 }}>
+                    <Typography sx={{ color: "black", fontWeight: 500 }} >Weight :</Typography>
+                        <Typography sx={{ color: "black", fontWeight: 500 }}>{x.weight} gm</Typography>
                     </Box>
                 </>
             )) : null}
+
+
         </Dialog>
     );
 }
@@ -61,7 +79,7 @@ SimpleDialog.propTypes = {
 
 
 
-export default function ReportModal(props) {
+export default function CardModal(props) {
     const theme = useTheme()
 
     const [open, setOpen] = React.useState(false);
@@ -81,7 +99,7 @@ export default function ReportModal(props) {
             <Button
                 onClick={handleClickOpen}
                 sx={[theme.custom.editButton]}>
-                Redeem Details
+                Item Details
             </Button>
 
             <SimpleDialog

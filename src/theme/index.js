@@ -147,7 +147,7 @@ export const theme = createTheme({
         },
       },
     },
-    
+
     MuiDataGridToolbarContainer: {
       styleOverrides: { backgroundColor: "red" }
     },
@@ -254,6 +254,7 @@ export const theme = createTheme({
       },
 
     },
+
     //----------- Typography ----------------------------------
     typography: {
       infoCard: {

@@ -81,7 +81,20 @@ export default function Table(props) {
 
               },
             },
-
+            '&.MuiDataGrid-root': {
+            },
+            '.MuiDataGrid-columnSeparator': {
+              color: '#2d1c01',
+            },
+            '& .MuiDataGrid-gridCOloumns': {
+              color: 'red',
+              backgroundColor:"red"
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor:"#794e0a",
+              color:"white",
+              fontWeight:"bolder"
+            },
             // margin: 5,
             padding: 1,
             borderRadius: 2,

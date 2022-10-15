@@ -325,7 +325,9 @@ export const reportList = {
 
         },
         {
-            title: "Sell old gold Module"
+            title: "Sell old gold Module",
+            url: "/reports/sell-old-gold/view"
+
         },
         {
             title: "Upload gold Module"
