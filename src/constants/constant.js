@@ -308,7 +308,7 @@ export const reportList = {
             title: "Buy and Save Module",
             url: "/reports/buy-save/view"
         },
-       
+
         {
             title: "Instant Gold Module",
             url: "/reports/instant-gold/view"
@@ -1806,9 +1806,32 @@ export const invoice = {
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-export const order = [
+export const custodian = [
     {
-        "date": "2022-10-06",
-        "order": 256
-    }
+        name: "Custodian Given",
+        value: 256
+    },
+    {
+        name: "Custodian Released",
+        value: 27
+    },
+    {
+        name: "Under Hold",
+        value: 256
+    },
+]
+export const userType = [
+    {
+        name: "To Customer",
+        value: 256
+    },
+    {
+        name: "To Business",
+        value: 27
+    },
+    {
+        name: "To VIP",
+        value: 256
+    },
+
 ]

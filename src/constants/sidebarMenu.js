@@ -8,7 +8,7 @@ import Image from "next/image";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import { ChartBar as ChartBarIcon } from "../icons/chart-bar";
 import { Cog as CogIcon } from "../icons/cog";
-
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 //================================================
 
 export const dashboardMenuList = [
@@ -79,129 +79,41 @@ export const dashboardMenuList = [
 
 export const inventoryMenuList = [
     {
-        href: "/inventory-dashboard/inventory",
-        icon: <ManageAccountsIcon />,
-        title: "Dashboard",
-    },
-    {
-        href: "/",
-        icon: <ReceiptIcon />,
-        title: "Custody Given",
+        href: '/',
+        icon: <DashboardIcon />,
+        title: 'Dashboard',
         childrens: [
             {
-                href: "/inventory-dashboard/customer",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Customer",
+                href: '/financial-dashobard/my-gold-financials',
+                icon: <ChartBarIcon fontSize="small" />,
+                title: 'Financials',
             },
             {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Merchant",
+                href: '/retail-dashboard/retail',
+                icon: <ChartBarIcon fontSize="small" />,
+                title: 'Retail',
             },
             {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Business",
-            },
-        ],
-    },
-    {
-        href: "/",
-        icon: <ReceiptIcon />,
-        title: "Custody Released",
-        childrens: [
-            {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Customer",
+                href: '/inventory-dashboard/inventory',
+                icon: <ChartBarIcon fontSize="small" />,
+                title: 'Inventory',
             },
             {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Merchant",
-            },
-            {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Business",
-            },
-        ],
-    },
-    {
-        href: "/",
-        icon: <ReceiptIcon />,
-        title: "Custody Hold",
-        childrens: [
-            {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Customer",
-            },
-            {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Merchant",
-            },
-            {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Business",
-            },
-        ],
-    },
-    {
-        href: "/",
-        icon: <ReceiptIcon />,
-        title: "Custody In-Transit",
-        childrens: [
-            {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Customer",
-            },
-            {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Merchant",
-            },
-            {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Business",
-            },
-        ],
-    },
-    {
-        href: "/",
-        icon: <ReceiptIcon />,
-        title: "Custody In-Checking",
-        childrens: [
-            {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Customer",
-            },
-            {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Merchant",
-            },
-            {
-                href: "/dashboard/retail-dashboard",
-                icon: <ReceiptIcon fontSize="small" />,
-                title: "Business",
+                href: '/dashboard/goldbank-dashboard',
+                icon: <ChartBarIcon fontSize="small" />,
+                title: 'CRM',
             },
         ],
     },
     {
         href: "/inventory-dashboard/stock-transfer",
-        icon: <ManageAccountsIcon />,
-        title: "Stock Transfer",
+        icon: <AnalyticsIcon/>,
+        title: "Track Gold",
     },
     {
         href: "/inventory-dashboard/stock-adjustment",
-        icon: <ManageAccountsIcon />,
-        title: "Stock Adjustment",
+        icon: <AnalyticsIcon/>,
+        title: "Track Gold Bars",
     }
 ];
 

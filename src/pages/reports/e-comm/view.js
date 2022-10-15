@@ -38,7 +38,7 @@ import GraphModal from 'src/components/graphModal';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useRouter } from 'next/router';
 import { InfoCard } from 'src/components/cards/infoCard';
-import { InventoryCard } from 'src/components/cards/inventoryCard';
+import { InventoryCard } from 'src/components/cards/inventoryDashboard/custodianCard';
 import { EcommReportCard } from 'src/components/cards/eComm-reportCard';
 //=============================================
 const eCommView = () => {

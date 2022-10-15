@@ -69,17 +69,35 @@ export default function FilterSection() {
                 <CustomTextField size="small" label="Settlement Status" />
             </Grid>
             <Grid
-                sx={{ width:100,height: "100%", display: "flex",justifyContent:"center", alignItems: "end" }}
+                sx={{ width: 100, height: "100%", display: "flex", justifyContent: "center", alignItems: "end" }}
                 item
                 lg={2} sm={12} xl={2} xs={12}>
-                <Button variant="outlined" sx={{ color: "black", backgroundColor: "white", width: "100px" }}>Clear</Button>
+                <Button
+                    sx={{
+                        color: "black",
+                        backgroundColor: "white",
+                        width: "100px",
+                        border:"1px solid gray"
+                    }}>
+                    Clear
+                </Button>
             </Grid>
             <Grid
                 sx={{ height: "100%", display: "flex", alignItems: "end" }}
 
                 item
                 lg={2} sm={12} xl={2} xs={12}>
-                <Button sx={{ color: "white", backgroundColor: "#9e0b0f", width: "100px" }}>Filter</Button>
+                <Button
+                    sx={{
+                        color: "white",
+                        background: "#9e0b0f",
+                        width: "100px",
+                        "&:hover": {
+                            backgroundColor: "#e33035"
+                        }
+                    }}>
+                    Filter
+                </Button>
             </Grid>
         </Grid >
     )

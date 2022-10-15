@@ -38,12 +38,12 @@ import GraphModal from 'src/components/graphModal';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useRouter } from 'next/router';
 import ReportModal from 'src/components/reportModal';
+import FilterSection from 'src/components/filterSection';
 //=============================================
-const buySaveReport = () => {
+const EcommDeliveryReport = () => {
     const router = useRouter()
     const theme = useTheme()
     //=====================================
-
 
     const itemDetail = (params) => {
         return (
@@ -64,11 +64,7 @@ const buySaveReport = () => {
         );
     };
 
-
     const column = [
-
-
-
         {
             field: "id",
             headerName: "invoiceid",
@@ -122,16 +118,12 @@ const buySaveReport = () => {
         },
     ];
     
-    
 
     const modal = (params) => {
         return (
-
             <ReportModal rows={row} columns={column}/>
         );
     };
-
-
 
 
     const columns = [
@@ -315,7 +307,7 @@ const buySaveReport = () => {
             amount_received_custodian: 5365,
             received_trans_status: "status",
             settled_trans_status: "status",
-            recieving_fund: ["bankID", "amount", "bank_no"],
+            recieving_fund: ["bankID", "amount", "bank_no","mode","to_bank"],
             transfer_fund: ["bankID", "amount", "bank_no"],
             flex: 1,
             minWidth: 100,
@@ -329,65 +321,7 @@ const buySaveReport = () => {
                 <title>Dashboard | Custody Given </title>
             </Head>
             <Grid container>
-                <Grid
-                    container
-                    spacing={1}
-                    sx={{
-
-                        minWidth: "100%",
-                        borderRadius: 2,
-                        // backgroundColor: "pink",
-                        mt: 10,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center"
-
-                        // boxShadow: "0px 4px 1px 0px #d2c6c6",
-                    }}
-                >
-                    <Grid
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-
-                        }}
-                        item
-                        lg={3} sm={6} xl={3} xs={12}>
-                        <CustomTextField label="Merchant" />
-                    </Grid>
-                    <Grid
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center"
-                        }}
-                        item
-                        lg={3} sm={6} xl={3} xs={12}>
-                        <CustomTextField label="Customer" />
-                    </Grid>
-                    <Grid
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center"
-                        }}
-                        item
-                        lg={3} sm={6} xl={3} xs={12}>
-                        <CustomTextField label="HSN Codes" />
-                    </Grid>
-                    <Grid
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center"
-                        }}
-                        item
-                        lg={3} sm={6} xl={3} xs={12}>
-                        <CustomTextField label="Settlement Status" />
-                    </Grid>
-
-                </Grid >
+               <FilterSection/>
                 {/* //------------------------------------------------------- */}
                 <Box
                     sx={{
@@ -454,8 +388,8 @@ const buySaveReport = () => {
 };
 //=============================================
 
-buySaveReport.getLayout = (page) => (
+EcommDeliveryReport.getLayout = (page) => (
     <DashboardLayout>{page}</DashboardLayout>
 );
 
-export default buySaveReport;
+export default EcommDeliveryReport;

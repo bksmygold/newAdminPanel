@@ -15,7 +15,7 @@ export const EcommReportCard = (props) => {
     return (
         <Grid container sx={theme.custom.inventoryCard.bg}>
             <Grid item >
-                <Typography sx={theme.custom.typography.inventoryCard.h2}>{props.subtitle}</Typography>
+                <Typography sx={[theme.custom.typography.inventoryCard.h2,{textAlign:"center"}]}>{props.subtitle}</Typography>
                 <Typography sx={[theme.custom.typography.inventoryCard.h1,{textAlign:"center"}]}>{props.title} </Typography>
 
             </Grid>

@@ -34,6 +34,7 @@ export const InventoryDashboardLayout = (props) => {
         </Box>
       </DashboardLayoutRoot>
       <DashboardNavbar
+        showFilter={props.showFilter}
         onSidebarOpen={() => setSidebarOpen(true)}
       />
       <InventoryDashboardSidebar

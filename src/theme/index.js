@@ -201,9 +201,27 @@ export const theme = createTheme({
     inventoryCard: {
       bg: {
         backgroundColor: "#FDFAF2",
-        width: "fit-content",
+        display: "flex",
+        // justifyContent:"start",
+        cursor: "pointer",
+
+        width: "100%",
         borderRadius: 1,
-        p: "10% 20%",
+        p: "10% 5%",
+        height: "100%",
+        boxShadow: '-3px 3px 4px -2px #d2c6c6',
+        border: '1px solid #d2c6c657',
+      },
+      selectedBg: {
+        backgroundColor: "#905E0F",
+        color: "white",
+        display: "flex",
+        // justifyContent:"start",
+        cursor: "pointer",
+
+        width: "100%",
+        borderRadius: 1,
+        p: "10% 5%",
         height: "100%",
         boxShadow: '-3px 3px 4px -2px #d2c6c6',
         border: '1px solid #d2c6c657',
@@ -340,14 +358,35 @@ export const theme = createTheme({
           mt: 5
         },
         h1: {
-          fontSize: 21,
-          color: "#8B5704"
+          fontSize: 19,
+          color: "#8B5704",
+          fontWeight: 600,
+          mb: 2
         },
         h2: {
-          fontSize: 27,
+          fontSize: 22,
           fontWeight: "bold",
           color: "#001737"
-        }
+        },
+        selectedH1: {
+          fontSize: 19,
+          color: "white",
+          fontWeight: 600,
+          mb: 2
+        },
+        selectedH2: {
+          fontSize: 22,
+          fontWeight: "bold",
+          color: "white"
+        },
+        span: {
+          color: "gray",
+          fontSize: "15px"
+        },
+        selectedSpan: {
+          color: "white",
+          fontSize: "15px"
+        },
       },
       reports: {
         fontWeight: 'regular',

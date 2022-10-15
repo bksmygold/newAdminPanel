@@ -27,10 +27,10 @@ import { alpha, styled } from "@mui/material/styles";
 import Table from "src/components/utility/table";
 import { InventoryDashboardLayout } from "src/components/layout/inventoryDashboard-layout";
 import { useTheme } from "@mui/styles";
-import FilterResults from 'react-filter-search';
 import {
     CustomTextField, CustomFormControl
 } from "src/components/customMUI";
+import FilterSection from "src/components/filterSection";
 //=============================================
 const customer = () => {
     //===============
@@ -181,38 +181,10 @@ const customer = () => {
 
                 }}
             >
-                <Box
-                    sx={{
-                        // width: "95%",
-                        borderRadius: 2,
-
-                        marginTop: 5,
-                        boxShadow: "0px 4px 1px 0px #d2c6c6",
-                    }}
-                >
-                    {/* <FormControl fullWidth>
-                        {" "}
-                        <InputLabel id="demo-simple-select-label">Search data</InputLabel>
-                        <Select label="Search data">
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Life Time Data</MenuItem>
-                            <MenuItem value={10}>Kuch aur options</MenuItem>
-                            <MenuItem value={10}>Kuch aur</MenuItem>
-                            <MenuItem value={10}>Aur bhi kuch</MenuItem>
-                        </Select>
-                    </FormControl> */}
-                    <CustomTextField
-                        onChange={(e) => {
-                            let keyword = e.target.value
-                            let newRow = rows.filter(x => x.customer?.toLowerCase().startsWith(keyword.toLowerCase()))
-                            setFilterRow(newRow)
-                        }}
-                        sx={{ minWidth: "100%" }}
-                        label="Search customer"
-                    />
-                </Box>
+               
+                    <FilterSection/>
+               
+                
                 {/* //------------------------------------------------------- */}
                 <Box
                     sx={{
