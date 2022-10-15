@@ -131,8 +131,7 @@ input[type="color"] {
     display: flex;
     flex-direction: row;
     flex-wrap:wrap;
-    background-color: #8b570436;
-    zoom:50%;
+    zoom:80%;
     margin-left: 0;
   }
   /* .card {
@@ -152,13 +151,21 @@ input[type="color"] {
 
 }
 
-@media screen and (max-width: 926px) {
-  .set {
+@media screen and (max-width: 768px) {
+  .responsive-image{
     display: none;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .responsive-image{
+    width:112% ;
+    height: 68vh;
+    margin-top: 20%;
 
   }
-
 }
+
 
 a{
   cursor: pointer;

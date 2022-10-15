@@ -176,7 +176,7 @@ const Lauda = () => {
                             m:"5%"
                         }}
                     >
-                        <img className="set" src={'./loginBg.png'} style={{maxWidth:"40vw"}} />
+                        <img className="responsive-image" src={'./loginBg.png'} style={{maxWidth:"40vw"}} />
                     </Box>
                 </Container>
             </Box>

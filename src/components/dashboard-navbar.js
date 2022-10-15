@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import {  FormControl, Grid, MenuItem, Select, AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip, Button, TextField } from "@mui/material";
+import { FormControl, Grid, MenuItem, Select, AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip, Button, TextField } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Bell as BellIcon } from "../icons/bell";
@@ -14,9 +14,15 @@ import { useState, createContext, useEffect } from "react";
 import { getLoggedInUser } from "src/apis/login";
 import React from "react";
 import { CustomTextField, CustomFormControl } from "./customMUI";
-import { DateRangePicker } from 'react-date-range';
 import { useDashboardFilter } from "src/context/dashboardFilter";
 import dayjs from "dayjs";
+import { useController } from "src/controller/dashboard";
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { Calendar } from 'react-date-range';
+import { DateRangePicker } from 'react-date-range';
+import CalendarModal from "./modal/calendarModal";
+
 //=================================================================
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -26,6 +32,7 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 //=================================================================
 export const DashboardNavbar = (props) => {
   const filter = useDashboardFilter()
+  const { query } = useController()
 
   const { showFilter, onSidebarOpen, ...other } = props;
 
@@ -56,7 +63,7 @@ export const DashboardNavbar = (props) => {
           sx={{
             height: "100%",
             left: 0,
-            p: 3,
+            p: 2,
 
           }}
         >
@@ -77,22 +84,11 @@ export const DashboardNavbar = (props) => {
           {/* --------------------------------------------------------------- */}
           {showFilter && (
 
-            <Grid container className="zoom" sx={{ display: "flex", justifyContent: "flex-end", marginRight: 5 }}>
-              <Grid item xs={12} lg={3} sx={{ flex: 1 }}>
-                <CustomTextField
-                  fullWidth
-                  onChange={(e) => filter.setFromDate(e.target.value)}
-                  type="date"
-                  sx={{ mr: 5, flex: 1 }} />
-              </Grid>
-              <Grid item xs={12} lg={3} sx={{ flex: 1 }}>
-                <CustomTextField
-                  fullWidth
-                  onChange={(e) => console.log(dayjs(e.target.value).format("DD/MM/YYYY"))}
-                  type="date"
+            <Box sx={{flex:1,display:"flex",justifyContent:"flex-end"}}>
+              {/* <Grid item xs={12} lg={3} > */}
+                <CalendarModal/>
+              {/* </Grid> */}
 
-                  sx={{ mr: 5, flex: 1, minHeight: "20%" }} />
-              </Grid>
               {/* <Grid item lg={2} xs={12}>
                 <CustomFormControl fullWidth>
                   <Select
@@ -134,18 +130,18 @@ export const DashboardNavbar = (props) => {
                   Badla
                 </Button>
               </Grid> */}
-            </Grid>
+            </Box>
           )}
 
           {/* --------------------------------------------------------------- */}
 
           {/* </Box> */}
-          <Box sx={{ flexShrink: 10, width: "100%", display: "flex", justifyContent: "flex-end" }}>
+          <Box sx={{   display: "flex", justifyContent: "flex-end" }}>
 
             <Tooltip title="Notifications">
-              <IconButton sx={{ ml: 5 }}>
+              <IconButton sx={{  }}>
                 <Badge color="error" badgeContent={14}>
-                  <BellIcon  sx={{ width: "100%", height: 36, color: "#905e0f" }} fontSize="small" />
+                  <BellIcon sx={{ width: "100%", height: 36, color: "#905e0f" }} fontSize="small" />
                 </Badge>
               </IconButton>
             </Tooltip>

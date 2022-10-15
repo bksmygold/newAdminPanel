@@ -72,11 +72,10 @@ export const GraphCard = (props) => {
   const theme = useTheme()
 
  const arr = [];
-  for (let i = 0; i < props.graph.length; i++) {
+  for (let i = 0; i < props.graph?.length; i++) {
     arr.push({ x: new Date(2022, 1, i+1),  y: props.graph[i] })
   }
   //   var newTest = Array.from(props.graph, val => {'x: '+ val});
-  console.log("<<<<<<<<------------", arr)
   //======================================
   return (
     <Card sx={{ backgroundColor: "#FDFAF2", boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657", height: "100%" }}>

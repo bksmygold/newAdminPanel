@@ -8,11 +8,11 @@ export const RateCard = (props) => {
   const theme = useTheme()
   //===========================
   return (
-    <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }} {...props}>
+    <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657",height:"100%",backgroundColor: "#FDFAF2", }}>
       <CardContent
         sx={{
           backgroundColor: "#FDFAF2",
-          boxShadow: "0px 0px 10px  ",
+          // boxShadow: "0px 0px 10px  ",
         }}
       >
         <Grid container spacing={3} sx={{ justifyContent: "center" }}>

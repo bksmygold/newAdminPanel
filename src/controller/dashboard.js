@@ -7,14 +7,15 @@ import { useDashboardFilter } from "src/context/dashboardFilter";
 //============================================================
 export const useController = () => {
 
-const filter = useDashboardFilter()
-console.log("==================================>", filter)
-
+    const filter = useDashboardFilter()
+    console.log("==========> From", filter.fromDate)
+    console.log("==========> TO", filter.toDate)
     //------------------ QUERY -------------------------------------
     const query = useQuery({
-        queryKey: "dashboardanalytics",
-        queryFn: getDashboardAnalytics,
-        enabled: !!(filter.fromDate && filter.toDate)
+        queryKey: ["dashboardanalytics", filter.fromDate,filter.toDate],
+        queryFn: () => getDashboardAnalytics(filter.fromDate, filter.toDate),
+        enabled: !!(filter.fromDate && filter.toDate),
+
     })
     return {
         query

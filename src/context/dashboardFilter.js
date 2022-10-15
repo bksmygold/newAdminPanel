@@ -4,8 +4,8 @@ export const DashboardFilterContext = createContext();
 
 const DashboardFilterProvider = ({ children }) => {
 
-  const [fromDate, setFromDate] = React.useState("03/10/2022");
-  const [toDate, setToDate] = React.useState("04/12/2022");
+  const [fromDate, setFromDate] = React.useState("");
+  const [toDate, setToDate] = React.useState("");
 
   const value = useMemo(
     () => ({
