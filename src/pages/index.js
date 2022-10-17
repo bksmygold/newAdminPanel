@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Box, Container, Grid, Typography,Skeleton } from "@mui/material";
+import { Box, Container, Grid, Typography, Skeleton } from "@mui/material";
 import { GraphCard } from "../components/dashboard/cards/graphCard";
 import { LatestOrders } from "../components/dashboard/latest-orders";
 import { LatestProducts } from "../components/dashboard/latest-products";
@@ -29,6 +29,9 @@ import { Chart as ChartJS, TimeScale, N } from "chart.js";
 import { useDashboardFilter } from "src/context/dashboardFilter";
 import { useController } from "src/controller/dashboard";
 import GeneralDetails from "src/components/dashboard/general-details";
+import { getDashboardAnalytics } from "src/apis/dashboard";
+import OrderDetails from "src/components/dashboard/order-detail";
+import PeopleDetails from "src/components/dashboard/people-details";
 //====================================================================
 const Dashboard = () => {
   const theme = useTheme()
@@ -38,16 +41,18 @@ const Dashboard = () => {
 
 
   // if (query.isLoading) return <Loading />
-  
-  // console.log("=======> Query", query.data)
 
+  // console.log("=======> Query", query.data)
+// useEffect(()=>{
+//   getDashboardAnalytics("01/10/2022","31/10/2022").then(res =>console.log("aayaa ----", res))
+// },[])
   //====================================================================
   return (
     <>
       {/* ------------------------------ */}
       <Head>
         <title>Dashboard </title>
-      </Head> 
+      </Head>
       {/* ------------------------------ */}
       <Box
         component="main"
@@ -71,7 +76,7 @@ const Dashboard = () => {
           >
             General Information
           </Typography>
-          <GeneralDetails/>
+          <GeneralDetails />
 
 
           {/* -----------   My Gold Financials------------------- */}
@@ -84,7 +89,7 @@ const Dashboard = () => {
           >
             MyGold Financials <ArrowForwardIosIcon />
           </Typography>
-          <Grid container spacing={3}>
+          {/* <Grid container spacing={3}>
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <FinancialsCard isInvoice />
             </Grid>
@@ -100,7 +105,7 @@ const Dashboard = () => {
             <Grid item xl={3} lg={3} sm={6} xs={12}>
               <FinancialsCard title="Commissions" />
             </Grid>
-          </Grid>
+          </Grid> */}
           {/* -----------   My Gold Retails------------------- */}
 
           <Typography
@@ -109,42 +114,8 @@ const Dashboard = () => {
           >
             MyGold Retials
           </Typography>
-          <Grid container spacing={3}>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <RetailCard totalOrder title="Total Order" stats={369} />
-            </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <RetailCard toBePacked title="To be Packed" stats={12} />
-            </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <RetailCard toBeShipped title="To be Shipped" stats={100} />
-            </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <RetailCard inTransit title="In-Transit" stats={2} />
-            </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <RetailCard orderDelivered title="Order Delivered" stats={369} />
-            </Grid>
-
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <RetailCard totalReturn title="Total Returns" stats={369} />
-            </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <RetailCard toBePicked title="To be Picked" stats={12} />
-            </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <RetailCard toBeRecieved title="To be Recieved" stats={100} />
-            </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <RetailCard returnAccepted title="Return Accepted" stats={2} />
-            </Grid>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <RetailCard returnRejected title="Return Rejected" stats={369} />
-            </Grid>
-
-
-
-          </Grid>
+          <OrderDetails/>
+          
           {/* -----------   My Gold People------------------- */}
           <Typography
             sx={[theme.custom.typography.dashBoard.heading, { mt: 5, mb: 2 }]}
@@ -153,20 +124,7 @@ const Dashboard = () => {
           >
             MyGold People
           </Typography>
-          <Grid container spacing={3}>
-            <Grid item lg={3} sm={6} xs={12}>
-              <PeopleCard totalOrder title="Total Customers" stats={369} percentage={10} />
-            </Grid>
-            <Grid item lg={3} sm={6} xs={12}>
-              <PeopleCard totalOrder title="Total Merchants" stats={36} percentage={2} />
-            </Grid>
-            <Grid item lg={3} sm={6} xs={12}>
-              <PeopleCard totalOrder title="Total Retails" stats={12} percentage={14} />
-            </Grid>
-            <Grid item lg={3} sm={6} xs={12}>
-              <PeopleCard totalOrder title="Total VIP Referrals" stats={786} percentage={7} />
-            </Grid>
-          </Grid>
+          <PeopleDetails/>
 
           {/* <Grid item lg={4} md={6} xl={3} xs={12}>
             <TrafficByDevice sx={{ height: "100%" }} />

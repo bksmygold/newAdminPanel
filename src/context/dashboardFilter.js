@@ -1,11 +1,11 @@
 import React, { createContext, useMemo, useContext } from "react";
-
+import dayjs from "dayjs";
 export const DashboardFilterContext = createContext();
 
 const DashboardFilterProvider = ({ children }) => {
 
-  const [fromDate, setFromDate] = React.useState("");
-  const [toDate, setToDate] = React.useState("");
+  const [fromDate, setFromDate] = React.useState(dayjs().startOf("month").toDate());
+  const [toDate, setToDate] = React.useState(dayjs().toDate());
 
   const value = useMemo(
     () => ({

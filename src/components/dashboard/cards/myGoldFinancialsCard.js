@@ -62,7 +62,7 @@ export const FinancialsCard = (props) => {
     },
   };
   const theme = useTheme()
-  return null
+  // return null
   return (
     <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657", height: "100%" }} {...props}>
       <CardContent sx={{ backgroundColor: "#FDFAF2" }}>

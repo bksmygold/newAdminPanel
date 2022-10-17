@@ -11,23 +11,67 @@ import { Chart as ChartJS, TimeScale, N } from "chart.js";
 
 ChartJS.register([TimeScale]);
 
-let arr = [];
-
-for (let i = 0; i < 100; i++) {
-  arr.push({ x: new Date(2022, 1, i + 1), y: i * 50 })
-}
 //======================================================
 export const PeopleCard = (props) => {
-  const theme = useTheme()
+
+  // const options = {
+  //   //animation: true,
+  //   pointStyle: "line",
+  //   spanGaps: true,
+  //   responsive: true,
+  //   scales: {
+  //     y: {
+  //       display: false,
+  //       title: {
+  //         display: false,
+  //         text: "",
+  //       },
+  //       ticks: {
+  //         // Include a dollar sign in the ticks
+  //         callback: function (y, index, ticks) {
+  //           return y;
+  //         },
+  //       },
+  //       weight: 50,
+  //     },
+  //     x: {
+  //       display: false,
+  //       adapters: {
+  //         date: {
+  //           locale: enGB,
+  //         },
+  //       },
+  //       type: "time",
+  //       distribution: "linear",
+  //       time: {
+  //         parser: "MM",
+  //         // unit: format,
+  //       },
+  //       title: {
+  //         display: false,
+  //         text: "Date",
+  //       },
+  //     },
+  //   },
+  //   plugins: {
+  //     legend: { display: false }, 
+  //     title: {
+  //       display: false,
+  //       text: "Text",
+  //     },
+  //   },
+  // };
+
 
   const options = {
     //animation: true,
-    pointStyle: "line",
+    // pointStyle: null
+    pointRadius:0,
     spanGaps: true,
     responsive: true,
     scales: {
       y: {
-        display: false,
+      display: false,
         title: {
           display: false,
           text: "",
@@ -41,7 +85,7 @@ export const PeopleCard = (props) => {
         weight: 50,
       },
       x: {
-        display: false,
+      display: false,
         adapters: {
           date: {
             locale: enGB,
@@ -68,52 +112,14 @@ export const PeopleCard = (props) => {
     },
   };
 
+  const arr = [];
+  for (let i = 0; i < props.graph?.length; i++) {
+    arr.push({ x: new Date(2022, 1, i+1),  y: props.graph[i] })
+  }
+  const theme = useTheme()
+
   return (
-    // <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }} {...props}>
-    //   <CardContent sx={{ backgroundColor: "#FDFAF2" }}>
-    //     <Grid container spacing={1} >
-    //       <Box sx={{ display: "flex" }}>
-    //         <Typography sx={theme.custom.typography.dashBoard.h1}>
-    //           {props.title}
-    //         </Typography>
-    //         <Grid item>
-    //           <Typography sx={theme.custom.typography.dashBoard.h2}>
-    //             {props.stats}
-    //           </Typography>
-
-    //           <Typography sx={theme.custom.typography.dashBoard.h3}>
-    //             {props.percentage}% Since last month
-    //           </Typography>
-    //         </Grid>
-    //         <Box sx={{ zoom: "80%" }}>
-
-    //           <Line
-
-    //             datasetIdKey='id'
-
-    //             data={{
-    //               labels: ['Jun', 'Jul', 'Aug', 'Jun', 'Jul', 'Aug'],
-    //               datasets: [
-    //                 {
-    //                   backgroundColor: "#AD700E",
-    //                   color: "red",
-    //                   borderColor: 'white',
-    //                   fill: true,
-    //                   id: 1,
-    //                   data: [1, 2, 3, 2, 2, 4],
-    //                 },
-
-    //               ],
-    //             }}
-    //           />
-    //         </Box>
-    //       </Box>
-
-
-    //     </Grid>
-
-    //   </CardContent>
-    // </Card>
+   
     <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657" }} {...props}>
       <CardContent sx={{ backgroundColor: "#FDFAF2" }}>
         <Grid container spacing={1} >
@@ -143,11 +149,11 @@ export const PeopleCard = (props) => {
                           const ctx = context.chart.ctx;
                           const gradient = ctx.createLinearGradient(0, 0, 0, 200);
                           gradient.addColorStop(0, "#9D702B");
-                          gradient.addColorStop(1, "#FEF1DE");
+                          gradient.addColorStop(1, "white");
                           return gradient;
                         },
                         borderColor: "#905E0F",
-                        borderWidth: 2,
+                        borderWidth: 5,
                         fill: true,
                         id: 1,
                         data: arr

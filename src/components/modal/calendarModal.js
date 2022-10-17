@@ -19,16 +19,18 @@ import { Slide } from '@mui/material';
 import { DateRangePicker } from 'react-date-range';
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import { addDays } from 'date-fns';
+import dayjs from "dayjs";
+import { useController } from "../../controller/dashboard"
+import { useDashboardFilter } from "../../context/dashboardFilter";
 
 //======================================================
 function SimpleDialog(props) {
     const theme = useTheme()
+    const { query } = useController()
+    const filter = useDashboardFilter()
+
     const { onClose, selectedValue, open } = props;
-    const[state,setState] = React.useState([{
-        startDate: new Date(),
-        endDate: addDays(new Date(), 7),
-        key: 'selection',
-    }])
+
 
     const handleClose = () => {
         onClose(selectedValue);
@@ -37,20 +39,30 @@ function SimpleDialog(props) {
     const handleListItemClick = (value) => {
         onClose(value);
     };
-console.log("state",state)
+
+    // console.log("From ---", dayjs(state[0].startDate).format('DD/MM/YYYY'))
+    // console.log("To ---", dayjs(state[0].endDate).format('DD/MM/YYYY'))
+
     return (
-        <Dialog sx={{width:"100vw"}}onClose={handleClose} transitionDuration={350} TransitionComponent={Slide}
+        <Dialog sx={{ width: "100vw" }} onClose={handleClose} transitionDuration={350} TransitionComponent={Slide}
             open={open}>
             <DateRangePicker
                 rangeColors={['#905E0F', '#905E0F', '#905E0F']}
-                
-                onChange={item => setState([item.selection])}
+                ranges={[{
+                    startDate: filter.fromDate,
+                    endDate: filter.toDate,
+                    key: "selection"
+                }]}
+                onChange={item => {
+                    filter.setFromDate(item.selection.startDate)
+                    filter.setToDate(item.selection.endDate)
+                }}
                 showSelectionPreview={true}
                 moveRangeOnFirstSelection={false}
                 months={2}
-                ranges={state}
-                direction="horizontal"
-              
+
+                direction="vertical"
+
             />
         </Dialog>
     );
@@ -65,8 +77,10 @@ SimpleDialog.propTypes = {
 //======================================================================
 export default function CalendarModal(props) {
     const theme = useTheme()
-
+    const filter = useDashboardFilter()
     const [open, setOpen] = React.useState(false);
+
+    // console.log("filter ---",dayjs(filter.fromDate).format("DD/MM/YYYY"))
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -81,9 +95,9 @@ export default function CalendarModal(props) {
         <div>
             <Button
                 onClick={handleClickOpen}
-                sx={{ color: "#905E0F", fontWeight: 600 }}>
-                <span>Filter by date</span><InsertInvitationIcon />
-            </Button>
+                sx={{ backgroundColor:"#FDFAF2",border:"1px solid #F1E9D4 ",color: "#905E0F", fontWeight: 600, m: 1 }}>
+                {dayjs(filter.fromDate).format("DD/MMM/YY")}{" - "}{dayjs(filter.toDate).format("DD/MMM/YY")}
+                <InsertInvitationIcon sx={{ml:2}} /></Button>
 
             <SimpleDialog
 

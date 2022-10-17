@@ -84,9 +84,9 @@ export const DashboardNavbar = (props) => {
           {/* --------------------------------------------------------------- */}
           {showFilter && (
 
-            <Box sx={{flex:1,display:"flex",justifyContent:"flex-end"}}>
+            <Box sx={{width:"100%",flex:1,display:"flex",justifyContent:"flex-end"}}>
               {/* <Grid item xs={12} lg={3} > */}
-                <CalendarModal/>
+               
               {/* </Grid> */}
 
               {/* <Grid item lg={2} xs={12}>
@@ -136,8 +136,9 @@ export const DashboardNavbar = (props) => {
           {/* --------------------------------------------------------------- */}
 
           {/* </Box> */}
-          <Box sx={{   display: "flex", justifyContent: "flex-end" }}>
-
+          <Box sx={{   width:"100%",display: "flex", justifyContent: "flex-end" }}>
+          {showFilter &&
+          <CalendarModal />}
             <Tooltip title="Notifications">
               <IconButton sx={{  }}>
                 <Badge color="error" badgeContent={14}>

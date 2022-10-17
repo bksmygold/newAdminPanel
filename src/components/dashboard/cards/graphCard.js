@@ -23,7 +23,8 @@ export const GraphCard = (props) => {
 
   const options = {
     //animation: true,
-    pointStyle: "line",
+    // pointStyle: null
+    pointRadius:0,
     spanGaps: true,
     responsive: true,
     scales: {
