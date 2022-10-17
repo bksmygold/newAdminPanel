@@ -180,7 +180,6 @@ export default function AddSlider() {
                 Slider Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Type</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"
@@ -215,7 +214,6 @@ export default function AddSlider() {
                 Slider Sub Type
               </Typography>
               <CustomFormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Sub Type</InputLabel>
                 <Select
                   defaultValue=""
                   labelId="demo-simple-select-label"

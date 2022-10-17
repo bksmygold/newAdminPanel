@@ -82,13 +82,13 @@ export default function Slider() {
       headerName: 'Slider Image',
       width: 250,      flex:1,
       renderCell: (params) => (
-        <div style={{padding:50}}>
+
 
           <img
             style={{ width: "100%"  }}
             src={params.value}
           />
-        </div>
+
       ),
 
       editable: true,

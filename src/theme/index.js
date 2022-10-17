@@ -171,7 +171,7 @@ export const theme = createTheme({
       },
     },
     addButton: {
-      background: 'linear-gradient(43deg, #8b5704, #ddb070)',
+      background: 'linear-gradient(43deg, #8b5704, #8b5704)',
       color: 'white',
       mt: 1,
       fontWeight: 'bolder',

@@ -271,18 +271,11 @@ export const infoCard = {
             title: "How-to Videos",
             desc: "create, update, delete how To Videos",
             url: "/promotional-setting/how-to-video/view-how-to-video",
-
         },
         testi: {
             title: "Testimonials",
             desc: "create, update, delete Testimonials Videos",
             url: "/promotional-setting/testimonial/view-testimonial-video"
-
-        },
-        governmentTax: {
-            title: "Ad Position",
-            desc: "create, update, delete Ad Position",
-
         },
         offerPopup: {
             title: "Offer Popups",
@@ -295,8 +288,8 @@ export const infoCard = {
         },
         merchNatBanner: {
             title: "Merchant Banners",
-
             desc: "Approve, disapprove Merchant Banners",
+            url: "/promotional-setting/merchant-banner/view"
         },
 
     },
