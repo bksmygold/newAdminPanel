@@ -280,6 +280,8 @@ export const infoCard = {
         offerPopup: {
             title: "Offer Popups",
             desc: "create, update, delete offer popups with timeline conditions etc.",
+            url: "/promotional-setting/offer-popup/view"
+
         },
         referratlType: {
             title: "Referral Type",
