@@ -1,10 +1,30 @@
 import { Bar } from 'react-chartjs-2';
-import { Box, Button, Card, CardContent, CardHeader, Divider, useTheme } from '@mui/material';
+import { Box, Button, Card, CardContent, CardHeader, Dialog, Divider, Menu, useTheme, List, ListItem, ListItemText, MenuItem, TextField } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import { useState } from 'react';
+import React from 'react';
+import { CustomTextField } from 'src/components/customMUI';
+
 //==================================================
 export const Graph = (props) => {
   const theme = useTheme();
+  const [year, setYear] = useState(false)
+  const optionsList = [
+
+    'Show all notification content',
+    'Hide sensitive notification content',
+    'Hide all notification content',
+  ];
+
+
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const open = Boolean(anchorEl);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const data = {
     datasets: [
@@ -81,49 +101,114 @@ export const Graph = (props) => {
     }
   };
 
+
+  const handleClickListItem = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+
+
+
+
+
+
   return (
-    <Box sx={{ width:"100%",display: "flex", justifyContent: "center",alignItems:"center" }}>
-      <Card
-        sx={{
-           boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657",
-          marginTop: 2,
-          width: "100%",
-        }}
-        {...props}
-      >
-        <CardHeader
-          action={
-            <Button endIcon={<ArrowDropDownIcon fontSize="small" />} size="small">
-              Last 7 days
-            </Button>
-          }
-          sx={{ color: "#905E0F" }}
-          title="Gold in Custody Vs Gold Released"
-        />
-        <Divider />
-        <CardContent>
+    <>
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Card
+          sx={{
+            boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657",
+            marginTop: 2,
+            width: "100%",
+          }}
+          {...props}
+        >
+          <CardHeader
+            action={
+              // <Button
+              //   endIcon={<ArrowDropDownIcon fontSize="small" />}
+              //   size="small"
+              //   onClick={() => setAnchorEl(!anchorEl)}
+              // >
+              //   Last 7 days
+              // </Button>
+              <CustomTextField
+                size="small"
+                label="select year"
+              />
+            }
+            sx={{ color: "#905E0F" }}
+            title="Gold in Custody Vs Gold Released"
+          />
+          <Divider />
+          <CardContent>
+            <Box
+              sx={{
+                height: 400,
+                position: "relative",
+              }}
+            >
+              <Bar data={data} options={options} />
+            </Box>
+          </CardContent>
+          <Divider />
           <Box
             sx={{
-              height: 400,
-              position: "relative",
+              display: "flex",
+              justifyContent: "flex-end",
+              p: 2,
             }}
           >
-            <Bar data={data} options={options} />
+            <Button color="primary" endIcon={<ArrowRightIcon fontSize="small" />} size="small">
+              Overview
+            </Button>
           </Box>
-        </CardContent>
-        <Divider />
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            p: 2,
+        </Card>
+      </Box>
+
+      <div>
+        <List
+          component="nav"
+          aria-label="Device settings"
+          sx={{ bgcolor: 'background.paper' }}
+        >
+          <ListItem
+            button
+            id="lock-button"
+            aria-haspopup="listbox"
+            aria-controls="lock-menu"
+            aria-label="when device is locked"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClickListItem}
+          >
+            <ListItemText
+              primary="When device is locked"
+              secondary={optionsList[selectedIndex]}
+            />
+          </ListItem>
+        </List>
+        <Menu
+          id="lock-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'lock-button',
+            role: 'listbox',
           }}
         >
-          <Button color="primary" endIcon={<ArrowRightIcon fontSize="small" />} size="small">
-            Overview
-          </Button>
-        </Box>
-      </Card>
-    </Box>
+          {optionsList.map((option, index) => (
+            <MenuItem
+              key={option}
+              disabled={index === 0}
+              selected={index === selectedIndex}
+              onClick={(event) => handleMenuItemClick(event, index)}
+            >
+              {option}
+            </MenuItem>
+          ))}
+        </Menu>
+      </div>
+    </>
   );
 };

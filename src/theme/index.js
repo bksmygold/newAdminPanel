@@ -41,7 +41,7 @@ export const theme = createTheme({
     },
     MuiButtonBase: {
       defaultProps: {
-        disableRipple: true,
+        // disableRipple: true,
       },
     },
     MuiCardContent: {

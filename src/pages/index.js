@@ -32,6 +32,7 @@ import GeneralDetails from "src/components/dashboard/general-details";
 import { getDashboardAnalytics } from "src/apis/dashboard";
 import OrderDetails from "src/components/dashboard/order-detail";
 import PeopleDetails from "src/components/dashboard/people-details";
+import FinancialsDetails from "src/components/dashboard/financial-details";
 //====================================================================
 const Dashboard = () => {
   const theme = useTheme()
@@ -89,23 +90,7 @@ const Dashboard = () => {
           >
             MyGold Financials <ArrowForwardIosIcon />
           </Typography>
-          {/* <Grid container spacing={3}>
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <FinancialsCard isInvoice />
-            </Grid>
-
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <FinancialsCard title="Receiveables" />
-            </Grid>
-
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <FinancialsCard title="Settlements" />
-            </Grid>
-
-            <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <FinancialsCard title="Commissions" />
-            </Grid>
-          </Grid> */}
+          <FinancialsDetails/>
           {/* -----------   My Gold Retails------------------- */}
 
           <Typography

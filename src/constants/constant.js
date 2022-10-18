@@ -328,7 +328,9 @@ export const reportList = {
             title: "Upload gold Module"
         },
         {
-            title: "Referral Module"
+            title: "Referral Module",
+            url: "/reports/referral/view"
+
         },
         {
             title: "Bid buy and sell Module"
