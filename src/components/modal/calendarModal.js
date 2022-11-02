@@ -44,8 +44,13 @@ function SimpleDialog(props) {
     // console.log("To ---", dayjs(state[0].endDate).format('DD/MM/YYYY'))
 
     return (
-        <Dialog sx={{ width: "100vw" }} onClose={handleClose} transitionDuration={350} TransitionComponent={Slide}
-            open={open}>
+        <Dialog
+            sx={{ width: "100vw" }}
+            onClose={handleClose}
+            transitionDuration={350}
+            TransitionComponent={Slide}
+            open={open}
+        >
             <DateRangePicker
                 rangeColors={['#905E0F', '#905E0F', '#905E0F']}
                 ranges={[{
@@ -60,9 +65,7 @@ function SimpleDialog(props) {
                 showSelectionPreview={true}
                 moveRangeOnFirstSelection={false}
                 months={2}
-
                 direction="vertical"
-
             />
         </Dialog>
     );
@@ -95,9 +98,9 @@ export default function CalendarModal(props) {
         <div>
             <Button
                 onClick={handleClickOpen}
-                sx={{ backgroundColor:"#FDFAF2",border:"1px solid #F1E9D4 ",color: "#905E0F", fontWeight: 600, m: 1 }}>
+                sx={{ backgroundColor: "#FDFAF2", border: "1px solid #F1E9D4 ", color: "#905E0F", fontWeight: 600, m: 1 }}>
                 {dayjs(filter.fromDate).format("DD/MMM/YY")}{" - "}{dayjs(filter.toDate).format("DD/MMM/YY")}
-                <InsertInvitationIcon sx={{ml:2}} /></Button>
+                <InsertInvitationIcon sx={{ ml: 2 }} /></Button>
 
             <SimpleDialog
 

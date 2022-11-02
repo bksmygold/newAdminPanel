@@ -129,7 +129,7 @@ const Dashboard = () => {
               router.push("/inventoryDashboard/inventory");
             }}
           >
-            MyGold Inventory  <ArrowForwardIosIcon />
+            MyGold Inventory  <ArrowForwardIosIcon/>
           </Typography>
           <Graph />
         </Container>

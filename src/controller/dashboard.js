@@ -2,10 +2,10 @@ import { useFormik } from "formik";
 import { useQuery, useMutation } from '@tanstack/react-query';
 import React from "react";
 import swal from 'sweetalert';
-import { getDashboardAnalytics, getDashboardCommissions, getDashboardInvoice, getDashboardOrders, getDashboardPeople, getDashboardReceivables, getDashboardSettlements } from "../apis/dashboard";
+import { getDashboardAnalytics, getDashboardCommissions, getDashboardCustody, getDashboardInvoice, getDashboardOrders, getDashboardPeople, getDashboardReceivables, getDashboardSettlements } from "../apis/dashboard";
 import { useDashboardFilter } from "src/context/dashboardFilter";
 //============================================================
-export const useController = (type) => {
+export const useController = (x) => {
 
     const filter = useDashboardFilter()
 
@@ -74,11 +74,10 @@ export const useController = (type) => {
     })
 
     const custody_Query = useQuery({
-        queryKey:['dashboardCustodyDetail'],
-        queryFn:getDashboardCommissions,
+        queryKey:['dashboardCustodyDetail',x],
+        queryFn:()=>getDashboardCustody(x),
         // enabled:!!(year)
     })
-
 
     return {
         analyticsQuery,

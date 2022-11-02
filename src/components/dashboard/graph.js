@@ -5,7 +5,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { useState } from 'react';
 import React from 'react';
 import { CustomTextField } from 'src/components/customMUI';
-
+import { useController } from 'src/controller/dashboard';
 //==================================================
 export const Graph = (props) => {
   const theme = useTheme();
@@ -17,7 +17,9 @@ export const Graph = (props) => {
     'Hide all notification content',
   ];
 
+  const { custody_Query } = useController(year)
 
+  console.log("custody", custody_Query.data)
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -34,7 +36,7 @@ export const Graph = (props) => {
         barThickness: 12,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: [18, 5, 19, 27, 29, 19, 20],
+        data: custody_Query?.data?.given,
         label: "Custody",
         maxBarThickness: 80,
       },
@@ -44,12 +46,12 @@ export const Graph = (props) => {
         barThickness: 12,
         borderRadius: 4,
         categoryPercentage: 0.5,
-        data: [11, 20, 12, 29, 30, 25, 13],
+        data: custody_Query?.data?.release,
         label: "Release",
         maxBarThickness: 80,
       },
     ],
-    labels: ["1 Aug", "2 Aug", "3 Aug", "4 Aug", "5 Aug", "6 Aug", "7 aug"],
+    labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
   };
 
   const options = {
@@ -135,6 +137,7 @@ export const Graph = (props) => {
               <CustomTextField
                 size="small"
                 label="select year"
+                onChange={(e) => setYear(e.target.value)}
               />
             }
             sx={{ color: "#905E0F" }}
