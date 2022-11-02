@@ -169,7 +169,7 @@ export const Graph = (props) => {
         </Card>
       </Box>
 
-      <div>
+      {/* <div>
         <List
           component="nav"
           aria-label="Device settings"
@@ -211,7 +211,7 @@ export const Graph = (props) => {
             </MenuItem>
           ))}
         </Menu>
-      </div>
+      </div> */}
     </>
   );
 };

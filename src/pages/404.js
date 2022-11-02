@@ -30,7 +30,7 @@ const NotFound = () => (
           <Typography
             align="center"
             color="textPrimary"
-            variant="h1"
+            variant="h2"
           >
             404: The page you are looking for isn’t here
           </Typography>
@@ -45,12 +45,12 @@ const NotFound = () => (
           <Box sx={{ textAlign: 'center' }}>
             <img
               alt="Under development"
-              src="/static/images/undraw_page_not_found_su7k.svg"
+              src="/static/images/404.PNG"
               style={{
                 marginTop: 50,
                 display: 'inline-block',
                 maxWidth: '100%',
-                width: 560,
+                width: 260,
                 
               }}
             />
@@ -62,7 +62,13 @@ const NotFound = () => (
             <Button
               component="a"
               startIcon={(<ArrowBackIcon fontSize="small" />)}
-              sx={{ mt: 3 }}
+              sx={{ 
+                mt: 3 ,
+                backgroundColor:"#905E0F",
+                "&:hover":{
+                  backgroundColor:"#724E15"
+                }
+              }}
               variant="contained"
             >
               Go back to dashboard

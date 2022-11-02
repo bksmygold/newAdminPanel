@@ -41,7 +41,7 @@ import ReportModal from 'src/components/modal/reportModal';
 import CardModal from 'src/components/modal/cardModal';
 import FilterSection from 'src/components/filterSection';
 //=============================================
-const CustomerReferralReports = () => {
+const UploadGoldReport = () => {
     const router = useRouter()
     const theme = useTheme()
     //=====================================
@@ -49,11 +49,16 @@ const CustomerReferralReports = () => {
 
     const itemModal = (params) => {
         return (
-            <CardModal customerReferral={itemRows} />
+            <CardModal item={itemRows} />
         );
     };
 
-
+    const linkButton = (params) => {
+        return (
+            <Button sx={theme.custom.editButton} onClick={()=>router.push("/reports/upload-gold/transaction")}>View Transaction</Button>
+            
+        );
+    };
     //=============================
 
     const mediaRows = [
@@ -103,7 +108,7 @@ const CustomerReferralReports = () => {
             field: "weight",
             headerName: "weight",
             flex: 1,
-            minWidth: 50,
+            minWidth: 100,
 
         },
 
@@ -112,98 +117,87 @@ const CustomerReferralReports = () => {
     const itemRows = [
         {
             id: 1,
-            customer: "Nischal",
-            email:"email@email.com",
-            phone:7392899874,
-            first_plan:"Buy-Save",
-            installments:'₹4587/month',
-            last_installments_paid_on:"14/07/1987",
-            plan_status:"de-active",
-            mature_on:"15/08/1988",
-            custodian:"Malabaar",
-            custody_certificate:"certificate",
-            referral_gold_afterMaturity:7,
+            name: "24kt bangles",
+            details: ["style Name", "Pieces", "weight"],
+            photo: "https://d2x02matzb08hy.cloudfront.net/img/accessory/hero_image/781212142/ACN032__4_.jpg",
+            weight: 12,
         },
     ];
 
     //=============================
     const columns = [
         {
-            field: "customer",
-            headerName: "customer",
+            field: "merchant",
+            headerName: "merchant",
+            minWidth: 100,
             flex: 1,
-            minWidth: "100%",
             renderCell: (params) => (
-                <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.row.customer}</p>
+                <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.row.merchant}</p>
             ),
 
         },
         {
-            field: "referral_code",
-            headerName: "referral_code",
-            minWidth: "100%",
+            field: "active_appointment",
+            headerName: "active_appointment",
+            minWidth: 100,
 
             flex: 1
         },
         {
-            field: "plan_subscribed",
-            headerName: "plan_subscribed",
-            minWidth: "100%",
+            field: "cancelled_appointment",
+            headerName: "cancelled_appointment",
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: "verified_appointment",
+            headerName: "verified_appointment",
+            minWidth: 100,
 
             flex: 1
         },
         {
-            field: "referred_to",
-            headerName: "referred_to",
-            minWidth: "100%",
-
-
-            flex: 1
-        },
-        {
-            field: "referral_gold_recieved",
-            headerName: "referral_gold_recieved",
-            minWidth: "100%",
+            field: "total_gold_weight",
+            headerName: "total_gold_weight",
+            minWidth: 100,
 
             flex: 1
         },
         {
-            field: "referral_gold_lost",
-            headerName: "referral_gold_lost",
-            minWidth: "100%",
-
-            flex: 1
-        },
-        {
-            field: "joining_bonus",
-            headerName: "joining_bonus",
-            minWidth: "100%",
+            field: "total_gold_value",
+            headerName: "total_gold_value",
+            minWidth: 100,
             
             flex: 1
         },
         {
-            field: "referral_details",
-            headerName: "referral_details",
-            minWidth: "100%",
-            flex: 1,
-            renderCell: itemModal
+            field: "total_commission",
+            headerName: "total_commission",
+            minWidth: 100,
+            
+            flex: 1
         },
-
+        {
+            field: "view_appointment",
+            headerName: "view_appointment",
+            minWidth: 150,
+            flex: 1,
+            renderCell: linkButton
+        },
 
     ];
 
     const rows = [
         {
             id: 1,
-            customer: "Nischal",
-            referral_code:"BKS-789",
-            plan_subscribed:"Yes",
-            referred_to:44,
-            referral_gold_recieved:4,
-            referral_gold_lost:4,
-            joining_bonus:4,
-            referral_details:"button"
-            
+            merchant: "merchant",
+            active_appointment: 11,
+            cancelled_appointment: 5,
+            verified_appointment: 6,
+            total_gold_weight: 5,
+            total_gold_value: 1100,
+            total_commission:7896,
+            view_appointment:"Link",
         },
     ];
     //=================================================================================
@@ -211,7 +205,7 @@ const CustomerReferralReports = () => {
         <>
             {/* ------------------------------ */}
             <Head>
-                <title>Dashboard | Customer Referral Reports</title>
+                <title>Dashboard | Upload Gold </title>
             </Head>
             <Grid container>
                 <FilterSection />
@@ -282,8 +276,8 @@ const CustomerReferralReports = () => {
 };
 //=============================================
 
-CustomerReferralReports.getLayout = (page) => (
+UploadGoldReport.getLayout = (page) => (
     <DashboardLayout>{page}</DashboardLayout>
 );
 
-export default CustomerReferralReports;
+export default UploadGoldReport;

@@ -322,21 +322,22 @@ export const reportList = {
         {
             title: "Sell old gold Module",
             url: "/reports/sell-old-gold/view"
-
         },
         {
-            title: "Upload gold Module"
+            title: "Upload gold Module",
+            url: "/reports/upload-gold/view"
         },
         {
             title: "Referral Module",
             url: "/reports/referral/view"
-
         },
         {
-            title: "Bid buy and sell Module"
+            title: "Bid buy and sell Module",
+            url: "/reports/bid-buy-sell/view"
         },
         {
-            title: "Loan Module"
+            title: "Scan & Pay Module",
+            url: "/reports/scan-pay/view"
         }
     ],
     metal: [

@@ -41,73 +41,17 @@ import ReportModal from 'src/components/modal/reportModal';
 import CardModal from 'src/components/modal/cardModal';
 import FilterSection from 'src/components/filterSection';
 //=============================================
-const CustomerReferralReports = () => {
-    const router = useRouter()
-    const theme = useTheme()
-    //=====================================
+const SalesOfferReports = () => {
+  
 
 
     const itemModal = (params) => {
         return (
-            <CardModal customerReferral={itemRows} />
+            <CardModal salesOfferReferral={itemRows} />
         );
     };
 
 
-    //=============================
-
-    const mediaRows = [
-        {
-            id: 1,
-            purity: "scale",
-            weight: "scale",
-            flex: 1,
-            minWidth: 100,
-        },
-    ];
-
-    //=============================
-    const itemColumns = [
-        {
-            field: "name",
-            headerName: "name",
-            flex: 1,
-            minWidth: 100,
-
-        },
-
-        {
-            field: "ntWt",
-            headerName: "ntWt",
-            minWidth: 100,
-            flex: 1,
-            renderCell: (params) => (
-                <ul>
-                    {params.row.details.map(x => (
-                        <li>{x}</li>
-                    ))}
-                </ul>
-            ),
-        },
-        {
-            field: "photo",
-            headerName: "photo",
-            flex: 1,
-            minWidth: 100,
-            renderCell: (params) => (
-                <img width={50} src={params.row.photo} />
-            )
-
-        },
-        {
-            field: "weight",
-            headerName: "weight",
-            flex: 1,
-            minWidth: 50,
-
-        },
-
-    ];
 
     const itemRows = [
         {
@@ -115,72 +59,42 @@ const CustomerReferralReports = () => {
             customer: "Nischal",
             email:"email@email.com",
             phone:7392899874,
-            first_plan:"Buy-Save",
-            installments:'₹4587/month',
-            last_installments_paid_on:"14/07/1987",
-            plan_status:"de-active",
-            mature_on:"15/08/1988",
-            custodian:"Malabaar",
-            custody_certificate:"certificate",
-            referral_gold_afterMaturity:7,
+            referral_gold_weight:7,
+            joining_gold_weight:4,
+           
         },
     ];
 
     //=============================
     const columns = [
         {
-            field: "customer",
-            headerName: "customer",
+            field: "userDetails_salesDepart",
+            headerName: "userDetails_salesDepart",
             flex: 1,
             minWidth: "100%",
             renderCell: (params) => (
-                <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.row.customer}</p>
+                <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.row.userDetails_salesDepart}</p>
             ),
-
         },
         {
             field: "referral_code",
             headerName: "referral_code",
             minWidth: "100%",
-
-            flex: 1
-        },
-        {
-            field: "plan_subscribed",
-            headerName: "plan_subscribed",
-            minWidth: "100%",
-
             flex: 1
         },
         {
             field: "referred_to",
             headerName: "referred_to",
             minWidth: "100%",
-
-
             flex: 1
         },
         {
             field: "referral_gold_recieved",
             headerName: "referral_gold_recieved",
             minWidth: "100%",
-
             flex: 1
         },
-        {
-            field: "referral_gold_lost",
-            headerName: "referral_gold_lost",
-            minWidth: "100%",
-
-            flex: 1
-        },
-        {
-            field: "joining_bonus",
-            headerName: "joining_bonus",
-            minWidth: "100%",
-            
-            flex: 1
-        },
+      
         {
             field: "referral_details",
             headerName: "referral_details",
@@ -195,13 +109,11 @@ const CustomerReferralReports = () => {
     const rows = [
         {
             id: 1,
-            customer: "Nischal",
+            userDetails_salesDepart: "Sugandh",
             referral_code:"BKS-789",
-            plan_subscribed:"Yes",
             referred_to:44,
             referral_gold_recieved:4,
-            referral_gold_lost:4,
-            joining_bonus:4,
+         
             referral_details:"button"
             
         },
@@ -211,7 +123,7 @@ const CustomerReferralReports = () => {
         <>
             {/* ------------------------------ */}
             <Head>
-                <title>Dashboard | Customer Referral Reports</title>
+                <title>Dashboard | Sales Offer Referral Reports</title>
             </Head>
             <Grid container>
                 <FilterSection />
@@ -282,8 +194,8 @@ const CustomerReferralReports = () => {
 };
 //=============================================
 
-CustomerReferralReports.getLayout = (page) => (
+SalesOfferReports.getLayout = (page) => (
     <DashboardLayout>{page}</DashboardLayout>
 );
 
-export default CustomerReferralReports;
+export default SalesOfferReports;

@@ -41,153 +41,89 @@ import ReportModal from 'src/components/modal/reportModal';
 import CardModal from 'src/components/modal/cardModal';
 import FilterSection from 'src/components/filterSection';
 //=============================================
-const CustomerReferralReports = () => {
-    const router = useRouter()
-    const theme = useTheme()
-    //=====================================
-
+const subscriptions = () => {
 
     const itemModal = (params) => {
         return (
-            <CardModal customerReferral={itemRows} />
+            <CardModal sub={itemRows} />
         );
     };
-
-
-    //=============================
-
-    const mediaRows = [
-        {
-            id: 1,
-            purity: "scale",
-            weight: "scale",
-            flex: 1,
-            minWidth: 100,
-        },
-    ];
-
-    //=============================
-    const itemColumns = [
-        {
-            field: "name",
-            headerName: "name",
-            flex: 1,
-            minWidth: 100,
-
-        },
-
-        {
-            field: "ntWt",
-            headerName: "ntWt",
-            minWidth: 100,
-            flex: 1,
-            renderCell: (params) => (
-                <ul>
-                    {params.row.details.map(x => (
-                        <li>{x}</li>
-                    ))}
-                </ul>
-            ),
-        },
-        {
-            field: "photo",
-            headerName: "photo",
-            flex: 1,
-            minWidth: 100,
-            renderCell: (params) => (
-                <img width={50} src={params.row.photo} />
-            )
-
-        },
-        {
-            field: "weight",
-            headerName: "weight",
-            flex: 1,
-            minWidth: 50,
-
-        },
-
-    ];
 
     const itemRows = [
         {
             id: 1,
-            customer: "Nischal",
-            email:"email@email.com",
-            phone:7392899874,
-            first_plan:"Buy-Save",
-            installments:'₹4587/month',
-            last_installments_paid_on:"14/07/1987",
-            plan_status:"de-active",
-            mature_on:"15/08/1988",
-            custodian:"Malabaar",
-            custody_certificate:"certificate",
-            referral_gold_afterMaturity:7,
+            amount_paid: 52247,
+            razorpay_fees: 102,
+            settled_amount: 17,
+            settled_on: "14/07/1995",
+            transaction_on: "10/07/1995",
+            flex: 1,
+            minWidth: 100,
         },
     ];
 
     //=============================
     const columns = [
         {
-            field: "customer",
-            headerName: "customer",
+            field: "name",
+            headerName: "name",
             flex: 1,
-            minWidth: "100%",
-            renderCell: (params) => (
-                <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.row.customer}</p>
-            ),
-
+            minWidth: 250,
         },
+
         {
-            field: "referral_code",
-            headerName: "referral_code",
-            minWidth: "100%",
+            field: "email",
+            headerName: "email",
+            minWidth: 250,
 
             flex: 1
         },
         {
-            field: "plan_subscribed",
-            headerName: "plan_subscribed",
-            minWidth: "100%",
+            field: "phone",
+            headerName: "phone",
+            minWidth: 250,
 
             flex: 1
         },
         {
-            field: "referred_to",
-            headerName: "referred_to",
-            minWidth: "100%",
+            field: "subscribed_to",
+            headerName: "subscribed_to",
+            minWidth: 250,
 
 
             flex: 1
         },
         {
-            field: "referral_gold_recieved",
-            headerName: "referral_gold_recieved",
-            minWidth: "100%",
+            field: "amount",
+            headerName: "amount",
+            minWidth: 250,
 
             flex: 1
         },
         {
-            field: "referral_gold_lost",
-            headerName: "referral_gold_lost",
-            minWidth: "100%",
+            field: "renewal",
+            headerName: "renewal",
+            minWidth: 250,
 
             flex: 1
         },
+
         {
-            field: "joining_bonus",
-            headerName: "joining_bonus",
-            minWidth: "100%",
-            
+            field: "status",
+            headerName: "status",
+            minWidth: 250,
+
             flex: 1
         },
+
         {
-            field: "referral_details",
-            headerName: "referral_details",
-            minWidth: "100%",
+            field: "transactions",
+            headerName: "transactions",
+            minWidth: 250,
             flex: 1,
             renderCell: itemModal
         },
+
 
 
     ];
@@ -195,23 +131,22 @@ const CustomerReferralReports = () => {
     const rows = [
         {
             id: 1,
-            customer: "Nischal",
-            referral_code:"BKS-789",
-            plan_subscribed:"Yes",
-            referred_to:44,
-            referral_gold_recieved:4,
-            referral_gold_lost:4,
-            joining_bonus:4,
-            referral_details:"button"
-            
-        },
+            name: "nischal",
+            email: "gupta.nischal014@gmail.com",
+            phone: 7392988369,
+            subscribed_to: "Bk saraff",
+            amount: 457,
+            status: "active",
+            renewal: "02/05/2024",
+            transactions: 147,
+        }
     ];
     //=================================================================================
     return (
         <>
             {/* ------------------------------ */}
             <Head>
-                <title>Dashboard | Customer Referral Reports</title>
+                <title>Dashboard | Bids-Subscriptions</title>
             </Head>
             <Grid container>
                 <FilterSection />
@@ -282,8 +217,8 @@ const CustomerReferralReports = () => {
 };
 //=============================================
 
-CustomerReferralReports.getLayout = (page) => (
+subscriptions.getLayout = (page) => (
     <DashboardLayout>{page}</DashboardLayout>
 );
 
-export default CustomerReferralReports;
+export default subscriptions;

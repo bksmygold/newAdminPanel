@@ -1,4 +1,4 @@
-import{
+import {
     Grid,
     Box,
     Container,
@@ -44,23 +44,32 @@ const Invoice = (props) => {
         <>
             {/* //------------------------------------------------------- */}
             <Container sx={theme.custom.invoiceCard}>
-                <Grid container sx={{
-
-                }}>
+                <Grid container>
 
                     <Grid
                         sx={{
-                            padding:"2px 150px" ,
-ml:3,
-                            minWidth: "100%", p: 5,height:"100%", backgroundColor: "white", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                            padding: "2px 150px",
+                            ml: 3,
+                            minWidth: "100%",
+                            p: 5,
+                            height: "100%",
+                            backgroundColor: "white",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center"
+                        }}
                         item lg={6} sm={6} xs={12}>
-                        <Image sx={{      ml:5 ,
-}}src="/logo.svg" alt="me" width="160" height="150" />
+                        <Image sx={{
+                            ml: 5,
+                        }} src="/logo.svg" alt="me" width="160" height="150" />
                         <Grid item
-                            sx={{ 
-                                padding:"2px 150px" ,
-
-                                display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}
+                            sx={{
+                                padding: "2px 150px",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}
                         >
 
                             <Typography
@@ -75,11 +84,12 @@ ml:3,
                     </Grid>
 
                     {/* <Divider sx={{backgroundColor:"red",height:100}} /> */}
-                    <hr style={{ width: "80%",margin:"auto" }} />
+                    <hr style={{ width: "80%", margin: "auto" }} />
 
                     <Typography
-                        sx={[theme.custom.typography.invoice.text_24,{      padding:"2px 150px" ,
-                    }]}
+                        sx={[theme.custom.typography.invoice.text_24, {
+                            padding: "2px 150px",
+                        }]}
 
                     >
                         Tax Invoice
@@ -112,7 +122,7 @@ ml:3,
                                 226006
                             </Typography>
                         </Box>
-                        <Box sx={{textAlign:"right"}}>
+                        <Box sx={{ textAlign: "right" }}>
                             <Typography
                                 sx={theme.custom.typography.invoice.text_12.light}
                             >
@@ -131,7 +141,7 @@ ml:3,
                         </Box>
                     </Grid>
 
-                    <hr style={{ width: "80%",margin:"auto" }} />
+                    <hr style={{ width: "80%", margin: "auto" }} />
 
 
                     <Grid
@@ -152,7 +162,7 @@ ml:3,
                                 26-09-2022
                             </Typography>
                         </Box>
-                        <Box sx={{textAlign:"right"}}>
+                        <Box sx={{ textAlign: "right" }}>
 
                             <Typography
                                 sx={theme.custom.typography.invoice.text_12.bold}
@@ -170,7 +180,7 @@ ml:3,
                         </Box>
                     </Grid>
 
-                    <hr style={{ width: "80%",margin:"auto" }} />
+                    <hr style={{ width: "80%", margin: "auto" }} />
 
 
 
@@ -278,25 +288,28 @@ ml:3,
                         </Box>
                     </Grid>
                     <Typography
-                        sx={[theme.custom.typography.invoice.text_12.light,{      padding:"2px 150px" ,
-                    }]}
+                        sx={[theme.custom.typography.invoice.text_12.light, {
+                            padding: "2px 150px",
+                        }]}
 
                     >
 
                         HSN Code : 71081300
                     </Typography>
 
-                    <hr style={{ width: "80%",margin:"auto" }} />
+                    <hr style={{ width: "80%", margin: "auto" }} />
 
 
                     <Grid
-                        sx={{ 
-                            padding:"2px 150px" ,
+                        sx={{
+                            padding: "2px 150px",
 
-                            minWidth: "100%", p: 5, backgroundColor: "white", flexDirection: "column", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}
+                            minWidth: "100%", p: 5, backgroundColor: "white", flexDirection: "column", display: "flex", justifyContent: "flex-end", alignItems: "flex-end"
+                        }}
                         item lg={6} sm={6} xs={12}>
-                        <Box sx={{ display: "flex",      padding:"2px 150px" ,
- }}>
+                        <Box sx={{
+                            display: "flex", padding: "2px 150px",
+                        }}>
 
                             <Typography
                                 sx={theme.custom.typography.invoice.text_12.bold}
@@ -311,8 +324,9 @@ ml:3,
                                 ₹ 11.45
                             </Typography>
                         </Box>
-                        <Box sx={{ display: "flex", margin: "20px 0px" ,      padding:"2px 150px" ,
-}}>
+                        <Box sx={{
+                            display: "flex", margin: "20px 0px", padding: "2px 150px",
+                        }}>
 
                             <Typography
                                 sx={theme.custom.typography.invoice.text_12.bold}
@@ -329,11 +343,12 @@ ml:3,
                         </Box>
                     </Grid>
 
-                    <hr style={{ width: "80%",margin:"auto" }} />
+                    <hr style={{ width: "80%", margin: "auto" }} />
 
                     <Typography
-                        sx={[theme.custom.typography.invoice.text_12.bold, { mt: 5 ,      padding:"2px 150px" ,
-                    }]}
+                        sx={[theme.custom.typography.invoice.text_12.bold, {
+                            mt: 5, padding: "2px 150px",
+                        }]}
 
                     >
 
@@ -341,7 +356,8 @@ ml:3,
 
                     </Typography>
                     <Typography
-                        sx={[theme.custom.typography.invoice.text_12.light,{      padding:"2px 150px" ,
+                        sx={[theme.custom.typography.invoice.text_12.light, {
+                            padding: "2px 150px",
                         }]}
 
                     >
@@ -352,8 +368,9 @@ ml:3,
                     </Typography>
 
                     <Typography
-                        sx={[theme.custom.typography.invoice.text_12.bold, { mt: 5 ,      padding:"2px 150px" ,
-                    }]}
+                        sx={[theme.custom.typography.invoice.text_12.bold, {
+                            mt: 5, padding: "2px 150px",
+                        }]}
 
                     >
 
@@ -362,15 +379,17 @@ ml:3,
 
                     </Typography>
                     <Typography
-                        sx={[theme.custom.typography.invoice.text_12.light,{      padding:"2px 150px" ,
-                    }]}
+                        sx={[theme.custom.typography.invoice.text_12.light, {
+                            padding: "2px 150px",
+                        }]}
 
                     >
 
                         {invoice.disclaimer}
                     </Typography>
-                    <Box sx={{      padding:"2px 150px" ,
-}}>
+                    <Box sx={{
+                        padding: "2px 150px",
+                    }}>
                         <Typography
                             sx={[theme.custom.typography.invoice.text_12.light, { mt: 5 }]}
                         >
@@ -384,7 +403,7 @@ ml:3,
                         </Typography>
 
                     </Box>
-                    <hr style={{ width: "80%",margin:"auto" }} />
+                    <hr style={{ width: "80%", margin: "auto" }} />
 
 
                 </Grid>
