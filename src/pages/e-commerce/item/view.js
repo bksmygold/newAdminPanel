@@ -70,7 +70,7 @@ export default function Item() {
       flex: 1,
       renderCell: (params) => {
         return (
-          <img width={70} src={params.row.image} />
+          <img width={80} height={80} src={params.row.image} />
         )
       }
     },
@@ -259,7 +259,7 @@ export default function Item() {
                 helperText={addForm.touched.name && addForm.errors.name}
                 id="name"
                 name="name"
-                required
+
                 value={addForm.values.name}
                 onChange={addForm.handleChange}
                 fullWidth

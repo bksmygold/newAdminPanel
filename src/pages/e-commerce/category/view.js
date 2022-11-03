@@ -19,11 +19,11 @@ import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import {
-  getCollection,
-  deleteCollection,
-  postCollection,
-  updateCollection,
-} from 'src/apis/collection';
+  getCategory,
+  deleteCategory,
+  postCategory,
+  updateCategory,
+} from 'src/apis/category';
 import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
@@ -33,13 +33,15 @@ import * as yup from 'yup';
 import swal from 'sweetalert';
 import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { useTheme } from '@mui/styles';
+import { useTheme } from '@mui/Styles'
+import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 import { EditButton } from 'src/components/button/editButton';
 import { DeleteButton } from 'src/components/button/deleteButton';
-import { useController } from 'src/controller/collection';
+import { useController } from 'src/controller/category';
 //=======================================================
-export default function Collection() {
+export default function Category() {
+
   const theme = useTheme();
   const {
     add,
@@ -53,25 +55,31 @@ export default function Collection() {
     showEdit
   } = useController()
 
-
   //==========
   const columns = [
     {
       field: 'name',
-      headerName: 'Collection Name',
-      width: 250,
-      editable: true,
+      headerName: 'Category Name',
+      minWidth: 150,
+      flex: 1,
       renderCell: (params) => (
         <p style={theme.custom.typography.table}>{params.value}</p>
       ),
-      flex: 1
+    },
+    {
+      field: 'image',
+      headerName: 'Category Image',
+      minWidth: 150,
+      flex: 1,
+      renderCell: (params) => (
+        <img width={90} height={70} src={params.row.image} />
+      ),
     },
 
     {
       field: 'edit',
       headerName: 'Edit',
-      width: 150,
-      editable: true,
+      minWidth: 150,
       renderCell: (params) => (
         <EditButton
           onClick={() => {
@@ -84,12 +92,11 @@ export default function Collection() {
     {
       field: 'delete',
       headerName: 'Delete',
-      width: 150,
-      editable: true,
+      minWidth: 150,
       renderCell: (params) => (
         <DeleteButton
           id={params.id}
-          deleting={deleteCollection}
+          deleting={deleteCategory}
         />
       ),
       flex: 1
@@ -102,7 +109,7 @@ export default function Collection() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Collection </title>
+        <title>Dashboard | Category </title>
       </Head>
       {/* ================= EDIT ================================== */}
       <Modal
@@ -125,7 +132,7 @@ export default function Collection() {
                 fontWeight: 'bolder',
               }}
             >
-              Edit Collection
+              Edit Category
             </Typography>
             <Typography
               variant="caption"
@@ -135,7 +142,7 @@ export default function Collection() {
                 fontWeight: 'bold',
               }}
             >
-              Edit Collection for products used in E-commerce
+              Edit Category for products used in E-commerce
             </Typography>
 
             <form onSubmit={editForm.handleSubmit}>
@@ -148,7 +155,7 @@ export default function Collection() {
                   fontWeight: 600,
                 }}
               >
-                Collection Type Name
+                Category Type Name
               </Typography>
               <CustomTextField
                 error={
@@ -161,7 +168,29 @@ export default function Collection() {
                 onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Collection Type name"
+                label="Category Type name"
+              />
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Category Image
+              </Typography>
+              <CustomTextField
+                error={editForm.touched.image && Boolean(editForm.errors.image)}
+                helperText={editForm.touched.image && editForm.errors.image}
+                id="image"
+                type="file"
+                name="image"
+                // required
+                onChange={(e) => editForm.setFieldValue('image', e.target.files[0])}
+                fullWidth
+                variant="outlined"
               />
 
               <LoadingButton
@@ -170,7 +199,7 @@ export default function Collection() {
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Edit Collection
+                Edit Category
               </LoadingButton>
             </form>
           </Grid>
@@ -197,16 +226,17 @@ export default function Collection() {
                 fontWeight: 'bolder',
               }}
             >
-              Add Collection
+              Add Category
             </Typography>
             <Typography
               variant="caption"
               sx={{
                 color: '#cba56a',
+                marginBottom: 15,
                 fontWeight: 'bold',
               }}
             >
-              Add Collection for products used in E-commerce
+              Add Category for products used in E-commerce
             </Typography>
 
             <form onSubmit={addForm.handleSubmit}>
@@ -215,11 +245,11 @@ export default function Collection() {
                 sx={{
                   color: '#8B5704',
                   marginBottom: 2,
-                  marginTop: 7,
+                  marginTop: 2,
                   fontWeight: 600,
                 }}
               >
-                Collection Type Name
+                Category Type Name
               </Typography>
               <CustomTextField
                 error={addForm.touched.name && Boolean(addForm.errors.name)}
@@ -230,16 +260,37 @@ export default function Collection() {
                 onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Collection Type name"
+                label="Category Type name"
               />
-
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Category Image
+              </Typography>
+              <CustomTextField
+                error={addForm.touched.image && Boolean(addForm.errors.image)}
+                helperText={addForm.touched.image && addForm.errors.image}
+                id="image"
+                type="file"
+                name="image"
+                required
+                onChange={(e) => addForm.setFieldValue('image', e.target.files[0])}
+                fullWidth
+                variant="outlined"
+              />
               <LoadingButton
                 disabled={add.isLoading}
                 loading={add.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Add Collection
+                Add Category
               </LoadingButton>
             </form>
           </Grid>
@@ -257,18 +308,18 @@ export default function Collection() {
       >
         <Grid item>
           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-            Collection View
+            Category View
           </Typography>
         </Grid>
         <Grid item>
           <Button onClick={() => setShowAdd(true)} sx={theme.custom.addButton}>
-            Create Collection
+            Create Category
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>
         </Grid>
       </Grid>{' '}
-      <Table rows={query.data.docs} columns={columns} />
+      <Table rows={query.data?.docs} columns={columns} />
     </>
   );
 }
-Collection.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Category.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

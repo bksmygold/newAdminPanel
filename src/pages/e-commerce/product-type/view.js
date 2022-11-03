@@ -61,18 +61,27 @@ export default function ProductType() {
     {
       field: 'name',
       headerName: 'Product Type Name',
-      width: 150,
+      minWidth: 150,
       editable: true,
       flex: 1,
       renderCell: (params) => (
         <p style={theme.custom.typography.table}>{params.value}</p>
       ),
     },
+    {
+      field: 'image',
+      headerName: 'Product Type Image',
+      minWidth: 150,
+      flex: 1,
+      renderCell: (params) => (
+        <img width={90} height={70} src={params.row.image} />
+      ),
+    },
 
     {
       field: 'edit',
       headerName: 'Edit',
-      width: 150,
+      minWidth: 150,
       editable: true,
       renderCell: (params) => (
         <EditButton
@@ -86,7 +95,7 @@ export default function ProductType() {
     {
       field: 'delete',
       headerName: 'Delete',
-      width: 150,
+      minWidth: 150,
       editable: true,
       renderCell: (params) => (
         <DeleteButton
@@ -150,7 +159,7 @@ export default function ProductType() {
                   fontWeight: 600,
                 }}
               >
-                Product Type Type Name
+                Product Type Name
               </Typography>
               <CustomTextField
                 error={
@@ -163,7 +172,29 @@ export default function ProductType() {
                 onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Product Type Type name"
+                label="Product Type name"
+              />
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Product Type Image
+              </Typography>
+              <CustomTextField
+                error={editForm.touched.image && Boolean(editForm.errors.image)}
+                helperText={editForm.touched.image && editForm.errors.image}
+                id="image"
+                type="file"
+                name="image"
+                // required
+                onChange={(e) => editForm.setFieldValue('image', e.target.files[0])}
+                fullWidth
+                variant="outlined"
               />
 
               <LoadingButton
@@ -222,7 +253,7 @@ export default function ProductType() {
                   fontWeight: 600,
                 }}
               >
-                Product Type Type Name
+                Product Type Name
               </Typography>
               <CustomTextField
                 error={addForm.touched.name && Boolean(addForm.errors.name)}
@@ -233,8 +264,32 @@ export default function ProductType() {
                 onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Product Type Type name"
+                label="Product Type name"
               />
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Product Type Image
+              </Typography>
+              <CustomTextField
+                error={addForm.touched.image && Boolean(addForm.errors.image)}
+                helperText={addForm.touched.image && addForm.errors.image}
+                id="image"
+                type="file"
+                name="image"
+                required
+                onChange={(e) => addForm.setFieldValue('image', e.target.files[0])}
+                fullWidth
+                variant="outlined"
+              />
+
 
               <LoadingButton
                 disabled={add.isLoading}

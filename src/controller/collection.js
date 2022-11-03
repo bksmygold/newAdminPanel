@@ -28,6 +28,7 @@ export const useController = () => {
     const addForm = useFormik({
         initialValues: {
             name: '',
+            image:[]
            
         },
         validationSchema: collectionValidation,
@@ -39,6 +40,7 @@ export const useController = () => {
     const editForm = useFormik({
         initialValues: {
             name: '',
+            image:[]
         },
         validationSchema: collectionValidation,
         onSubmit: (values) => {

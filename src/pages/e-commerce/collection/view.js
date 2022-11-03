@@ -19,11 +19,11 @@ import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import {
-  getVariety,
-  deleteVariety,
-  postVariety,
-  updateVariety,
-} from 'src/apis/variety';
+  getCollection,
+  deleteCollection,
+  postCollection,
+  updateCollection,
+} from 'src/apis/collection';
 import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
@@ -34,15 +34,12 @@ import swal from 'sweetalert';
 import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/styles';
-
-import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 import { EditButton } from 'src/components/button/editButton';
 import { DeleteButton } from 'src/components/button/deleteButton';
-import { useController } from 'src/controller/variety';
+import { useController } from 'src/controller/collection';
 //=======================================================
-export default function Variety() {
-
+export default function Collection() {
   const theme = useTheme();
   const {
     add,
@@ -61,20 +58,19 @@ export default function Variety() {
   const columns = [
     {
       field: 'name',
-      headerName: 'Variety Name',
-      width: 150,
+      headerName: 'Collection Name',
+      minWidth: 200,
       editable: true,
-      flex: 1,
       renderCell: (params) => (
         <p style={theme.custom.typography.table}>{params.value}</p>
       ),
+      flex: 1
     },
-
+   
     {
       field: 'edit',
       headerName: 'Edit',
-      width: 150,
-      editable: true,
+      minWidth: 150,
       renderCell: (params) => (
         <EditButton
           onClick={() => {
@@ -87,12 +83,11 @@ export default function Variety() {
     {
       field: 'delete',
       headerName: 'Delete',
-      width: 150,
-      editable: true,
+      minWidth: 150,
       renderCell: (params) => (
         <DeleteButton
           id={params.id}
-          deleting={deleteVariety}
+          deleting={deleteCollection}
         />
       ),
       flex: 1
@@ -105,7 +100,7 @@ export default function Variety() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Variety </title>
+        <title>Dashboard | Collection </title>
       </Head>
       {/* ================= EDIT ================================== */}
       <Modal
@@ -128,7 +123,7 @@ export default function Variety() {
                 fontWeight: 'bolder',
               }}
             >
-              Edit Variety
+              Edit Collection
             </Typography>
             <Typography
               variant="caption"
@@ -138,7 +133,7 @@ export default function Variety() {
                 fontWeight: 'bold',
               }}
             >
-              Edit Variety for products used in E-commerce
+              Edit Collection for products used in E-commerce
             </Typography>
 
             <form onSubmit={editForm.handleSubmit}>
@@ -151,7 +146,7 @@ export default function Variety() {
                   fontWeight: 600,
                 }}
               >
-                Variety Type Name
+                Collection Type Name
               </Typography>
               <CustomTextField
                 error={
@@ -164,8 +159,9 @@ export default function Variety() {
                 onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Variety Type name"
+                label="Collection Type name"
               />
+            
 
               <LoadingButton
                 disabled={edit.isLoading}
@@ -173,7 +169,7 @@ export default function Variety() {
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Edit Variety
+                Edit Collection
               </LoadingButton>
             </form>
           </Grid>
@@ -200,17 +196,16 @@ export default function Variety() {
                 fontWeight: 'bolder',
               }}
             >
-              Add Variety
+              Add Collection
             </Typography>
             <Typography
               variant="caption"
               sx={{
                 color: '#cba56a',
-                marginBottom: 15,
                 fontWeight: 'bold',
               }}
             >
-              Add Variety for products used in E-commerce
+              Add Collection for products used in E-commerce
             </Typography>
 
             <form onSubmit={addForm.handleSubmit}>
@@ -219,11 +214,11 @@ export default function Variety() {
                 sx={{
                   color: '#8B5704',
                   marginBottom: 2,
-                  marginTop: 2,
+                  marginTop: 7,
                   fontWeight: 600,
                 }}
               >
-                Variety Type Name
+                Collection Name
               </Typography>
               <CustomTextField
                 error={addForm.touched.name && Boolean(addForm.errors.name)}
@@ -234,7 +229,7 @@ export default function Variety() {
                 onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Variety Type name"
+                label="Collection  name"
               />
 
               <LoadingButton
@@ -243,7 +238,7 @@ export default function Variety() {
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Add Variety
+                Add Collection
               </LoadingButton>
             </form>
           </Grid>
@@ -261,12 +256,12 @@ export default function Variety() {
       >
         <Grid item>
           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-            Variety View
+            Collection View
           </Typography>
         </Grid>
         <Grid item>
           <Button onClick={() => setShowAdd(true)} sx={theme.custom.addButton}>
-            Create Variety
+            Create Collection
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>
         </Grid>
@@ -275,4 +270,4 @@ export default function Variety() {
     </>
   );
 }
-Variety.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Collection.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

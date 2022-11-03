@@ -188,17 +188,17 @@ export const infoCard = {
         {
             title: "Collections",
             desc: "create, update, delete Collections",
-            url: "/e-commerce/collection/view-collection"
+            url: "/e-commerce/collection/view"
         },
         {
             title: "Categories",
             desc: "create, update, delete Categories",
-            url: "/e-commerce/category/view-category"
+            url: "/e-commerce/category/view"
         },
         {
             title: "Varieties",
             desc: "create, update, delete Varieties",
-            url: "/e-commerce/variety/view-variety"
+            url: "/e-commerce/variety/view"
         },
         {
             title: "Items",

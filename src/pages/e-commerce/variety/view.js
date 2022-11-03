@@ -19,11 +19,11 @@ import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import {
-  getCategory,
-  deleteCategory,
-  postCategory,
-  updateCategory,
-} from 'src/apis/category';
+  getVariety,
+  deleteVariety,
+  postVariety,
+  updateVariety,
+} from 'src/apis/variety';
 import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
@@ -33,14 +33,15 @@ import * as yup from 'yup';
 import swal from 'sweetalert';
 import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { useTheme } from '@mui/Styles'
+import { useTheme } from '@mui/styles';
+
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 import { EditButton } from 'src/components/button/editButton';
 import { DeleteButton } from 'src/components/button/deleteButton';
-import { useController } from 'src/controller/category';
+import { useController } from 'src/controller/variety';
 //=======================================================
-export default function Category() {
+export default function Variety() {
 
   const theme = useTheme();
   const {
@@ -60,7 +61,7 @@ export default function Category() {
   const columns = [
     {
       field: 'name',
-      headerName: 'Category Name',
+      headerName: 'Variety Name',
       width: 150,
       editable: true,
       flex: 1,
@@ -68,7 +69,15 @@ export default function Category() {
         <p style={theme.custom.typography.table}>{params.value}</p>
       ),
     },
-
+    {
+      field: 'image',
+      headerName: 'Vareity Image',
+      minWidth: 150,
+      flex: 1,
+      renderCell: (params) => (
+        <img width={90} height={70} src={params.row.image} />
+      ),
+    },
     {
       field: 'edit',
       headerName: 'Edit',
@@ -91,7 +100,7 @@ export default function Category() {
       renderCell: (params) => (
         <DeleteButton
           id={params.id}
-          deleting={deleteCategory}
+          deleting={deleteVariety}
         />
       ),
       flex: 1
@@ -104,7 +113,7 @@ export default function Category() {
     <>
       {/* ------------------------------ */}
       <Head>
-        <title>Dashboard | Category </title>
+        <title>Dashboard | Variety </title>
       </Head>
       {/* ================= EDIT ================================== */}
       <Modal
@@ -127,7 +136,7 @@ export default function Category() {
                 fontWeight: 'bolder',
               }}
             >
-              Edit Category
+              Edit Variety
             </Typography>
             <Typography
               variant="caption"
@@ -137,7 +146,7 @@ export default function Category() {
                 fontWeight: 'bold',
               }}
             >
-              Edit Category for products used in E-commerce
+              Edit Variety for products used in E-commerce
             </Typography>
 
             <form onSubmit={editForm.handleSubmit}>
@@ -150,7 +159,7 @@ export default function Category() {
                   fontWeight: 600,
                 }}
               >
-                Category Type Name
+                Variety Type Name
               </Typography>
               <CustomTextField
                 error={
@@ -163,16 +172,37 @@ export default function Category() {
                 onChange={editForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Category Type name"
+                label="Variety Type name"
               />
-
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Variety Image
+              </Typography>
+              <CustomTextField
+                error={editForm.touched.image && Boolean(editForm.errors.image)}
+                helperText={editForm.touched.image && editForm.errors.image}
+                id="image"
+                type="file"
+                name="image"
+                // required
+                onChange={(e) => editForm.setFieldValue('image', e.target.files[0])}
+                fullWidth
+                variant="outlined"
+              />
               <LoadingButton
                 disabled={edit.isLoading}
                 loading={edit.isLoading}
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Edit Category
+                Edit Variety
               </LoadingButton>
             </form>
           </Grid>
@@ -199,7 +229,7 @@ export default function Category() {
                 fontWeight: 'bolder',
               }}
             >
-              Add Category
+              Add Variety
             </Typography>
             <Typography
               variant="caption"
@@ -209,7 +239,7 @@ export default function Category() {
                 fontWeight: 'bold',
               }}
             >
-              Add Category for products used in E-commerce
+              Add Variety for products used in E-commerce
             </Typography>
 
             <form onSubmit={addForm.handleSubmit}>
@@ -222,7 +252,7 @@ export default function Category() {
                   fontWeight: 600,
                 }}
               >
-                Category Type Name
+                Variety Type Name
               </Typography>
               <CustomTextField
                 error={addForm.touched.name && Boolean(addForm.errors.name)}
@@ -233,7 +263,29 @@ export default function Category() {
                 onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
-                label="Category Type name"
+                label="Variety Type name"
+              />
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Variety Image
+              </Typography>
+              <CustomTextField
+                error={addForm.touched.image && Boolean(addForm.errors.image)}
+                helperText={addForm.touched.image && addForm.errors.image}
+                id="image"
+                type="file"
+                name="image"
+                required
+                onChange={(e) => addForm.setFieldValue('image', e.target.files[0])}
+                fullWidth
+                variant="outlined"
               />
 
               <LoadingButton
@@ -242,7 +294,7 @@ export default function Category() {
                 type="submit"
                 sx={theme.custom.addButton}
               >
-                Add Category
+                Add Variety
               </LoadingButton>
             </form>
           </Grid>
@@ -260,18 +312,18 @@ export default function Category() {
       >
         <Grid item>
           <Typography variant="h5" sx={{ color: '#8B5704', marginBottom: 3 }}>
-            Category View
+            Variety View
           </Typography>
         </Grid>
         <Grid item>
           <Button onClick={() => setShowAdd(true)} sx={theme.custom.addButton}>
-            Create Category
+            Create Variety
             <AddIcon sx={{ marginLeft: 1 }} />
           </Button>
         </Grid>
       </Grid>{' '}
-      <Table rows={query.data?.docs} columns={columns} />
+      <Table rows={query.data.docs} columns={columns} />
     </>
   );
 }
-Category.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Variety.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

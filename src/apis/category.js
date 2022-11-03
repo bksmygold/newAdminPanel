@@ -9,11 +9,22 @@ export const getCategoryById = (id) => {
 };
 
 export const postCategory = (data) => {
-  return axios.post('/category/create', data);
+  const formData = new FormData()
+  const {name , image} = data
+  formData.append("name",name)
+  if(image instanceof File){
+    formData.append("image",image)
+  }
+  return axios.post('/category/create', formData);
 };
 
 export const updateCategory = ({ data, id }) => {
-  return axios.patch(`/category/${id}`, data);
+  const formData = new FormData()
+  formData.append("name",data.name)
+  if(data.image instanceof File){
+    formData.append("image",data.image)
+  }
+  return axios.patch(`/category/${id}`, formData);
 };
 
 export const deleteCategory = (id) => {

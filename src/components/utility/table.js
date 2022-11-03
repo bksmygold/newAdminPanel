@@ -100,7 +100,7 @@ export default function Table(props) {
             borderRadius: 2,
             boxShadow: '0px 4px 1px 0px #d2c6c6',
             marginTop: 5,
-            height: "600px",
+            height: "700px",
             // width: "100%",
             border: '1px solid #d2c6c657',
             // justifyContent: "center",
@@ -109,7 +109,7 @@ export default function Table(props) {
             minWidth:"100%"
 
           }}
-          rowHeight={75}
+          rowHeight={85}
           components={{ Toolbar: GridToolbar }}
           GridPrintExportOptions={{ color: "red" }}
           data={props.rows}

@@ -22,6 +22,7 @@ export const useController = () => {
     const addForm = useFormik({
         initialValues: {
             name: '',
+            image:[]
         },
         validationSchema: productTypeValidation,
         onSubmit: (values) => {
@@ -32,10 +33,10 @@ export const useController = () => {
     const editForm = useFormik({
         initialValues: {
             name: '',
+            image:[]
         },
         validationSchema: productTypeValidation,
         onSubmit: (values) => {
-            console.log("edit ho raha hai---", values)
             edit.mutate({ data: values, id: values.id });
         }
     })
