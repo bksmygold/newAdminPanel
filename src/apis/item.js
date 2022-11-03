@@ -9,11 +9,23 @@ export const getItemById = (id) => {
 };
 
 export const postItem = (data) => {
-  return axios.post('/item/create', data);
+  let formData = new FormData();
+  let { name, image } = data;
+  formData.append('name', name);
+  if (image instanceof File) {
+    formData.append('image', image)
+  }
+  return axios.post('/item/create', formData);
 };
 
 export const updateItem = ({ data, id }) => {
-  return axios.patch(`/item/${id}`, data);
+  console.log("edited ---", data.name)
+  let formData = new FormData();
+  formData.append('name', data.name);
+  if (data.image instanceof File) {
+    formData.append('image', data.image)
+  }
+  return axios.patch(`/item/${id}`, formData);
 };
 
 export const deleteItem = (id) => {

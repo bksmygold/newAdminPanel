@@ -203,12 +203,12 @@ export const infoCard = {
         {
             title: "Items",
             desc: "create, update, delete Items",
-            url: "/e-commerce/item/view-item"
+            url: "/e-commerce/item/view"
         },
         {
             title: "Product Types",
             desc: "create, update, delete Product Types",
-            url: "/e-commerce/product-type/view-product-type"
+            url: "/e-commerce/product-type/view"
         },
         {
             title: "FAQ",

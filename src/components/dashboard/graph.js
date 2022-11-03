@@ -169,7 +169,7 @@ export const Graph = (props) => {
         </Card>
       </Box>
 
-      {/* <div>
+      <div>
         <List
           component="nav"
           aria-label="Device settings"
@@ -202,6 +202,7 @@ export const Graph = (props) => {
         >
           {optionsList.map((option, index) => (
             <MenuItem
+            sx={{backgroundColor:"pink"}}
               key={option}
               disabled={index === 0}
               selected={index === selectedIndex}
@@ -211,7 +212,7 @@ export const Graph = (props) => {
             </MenuItem>
           ))}
         </Menu>
-      </div> */}
+      </div>
     </>
   );
 };

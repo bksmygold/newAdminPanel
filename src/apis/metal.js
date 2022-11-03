@@ -12,20 +12,19 @@ export const postMetal = (data) => {
   let formData = new FormData();
   let { name, icon } = data;
   formData.append('name', name);
-  if (icon instanceof File) { 
+  if (icon instanceof File) {
 
     formData.append('icon', icon);
   }
   return axios.post('/metal/create', formData);
 };
 //==============================
-export const updateMetal = ({data, id}) => {
+export const updateMetal = ({ data, id }) => {
   let formData = new FormData();
 
   let { name, icon } = data;
   formData.append('name', name);
-  if (icon instanceof File) { 
-
+  if (icon instanceof File) {
     formData.append('icon', icon);
   }
   return axios.patch(`/metal/${id}`, formData);

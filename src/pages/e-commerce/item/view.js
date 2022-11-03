@@ -62,6 +62,18 @@ export default function Item() {
         <p style={theme.custom.typography.table}>{params.value}</p>
       ),
     },
+    {
+      field: 'image',
+      headerName: 'Item Image',
+      width: 150,
+      editable: true,
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <img width={70} src={params.row.image} />
+        )
+      }
+    },
 
     {
       field: 'edit',
@@ -93,6 +105,8 @@ export default function Item() {
   ];
   if (query.isLoading) return <Loading />
 
+
+  console.log("---",query.data.docs)
   //=======================================================
   return (
     <>
@@ -160,6 +174,28 @@ export default function Item() {
                 label="Item Type name"
               />
 
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Item Image
+              </Typography>
+              <CustomTextField
+                error={editForm.touched.image && Boolean(editForm.errors.image)}
+                helperText={editForm.touched.image && editForm.errors.image}
+                id="image"
+                type="file"
+                name="image"
+                onChange={(e) => editForm.setFieldValue('image', e.target.files[0])}
+                fullWidth
+                variant="outlined"
+              />
+
               <LoadingButton
                 disabled={edit.isLoading}
                 loading={edit.isLoading}
@@ -223,12 +259,38 @@ export default function Item() {
                 helperText={addForm.touched.name && addForm.errors.name}
                 id="name"
                 name="name"
+                required
                 value={addForm.values.name}
                 onChange={addForm.handleChange}
                 fullWidth
                 variant="outlined"
                 label="Item Type name"
               />
+
+              <Typography
+                variant="body1"
+                sx={{
+                  color: '#8B5704',
+                  marginBottom: 2,
+                  marginTop: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Item Image
+              </Typography>
+              <CustomTextField
+                error={addForm.touched.image && Boolean(addForm.errors.image)}
+                helperText={addForm.touched.image && addForm.errors.image}
+                id="image"
+                type="file"
+                name="image"
+                required
+                onChange={(e) => addForm.setFieldValue('image', e.target.files[0])}
+                fullWidth
+                variant="outlined"
+              />
+
+
 
               <LoadingButton
                 disabled={add.isLoading}

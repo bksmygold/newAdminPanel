@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 import { getOrnament, postOrnament, updateOrnament } from "src/apis/ornament";
 import { ornamentValidation } from "src/validation/ornament";
 import { unitValidation } from "src/validation/unit";
-import { postUnit, updateUnit ,getUnit} from "src/apis/unit";
+import { postUnit, updateUnit, getUnit } from "src/apis/unit";
 import { getCut, postCut, updateCut } from "src/apis/cut";
 import { cutValidation } from "src/validation/cut";
 import { getColor, postColor, updateColor } from "src/apis/color";
@@ -28,7 +28,8 @@ export const useController = () => {
     const addForm = useFormik({
         initialValues: {
             name: '',
-           
+            image: []
+
         },
         validationSchema: itemValidation,
         onSubmit: (values) => {
@@ -39,6 +40,7 @@ export const useController = () => {
     const editForm = useFormik({
         initialValues: {
             name: '',
+            image: []
         },
         validationSchema: itemValidation,
         onSubmit: (values) => {
