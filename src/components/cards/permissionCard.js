@@ -21,6 +21,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StoreIcon from '@mui/icons-material/Store';
 import GroupsIcon from '@mui/icons-material/Groups';
 import { useState } from 'react';
+import CheckAll from '../checkAll';
 
 //=====================================
 const CustomTextCheckbox = styled(Checkbox)`
@@ -37,6 +38,8 @@ const CustomTextCheckbox = styled(Checkbox)`
 export const PermissionCard = (props) => {
   const router = useRouter();
   let { permissions } = props
+  const [checkedAll, setCheckedAll] = useState(false)
+
   const [checked, setChecked] = useState(false)
   //-------------------------------------------
   return (
@@ -68,15 +71,12 @@ export const PermissionCard = (props) => {
               fontWeight: 'bolder',
               color: 'gray',
               width: '100%',
-
             }}
           >
             {props.title}
           </Typography>
-          <Grid item 
-           
-          >
-            {props.perm.map((x) => (
+          <Grid item>
+            {/* {props.perm.map((x) => (
               <FormGroup>
                 <FormControlLabel
                   control={
@@ -87,15 +87,13 @@ export const PermissionCard = (props) => {
                           color: "#8B5704",
                         },
                       }}
-                      checked={checked}
+                      checked={checkedAll}
                       // defaultChecked={checked}
                       onChange={(e) => {
-                        console.log("e -->", e.target.value)
+                        console.log("<--->", e.target.value)
                         if (e.target.value === "all") {
-                          setChecked((prev) => !prev),
-
-                          props.setPermissions(x.value)
-
+                          setCheckedAll(true),
+                            props.setPermissions(x.value)
                         }
                         setChecked((prev) => !prev)
                         props.setPermissions(x.value)
@@ -106,7 +104,12 @@ export const PermissionCard = (props) => {
                   label={x.name}
                 />
               </FormGroup>
-            ))}
+            ))} */}
+            <CheckAll
+              perm={props.perm}
+              setPerm={props.setPermissions}
+            />
+
           </Grid>
         </Grid>
       </Card>

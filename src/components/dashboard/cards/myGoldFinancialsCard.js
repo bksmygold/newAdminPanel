@@ -6,7 +6,7 @@ import { Bar } from 'react-chartjs-2';
 import "chartjs-adapter-date-fns";
 import { enGB } from "date-fns/locale";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
-import { BarChart } from "src/components/barChart";
+import BarChart from "src/components/barChart";
 
 
 ChartJS.register(
@@ -79,34 +79,8 @@ export const FinancialsCard = (props) => {
         {/* ----------------------------------------------- */}
         {props.isInvoice ? (
           <Grid container spacing={3} sx={{ justifyContent: "center" }}>
-            <Grid
-              item
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-around",
-                paddingRight: 0,
-              }}
-            >
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography sx={theme.custom.typography.dashBoard.h2}>
-                  89,124
-                </Typography>
-                <Typography variant="overline" sx={{ fontSize: 9, color: "black" }}>
-                  Sale-Invoice
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography sx={theme.custom.typography.dashBoard.h2}>
-                  89,124
-                </Typography>
-                <Typography variant="overline" sx={{ fontSize: 9, color: "black" }}>
-                  Purchase-Invoice
-                </Typography>
-              </Box>
-            </Grid>
-            <Box
-            >
+
+            <Box>
               {/* <Bar
                 datasetIdKey='id6e4778rfdsd54457'
                 data={{
@@ -132,6 +106,7 @@ export const FinancialsCard = (props) => {
                   ],
                 }}
               /> */}
+              <BarChart />
             </Box>
           </Grid>
         ) : (
@@ -156,12 +131,14 @@ export const FinancialsCard = (props) => {
                   {props.value}
                 </Typography>
               </Box>
-              <Box sx={{ textAlign: "center" }}>
+              <Box
+              // sx={{ textAlign: "center" }}
+              >
                 <Line
-                  style={{
-                    width: "70%",
-                    float: "right"
-                  }}
+                  // style={{
+                  //   width: "70%",
+                  //   float: "right"
+                  // }}
                   datasetIdKey='id'
                   options={options}
                   data={{
@@ -176,7 +153,7 @@ export const FinancialsCard = (props) => {
                         },
                         borderColor: "#905E0F",
                         // borderWidth: 3,
-
+ 
                         fill: true,
                         id: 1,
                         // data: props.graph.map(e => ({
@@ -193,9 +170,6 @@ export const FinancialsCard = (props) => {
             </Grid>
           </Grid>
         )}
-
-        {/* ----------------------------------------------- */}
-
         {/* ----------------------------------------------- */}
       </CardContent>
     </Card>

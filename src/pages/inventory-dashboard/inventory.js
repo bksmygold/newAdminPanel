@@ -297,7 +297,7 @@ const Inventory = () => {
           </Grid>)}
 
         {savedInstallments && (
-          <Grid contain er fullWidth spacing={6} sx={{ mt: 3 }}>
+          <Grid container fullWidth spacing={6} sx={{ mt: 3 }}>
             <Grid item fullWidth>
               <Table
                 rows={rows}

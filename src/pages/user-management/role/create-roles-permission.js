@@ -76,8 +76,8 @@ export default function RolesPermission() {
             name="name"
             variant="outlined"
             onChange={(e) => setName(e.target.value)}
-            label="Role name "
-            sx={{ mt: 1, width: '40%' }}
+            label="Role name"
+            sx={{ mt: 1, width: '100%' }}
           />{' '}
         </Grid>
         <Grid item xl={6} lg={6} sm={6} xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -85,10 +85,11 @@ export default function RolesPermission() {
           <CustomTextField
             id="name"
             name="name"
+            multiline
             variant="outlined"
             label="Description"
             onChange={(e) => setDescription(e.target.value)}
-            sx={{ mt: 1, width: '50%' }}
+            sx={{ mt: 1, width: '100%' }}
           />{' '}
         </Grid>
       </Grid>
@@ -182,7 +183,7 @@ export default function RolesPermission() {
         </>
       ) : null}
 
-   
+
       {tax ? (
         <>
           <Grid container spacing={3} sx={{ p: 2 }}>
@@ -275,8 +276,6 @@ export default function RolesPermission() {
         </>
       ) : null}
 
-
-
       {reports ? (
         <>
           <Grid container spacing={3} sx={{ p: 2 }}>
@@ -312,7 +311,7 @@ export default function RolesPermission() {
           //   router.push('/userManagement/role/view-rolesPermission')
           // )
         }
-        sx={[theme.custom.editButton, { width: "50%", margin: "auto" }]}
+        sx={[theme.custom.editButton, { width: "50%", margin: "auto",mb:5}]}
       >
         Add Role
       </LoadingButton>

@@ -19,7 +19,7 @@ export const Graph = (props) => {
 
   const { custody_Query } = useController(year)
 
-  console.log("custody", custody_Query.data)
+  // console.log("custody", custody_Query.data)
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -51,7 +51,7 @@ export const Graph = (props) => {
         maxBarThickness: 80,
       },
     ],
-    labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
   };
 
   const options = {
@@ -154,7 +154,7 @@ export const Graph = (props) => {
               <Bar data={data} options={options} />
             </Box>
           </CardContent>
-          <Divider />
+          <Divider/>
           <Box
             sx={{
               display: "flex",
@@ -169,7 +169,7 @@ export const Graph = (props) => {
         </Card>
       </Box>
 
-      <div>
+      {/* <div>
         <List
           component="nav"
           aria-label="Device settings"
@@ -212,7 +212,7 @@ export const Graph = (props) => {
             </MenuItem>
           ))}
         </Menu>
-      </div>
+      </div> */}
     </>
   );
 };

@@ -14,7 +14,7 @@ export default function FinancialsDetails() {
         commission_Query
     } = useController()
 
-    console.log("commission ---", commission_Query.data)
+    // console.log("commission ---", commission_Query.data)
     if (receivables_Query.isLoading) return <LoadingSkeleton />
 
     //================================================

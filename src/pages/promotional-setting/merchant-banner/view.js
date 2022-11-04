@@ -39,7 +39,7 @@ import { CustomTextField } from 'src/components/customMUI';
 import { EditButton } from 'src/components/button/editButton';
 import { DeleteButton } from 'src/components/button/deleteButton';
 import { useController } from 'src/controller/category';
-import Merchant from 'src/pages/user-management/merchant/view-merchant';
+import Merchant from 'src/pages/user-management/merchant/view';
 //=======================================================
 export default function MerchantBanner() {
 

@@ -41,7 +41,7 @@ export const infoCard = {
         merchant: {
             title: "Merchant",
             desc: "create, update, delete merchants, commissions and manage their approvals",
-            url: "/user-management/merchant/view-merchant"
+            url: "/user-management/merchant/view"
         },
         retail: {
             title: "Retail",
@@ -452,16 +452,6 @@ export const reportList = {
                 url: "/reports/retailer/financial-settlement"
             },
         },
-
-
-        // {
-        //     head: "Bank",
-        //     title1: "Bank Receipts",
-        //     title2: "Bank Payment",
-
-        // },
-
-
     ]
 }
 //-------------  PERMISSIONS  --------------------------------------
@@ -1189,7 +1179,7 @@ export const ecommPerma = [
         perm: [
             {
                 name: 'all',
-                value: "all"
+                value: ["create_cyclePeriod", "view_cyclePeriod", "update_cyclePeriod", "delete_cyclePeriod"]
             },
             {
                 name: 'create',
@@ -1723,78 +1713,78 @@ export const reportsPerma = [
     {
         title: 'Financials',
         perm: [
-            {
-                name: 'all',
-                value: "all"
-            },
+            // {
+            //     name: 'all',
+            //     value: ["creat_finanacial_reports","creat_finanacial_reports","all","all"]
+            // },
             {
                 name: 'create',
-                value: 'creat_referralType',
+                value: 'creat_finanacial_reports',
             },
             {
                 name: 'read',
-                value: 'read_referralType',
+                value: 'read_finanacial_reports',
             },
             {
                 name: 'update',
-                value: 'update_referralType',
+                value: 'update_finanacial_reports',
             },
             {
                 name: 'delete',
-                value: 'delete_referralType',
+                value: 'delete_finanacial_reports',
             },
         ],
     },
-    {
-        title: 'Metal',
-        perm: [
-            {
-                name: 'all',
-                value: "all"
-            },
-            {
-                name: 'create',
-                value: 'creat_referralType',
-            },
-            {
-                name: 'read',
-                value: 'read_referralType',
-            },
-            {
-                name: 'update',
-                value: 'update_referralType',
-            },
-            {
-                name: 'delete',
-                value: 'delete_referralType',
-            },
-        ],
-    },
-    {
-        title: 'Smart Reports',
-        perm: [
-            {
-                name: 'all',
-                value: "all"
-            },
-            {
-                name: 'create',
-                value: 'creat_referralType',
-            },
-            {
-                name: 'read',
-                value: 'read_referralType',
-            },
-            {
-                name: 'update',
-                value: 'update_referralType',
-            },
-            {
-                name: 'delete',
-                value: 'delete_referralType',
-            },
-        ],
-    },
+    // {
+    //     title: 'Metal',
+    //     perm: [
+    //         {
+    //             name: 'all',
+    //             value: "all"
+    //         },
+    //         {
+    //             name: 'create',
+    //             value: 'creat_referralType',
+    //         },
+    //         {
+    //             name: 'read',
+    //             value: 'read_referralType',
+    //         },
+    //         {
+    //             name: 'update',
+    //             value: 'update_referralType',
+    //         },
+    //         {
+    //             name: 'delete',
+    //             value: 'delete_referralType',
+    //         },
+    //     ],
+    // },
+    // {
+    //     title: 'Smart Reports',
+    //     perm: [
+    //         {
+    //             name: 'all',
+    //             value: "all"
+    //         },
+    //         {
+    //             name: 'create',
+    //             value: 'creat_referralType',
+    //         },
+    //         {
+    //             name: 'read',
+    //             value: 'read_referralType',
+    //         },
+    //         {
+    //             name: 'update',
+    //             value: 'update_referralType',
+    //         },
+    //         {
+    //             name: 'delete',
+    //             value: 'delete_referralType',
+    //         },
+    //     ],
+    // },
 ]
 
 //---------------------------------------------------
@@ -1831,5 +1821,4 @@ export const userType = [
         name: "To VIP",
         value: 256
     },
-
 ]

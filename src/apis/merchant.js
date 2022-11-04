@@ -13,7 +13,7 @@ export const postMerchant = (data) => {
   return axios.post('/merchant/create', data);
 };
 
-export const updateMerchant = ({ data, id }) => {
+export const updateMerchant = (data, id ) => {
   return axios.patch(`/merchant/${id}`, data);
 };
 

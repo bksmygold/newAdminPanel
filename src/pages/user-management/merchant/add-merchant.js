@@ -153,7 +153,7 @@ export default function AddMerchant() {
     mutationFn: postMerchant,
     onSuccess: (res) => {
       swal('Merchant Added !', 'continue with the admin panel', 'success');
-      router.push('/userManagement/merchant/view-merchant');
+      router.push('/user-management/merchant/view-merchant');
     },
     onError: (err) => swal('Error !', err.message, 'error'),
   });
@@ -849,7 +849,7 @@ export default function AddMerchant() {
               disabled={merchantMutation.isLoading}
               loading={merchantMutation.isLoading}
               type="submit"
-              sx={theme.custom.Button.margin}
+              sx={[theme.custom.addButton,{width:"50%",m:5}]}
             >
               Add merchant
             </LoadingButton>

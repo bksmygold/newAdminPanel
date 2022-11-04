@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
 import { Menu, MenuItem } from "@material-ui/core";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { ChartBar as ChartBarIcon } from "../../icons/chart-bar";
@@ -119,7 +120,60 @@ export const InventoryDashboardSidebar = (props) => {
                         </>
                     ))}
                 </Box>
-                <Divider sx={{ borderColor: "green" }} />
+                <Box
+          sx={{
+            px: 2,
+            py: 3,
+          }}
+        >
+
+          <Box
+            disableRipple
+            onClick={() =>
+              router.push("/")
+            }
+            sx={{
+              display: "flex",
+              cursor: "pointer",
+              color: 'gray',
+              fontWeight: "bolder",
+              p: 1,
+              width: '100%',
+              marginRight: 1,
+              borderRadius: 1,
+              mb: 2,
+              textAlign: 'center',
+            }}
+          >
+            <DashboardIcon sx={{ mr: 2 }} />
+            Back To Dashboard
+          </Box>
+          <Box
+            onClick={() =>
+              Swal.fire(
+                'You have been logged out!',
+                'Log in to continue',
+                'success'
+              )
+            }
+
+            sx={{
+              display: "flex",
+              color: 'gray',
+              cursor: "pointer",
+              fontWeight: "bolder",
+              p: 1,
+              width: '100%',
+              marginRight: 1,
+              borderRadius: 1,
+              textAlign: 'center',
+            }}
+          >
+            <LogoutIcon sx={{ mr: 2 }} />
+            Logout
+          </Box>
+        </Box>
+                <Divider sx={{ borderColor: "gray" }} />
                 {/* <Box
           sx={{
             px: 2,

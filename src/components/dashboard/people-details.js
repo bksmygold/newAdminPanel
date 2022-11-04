@@ -15,7 +15,7 @@ export default function PeopleDetails() {
     } = useController()
 
     // if (people_customer_query.isLoading) return <PeopleSkeleton />
-    // console.log("Graph data ---", people_referral_Query.data.data)
+    console.log("Graph data ---", people_referral_Query?.data)
     //================================================
     return (
         <>

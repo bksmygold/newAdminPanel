@@ -15,7 +15,7 @@ import Loading from 'src/components/loading';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import { useTheme } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
-
+import VerifiedIcon from '@mui/icons-material/Verified';
 //=======================================================
 export default function Merchant() {
   const router = useRouter();
@@ -35,13 +35,11 @@ export default function Merchant() {
             );
           }}
         >
-          Manage 
+          Manage
         </Button>
       </strong>
     );
   };
-  
- 
   //=======================
   const query = useQuery({
     queryKey: 'merchant',
@@ -50,13 +48,13 @@ export default function Merchant() {
     onError: (err) => console.log('Error --->', err),
   });
   if (query.isLoading) return <Loading />;
-
+  console.log(query.data.docs)
   //===============================
   const columns = [
     {
       field: 'name',
       headerName: 'Merchant Name',
-      width: 250,
+      minWidth: 250,
       renderCell: (params) => (
         <p style={{ color: '#925F0F', fontWeight: 600 }}>{params.value}</p>
       ),
@@ -64,47 +62,62 @@ export default function Merchant() {
     {
       field: 'modules',
       headerName: 'Modules Applicable',
-      width: 280,
+      minWidth: 280,
       renderCell: (params) => {
-        params.value.map((x) => x);
+        return (
+          <ul>
+            {params.value.map((x) => (
+              <li>{x}</li>
+            ))}
+          </ul>
+        )
       },
     },
     {
-      field: 'retainershipType',
-      headerName: 'Retainership Type',
-      width: 200,
+      field: 'mobile',
+      headerName: 'Phone',
+      minWidth: 200,
     },
     {
-      field: 'retainershipValue',
-      headerName: 'Retainership Value ',
-      width: 150,
+      field: 'email',
+      headerName: 'Email',
+      minWidth: 150,
     },
     {
-      field: 'commission',
-      headerName: 'Buy Commission ',
-      width: 200,
-      valueGetter: (params) => {
-        console.log(params.row.commission.buy);
-        let result = [];
-        if (params.row.commission) {
-          if (params.row.commission.buy) {
-            result.push(params.row.commission.buy);
-          }
+      field: 'isVerified',
+      headerName: 'Verified',
+      minWidth: 150,
+      renderCell: (params) => {
+        if (params.row.isVerified === true) {
+          return (
+            <Box sx={{display:"flex",margin:"auto"}}>
+
+              Verified <VerifiedIcon sx={{ml:1,color:"#458eff"}}/>
+            </Box>
+          )
         } else {
-          result = ['Unknown'];
+          return (
+            <Box sx={{ margin: "auto" }}>
+              <Button
+                onClick={() => router.push(`/user-management/merchant/verify?id=${params.row.id}`)}
+                sx={theme.custom.editButton}>
+                Verify
+              </Button>
+            </Box>
+          )
         }
-        return result.join(', ');
-      },
+      }
     },
+
 
     {
       field: 'Action',
       headerName: 'Action',
-      width: 150,
+      minWidth: 150,
       editable: true,
       renderCell: manageButton,
     },
-  
+
   ];
 
   //=======================================================
@@ -130,7 +143,7 @@ export default function Merchant() {
         </Grid>
         <Grid item>
           <Button
-            onClick={() => router.push('/userManagement/merchant/add-merchant')}
+            onClick={() => router.push('/user-management/merchant/add-merchant')}
             sx={theme.custom.addButton}
           >
             Add Merchant
@@ -142,7 +155,7 @@ export default function Merchant() {
         rows={query.data.docs}
         columns={columns}
         create="merchant"
-        url="/userManagement/merchant/add-merchant"
+        url="/user-management/merchant/add-merchant"
         title="Your Merchant"
       />
     </>

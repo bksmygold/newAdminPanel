@@ -44,12 +44,11 @@ export default function BarChart() {
     //============================================================
     const { invoice_Query } = useController()
     const theme = useTheme()
-    // console.log("---<<<", invoice_Query.data?.data)
+    console.log("---<<<", invoice_Query.data?.data)
 
 
 
     const data = {
-        
         datasets: [
             {
                 backgroundColor: "#905E0F",
@@ -58,7 +57,7 @@ export default function BarChart() {
                 borderRadius: 4,
                 categoryPercentage: 0.5,
                 data: [1, 2, 3],
-                label: "Sale",
+                label: "Custody",
                 maxBarThickness: 80,
             },
             {
@@ -68,7 +67,7 @@ export default function BarChart() {
                 borderRadius: 4,
                 categoryPercentage: 0.5,
                 data: [3,2,1],
-                label: "Purchase",
+                label: "Release",
                 maxBarThickness: 80,
             },
         ],
