@@ -13,6 +13,8 @@ import {
     TextField,
     Typography,
     styled,
+    InputAdornment,
+    IconButton
 } from "@mui/material";
 import { CheckBox } from "@mui/icons-material";
 import Image from "next/image";
@@ -21,20 +23,15 @@ import { validateLogin } from "src/apis/login";
 import swal from "sweetalert";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Swal from "sweetalert2";
-
+import { CustomTextField } from "src/components/customMUI";
+import { useState } from "react";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useTheme } from "@mui/styles";
 //========================================
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #a88143;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #a88143;
-    }
-  }
-`;
-//========================================
-const Lauda = () => {
+const Login = () => {
+    const theme = useTheme()
+    const [showPassword, setShowPassword] = useState(false)
     const router = useRouter();
     const formik = useFormik({
         initialValues: {
@@ -74,7 +71,7 @@ const Lauda = () => {
             <Head>
                 <title>Login | Bks MyGold </title>
             </Head>
-            <Box 
+            <Box
                 component="main"
                 sx={{
                     alignItems: "center",
@@ -129,34 +126,36 @@ const Lauda = () => {
                             />
 
                             <CustomTextField
-                                error={Boolean(formik.touched.password && formik.errors.password)}
-                                fullWidth
-                                helperText={formik.touched.password && formik.errors.password}
-                                label="Password"
-                                margin="normal"
-                                name="password"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="password"
-                                value={formik.values.password}
-                                variant="outlined"
-                            />
+                                error={Boolean(formik.touched.email && formik.errors.email)}
+                                helperText={formik.touched.email && formik.errors.email}
 
+                                sx={{ mt: 2 }}
+                                label='password'
+                                fullWidth
+                                variant="outlined"
+                                type={showPassword ? "text" : "password"}
+                                onChange={formik.handleChange}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={() => setShowPassword(prev => !prev)}
+                                            // onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
                             <Box sx={{ py: 2 }}>
                                 <LoadingButton
                                     disabled={loginMutation.isLoading}
                                     loading={loginMutation.isLoading}
                                     type="submit"
                                     fullWidth
-                                    sx={{
-                                        marginTop: 2,
-                                        backgroundColor: "#DDB070",
-                                        border: "none",
-                                        color: "white",
-                                        "&:hover": {
-                                            backgroundColor: "#DBA251",
-                                        },
-                                    }}
+                                    sx={theme.custom.editButton}
                                 >
                                     Sign in
                                 </LoadingButton>
@@ -173,10 +172,10 @@ const Lauda = () => {
                     <Box
                         sx={{
                             // width: "40%"
-                            m:"5%"
+                            m: "5%"
                         }}
                     >
-                        <img className="responsive-image" src={'./loginBg.png'} style={{maxWidth:"40vw"}} />
+                        <img className="responsive-image" src={'./loginBg.png'} style={{ maxWidth: "40vw" }} />
                     </Box>
                 </Container>
             </Box>
@@ -184,4 +183,4 @@ const Lauda = () => {
     );
 };
 
-export default Lauda;
+export default Login;

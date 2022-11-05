@@ -175,7 +175,8 @@ a{
 }
 a:hover{
   /* background-color: rgba(128, 128, 128, 0.472); */
-  border:1px solid rgba(0, 0, 0, 0.406);
-  padding: 4px;
+  /* border:1px solid #905f0f53; */
+  /* padding: 4px; */
   border-radius: 5px;
+  color:#905E0F
 }

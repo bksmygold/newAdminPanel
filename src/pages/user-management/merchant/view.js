@@ -16,6 +16,8 @@ import DeleteSpinner from 'src/components/deleteSpinner';
 import { useTheme } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import { getMerchantById, updateMerchant } from 'src/apis/merchant';
+
 //=======================================================
 export default function Merchant() {
   const router = useRouter();
@@ -90,22 +92,52 @@ export default function Merchant() {
       renderCell: (params) => {
         if (params.row.isVerified === true) {
           return (
-            <Box sx={{display:"flex",margin:"auto"}}>
-
-              Verified <VerifiedIcon sx={{ml:1,color:"#458eff"}}/>
+            <Box sx={{ display: "flex", margin: "auto" }}>
+              Verified <VerifiedIcon sx={{ ml: 1, color: "#458eff" }} />
             </Box>
           )
-        } else {
+        }
+        return (
+          <Box sx={{ margin: "auto" }}>
+            <Button
+              onClick={() => router.push(`/user-management/merchant/verify?id=${params.row.id}`)}
+              sx={theme.custom.editButton}>
+              Verify
+            </Button>
+          </Box>
+        )
+
+      }
+    },
+
+    {
+      field: 'notVerified',
+      headerName: 'Un-Verify',
+      minWidth: 150,
+      renderCell: (params) => {
+        if (params.row.isVerified !== false) {
           return (
+
             <Box sx={{ margin: "auto" }}>
               <Button
-                onClick={() => router.push(`/user-management/merchant/verify?id=${params.row.id}`)}
+                onClick={() => {
+                  try {
+                    updateMerchant({ isVerified: false }, params.id).then(() =>
+                      swal('Merhcant Un-Verified !', 'Continue with the admin panel', 'success'));
+                    query.refetch()
+
+                  } catch (error) {
+                    alert(error)
+                  }
+
+                }}
                 sx={theme.custom.editButton}>
-                Verify
+                Un-Verify
               </Button>
             </Box>
           )
         }
+
       }
     },
 

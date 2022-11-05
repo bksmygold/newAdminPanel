@@ -78,12 +78,11 @@ export default function VerifyMerchant() {
                 onClick={() => {
                     try {
                         updateMerchant({ isVerified: true }, router.query.id).then(() =>
-                            swal('Merhcant Verified !', 'Continue with the admin panel', 'success'))
+                        swal('Merhcant Verified !', 'Continue with the admin panel', 'success'))
+                        router.push('/user-management/merchant/view')
                     } catch (error) {
                         alert(error)
-                    } finally {
-                        router.push('/user-management/merchant/view')
-                    }
+                    } 
                 }}
                 type="submit"
                 sx={[theme.custom.editButton, { width: "40%", m: "auto", mt: 4 }]}
@@ -92,7 +91,7 @@ export default function VerifyMerchant() {
             </LoadingButton>
 
 
-            <LoadingButton
+            {/* <LoadingButton
                 disabled={update.isLoading}
                 loading={update.isLoading}
                 fullWidth
@@ -100,7 +99,7 @@ export default function VerifyMerchant() {
                 sx={[theme.custom.editButton, { width: "40%", m: "auto", mt: 4 }]}
             >
                 Verify
-            </LoadingButton>
+            </LoadingButton> */}
 
 
 

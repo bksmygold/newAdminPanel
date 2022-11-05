@@ -116,12 +116,12 @@ export const theme = createTheme({
           borderColor: '#9A6715',
           borderWidth: 1,
           // backgroundColor:"gray"
+          focused: {
+            borderColor: "red",
+            backgroundColor: "red"
+  
+          }
         },
-        focused: {
-          borderColor: "red",
-          backgroundColor: "red"
-
-        }
       },
     },
     MuiTableHead: {

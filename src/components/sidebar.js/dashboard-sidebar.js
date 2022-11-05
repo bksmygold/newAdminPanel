@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Divider, Drawer, Typography, useMediaQuery, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { NavItem } from "../nav-item";
 import Image from "next/image";
 import { dashboardMenuList } from "src/constants/sidebarMenu";
@@ -10,10 +10,19 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Swal from "sweetalert2";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useTheme } from '@mui/styles'
+
 //========================================================================
 export const DashboardSidebar = (props) => {
-
   const theme = useTheme()
+  const [opN, setOpN] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpN(true);
+  };
+
+  const handleClose = () => {
+    setOpN(false);
+  };
   //========================================================================
   const { open, onClose } = props;
   const router = useRouter();
@@ -43,6 +52,8 @@ export const DashboardSidebar = (props) => {
           display: "flex",
           flexDirection: "column",
           height: "100%",
+          overflowX: "hidden"
+
         }}
       >
         <div>
@@ -139,32 +150,65 @@ export const DashboardSidebar = (props) => {
             <DashboardIcon sx={{ mr: 2 }} />
             Back To Dashboard
           </Box>
-          <Box
-            onClick={() =>
-              Swal.fire(
-                'You have been logged out!',
-                'Log in to continue',
-                'success'
-              )
-            }
-
-            sx={{
-              display: "flex",
-              color: 'gray',
-              cursor: "pointer",
-              fontWeight: "bolder",
-              p: 1,
-              width: '100%',
-              marginRight: 1,
-              borderRadius: 1,
-              textAlign: 'center',
-            }}
-          >
-            <LogoutIcon sx={{ mr: 2 }} />
-            Logout
-          </Box>
+          
         </Box>
       </Box>
+      <div>
+        <Box
+          onClick={handleClickOpen}
+          // localStorage.clear();
+          // window.location.reload(false)
+
+          // Swal.fire(
+          // 'You have been logged out!',
+          // 'Log in to continue',
+          // 'success'
+          // )
+
+
+          sx={{
+            display: "flex",
+            color: 'gray',
+            cursor: "pointer",
+            fontWeight: "bolder",
+            p: 1,
+            width: '100%',
+            mt: 5,
+            ml:2.4,
+            borderRadius: 1,
+            textAlign: 'center',
+            // overflowX: "hidden"
+
+          }}
+        >
+          <LogoutIcon sx={{ mr: 2 }} />
+          Logout
+        </Box>
+        <Dialog
+          open={opN}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"You are about to be logged out"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure to be get logged out ?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => {
+              localStorage.clear();
+              window.location.reload(false)
+            }}>Yes</Button>
+            <Button onClick={handleClose} autoFocus>
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </>
   );
   //========================================================================
@@ -188,22 +232,26 @@ export const DashboardSidebar = (props) => {
   }
   //========================================================================
   return (
-    <Drawer
-      anchor="left"
-      onClose={onClose}
-      open={open}
-      PaperProps={{
-        sx: {
-          backgroundColor: "#ffffff",
-          color: "#FFFFFF",
-          width: 280,
-        },
-      }}
-      sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
-      variant="temporary"
-    >
-      {content}
-    </Drawer>
+    <>
+
+
+      <Drawer
+        anchor="left"
+        onClose={onClose}
+        open={open}
+        PaperProps={{
+          sx: {
+            backgroundColor: "#ffffff",
+            color: "#FFFFFF",
+            width: 280,
+          },
+        }}
+        sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
+        variant="temporary"
+      >
+        {content}
+      </Drawer>
+    </>
   );
 };
 //========================================================================

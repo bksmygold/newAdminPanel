@@ -30,7 +30,7 @@ const App = (props) => {
   const router = useRouter();
   //=====================================================
   useEffect(() => {
-    if (localStorage.getItem("token") === null) router.push("/login");
+    if (localStorage.getItem("token") === null) router.push("/auth/login");
   }, []);
   //=====================================================
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
