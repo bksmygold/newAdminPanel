@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 import { loanInterestValidation } from "src/validation/loanInterest";
 import { getLoanInterest, postLoanInterest, updateLoanInterest } from "src/apis/loanInterest";
 import { getOrganisationUser, postUser, updateUser } from "src/apis/user";
-import { orgUserValidation } from "src/validation/OrgUser";
+import { orgUserValidation } from "src/validation/orgUser";
 import { getRole } from "src/apis/role";
 //============================================================
 export const useController = () => {

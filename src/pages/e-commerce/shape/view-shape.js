@@ -18,7 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Table from '../../../components/utility/table';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getShape, deleteShape, postShape, updateShape } from 'src/apis/Shape';
+import { getShape, deleteShape, postShape, updateShape } from 'src/apis/shape';
 import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
