@@ -33,7 +33,7 @@ import * as yup from 'yup';
 import swal from 'sweetalert';
 import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { useTheme } from '@mui/Styles'
+import { useTheme } from '@mui/styles'
 import { CustomFormControl } from 'src/components/customMUI';
 import { CustomTextField } from 'src/components/customMUI';
 import { EditButton } from 'src/components/button/editButton';
