@@ -33,7 +33,7 @@ export default function Merchant() {
           size="small"
           onClick={() => {
             router.push(
-              `/userManagement/merchant/edit-merchant/?id=${params.id}`
+              `/user-management/merchant/edit-merchant/?id=${params.id}`
             );
           }}
         >

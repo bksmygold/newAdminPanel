@@ -118,8 +118,8 @@ export const DashboardNavbar = (props) => {
                   }}
                   sx={{
                     width:"100%",
-                    height: "50%",
-                    background: "linear-gradient(43deg, #8b5704, #ddb070)",
+                    height: "100%",
+                    backgroundColor: "#8b5704",
                     color: "white",
                     p: 10,
                     ml:1,
@@ -139,6 +139,31 @@ export const DashboardNavbar = (props) => {
           <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
             {showFilter &&
               <CalendarModal />}
+            <Grid item lg={1} xs={12} sx={{
+
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}>
+
+              <Button
+                onClick={() => {
+                  router.push("/badla/view-badla");
+                }}
+                sx={{
+                  width: "100%",
+                  height: "50%",
+                  backgroundColor: "#8b5704",
+                  color: "white",
+                  p: 10,
+                  ml: 1,
+                  padding: "0px 12px 0px 0px",
+                }}
+              >
+                <AddIcon sx={{ ml: 1 }} />
+                Badla
+              </Button>
+            </Grid>
             <Tooltip title="Notifications">
               <IconButton sx={{}}>
                 <Badge color="error" badgeContent={14}>

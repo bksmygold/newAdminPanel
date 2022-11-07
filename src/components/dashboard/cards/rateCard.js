@@ -21,7 +21,7 @@ export const RateCard = (props) => {
               {props.title}
             </Typography>
             <Typography sx={theme.custom.typography.dashBoard.h2}>
-              ₹ {props.rate} /gm
+              ₹ {props.rate.toLocaleString('en-IN')} /gm
             </Typography>
           </Grid>
           {/* <Grid item>

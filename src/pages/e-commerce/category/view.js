@@ -72,7 +72,7 @@ export default function Category() {
       minWidth: 150,
       flex: 1,
       renderCell: (params) => (
-        <img width={90} height={70} src={params.row.image} />
+        <img style={{ width:"100%",height:"100%",objectFit: "contain" }} src={params.row.image} />
       ),
     },
 

@@ -109,7 +109,7 @@ export default function Table(props) {
             minWidth:"100%"
 
           }}
-          rowHeight={85}
+          rowHeight={100}
           components={{ Toolbar: GridToolbar }}
           GridPrintExportOptions={{ color: "red" }}
           data={props.rows}

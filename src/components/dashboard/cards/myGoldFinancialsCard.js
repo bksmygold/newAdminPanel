@@ -66,13 +66,16 @@ const options = {
     },
   },
 };
-export const FinancialsCard = (props) => {
-  let arr = [];
-  for (let i = 0; i < 100; i++) {
-    arr.push({ x: new Date(2022, 1, i + 1), y: i * 50 })
-  }
-
+let arr = [];
+for (let i = 0; i < 100; i++) {
+  arr.push({ x: new Date(2022, 1, i + 1), y: i * 50 })
+}
+//======================================================
+export const  FinancialsCard = (props) => {
+  // console.log("props ---<>", props)
   const theme = useTheme()
+  //======================================================
+
   return (
     <Card sx={{ boxShadow: "0px 4px 1px 0px #d2c6c6", border: "1px solid #d2c6c657", height: "100%" }}>
       <CardContent sx={{ backgroundColor: "#FDFAF2" }}>
@@ -102,7 +105,6 @@ export const FinancialsCard = (props) => {
                       id: "id123",
                       data: [1, 2, 3, 2, 2, 4],
                     },
-
                   ],
                 }}
               /> */}
@@ -128,12 +130,12 @@ export const FinancialsCard = (props) => {
                 <Typography
                   sx={[theme.custom.typography.dashBoard.h2, { margin: "auto" }]}
                 >
-                  {props.value}
+                  {props.value.toLocaleString('en-IN')}
                 </Typography>
               </Box>
               <Box
               // sx={{ textAlign: "center" }}
-              >
+                >
                 <Line
                   // style={{
                   //   width: "70%",
@@ -153,7 +155,7 @@ export const FinancialsCard = (props) => {
                         },
                         borderColor: "#905E0F",
                         // borderWidth: 3,
- 
+
                         fill: true,
                         id: 1,
                         // data: props.graph.map(e => ({

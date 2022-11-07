@@ -9,8 +9,6 @@ import { prototype } from 'google-map-react';
 import "chartjs-adapter-date-fns";
 import { enGB } from "date-fns/locale";
 import { Chart as ChartJS, TimeScale, N } from "chart.js";
-
-
 ChartJS.register([TimeScale]);
 
 // for (let i = 0; i < 100; i++) {
@@ -89,7 +87,7 @@ export const GraphCard = (props) => {
                 {props.title}
               </Typography>
               <Typography sx={theme.custom.typography.dashBoard.h2}>
-                {props.stats}
+                {props.stats.toLocaleString('en-IN')}
               </Typography>
             </Grid>
             {/* <Grid item> */}
