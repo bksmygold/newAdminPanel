@@ -197,7 +197,7 @@ import React from 'react';
 import DeleteSpinner from 'src/components/deleteSpinner';
 import Loading from 'src/components/loading';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { useFormik } from 'Formik';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
 import swal from 'sweetalert';
 import { useState } from 'react';
